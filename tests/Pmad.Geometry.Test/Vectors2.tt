@@ -1,0 +1,116 @@
+﻿<#@ template debug="false" hostspecific="false" language="C#" #>
+<#@ assembly name="System.Core" #>
+<#@ import namespace="System.Linq" #>
+<#@ import namespace="System.Text" #>
+<#@ import namespace="System.Collections.Generic" #>
+<#@ output extension=".cs" #>
+
+namespace Pmad.Geometry.Test
+{
+<#
+
+	var definitions = new []
+	{
+		(Struct: "Vector2I",  BaseVector: "Vector128", Primitive: "int",    HasFiller: true),
+		(Struct: "Vector2F",  BaseVector: "Vector128", Primitive: "float",  HasFiller: true),
+		(Struct: "Vector2L",  BaseVector: "Vector128", Primitive: "long",   HasFiller: false),
+		(Struct: "Vector2D",  BaseVector: "Vector128", Primitive: "double", HasFiller: false),
+        (Struct: "Vector2IS", BaseVector: null,        Primitive: "int",    HasFiller: false),
+		(Struct: "Vector2FS", BaseVector: null,        Primitive: "float",  HasFiller: false),
+		(Struct: "Vector2LS", BaseVector: null,        Primitive: "long",   HasFiller: false),
+		(Struct: "Vector2DS", BaseVector: null,        Primitive: "double", HasFiller: false)
+	};
+
+	foreach(var def in definitions)
+	{
+#>
+	public partial class <#=def.Struct#>Test : Vector2TestBase<<#=def.Primitive#>,<#=def.Struct#>>
+	{
+        public <#=def.Struct#>Test() : base((x,y) => new <#=def.Struct#>(x, y)) { }
+
+	    [Fact]
+        public void Add()
+        {
+            Assert.Equal(new <#=def.Struct#>(123, 456), new <#=def.Struct#>(100, 56) + new <#=def.Struct#>(23, 400));
+        }
+
+        [Fact]
+        public void Substract()
+        {
+            Assert.Equal(new <#=def.Struct#>(100, 56), new <#=def.Struct#>(123, 456) - new <#=def.Struct#>(23, 400));
+        }
+
+        [Fact]
+        public void Multiply()
+        {
+            Assert.Equal(new <#=def.Struct#>(2000, 8000), new <#=def.Struct#>(200, 400) * new <#=def.Struct#>(10, 20));
+        }
+
+        [Fact]
+        public void MultiplyScalar()
+        {
+            Assert.Equal(new <#=def.Struct#>(2000, 4000), new <#=def.Struct#>(200, 400) * 10);
+            Assert.Equal(new <#=def.Struct#>(2000, 4000), 10 * new <#=def.Struct#>(200, 400));
+        }
+
+        [Fact]
+        public void Divide()
+        {
+            Assert.Equal(new <#=def.Struct#>(10, 40), new <#=def.Struct#>(200, 400) / new <#=def.Struct#>(20, 10));
+        }
+        
+        [Fact]
+        public void DivideScalar()
+        {
+            Assert.Equal(new <#=def.Struct#>(20, 40), new <#=def.Struct#>(200, 400) / 10);
+        }
+        
+        [Fact]
+        public void Negate()
+        {
+            Assert.Equal(new <#=def.Struct#>(-200, -400), -new <#=def.Struct#>(200, 400));
+        }
+        
+        [Fact]
+        public void EqualOperator()
+        {
+            Assert.True(new <#=def.Struct#>(123, 456) == new <#=def.Struct#>(123, 456));
+            Assert.False(new <#=def.Struct#>(789, 456) == new <#=def.Struct#>(123, 456));
+            Assert.False(new <#=def.Struct#>(123, 789) == new <#=def.Struct#>(123, 456));
+        }
+        
+        [Fact]
+        public void NotEqualOperator()
+        {
+            Assert.False(new <#=def.Struct#>(123, 456) != new <#=def.Struct#>(123, 456));
+            Assert.True(new <#=def.Struct#>(789, 456) != new <#=def.Struct#>(123, 456));
+            Assert.True(new <#=def.Struct#>(123, 789) != new <#=def.Struct#>(123, 456));
+        }
+
+        [Fact]
+        public void X()
+        {
+            var value = new <#=def.Struct#>(123, 456);
+            Assert.Equal(123, value.X);
+            
+            value.X = 789;
+            Assert.Equal(789, value.X);
+            Assert.Equal(new <#=def.Struct#>(789, 456), value);
+        }
+
+        [Fact]
+        public void Y()
+        {
+            var value = new <#=def.Struct#>(123, 456);
+            Assert.Equal(456, value.Y);
+            
+            value.Y = 789;
+            Assert.Equal(789, value.Y);
+            Assert.Equal(new <#=def.Struct#>(123, 789), value);
+        }
+
+	}
+<#
+	}
+#>
+}

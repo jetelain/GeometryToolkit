@@ -1,0 +1,93 @@
+﻿<#@ template debug="false" hostspecific="false" language="C#" #>
+<#@ assembly name="System.Core" #>
+<#@ import namespace="System.Linq" #>
+<#@ import namespace="System.Text" #>
+<#@ import namespace="System.Collections.Generic" #>
+<#@ output extension=".cs" #>
+
+namespace Pmad.Geometry.Algorithms
+{
+	public static class PointInPolygon
+	{
+<#
+
+	var definitions = new []
+	{
+		"Vector2I",
+		"Vector2F",
+		"Vector2L",
+		"Vector2D",
+        "Vector2IS",
+		"Vector2FS",
+		"Vector2LS",
+		"Vector2DS"
+	};
+
+	foreach(var def in definitions)
+	{
+#>
+        public static PointInPolygonResult TestPointInPolygon(this IReadOnlyList<<#=def#>> path, <#=def#> pt)
+        {
+            var cnt = path.Count;
+            if (cnt < 3) 
+            {
+                return PointInPolygonResult.Outside;
+            }
+            bool result = false;
+            var ip = path[0];
+            for (int i = 1; i <= cnt; ++i)
+            {
+                var ipNext = (i == cnt ? path[0] : path[i]);
+                if (ipNext.Y == pt.Y)
+                {
+                    if ((ipNext.X == pt.X) || (ip.Y == pt.Y && ((ipNext.X > pt.X) == (ip.X < pt.X))))
+                    {
+                        return PointInPolygonResult.Boundary;
+                    }
+                }
+                if ((ip.Y < pt.Y) != (ipNext.Y < pt.Y))
+                {
+                    if (ip.X >= pt.X)
+                    {
+                        if (ipNext.X > pt.X) 
+                        {
+                            result = !result;
+                        }
+                        else
+                        {
+                            var d = <#=def#>.CrossProduct(ip - pt, ipNext - pt);
+                            if (d == 0) 
+                            {
+                                return PointInPolygonResult.Boundary;
+                            }
+                            else if ((d > 0) == (ipNext.Y > ip.Y))
+                            {
+                                result = !result;
+                            }
+                        }
+                    }
+                    else
+                    {
+                        if (ipNext.X > pt.X)
+                        {
+                            var d = <#=def#>.CrossProduct(ip - pt, ipNext - pt);
+                            if (d == 0) 
+                            {
+                                return PointInPolygonResult.Boundary;
+                            }
+                            else if ((d > 0) == (ipNext.Y > ip.Y))
+                            {
+                                result = !result;
+                            }
+                        }
+                    }
+                }
+                ip = ipNext;
+            }
+            return result ? PointInPolygonResult.Inside : PointInPolygonResult.Outside;
+        }
+<#
+	}
+#>
+	}
+}

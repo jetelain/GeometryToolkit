@@ -1,0 +1,216 @@
+﻿<#@ template debug="false" hostspecific="false" language="C#" #>
+<#@ assembly name="System.Core" #>
+<#@ import namespace="System.Linq" #>
+<#@ import namespace="System.Text" #>
+<#@ import namespace="System.Collections.Generic" #>
+<#@ output extension=".cs" #>
+using System.Diagnostics;
+using System.Diagnostics.CodeAnalysis;
+using System.Runtime.CompilerServices;
+using System.Runtime.Intrinsics;
+
+namespace Pmad.Geometry
+{
+<#
+
+	var definitions = new []
+	{
+		(Struct: "Vector2IS", Primitive: "int"),
+		(Struct: "Vector2FS", Primitive: "float"),
+		(Struct: "Vector2LS", Primitive: "long"),
+		(Struct: "Vector2DS", Primitive: "double")
+	};
+
+	foreach(var def in definitions)
+	{
+#>
+    [DebuggerDisplay("({X};{Y})")]
+	public partial struct <#=def.Struct#> : IEquatable<<#=def.Struct#>>, IVector2<<#=def.Primitive#>,<#=def.Struct#>>
+	{
+        public static <#=def.Struct#> Zero => default;
+        
+        public static <#=def.Struct#> One => new (1);
+
+        public static <#=def.Struct#> UnitX => new (1, 0);
+
+        public static <#=def.Struct#> UnitY => new (0, 1);
+
+        public static <#=def.Struct#> MaxValue => new (<#=def.Primitive#>.MaxValue);
+
+        public static <#=def.Struct#> MinValue => new (<#=def.Primitive#>.MinValue);
+
+        [MethodImpl(MethodImplOptions.AggressiveInlining)]
+        public <#=def.Struct#>(<#=def.Primitive#> x, <#=def.Primitive#> y)
+        {
+            X = x;
+            Y = y;
+        }
+        
+        [MethodImpl(MethodImplOptions.AggressiveInlining)]
+        public <#=def.Struct#>(<#=def.Primitive#> value)
+        {
+            X = value;
+            Y = value;
+        }
+
+        public <#=def.Primitive#> X { get; set; }
+
+        public <#=def.Primitive#> Y { get; set; }
+
+        [MethodImpl(MethodImplOptions.AggressiveInlining)]
+        public static bool operator !=(<#=def.Struct#> left, <#=def.Struct#> right)
+            => left.X != right.X || left.Y != right.Y;
+
+        [MethodImpl(MethodImplOptions.AggressiveInlining)]
+        public static bool operator ==(<#=def.Struct#> left, <#=def.Struct#> right)
+            => left.X == right.X && left.Y == right.Y;
+
+        [MethodImpl(MethodImplOptions.AggressiveInlining)]
+        public static <#=def.Struct#> operator *(<#=def.Struct#> left, <#=def.Struct#> right)
+            => new (left.X * right.X, left.Y * right.Y);
+
+        [MethodImpl(MethodImplOptions.AggressiveInlining)]
+        public static <#=def.Struct#> operator *(<#=def.Struct#> left, <#=def.Primitive#> right)
+            => new (left.X * right, left.Y * right);
+
+        [MethodImpl(MethodImplOptions.AggressiveInlining)]
+        public static <#=def.Struct#> operator *(<#=def.Primitive#> left, <#=def.Struct#> right)
+            => new (left * right.X, left * right.Y);
+
+        [MethodImpl(MethodImplOptions.AggressiveInlining)]
+        public static <#=def.Struct#> operator /(<#=def.Struct#> left, <#=def.Struct#> right)
+            => new (left.X / right.X, left.Y / right.Y);
+
+        [MethodImpl(MethodImplOptions.AggressiveInlining)]
+        public static <#=def.Struct#> operator /(<#=def.Struct#> left, <#=def.Primitive#> right)
+            => new (left.X / right, left.Y / right);
+
+        [MethodImpl(MethodImplOptions.AggressiveInlining)]
+        public static <#=def.Struct#> operator +(<#=def.Struct#> left, <#=def.Struct#> right)
+            => new (left.X + right.X, left.Y + right.Y);
+
+        [MethodImpl(MethodImplOptions.AggressiveInlining)]
+        public static <#=def.Struct#> operator -(<#=def.Struct#> left, <#=def.Struct#> right)
+            => new (left.X - right.X, left.Y - right.Y);
+
+        [MethodImpl(MethodImplOptions.AggressiveInlining)]
+        public static <#=def.Struct#> operator -(<#=def.Struct#> value)
+            => new (-value.X, -value.Y);
+
+        [MethodImpl(MethodImplOptions.AggressiveInlining)]
+        public readonly <#=def.Struct#> SwapXY()
+        {
+            return new(Y, X);
+        }
+
+        public readonly override int GetHashCode()
+        {
+            return HashCode.Combine(X.GetHashCode(), Y.GetHashCode());
+        }
+
+        public readonly override bool Equals([NotNullWhen(true)] object? obj)
+        {
+            if (obj is <#=def.Struct#> other)
+            {
+                return Equals(other);
+            }
+            return false;
+        }
+
+        public readonly bool Equals(<#=def.Struct#> other)
+        {
+            return X == other.X && Y == other.Y;
+        }
+
+        public readonly Vector2F ToFloat() => new ((float)X, (float)Y);
+
+        public readonly Vector2D ToDouble() => new ((double)X, (double)Y);
+
+        public readonly override string ToString()
+        {
+            return FormattableString.Invariant($"({X};{Y})");
+        }
+
+        public static <#=def.Struct#> Max(<#=def.Struct#> value1, <#=def.Struct#> value2)
+        {
+            return new(Math.Max(value1.X, value2.X),Math.Max(value1.Y, value2.Y));
+        }
+
+        public static <#=def.Struct#> Min(<#=def.Struct#> value1, <#=def.Struct#> value2)
+        {
+            return new(Math.Min(value1.X, value2.X),Math.Min(value1.Y, value2.Y));
+        }
+        
+        public static <#=def.Struct#> Clamp(<#=def.Struct#> value, <#=def.Struct#> min, <#=def.Struct#> max)
+        {
+            return new(Math.Clamp(value.X, min.X, max.X),Math.Clamp(value.Y, min.Y, max.Y));
+        }
+
+        public readonly bool IsInRange(<#=def.Struct#> min, <#=def.Struct#> max)
+        {
+            // min <= vector && vector <= max
+            return IsGreaterThanOrEqualAll(min) && IsLessThanOrEqualAll(max);
+        }
+
+        public readonly bool IsGreaterThanOrEqualAll(<#=def.Struct#> other)
+        {
+            return X >= other.X && Y >= other.Y;
+        }
+
+        public readonly bool IsLessThanOrEqualAll(<#=def.Struct#> other)
+        {
+            return X <= other.X && Y <= other.Y;
+        }
+        
+        public static double CrossProduct(<#=def.Struct#> v1, <#=def.Struct#> v2)
+        {
+            return v2.Y * v1.X - v2.X * v1.Y;
+        }
+
+        readonly <#=def.Struct#> IVector<<#=def.Struct#>>.Add(<#=def.Struct#> value)
+        {
+            return this + value;
+        }
+
+        readonly <#=def.Struct#> IVector<<#=def.Struct#>>.Substract(<#=def.Struct#> value)
+        {
+            return this - value;
+        }
+
+        readonly <#=def.Struct#> IVector<<#=def.Struct#>>.Min(<#=def.Struct#> other)
+        {
+            return Min(this, other);
+        }
+
+        readonly <#=def.Struct#> IVector<<#=def.Struct#>>.Max(<#=def.Struct#> other)
+        {
+            return Max(this, other);
+        }
+
+<#      if (def.Struct != "Vector2FS") { #>
+        public readonly Vector2FS ToFloatS() => new ((float)X, (float)Y);
+<#      } else { #>
+        public readonly Vector2FS ToFloatS() => this;
+<#      } #>
+
+<#      if (def.Struct != "Vector2DS") { #>
+        public readonly Vector2DS ToDoubleS() => new ((double)X, (double)Y);
+<#      } else { #>
+        public readonly Vector2DS ToDoubleS() => this;
+<#      } #>
+
+        public readonly <#=def.Struct#> Rotate90()
+        {
+            return new (-Y, X);
+        }
+        
+        public readonly <#=def.Struct#> RotateM90()
+        {
+            return new (Y, -X);
+        }
+
+	}
+<#
+	}
+#>
+}

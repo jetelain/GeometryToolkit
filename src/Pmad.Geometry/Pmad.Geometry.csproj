@@ -1,0 +1,74 @@
+﻿<Project Sdk="Microsoft.NET.Sdk">
+
+  <PropertyGroup>
+    <TargetFramework>net8.0</TargetFramework>
+    <ImplicitUsings>enable</ImplicitUsings>
+    <Nullable>enable</Nullable>
+	<IsAotCompatible>true</IsAotCompatible>
+  </PropertyGroup>
+
+  <ItemGroup>
+    <None Update="Algorithms\PathFollower.tt">
+      <LastGenOutput>PathFollower.cs</LastGenOutput>
+      <Generator>TextTemplatingFileGenerator</Generator>
+    </None>
+    <None Update="Algorithms\Algorithms.tt">
+      <LastGenOutput>Algorithms.cs</LastGenOutput>
+      <Generator>TextTemplatingFileGenerator</Generator>
+    </None>
+    <None Update="Algorithms\SignedArea.tt">
+      <LastGenOutput>SignedArea.cs</LastGenOutput>
+      <Generator>TextTemplatingFileGenerator</Generator>
+    </None>
+    <None Update="Algorithms\PointInPolygon.tt">
+      <LastGenOutput>PointInPolygon.cs</LastGenOutput>
+      <Generator>TextTemplatingFileGenerator</Generator>
+    </None>
+    <None Update="Vectors2Scalar.tt">
+      <LastGenOutput>Vectors2Scalar.cs</LastGenOutput>
+      <Generator>TextTemplatingFileGenerator</Generator>
+    </None>
+    <None Update="Vectors2.tt">
+      <Generator>TextTemplatingFileGenerator</Generator>
+      <LastGenOutput>Vectors2.cs</LastGenOutput>
+    </None>
+  </ItemGroup>
+
+  <ItemGroup>
+    <Service Include="{508349b6-6b84-4df5-91f0-309beebad82d}" />
+  </ItemGroup>
+
+  <ItemGroup>
+    <Compile Update="Algorithms\Algorithms.cs">
+      <DesignTime>True</DesignTime>
+      <AutoGen>True</AutoGen>
+      <DependentUpon>Algorithms.tt</DependentUpon>
+    </Compile>
+    <Compile Update="Algorithms\PathFollower.cs">
+      <DesignTime>True</DesignTime>
+      <AutoGen>True</AutoGen>
+      <DependentUpon>PathFollower.tt</DependentUpon>
+    </Compile>
+    <Compile Update="Algorithms\PointInPolygon.cs">
+      <DesignTime>True</DesignTime>
+      <AutoGen>True</AutoGen>
+      <DependentUpon>PointInPolygon.tt</DependentUpon>
+    </Compile>
+    <Compile Update="Algorithms\SignedArea.cs">
+      <DesignTime>True</DesignTime>
+      <AutoGen>True</AutoGen>
+      <DependentUpon>SignedArea.tt</DependentUpon>
+    </Compile>
+    <Compile Update="Vectors2Scalar.cs">
+      <DependentUpon>Vectors2Scalar.tt</DependentUpon>
+      <DesignTime>True</DesignTime>
+      <AutoGen>True</AutoGen>
+    </Compile>
+    <Compile Update="Vectors2.cs">
+      <DesignTime>True</DesignTime>
+      <AutoGen>True</AutoGen>
+      <DependentUpon>Vectors2.tt</DependentUpon>
+    </Compile>
+  </ItemGroup>
+
+</Project>

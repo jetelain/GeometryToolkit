@@ -1,0 +1,245 @@
+﻿<#@ template debug="false" hostspecific="false" language="C#" #>
+<#@ assembly name="System.Core" #>
+<#@ import namespace="System.Linq" #>
+<#@ import namespace="System.Text" #>
+<#@ import namespace="System.Collections.Generic" #>
+<#@ output extension=".cs" #>
+using System.Diagnostics;
+using System.Diagnostics.CodeAnalysis;
+using System.Runtime.CompilerServices;
+using System.Runtime.Intrinsics;
+
+namespace Pmad.Geometry
+{
+<#
+
+	var definitions = new []
+	{
+		(Struct: "Vector2I", BaseVector: "Vector128", Primitive: "int",    HasFiller: true),
+		(Struct: "Vector2F", BaseVector: "Vector128", Primitive: "float",  HasFiller: true),
+		(Struct: "Vector2L", BaseVector: "Vector128", Primitive: "long",   HasFiller: false),
+		(Struct: "Vector2D", BaseVector: "Vector128", Primitive: "double", HasFiller: false)
+	};
+
+	foreach(var def in definitions)
+	{
+#>
+    [DebuggerDisplay("({X};{Y})")]
+	public partial struct <#=def.Struct#> : IEquatable<<#=def.Struct#>>, IVector2<<#=def.Primitive#>,<#=def.Struct#>>
+	{
+ <#if (def.HasFiller) {#>
+        private static readonly Vector128<int> SwapXYShuffle = Vector128.Create(1, 0, 3, 2);
+<#} else {#>
+        private static readonly Vector128<long> SwapXYShuffle = Vector128.Create(1L, 0L);
+<#}#>
+	    private <#=def.BaseVector#><<#=def.Primitive#>> vector;
+
+        public static <#=def.Struct#> Zero => default;
+        
+        public static <#=def.Struct#> One => new (<#=def.BaseVector#><<#=def.Primitive#>>.One);
+
+        public static <#=def.Struct#> UnitX => new (1, 0);
+
+        public static <#=def.Struct#> UnitY => new (0, 1);
+
+        public static <#=def.Struct#> MaxValue => new (<#=def.Primitive#>.MaxValue);
+
+        public static <#=def.Struct#> MinValue => new (<#=def.Primitive#>.MinValue);
+
+        [MethodImpl(MethodImplOptions.AggressiveInlining)]
+        public <#=def.Struct#>(<#=def.Primitive#> x, <#=def.Primitive#> y)
+        {
+<#if (def.HasFiller) {#>
+            vector = <#=def.BaseVector#>.Create(x, y, 0, 0);
+<#} else {#>
+            vector = <#=def.BaseVector#>.Create(x, y);
+<#}#>
+        }
+        
+        [MethodImpl(MethodImplOptions.AggressiveInlining)]
+        public <#=def.Struct#>(<#=def.Primitive#> value)
+        {
+            vector = <#=def.BaseVector#>.Create(value);
+        }
+        
+        [MethodImpl(MethodImplOptions.AggressiveInlining)]
+        public <#=def.Struct#>(<#=def.BaseVector#><<#=def.Primitive#>> vector)
+        {
+            this.vector = vector;
+        }
+
+        public <#=def.Primitive#> X 
+        {
+            [MethodImpl(MethodImplOptions.AggressiveInlining)]
+            readonly get => vector[0];
+
+            [MethodImpl(MethodImplOptions.AggressiveInlining)]
+            set => vector = vector.WithElement(0, value);
+        }
+
+        public <#=def.Primitive#> Y
+        {
+            [MethodImpl(MethodImplOptions.AggressiveInlining)]
+            readonly get => vector[1];
+
+            [MethodImpl(MethodImplOptions.AggressiveInlining)]
+            set => vector = vector.WithElement(1, value);
+        }
+
+        public <#=def.BaseVector#><<#=def.Primitive#>> Vector
+        {
+            [MethodImpl(MethodImplOptions.AggressiveInlining)]
+            readonly get => vector;
+
+            [MethodImpl(MethodImplOptions.AggressiveInlining)]
+            set => vector = value;
+        }
+
+        [MethodImpl(MethodImplOptions.AggressiveInlining)]
+        public static bool operator !=(<#=def.Struct#> left, <#=def.Struct#> right)
+            => left.vector != right.vector;
+        
+        [MethodImpl(MethodImplOptions.AggressiveInlining)]
+        public static bool operator ==(<#=def.Struct#> left, <#=def.Struct#> right)
+            => left.vector == right.vector;
+
+        [MethodImpl(MethodImplOptions.AggressiveInlining)]
+        public static <#=def.Struct#> operator *(<#=def.Struct#> left, <#=def.Struct#> right)
+            => new (left.vector * right.vector);
+
+        [MethodImpl(MethodImplOptions.AggressiveInlining)]
+        public static <#=def.Struct#> operator *(<#=def.Struct#> left, <#=def.Primitive#> right)
+            => new (left.vector * right);
+
+        [MethodImpl(MethodImplOptions.AggressiveInlining)]
+        public static <#=def.Struct#> operator *(<#=def.Primitive#> left, <#=def.Struct#> right)
+            => new (left * right.vector);
+
+        [MethodImpl(MethodImplOptions.AggressiveInlining)]
+        public static <#=def.Struct#> operator /(<#=def.Struct#> left, <#=def.Struct#> right)
+<#if (def.HasFiller) {#>
+            => new (left.vector / right.vector.WithElement(2, 1).WithElement(3, 1));
+<#} else {#>
+            => new (left.vector / right.vector);
+<#}#>
+
+        [MethodImpl(MethodImplOptions.AggressiveInlining)]
+        public static <#=def.Struct#> operator /(<#=def.Struct#> left, <#=def.Primitive#> right)
+            => new (left.vector / right);
+
+        [MethodImpl(MethodImplOptions.AggressiveInlining)]
+        public static <#=def.Struct#> operator +(<#=def.Struct#> left, <#=def.Struct#> right)
+            => new (left.vector + right.vector);
+
+        [MethodImpl(MethodImplOptions.AggressiveInlining)]
+        public static <#=def.Struct#> operator -(<#=def.Struct#> left, <#=def.Struct#> right)
+            => new (left.vector - right.vector);
+
+        [MethodImpl(MethodImplOptions.AggressiveInlining)]
+        public static <#=def.Struct#> operator -(<#=def.Struct#> value)
+            => new (-value.vector);
+
+        [MethodImpl(MethodImplOptions.AggressiveInlining)]
+        public readonly <#=def.Struct#> SwapXY()
+        {
+            return new(Vector128.Shuffle(vector, SwapXYShuffle));
+        }
+
+        public readonly override int GetHashCode()
+        {
+            return vector.GetHashCode();
+        }
+
+        public readonly override bool Equals([NotNullWhen(true)] object? obj)
+        {
+            if (obj is <#=def.Struct#> other)
+            {
+                return Equals(other);
+            }
+            return false;
+        }
+
+        public readonly bool Equals(<#=def.Struct#> other)
+        {
+            return vector == other.vector;
+        }
+
+        
+<#      if (def.Struct != "Vector2F" && def.Struct != "Vector2I") { #>
+        public readonly Vector2F ToFloat() => new ((float)X, (float)Y);
+<#      } #>
+
+<#      if (def.Struct != "Vector2D" && def.Struct != "Vector2L") { #>
+        public readonly Vector2D ToDouble() => new ((double)X, (double)Y);
+<#      } #>
+
+        public readonly override string ToString()
+        {
+            return FormattableString.Invariant($"({X};{Y})");
+        }
+
+        public static <#=def.Struct#> Max(<#=def.Struct#> value1, <#=def.Struct#> value2)
+        {
+            return new(<#=def.BaseVector#>.Max(value1.vector, value2.vector));
+        }
+
+        public static <#=def.Struct#> Min(<#=def.Struct#> value1, <#=def.Struct#> value2)
+        {
+            return new(<#=def.BaseVector#>.Min(value1.vector, value2.vector));
+        }
+        
+        public static <#=def.Struct#> Clamp(<#=def.Struct#> value, <#=def.Struct#> min, <#=def.Struct#> max)
+        {
+            return new(<#=def.BaseVector#>.Min(<#=def.BaseVector#>.Max(value.vector, min.vector), max.vector));
+        }
+
+        public readonly bool IsInRange(<#=def.Struct#> min, <#=def.Struct#> max)
+        {
+            // min <= vector && vector <= max
+            return <#=def.BaseVector#>.LessThanOrEqualAll(min.vector, vector) && <#=def.BaseVector#>.LessThanOrEqualAll(vector, max.vector);
+        }
+
+        public readonly bool IsGreaterThanOrEqualAll(<#=def.Struct#> other)
+        {
+            return <#=def.BaseVector#>.GreaterThanOrEqualAll(vector, other.vector);
+        }
+
+        public readonly bool IsLessThanOrEqualAll(<#=def.Struct#> other)
+        {
+            return <#=def.BaseVector#>.LessThanOrEqualAll(vector, other.vector);
+        }
+
+        readonly <#=def.Struct#> IVector<<#=def.Struct#>>.Add(<#=def.Struct#> value)
+        {
+            return this + value;
+        }
+
+        readonly <#=def.Struct#> IVector<<#=def.Struct#>>.Substract(<#=def.Struct#> value)
+        {
+            return this - value;
+        }
+
+        readonly <#=def.Struct#> IVector<<#=def.Struct#>>.Min(<#=def.Struct#> other)
+        {
+            return Min(this, other);
+        }
+
+        readonly <#=def.Struct#> IVector<<#=def.Struct#>>.Max(<#=def.Struct#> other)
+        {
+            return Max(this, other);
+        }
+
+        public readonly <#=def.Struct#> Rotate90()
+        {
+            return SwapXY() * new <#=def.Struct#>(-1, 1);
+        }
+        
+        public readonly <#=def.Struct#> RotateM90()
+        {
+            return SwapXY() * new <#=def.Struct#>(1, -1);
+        }
+	}
+<#
+	}
+#>
+}
