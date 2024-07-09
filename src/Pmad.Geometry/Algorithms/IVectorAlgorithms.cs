@@ -1,4 +1,6 @@
-﻿namespace Pmad.Geometry.Algorithms
+﻿using Clipper2Lib;
+
+namespace Pmad.Geometry.Algorithms
 {
     public interface IVectorAlgorithms<TPrimitive, TVector>
         where TPrimitive : unmanaged

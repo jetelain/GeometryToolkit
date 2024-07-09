@@ -5,6 +5,7 @@
 <#@ import namespace="System.Collections.Generic" #>
 <#@ include file="../Definitions.tt" #>
 <#@ output extension=".cs" #>
+using Clipper2Lib;
 
 namespace Pmad.Geometry.Algorithms
 {
@@ -19,7 +20,7 @@ namespace Pmad.Geometry.Algorithms
             var cnt = path.Count;
             if (cnt < 3) 
             {
-                return PointInPolygonResult.Outside;
+                return PointInPolygonResult.IsOutside;
             }
             bool result = false;
             var ip = path[0];
@@ -30,7 +31,7 @@ namespace Pmad.Geometry.Algorithms
                 {
                     if ((ipNext.X == pt.X) || (ip.Y == pt.Y && ((ipNext.X > pt.X) == (ip.X < pt.X))))
                     {
-                        return PointInPolygonResult.Boundary;
+                        return PointInPolygonResult.IsOn;
                     }
                 }
                 if ((ip.Y < pt.Y) != (ipNext.Y < pt.Y))
@@ -46,7 +47,7 @@ namespace Pmad.Geometry.Algorithms
                             var d = <#=def.Struct#>.CrossProduct(ip - pt, ipNext - pt);
                             if (d == 0) 
                             {
-                                return PointInPolygonResult.Boundary;
+                                return PointInPolygonResult.IsOn;
                             }
                             else if ((d > 0) == (ipNext.Y > ip.Y))
                             {
@@ -61,7 +62,7 @@ namespace Pmad.Geometry.Algorithms
                             var d = <#=def.Struct#>.CrossProduct(ip - pt, ipNext - pt);
                             if (d == 0) 
                             {
-                                return PointInPolygonResult.Boundary;
+                                return PointInPolygonResult.IsOn;
                             }
                             else if ((d > 0) == (ipNext.Y > ip.Y))
                             {
@@ -72,7 +73,7 @@ namespace Pmad.Geometry.Algorithms
                 }
                 ip = ipNext;
             }
-            return result ? PointInPolygonResult.Inside : PointInPolygonResult.Outside;
+            return result ? PointInPolygonResult.IsInside : PointInPolygonResult.IsOutside;
         }
 <#
 	}

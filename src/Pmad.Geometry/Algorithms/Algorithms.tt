@@ -5,6 +5,7 @@
 <#@ import namespace="System.Collections.Generic" #>
 <#@ include file="../Definitions.tt" #>
 <#@ output extension=".cs" #>
+using Clipper2Lib;
 
 namespace Pmad.Geometry.Algorithms
 {

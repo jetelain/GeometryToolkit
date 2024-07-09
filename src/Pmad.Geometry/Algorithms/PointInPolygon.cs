@@ -1,4 +1,5 @@
-﻿
+﻿using Clipper2Lib;
+
 namespace Pmad.Geometry.Algorithms
 {
 	public static class PointInPolygon
@@ -8,7 +9,7 @@ namespace Pmad.Geometry.Algorithms
             var cnt = path.Count;
             if (cnt < 3) 
             {
-                return PointInPolygonResult.Outside;
+                return PointInPolygonResult.IsOutside;
             }
             bool result = false;
             var ip = path[0];
@@ -19,7 +20,7 @@ namespace Pmad.Geometry.Algorithms
                 {
                     if ((ipNext.X == pt.X) || (ip.Y == pt.Y && ((ipNext.X > pt.X) == (ip.X < pt.X))))
                     {
-                        return PointInPolygonResult.Boundary;
+                        return PointInPolygonResult.IsOn;
                     }
                 }
                 if ((ip.Y < pt.Y) != (ipNext.Y < pt.Y))
@@ -35,7 +36,7 @@ namespace Pmad.Geometry.Algorithms
                             var d = Vector2I.CrossProduct(ip - pt, ipNext - pt);
                             if (d == 0) 
                             {
-                                return PointInPolygonResult.Boundary;
+                                return PointInPolygonResult.IsOn;
                             }
                             else if ((d > 0) == (ipNext.Y > ip.Y))
                             {
@@ -50,7 +51,7 @@ namespace Pmad.Geometry.Algorithms
                             var d = Vector2I.CrossProduct(ip - pt, ipNext - pt);
                             if (d == 0) 
                             {
-                                return PointInPolygonResult.Boundary;
+                                return PointInPolygonResult.IsOn;
                             }
                             else if ((d > 0) == (ipNext.Y > ip.Y))
                             {
@@ -61,14 +62,14 @@ namespace Pmad.Geometry.Algorithms
                 }
                 ip = ipNext;
             }
-            return result ? PointInPolygonResult.Inside : PointInPolygonResult.Outside;
+            return result ? PointInPolygonResult.IsInside : PointInPolygonResult.IsOutside;
         }
         public static PointInPolygonResult TestPointInPolygon(this IReadOnlyList<Vector2F> path, Vector2F pt)
         {
             var cnt = path.Count;
             if (cnt < 3) 
             {
-                return PointInPolygonResult.Outside;
+                return PointInPolygonResult.IsOutside;
             }
             bool result = false;
             var ip = path[0];
@@ -79,7 +80,7 @@ namespace Pmad.Geometry.Algorithms
                 {
                     if ((ipNext.X == pt.X) || (ip.Y == pt.Y && ((ipNext.X > pt.X) == (ip.X < pt.X))))
                     {
-                        return PointInPolygonResult.Boundary;
+                        return PointInPolygonResult.IsOn;
                     }
                 }
                 if ((ip.Y < pt.Y) != (ipNext.Y < pt.Y))
@@ -95,7 +96,7 @@ namespace Pmad.Geometry.Algorithms
                             var d = Vector2F.CrossProduct(ip - pt, ipNext - pt);
                             if (d == 0) 
                             {
-                                return PointInPolygonResult.Boundary;
+                                return PointInPolygonResult.IsOn;
                             }
                             else if ((d > 0) == (ipNext.Y > ip.Y))
                             {
@@ -110,7 +111,7 @@ namespace Pmad.Geometry.Algorithms
                             var d = Vector2F.CrossProduct(ip - pt, ipNext - pt);
                             if (d == 0) 
                             {
-                                return PointInPolygonResult.Boundary;
+                                return PointInPolygonResult.IsOn;
                             }
                             else if ((d > 0) == (ipNext.Y > ip.Y))
                             {
@@ -121,14 +122,14 @@ namespace Pmad.Geometry.Algorithms
                 }
                 ip = ipNext;
             }
-            return result ? PointInPolygonResult.Inside : PointInPolygonResult.Outside;
+            return result ? PointInPolygonResult.IsInside : PointInPolygonResult.IsOutside;
         }
         public static PointInPolygonResult TestPointInPolygon(this IReadOnlyList<Vector2L> path, Vector2L pt)
         {
             var cnt = path.Count;
             if (cnt < 3) 
             {
-                return PointInPolygonResult.Outside;
+                return PointInPolygonResult.IsOutside;
             }
             bool result = false;
             var ip = path[0];
@@ -139,7 +140,7 @@ namespace Pmad.Geometry.Algorithms
                 {
                     if ((ipNext.X == pt.X) || (ip.Y == pt.Y && ((ipNext.X > pt.X) == (ip.X < pt.X))))
                     {
-                        return PointInPolygonResult.Boundary;
+                        return PointInPolygonResult.IsOn;
                     }
                 }
                 if ((ip.Y < pt.Y) != (ipNext.Y < pt.Y))
@@ -155,7 +156,7 @@ namespace Pmad.Geometry.Algorithms
                             var d = Vector2L.CrossProduct(ip - pt, ipNext - pt);
                             if (d == 0) 
                             {
-                                return PointInPolygonResult.Boundary;
+                                return PointInPolygonResult.IsOn;
                             }
                             else if ((d > 0) == (ipNext.Y > ip.Y))
                             {
@@ -170,7 +171,7 @@ namespace Pmad.Geometry.Algorithms
                             var d = Vector2L.CrossProduct(ip - pt, ipNext - pt);
                             if (d == 0) 
                             {
-                                return PointInPolygonResult.Boundary;
+                                return PointInPolygonResult.IsOn;
                             }
                             else if ((d > 0) == (ipNext.Y > ip.Y))
                             {
@@ -181,14 +182,14 @@ namespace Pmad.Geometry.Algorithms
                 }
                 ip = ipNext;
             }
-            return result ? PointInPolygonResult.Inside : PointInPolygonResult.Outside;
+            return result ? PointInPolygonResult.IsInside : PointInPolygonResult.IsOutside;
         }
         public static PointInPolygonResult TestPointInPolygon(this IReadOnlyList<Vector2D> path, Vector2D pt)
         {
             var cnt = path.Count;
             if (cnt < 3) 
             {
-                return PointInPolygonResult.Outside;
+                return PointInPolygonResult.IsOutside;
             }
             bool result = false;
             var ip = path[0];
@@ -199,7 +200,7 @@ namespace Pmad.Geometry.Algorithms
                 {
                     if ((ipNext.X == pt.X) || (ip.Y == pt.Y && ((ipNext.X > pt.X) == (ip.X < pt.X))))
                     {
-                        return PointInPolygonResult.Boundary;
+                        return PointInPolygonResult.IsOn;
                     }
                 }
                 if ((ip.Y < pt.Y) != (ipNext.Y < pt.Y))
@@ -215,7 +216,7 @@ namespace Pmad.Geometry.Algorithms
                             var d = Vector2D.CrossProduct(ip - pt, ipNext - pt);
                             if (d == 0) 
                             {
-                                return PointInPolygonResult.Boundary;
+                                return PointInPolygonResult.IsOn;
                             }
                             else if ((d > 0) == (ipNext.Y > ip.Y))
                             {
@@ -230,7 +231,7 @@ namespace Pmad.Geometry.Algorithms
                             var d = Vector2D.CrossProduct(ip - pt, ipNext - pt);
                             if (d == 0) 
                             {
-                                return PointInPolygonResult.Boundary;
+                                return PointInPolygonResult.IsOn;
                             }
                             else if ((d > 0) == (ipNext.Y > ip.Y))
                             {
@@ -241,14 +242,14 @@ namespace Pmad.Geometry.Algorithms
                 }
                 ip = ipNext;
             }
-            return result ? PointInPolygonResult.Inside : PointInPolygonResult.Outside;
+            return result ? PointInPolygonResult.IsInside : PointInPolygonResult.IsOutside;
         }
         public static PointInPolygonResult TestPointInPolygon(this IReadOnlyList<Vector2IS> path, Vector2IS pt)
         {
             var cnt = path.Count;
             if (cnt < 3) 
             {
-                return PointInPolygonResult.Outside;
+                return PointInPolygonResult.IsOutside;
             }
             bool result = false;
             var ip = path[0];
@@ -259,7 +260,7 @@ namespace Pmad.Geometry.Algorithms
                 {
                     if ((ipNext.X == pt.X) || (ip.Y == pt.Y && ((ipNext.X > pt.X) == (ip.X < pt.X))))
                     {
-                        return PointInPolygonResult.Boundary;
+                        return PointInPolygonResult.IsOn;
                     }
                 }
                 if ((ip.Y < pt.Y) != (ipNext.Y < pt.Y))
@@ -275,7 +276,7 @@ namespace Pmad.Geometry.Algorithms
                             var d = Vector2IS.CrossProduct(ip - pt, ipNext - pt);
                             if (d == 0) 
                             {
-                                return PointInPolygonResult.Boundary;
+                                return PointInPolygonResult.IsOn;
                             }
                             else if ((d > 0) == (ipNext.Y > ip.Y))
                             {
@@ -290,7 +291,7 @@ namespace Pmad.Geometry.Algorithms
                             var d = Vector2IS.CrossProduct(ip - pt, ipNext - pt);
                             if (d == 0) 
                             {
-                                return PointInPolygonResult.Boundary;
+                                return PointInPolygonResult.IsOn;
                             }
                             else if ((d > 0) == (ipNext.Y > ip.Y))
                             {
@@ -301,14 +302,14 @@ namespace Pmad.Geometry.Algorithms
                 }
                 ip = ipNext;
             }
-            return result ? PointInPolygonResult.Inside : PointInPolygonResult.Outside;
+            return result ? PointInPolygonResult.IsInside : PointInPolygonResult.IsOutside;
         }
         public static PointInPolygonResult TestPointInPolygon(this IReadOnlyList<Vector2FS> path, Vector2FS pt)
         {
             var cnt = path.Count;
             if (cnt < 3) 
             {
-                return PointInPolygonResult.Outside;
+                return PointInPolygonResult.IsOutside;
             }
             bool result = false;
             var ip = path[0];
@@ -319,7 +320,7 @@ namespace Pmad.Geometry.Algorithms
                 {
                     if ((ipNext.X == pt.X) || (ip.Y == pt.Y && ((ipNext.X > pt.X) == (ip.X < pt.X))))
                     {
-                        return PointInPolygonResult.Boundary;
+                        return PointInPolygonResult.IsOn;
                     }
                 }
                 if ((ip.Y < pt.Y) != (ipNext.Y < pt.Y))
@@ -335,7 +336,7 @@ namespace Pmad.Geometry.Algorithms
                             var d = Vector2FS.CrossProduct(ip - pt, ipNext - pt);
                             if (d == 0) 
                             {
-                                return PointInPolygonResult.Boundary;
+                                return PointInPolygonResult.IsOn;
                             }
                             else if ((d > 0) == (ipNext.Y > ip.Y))
                             {
@@ -350,7 +351,7 @@ namespace Pmad.Geometry.Algorithms
                             var d = Vector2FS.CrossProduct(ip - pt, ipNext - pt);
                             if (d == 0) 
                             {
-                                return PointInPolygonResult.Boundary;
+                                return PointInPolygonResult.IsOn;
                             }
                             else if ((d > 0) == (ipNext.Y > ip.Y))
                             {
@@ -361,14 +362,14 @@ namespace Pmad.Geometry.Algorithms
                 }
                 ip = ipNext;
             }
-            return result ? PointInPolygonResult.Inside : PointInPolygonResult.Outside;
+            return result ? PointInPolygonResult.IsInside : PointInPolygonResult.IsOutside;
         }
         public static PointInPolygonResult TestPointInPolygon(this IReadOnlyList<Vector2LS> path, Vector2LS pt)
         {
             var cnt = path.Count;
             if (cnt < 3) 
             {
-                return PointInPolygonResult.Outside;
+                return PointInPolygonResult.IsOutside;
             }
             bool result = false;
             var ip = path[0];
@@ -379,7 +380,7 @@ namespace Pmad.Geometry.Algorithms
                 {
                     if ((ipNext.X == pt.X) || (ip.Y == pt.Y && ((ipNext.X > pt.X) == (ip.X < pt.X))))
                     {
-                        return PointInPolygonResult.Boundary;
+                        return PointInPolygonResult.IsOn;
                     }
                 }
                 if ((ip.Y < pt.Y) != (ipNext.Y < pt.Y))
@@ -395,7 +396,7 @@ namespace Pmad.Geometry.Algorithms
                             var d = Vector2LS.CrossProduct(ip - pt, ipNext - pt);
                             if (d == 0) 
                             {
-                                return PointInPolygonResult.Boundary;
+                                return PointInPolygonResult.IsOn;
                             }
                             else if ((d > 0) == (ipNext.Y > ip.Y))
                             {
@@ -410,7 +411,7 @@ namespace Pmad.Geometry.Algorithms
                             var d = Vector2LS.CrossProduct(ip - pt, ipNext - pt);
                             if (d == 0) 
                             {
-                                return PointInPolygonResult.Boundary;
+                                return PointInPolygonResult.IsOn;
                             }
                             else if ((d > 0) == (ipNext.Y > ip.Y))
                             {
@@ -421,14 +422,14 @@ namespace Pmad.Geometry.Algorithms
                 }
                 ip = ipNext;
             }
-            return result ? PointInPolygonResult.Inside : PointInPolygonResult.Outside;
+            return result ? PointInPolygonResult.IsInside : PointInPolygonResult.IsOutside;
         }
         public static PointInPolygonResult TestPointInPolygon(this IReadOnlyList<Vector2DS> path, Vector2DS pt)
         {
             var cnt = path.Count;
             if (cnt < 3) 
             {
-                return PointInPolygonResult.Outside;
+                return PointInPolygonResult.IsOutside;
             }
             bool result = false;
             var ip = path[0];
@@ -439,7 +440,7 @@ namespace Pmad.Geometry.Algorithms
                 {
                     if ((ipNext.X == pt.X) || (ip.Y == pt.Y && ((ipNext.X > pt.X) == (ip.X < pt.X))))
                     {
-                        return PointInPolygonResult.Boundary;
+                        return PointInPolygonResult.IsOn;
                     }
                 }
                 if ((ip.Y < pt.Y) != (ipNext.Y < pt.Y))
@@ -455,7 +456,7 @@ namespace Pmad.Geometry.Algorithms
                             var d = Vector2DS.CrossProduct(ip - pt, ipNext - pt);
                             if (d == 0) 
                             {
-                                return PointInPolygonResult.Boundary;
+                                return PointInPolygonResult.IsOn;
                             }
                             else if ((d > 0) == (ipNext.Y > ip.Y))
                             {
@@ -470,7 +471,7 @@ namespace Pmad.Geometry.Algorithms
                             var d = Vector2DS.CrossProduct(ip - pt, ipNext - pt);
                             if (d == 0) 
                             {
-                                return PointInPolygonResult.Boundary;
+                                return PointInPolygonResult.IsOn;
                             }
                             else if ((d > 0) == (ipNext.Y > ip.Y))
                             {
@@ -481,14 +482,14 @@ namespace Pmad.Geometry.Algorithms
                 }
                 ip = ipNext;
             }
-            return result ? PointInPolygonResult.Inside : PointInPolygonResult.Outside;
+            return result ? PointInPolygonResult.IsInside : PointInPolygonResult.IsOutside;
         }
         public static PointInPolygonResult TestPointInPolygon(this IReadOnlyList<Vector2FN> path, Vector2FN pt)
         {
             var cnt = path.Count;
             if (cnt < 3) 
             {
-                return PointInPolygonResult.Outside;
+                return PointInPolygonResult.IsOutside;
             }
             bool result = false;
             var ip = path[0];
@@ -499,7 +500,7 @@ namespace Pmad.Geometry.Algorithms
                 {
                     if ((ipNext.X == pt.X) || (ip.Y == pt.Y && ((ipNext.X > pt.X) == (ip.X < pt.X))))
                     {
-                        return PointInPolygonResult.Boundary;
+                        return PointInPolygonResult.IsOn;
                     }
                 }
                 if ((ip.Y < pt.Y) != (ipNext.Y < pt.Y))
@@ -515,7 +516,7 @@ namespace Pmad.Geometry.Algorithms
                             var d = Vector2FN.CrossProduct(ip - pt, ipNext - pt);
                             if (d == 0) 
                             {
-                                return PointInPolygonResult.Boundary;
+                                return PointInPolygonResult.IsOn;
                             }
                             else if ((d > 0) == (ipNext.Y > ip.Y))
                             {
@@ -530,7 +531,7 @@ namespace Pmad.Geometry.Algorithms
                             var d = Vector2FN.CrossProduct(ip - pt, ipNext - pt);
                             if (d == 0) 
                             {
-                                return PointInPolygonResult.Boundary;
+                                return PointInPolygonResult.IsOn;
                             }
                             else if ((d > 0) == (ipNext.Y > ip.Y))
                             {
@@ -541,7 +542,7 @@ namespace Pmad.Geometry.Algorithms
                 }
                 ip = ipNext;
             }
-            return result ? PointInPolygonResult.Inside : PointInPolygonResult.Outside;
+            return result ? PointInPolygonResult.IsInside : PointInPolygonResult.IsOutside;
         }
 	}
 }

@@ -1,4 +1,5 @@
-﻿
+﻿using Clipper2Lib;
+
 namespace Pmad.Geometry.Algorithms
 {
 	public sealed class Vector2IAlgorithms : IVectorAlgorithms<int,Vector2I>

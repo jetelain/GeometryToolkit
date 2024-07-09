@@ -1,6 +1,5 @@
 ﻿using Clipper2Lib;
 using Pmad.Geometry.Algorithms;
-using PointInPolygonResult = Pmad.Geometry.Algorithms.PointInPolygonResult;
 
 namespace Pmad.Geometry.Shapes
 {

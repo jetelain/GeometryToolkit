@@ -1,6 +1,5 @@
 ﻿using Clipper2Lib;
 using Pmad.Geometry.Algorithms;
-using PointInPolygonResult = Pmad.Geometry.Algorithms.PointInPolygonResult;
 
 namespace Pmad.Geometry.Shapes
 {
@@ -203,36 +202,36 @@ namespace Pmad.Geometry.Shapes
         {
             if (!Bounds.Contains(vector))
             {
-                return PointInPolygonResult.Outside;
+                return PointInPolygonResult.IsOutside;
             }
             var result = Convention.Algorithms.TestPointInPolygon(Shell, vector);
-            if (result != PointInPolygonResult.Inside)
+            if (result != PointInPolygonResult.IsInside)
             {
                 return result;
             }
             foreach (var hole in Holes)
             {
                 result = Convention.Algorithms.TestPointInPolygon(hole, vector);
-                if (result == PointInPolygonResult.Inside)
+                if (result == PointInPolygonResult.IsInside)
                 {
-                    return PointInPolygonResult.Outside;
+                    return PointInPolygonResult.IsOutside;
                 }
-                else if (result == PointInPolygonResult.Boundary)
+                else if (result == PointInPolygonResult.IsOn)
                 {
-                    return PointInPolygonResult.Boundary;
+                    return PointInPolygonResult.IsOn;
                 }
             }
-            return PointInPolygonResult.Inside;
+            return PointInPolygonResult.IsInside;
         }
         
         public bool IsInside(TVector vector)
         {
-            return TestPointInPolygon(vector) == PointInPolygonResult.Inside;
+            return TestPointInPolygon(vector) == PointInPolygonResult.IsInside;
         }
 
         public bool IsInsideOrOnBoundary(TVector vector)
         {
-            return TestPointInPolygon(vector) != PointInPolygonResult.Outside;
+            return TestPointInPolygon(vector) != PointInPolygonResult.IsOutside;
         }
     }
 }
