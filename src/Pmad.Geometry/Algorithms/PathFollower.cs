@@ -529,4 +529,136 @@ namespace Pmad.Geometry.Algorithms
             return true;
         }
     }
+    public sealed class PathFollowerVector2FN : IPathFollower<float, Vector2FN>
+    {
+        private readonly IEnumerator<Vector2FN> enumerator;
+        private Vector2FN previousPoint;
+        private Vector2FN point;
+        private Vector2FN previousPosition;
+        private Vector2FN position;
+        private Vector2FN delta;
+        private float length;
+        private float positionOnSegment;
+        private bool hasReachedEnd;
+        private int index;
+
+        public PathFollowerVector2FN(IEnumerable<Vector2FN> points, bool keepRightAngles = false)
+        {
+            enumerator = points.GetEnumerator();
+            index = 0;
+            KeepRightAngles = keepRightAngles;
+            Init();
+        }
+
+        public void Reset()
+        {
+            enumerator.Reset();
+            index = 0;
+            Init();
+        }
+
+        private void Init()
+        {
+            IsAfterRightAngle = false;
+            previousPosition = default;
+            length = default;
+            positionOnSegment = default;
+            previousPoint = default;
+            if (enumerator.MoveNext())
+            {
+                position = point = enumerator.Current;
+                delta = default;
+                hasReachedEnd = false;
+                MoveNextPoint();
+            }
+            else
+            {
+                hasReachedEnd = true;
+            }
+        }
+
+        private bool MoveNextPoint()
+        {
+            previousPoint = point;
+            if (!enumerator.MoveNext())
+            {
+                point = default;
+                length = default;
+                positionOnSegment = default;
+                return false;
+            }
+            index++;
+            point = enumerator.Current;
+            delta = point - previousPoint;
+            length = delta.Length();
+            positionOnSegment = default;
+            return true;
+        }
+
+        public Vector2FN Current => position;
+
+        public Vector2FN Previous => previousPosition;
+
+        public Vector2FN Vector => Vector2FN.Normalize(delta);
+
+        public bool KeepRightAngles { get; }
+
+        public bool IsAfterRightAngle { get; private set; }
+
+        public bool IsLast => hasReachedEnd;
+
+        public bool IsFirst => index <= 1;
+
+        /// <summary>
+        /// Index in original list
+        /// </summary>
+        public int Index => index;
+
+        public bool Move(float step)
+        {
+            if (IsAfterRightAngle)
+            {
+                index++;
+            }
+            IsAfterRightAngle = false;
+            if (hasReachedEnd)
+            {
+                return false;
+            }
+            var remainLength = step;
+            while (remainLength + positionOnSegment > length)
+            {
+                remainLength -= length - positionOnSegment;
+                var previousDelta = delta;
+                if (!MoveNextPoint())
+                {
+                    hasReachedEnd = true;
+                    if (position != previousPoint)
+                    {
+                        previousPosition = position;
+                        position = previousPoint;
+                        return true;
+                    }
+                    return false;
+                }
+                if (KeepRightAngles)
+                {
+                    var angle = Math.Abs(Math.Abs(Math.Acos(Vector2FN.Dot(Vector2FN.Normalize(delta), Vector2FN.Normalize(previousDelta)))) - (Math.PI / 2));
+                    if (angle < 0.1d && position != previousPoint)
+                    {
+                        index--;
+                        previousPosition = position;
+                        position = previousPoint;
+                        positionOnSegment = 0;
+                        IsAfterRightAngle = true;
+                        return true;
+                    }
+                }
+            }
+            positionOnSegment += remainLength;
+            previousPosition = position;
+            position = Vector2FN.Lerp(previousPoint, point, positionOnSegment / length);
+            return true;
+        }
+    }
 }

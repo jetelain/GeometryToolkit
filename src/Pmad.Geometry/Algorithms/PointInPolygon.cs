@@ -483,5 +483,65 @@ namespace Pmad.Geometry.Algorithms
             }
             return result ? PointInPolygonResult.Inside : PointInPolygonResult.Outside;
         }
+        public static PointInPolygonResult TestPointInPolygon(this IReadOnlyList<Vector2FN> path, Vector2FN pt)
+        {
+            var cnt = path.Count;
+            if (cnt < 3) 
+            {
+                return PointInPolygonResult.Outside;
+            }
+            bool result = false;
+            var ip = path[0];
+            for (int i = 1; i <= cnt; ++i)
+            {
+                var ipNext = (i == cnt ? path[0] : path[i]);
+                if (ipNext.Y == pt.Y)
+                {
+                    if ((ipNext.X == pt.X) || (ip.Y == pt.Y && ((ipNext.X > pt.X) == (ip.X < pt.X))))
+                    {
+                        return PointInPolygonResult.Boundary;
+                    }
+                }
+                if ((ip.Y < pt.Y) != (ipNext.Y < pt.Y))
+                {
+                    if (ip.X >= pt.X)
+                    {
+                        if (ipNext.X > pt.X) 
+                        {
+                            result = !result;
+                        }
+                        else
+                        {
+                            var d = Vector2FN.CrossProduct(ip - pt, ipNext - pt);
+                            if (d == 0) 
+                            {
+                                return PointInPolygonResult.Boundary;
+                            }
+                            else if ((d > 0) == (ipNext.Y > ip.Y))
+                            {
+                                result = !result;
+                            }
+                        }
+                    }
+                    else
+                    {
+                        if (ipNext.X > pt.X)
+                        {
+                            var d = Vector2FN.CrossProduct(ip - pt, ipNext - pt);
+                            if (d == 0) 
+                            {
+                                return PointInPolygonResult.Boundary;
+                            }
+                            else if ((d > 0) == (ipNext.Y > ip.Y))
+                            {
+                                result = !result;
+                            }
+                        }
+                    }
+                }
+                ip = ipNext;
+            }
+            return result ? PointInPolygonResult.Inside : PointInPolygonResult.Outside;
+        }
 	}
 }

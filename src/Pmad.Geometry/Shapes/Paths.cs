@@ -154,4 +154,23 @@ namespace Pmad.Geometry.Shapes
 
 		protected override Path2DS This => this;
     }
+    public sealed class Path2FN : PathBase<float, Vector2FN, Polygon2FN, Path2FN, Vector2FNAlgorithms, Vector2FNConvention>
+    {
+		public Path2FN(IReadOnlyList<Vector2FN> points)
+            : this(new(), points)
+        {
+        }
+		
+		public Path2FN(Vector2FNConvention convention, IReadOnlyList<Vector2FN> points)
+            : base(convention, points)
+        {
+        }
+
+        protected override Path2FN CreatePath(IReadOnlyList<Vector2FN> points)
+		{
+			return new (Convention, points);
+		}
+
+		protected override Path2FN This => this;
+    }
 }

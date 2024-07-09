@@ -259,4 +259,40 @@ namespace Pmad.Geometry.Shapes
 			return Polygon2DS.FromClipper(this, polyTree64);
 		}
     }
+    public sealed class Vector2FNConvention : Vector2ConventionBase<float, Vector2FN, Polygon2FN, Vector2FNAlgorithms, Vector2FNConvention>
+    {
+        private readonly float scale;
+
+        public Vector2FNConvention(float scale = 1000)
+        {
+            this.scale = scale;
+        }
+
+        public override Vector2FN FromClipper(Point64 value)
+        {
+            return new Vector2FN(value.X, value.Y) / scale;
+        }
+
+        public override Point64 ToClipper(Vector2FN value)
+        {
+            var scaled = value * scale;
+            return new (scaled.X, scaled.Y);
+        }
+        
+        public override double ScaleForClipper => scale;
+		public override Polygon2FN CreatePolygon(IReadOnlyList<Vector2FN> shell, IReadOnlyList<IReadOnlyList<Vector2FN>> holes)
+		{
+			return new (this, shell, holes);
+		}
+		
+		public override Polygon2FN CreatePolygon(IReadOnlyList<Vector2FN> shell)
+		{
+			return new (this, shell);
+		}
+
+        internal override IEnumerable<Polygon2FN> FromClipper(PolyPath64 polyTree64)
+		{
+			return Polygon2FN.FromClipper(this, polyTree64);
+		}
+    }
 }

@@ -131,5 +131,21 @@ namespace Pmad.Geometry.Algorithms
             }
             return area / 2;
         }
+        public static float GetSignedArea(this IReadOnlyList<Vector2FN> points)
+        {
+            if (points.Count < 3)
+            {
+                return 0;
+            }
+            var v1 = points[points.Count-1];
+            float area = 0;
+            for (var i = 0; i < points.Count; i++)
+            {
+                var v2 = points[i];
+                area += Vector2FN.CrossProduct(v1, v2);
+                v1 = v2;
+            }
+            return area / 2;
+        }
 	}
 }

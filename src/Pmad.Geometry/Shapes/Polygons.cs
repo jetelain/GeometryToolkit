@@ -194,4 +194,28 @@ namespace Pmad.Geometry.Shapes
 
 		protected override Polygon2DS This => this;
     }
+    public sealed class Polygon2FN : PolygonBase<float, Vector2FN, Polygon2FN, Vector2FNAlgorithms, Vector2FNConvention>
+    {
+		public Polygon2FN(IReadOnlyList<Vector2FN> shell, IReadOnlyList<IReadOnlyList<Vector2FN>> holes)
+            : this(new(), shell, holes)
+        {
+        }
+		
+		public Polygon2FN(Vector2FNConvention convention, IReadOnlyList<Vector2FN> shell, IReadOnlyList<IReadOnlyList<Vector2FN>> holes)
+            : base(convention, shell, holes)
+        {
+        }
+
+		public Polygon2FN(Vector2FNConvention convention, IReadOnlyList<Vector2FN> shell)
+            : base(convention, shell, NoHoles)
+        {
+        }
+
+		protected override Polygon2FN CreatePolygon(IReadOnlyList<Vector2FN> shell, IReadOnlyList<IReadOnlyList<Vector2FN>> holes)
+		{
+			return new (Convention, shell, holes);
+		}
+
+		protected override Polygon2FN This => this;
+    }
 }

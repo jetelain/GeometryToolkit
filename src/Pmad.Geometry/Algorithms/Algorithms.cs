@@ -121,4 +121,21 @@ namespace Pmad.Geometry.Algorithms
 		public Vector2DS Create(int x, int y) => new (x, y);
 	}
 
+	public sealed class Vector2FNAlgorithms : IVectorFPAlgorithms<float,Vector2FN>
+	{
+		public PointInPolygonResult TestPointInPolygon(IReadOnlyList<Vector2FN> points, Vector2FN point) => points.TestPointInPolygon(point);
+		
+		public double GetSignedAreaD(IReadOnlyList<Vector2FN> points) => points.GetSignedArea();
+
+		public float GetSignedAreaF(IReadOnlyList<Vector2FN> points) => (float)points.GetSignedArea();
+
+		public IPathFollower<float,Vector2FN> CreateFollower(IEnumerable<Vector2FN> points) => new PathFollowerVector2FN(points);
+
+		public Vector2FN Create(float x, float y) => new (x, y);
+
+		public Vector2FN Create(int x, int y) => new (x, y);
+
+		public Vector2FN Create(double x, double y) => new ((float)x, (float)y);
+	}
+
 }
