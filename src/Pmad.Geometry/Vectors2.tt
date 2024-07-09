@@ -3,6 +3,7 @@
 <#@ import namespace="System.Linq" #>
 <#@ import namespace="System.Text" #>
 <#@ import namespace="System.Collections.Generic" #>
+<#@ include file="Definitions.tt" #>
 <#@ output extension=".cs" #>
 using System.Diagnostics;
 using System.Diagnostics.CodeAnalysis;
@@ -12,16 +13,7 @@ using System.Runtime.Intrinsics;
 namespace Pmad.Geometry
 {
 <#
-
-	var definitions = new []
-	{
-		(Struct: "Vector2I", BaseVector: "Vector128", Primitive: "int",    HasFiller: true),
-		(Struct: "Vector2F", BaseVector: "Vector128", Primitive: "float",  HasFiller: true),
-		(Struct: "Vector2L", BaseVector: "Vector128", Primitive: "long",   HasFiller: false),
-		(Struct: "Vector2D", BaseVector: "Vector128", Primitive: "double", HasFiller: false)
-	};
-
-	foreach(var def in definitions)
+	foreach(var def in definitions.Where(d => d.BaseVector == "Vector128"))
 	{
 #>
     [DebuggerDisplay("({X};{Y})")]

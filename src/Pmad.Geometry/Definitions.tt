@@ -3,15 +3,15 @@
 <#@ import namespace="System.Text" #>
 <#@ import namespace="System.Collections.Generic" #>
 <#
-	var definitions = new []
-	{
-        (Struct: "Vector2I",  Suffix: "2I",  Primitive: "int",    ResultType: "double", IsFP: false),
-		(Struct: "Vector2F",  Suffix: "2F",  Primitive: "float" , ResultType: "float" , IsFP: true),
-		(Struct: "Vector2L",  Suffix: "2L",  Primitive: "long",   ResultType: "double", IsFP: false),
-		(Struct: "Vector2D",  Suffix: "2D",  Primitive: "double", ResultType: "double", IsFP: true),
-        (Struct: "Vector2IS", Suffix: "2IS", Primitive: "int",    ResultType: "double", IsFP: false),
-		(Struct: "Vector2FS", Suffix: "2FS", Primitive: "float",  ResultType: "double", IsFP: true),
-		(Struct: "Vector2LS", Suffix: "2LS", Primitive: "long",   ResultType: "double", IsFP: false),
-		(Struct: "Vector2DS", Suffix: "2DS", Primitive: "double", ResultType: "double", IsFP: true)
-	};
+    var definitions = new []
+    {
+        (Struct: "Vector2I",  Suffix: "2I",  BaseVector: "Vector128", Primitive: "int",    ResultType: "double", HasFiller: true,  IsFP: false),
+        (Struct: "Vector2F",  Suffix: "2F",  BaseVector: "Vector128", Primitive: "float" , ResultType: "float" , HasFiller: true,  IsFP: true ),
+        (Struct: "Vector2L",  Suffix: "2L",  BaseVector: "Vector128", Primitive: "long",   ResultType: "double", HasFiller: false, IsFP: false),
+        (Struct: "Vector2D",  Suffix: "2D",  BaseVector: "Vector128", Primitive: "double", ResultType: "double", HasFiller: false, IsFP: true ),
+        (Struct: "Vector2IS", Suffix: "2IS", BaseVector: null,        Primitive: "int",    ResultType: "double", HasFiller: false, IsFP: false),
+        (Struct: "Vector2FS", Suffix: "2FS", BaseVector: null,        Primitive: "float",  ResultType: "double", HasFiller: false, IsFP: true ),
+        (Struct: "Vector2LS", Suffix: "2LS", BaseVector: null,        Primitive: "long",   ResultType: "double", HasFiller: false, IsFP: false),
+        (Struct: "Vector2DS", Suffix: "2DS", BaseVector: null,        Primitive: "double", ResultType: "double", HasFiller: false, IsFP: true )
+    };
 #>
