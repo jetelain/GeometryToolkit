@@ -196,21 +196,25 @@ namespace Pmad.Geometry
             return X <= other.X && Y <= other.Y;
         }
 
+        [MethodImpl(MethodImplOptions.AggressiveInlining)]
         readonly Vector2FN IVector<Vector2FN>.Add(Vector2FN value)
         {
             return this + value;
         }
 
+        [MethodImpl(MethodImplOptions.AggressiveInlining)]
         readonly Vector2FN IVector<Vector2FN>.Substract(Vector2FN value)
         {
             return this - value;
         }
 
+        [MethodImpl(MethodImplOptions.AggressiveInlining)]
         readonly Vector2FN IVector<Vector2FN>.Min(Vector2FN other)
         {
             return Min(this, other);
         }
 
+        [MethodImpl(MethodImplOptions.AggressiveInlining)]
         readonly Vector2FN IVector<Vector2FN>.Max(Vector2FN other)
         {
             return Max(this, other);

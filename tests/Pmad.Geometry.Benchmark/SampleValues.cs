@@ -10,7 +10,6 @@
         public static List<Vector2FS> RandomList2FS = RandomList2I.Select(p => new Vector2FS(p.X, p.Y)).ToList();
         public static List<Vector2DS> RandomList2DS = RandomList2I.Select(p => new Vector2DS(p.X, p.Y)).ToList();
         public static List<Vector2LS> RandomList2LS = RandomList2I.Select(p => new Vector2LS(p.X, p.Y)).ToList();
-
-
+        public static List<Vector2FN> RandomList2FN = RandomList2I.Select(p => new Vector2FN(p.X, p.Y)).ToList();
     }
 }

@@ -17,9 +17,6 @@ namespace Pmad.Geometry.Benchmark
         [Benchmark]
         public Vector2L SumVector2L() => SampleValues.RandomList2L.Sum();
 
-        //[Benchmark]
-        //public Vector2 SumVector2() => SampleValues.RandomList2.Sum();
-
         [Benchmark]
         public Vector2DS SumVector2DS() => SampleValues.RandomList2DS.Sum();
 
@@ -32,5 +29,7 @@ namespace Pmad.Geometry.Benchmark
         [Benchmark]
         public Vector2LS SumVector2LS() => SampleValues.RandomList2LS.Sum();
 
+        [Benchmark]
+        public Vector2FN SumVector2FN() => SampleValues.RandomList2FN.Sum();
     }
 }

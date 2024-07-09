@@ -170,11 +170,13 @@ namespace Pmad.Geometry
             return FormattableString.Invariant($"({X};{Y})");
         }
 
+        [MethodImpl(MethodImplOptions.AggressiveInlining)]
         public static <#=def.Struct#> Max(<#=def.Struct#> value1, <#=def.Struct#> value2)
         {
             return new(<#=def.BaseVector#>.Max(value1.vector, value2.vector));
         }
 
+        [MethodImpl(MethodImplOptions.AggressiveInlining)]
         public static <#=def.Struct#> Min(<#=def.Struct#> value1, <#=def.Struct#> value2)
         {
             return new(<#=def.BaseVector#>.Min(value1.vector, value2.vector));
@@ -191,31 +193,37 @@ namespace Pmad.Geometry
             return <#=def.BaseVector#>.LessThanOrEqualAll(min.vector, vector) && <#=def.BaseVector#>.LessThanOrEqualAll(vector, max.vector);
         }
 
+        [MethodImpl(MethodImplOptions.AggressiveInlining)]
         public readonly bool IsGreaterThanOrEqualAll(<#=def.Struct#> other)
         {
             return <#=def.BaseVector#>.GreaterThanOrEqualAll(vector, other.vector);
         }
 
+        [MethodImpl(MethodImplOptions.AggressiveInlining)]
         public readonly bool IsLessThanOrEqualAll(<#=def.Struct#> other)
         {
             return <#=def.BaseVector#>.LessThanOrEqualAll(vector, other.vector);
         }
 
+        [MethodImpl(MethodImplOptions.AggressiveInlining)]
         readonly <#=def.Struct#> IVector<<#=def.Struct#>>.Add(<#=def.Struct#> value)
         {
             return this + value;
         }
 
+        [MethodImpl(MethodImplOptions.AggressiveInlining)]
         readonly <#=def.Struct#> IVector<<#=def.Struct#>>.Substract(<#=def.Struct#> value)
         {
             return this - value;
         }
 
+        [MethodImpl(MethodImplOptions.AggressiveInlining)]
         readonly <#=def.Struct#> IVector<<#=def.Struct#>>.Min(<#=def.Struct#> other)
         {
             return Min(this, other);
         }
 
+        [MethodImpl(MethodImplOptions.AggressiveInlining)]
         readonly <#=def.Struct#> IVector<<#=def.Struct#>>.Max(<#=def.Struct#> other)
         {
             return Max(this, other);

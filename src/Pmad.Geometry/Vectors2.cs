@@ -142,11 +142,13 @@ namespace Pmad.Geometry
             return FormattableString.Invariant($"({X};{Y})");
         }
 
+        [MethodImpl(MethodImplOptions.AggressiveInlining)]
         public static Vector2I Max(Vector2I value1, Vector2I value2)
         {
             return new(Vector128.Max(value1.vector, value2.vector));
         }
 
+        [MethodImpl(MethodImplOptions.AggressiveInlining)]
         public static Vector2I Min(Vector2I value1, Vector2I value2)
         {
             return new(Vector128.Min(value1.vector, value2.vector));
@@ -163,31 +165,37 @@ namespace Pmad.Geometry
             return Vector128.LessThanOrEqualAll(min.vector, vector) && Vector128.LessThanOrEqualAll(vector, max.vector);
         }
 
+        [MethodImpl(MethodImplOptions.AggressiveInlining)]
         public readonly bool IsGreaterThanOrEqualAll(Vector2I other)
         {
             return Vector128.GreaterThanOrEqualAll(vector, other.vector);
         }
 
+        [MethodImpl(MethodImplOptions.AggressiveInlining)]
         public readonly bool IsLessThanOrEqualAll(Vector2I other)
         {
             return Vector128.LessThanOrEqualAll(vector, other.vector);
         }
 
+        [MethodImpl(MethodImplOptions.AggressiveInlining)]
         readonly Vector2I IVector<Vector2I>.Add(Vector2I value)
         {
             return this + value;
         }
 
+        [MethodImpl(MethodImplOptions.AggressiveInlining)]
         readonly Vector2I IVector<Vector2I>.Substract(Vector2I value)
         {
             return this - value;
         }
 
+        [MethodImpl(MethodImplOptions.AggressiveInlining)]
         readonly Vector2I IVector<Vector2I>.Min(Vector2I other)
         {
             return Min(this, other);
         }
 
+        [MethodImpl(MethodImplOptions.AggressiveInlining)]
         readonly Vector2I IVector<Vector2I>.Max(Vector2I other)
         {
             return Max(this, other);
@@ -340,11 +348,13 @@ namespace Pmad.Geometry
             return FormattableString.Invariant($"({X};{Y})");
         }
 
+        [MethodImpl(MethodImplOptions.AggressiveInlining)]
         public static Vector2F Max(Vector2F value1, Vector2F value2)
         {
             return new(Vector128.Max(value1.vector, value2.vector));
         }
 
+        [MethodImpl(MethodImplOptions.AggressiveInlining)]
         public static Vector2F Min(Vector2F value1, Vector2F value2)
         {
             return new(Vector128.Min(value1.vector, value2.vector));
@@ -361,31 +371,37 @@ namespace Pmad.Geometry
             return Vector128.LessThanOrEqualAll(min.vector, vector) && Vector128.LessThanOrEqualAll(vector, max.vector);
         }
 
+        [MethodImpl(MethodImplOptions.AggressiveInlining)]
         public readonly bool IsGreaterThanOrEqualAll(Vector2F other)
         {
             return Vector128.GreaterThanOrEqualAll(vector, other.vector);
         }
 
+        [MethodImpl(MethodImplOptions.AggressiveInlining)]
         public readonly bool IsLessThanOrEqualAll(Vector2F other)
         {
             return Vector128.LessThanOrEqualAll(vector, other.vector);
         }
 
+        [MethodImpl(MethodImplOptions.AggressiveInlining)]
         readonly Vector2F IVector<Vector2F>.Add(Vector2F value)
         {
             return this + value;
         }
 
+        [MethodImpl(MethodImplOptions.AggressiveInlining)]
         readonly Vector2F IVector<Vector2F>.Substract(Vector2F value)
         {
             return this - value;
         }
 
+        [MethodImpl(MethodImplOptions.AggressiveInlining)]
         readonly Vector2F IVector<Vector2F>.Min(Vector2F other)
         {
             return Min(this, other);
         }
 
+        [MethodImpl(MethodImplOptions.AggressiveInlining)]
         readonly Vector2F IVector<Vector2F>.Max(Vector2F other)
         {
             return Max(this, other);
@@ -538,11 +554,13 @@ namespace Pmad.Geometry
             return FormattableString.Invariant($"({X};{Y})");
         }
 
+        [MethodImpl(MethodImplOptions.AggressiveInlining)]
         public static Vector2L Max(Vector2L value1, Vector2L value2)
         {
             return new(Vector128.Max(value1.vector, value2.vector));
         }
 
+        [MethodImpl(MethodImplOptions.AggressiveInlining)]
         public static Vector2L Min(Vector2L value1, Vector2L value2)
         {
             return new(Vector128.Min(value1.vector, value2.vector));
@@ -559,31 +577,37 @@ namespace Pmad.Geometry
             return Vector128.LessThanOrEqualAll(min.vector, vector) && Vector128.LessThanOrEqualAll(vector, max.vector);
         }
 
+        [MethodImpl(MethodImplOptions.AggressiveInlining)]
         public readonly bool IsGreaterThanOrEqualAll(Vector2L other)
         {
             return Vector128.GreaterThanOrEqualAll(vector, other.vector);
         }
 
+        [MethodImpl(MethodImplOptions.AggressiveInlining)]
         public readonly bool IsLessThanOrEqualAll(Vector2L other)
         {
             return Vector128.LessThanOrEqualAll(vector, other.vector);
         }
 
+        [MethodImpl(MethodImplOptions.AggressiveInlining)]
         readonly Vector2L IVector<Vector2L>.Add(Vector2L value)
         {
             return this + value;
         }
 
+        [MethodImpl(MethodImplOptions.AggressiveInlining)]
         readonly Vector2L IVector<Vector2L>.Substract(Vector2L value)
         {
             return this - value;
         }
 
+        [MethodImpl(MethodImplOptions.AggressiveInlining)]
         readonly Vector2L IVector<Vector2L>.Min(Vector2L other)
         {
             return Min(this, other);
         }
 
+        [MethodImpl(MethodImplOptions.AggressiveInlining)]
         readonly Vector2L IVector<Vector2L>.Max(Vector2L other)
         {
             return Max(this, other);
@@ -736,11 +760,13 @@ namespace Pmad.Geometry
             return FormattableString.Invariant($"({X};{Y})");
         }
 
+        [MethodImpl(MethodImplOptions.AggressiveInlining)]
         public static Vector2D Max(Vector2D value1, Vector2D value2)
         {
             return new(Vector128.Max(value1.vector, value2.vector));
         }
 
+        [MethodImpl(MethodImplOptions.AggressiveInlining)]
         public static Vector2D Min(Vector2D value1, Vector2D value2)
         {
             return new(Vector128.Min(value1.vector, value2.vector));
@@ -757,31 +783,37 @@ namespace Pmad.Geometry
             return Vector128.LessThanOrEqualAll(min.vector, vector) && Vector128.LessThanOrEqualAll(vector, max.vector);
         }
 
+        [MethodImpl(MethodImplOptions.AggressiveInlining)]
         public readonly bool IsGreaterThanOrEqualAll(Vector2D other)
         {
             return Vector128.GreaterThanOrEqualAll(vector, other.vector);
         }
 
+        [MethodImpl(MethodImplOptions.AggressiveInlining)]
         public readonly bool IsLessThanOrEqualAll(Vector2D other)
         {
             return Vector128.LessThanOrEqualAll(vector, other.vector);
         }
 
+        [MethodImpl(MethodImplOptions.AggressiveInlining)]
         readonly Vector2D IVector<Vector2D>.Add(Vector2D value)
         {
             return this + value;
         }
 
+        [MethodImpl(MethodImplOptions.AggressiveInlining)]
         readonly Vector2D IVector<Vector2D>.Substract(Vector2D value)
         {
             return this - value;
         }
 
+        [MethodImpl(MethodImplOptions.AggressiveInlining)]
         readonly Vector2D IVector<Vector2D>.Min(Vector2D other)
         {
             return Min(this, other);
         }
 
+        [MethodImpl(MethodImplOptions.AggressiveInlining)]
         readonly Vector2D IVector<Vector2D>.Max(Vector2D other)
         {
             return Max(this, other);
