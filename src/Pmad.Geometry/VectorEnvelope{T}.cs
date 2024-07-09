@@ -1,6 +1,6 @@
 ﻿namespace Pmad.Geometry
 {
-    public sealed class VectorEnvelope<TVector> 
+    public struct VectorEnvelope<TVector> 
         where TVector : struct, IVector<TVector>
     {
         private readonly TVector min;

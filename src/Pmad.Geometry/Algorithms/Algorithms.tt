@@ -3,34 +3,23 @@
 <#@ import namespace="System.Linq" #>
 <#@ import namespace="System.Text" #>
 <#@ import namespace="System.Collections.Generic" #>
+<#@ include file="../Definitions.tt" #>
 <#@ output extension=".cs" #>
 
 namespace Pmad.Geometry.Algorithms
 {
 <#
-	var definitions = new []
-	{
-        (Struct: "Vector2I",  Primitive: "int",    ResultType: "double", CanFollow: false),
-		(Struct: "Vector2F",  Primitive: "float" , ResultType: "float" , CanFollow: true),
-		(Struct: "Vector2L",  Primitive: "long",   ResultType: "double", CanFollow: false),
-		(Struct: "Vector2D",  Primitive: "double", ResultType: "double", CanFollow: true),
-        (Struct: "Vector2IS", Primitive: "int",    ResultType: "double", CanFollow: false),
-		(Struct: "Vector2FS", Primitive: "float",  ResultType: "double", CanFollow: true),
-		(Struct: "Vector2LS", Primitive: "long",   ResultType: "double", CanFollow: false),
-		(Struct: "Vector2DS", Primitive: "double", ResultType: "double", CanFollow: true)
-	};
-
 	foreach(var def in definitions)
 	{
 #>
-	public sealed class <#=def.Struct#>Algorithms : IVector<# if (def.CanFollow) { #>FP<# } #>Algorithms<<#=def.Primitive#>,<#=def.Struct#>>
+	public sealed class <#=def.Struct#>Algorithms : IVector<# if (def.IsFP) { #>FP<# } #>Algorithms<<#=def.Primitive#>,<#=def.Struct#>>
 	{
 		public PointInPolygonResult TestPointInPolygon(IReadOnlyList<<#=def.Struct#>> points, <#=def.Struct#> point) => points.TestPointInPolygon(point);
 		
 		public double GetSignedAreaD(IReadOnlyList<<#=def.Struct#>> points) => points.GetSignedArea();
 
 		public float GetSignedAreaF(IReadOnlyList<<#=def.Struct#>> points) => (float)points.GetSignedArea();
-<# if (def.CanFollow) { #>
+<# if (def.IsFP) { #>
 
 		public IPathFollower<<#=def.Primitive#>,<#=def.Struct#>> CreateFollower(IEnumerable<<#=def.Struct#>> points) => new PathFollower<#=def.Struct#>(points);
 <# } #>

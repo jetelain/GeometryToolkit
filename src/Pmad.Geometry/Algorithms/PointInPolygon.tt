@@ -3,6 +3,7 @@
 <#@ import namespace="System.Linq" #>
 <#@ import namespace="System.Text" #>
 <#@ import namespace="System.Collections.Generic" #>
+<#@ include file="../Definitions.tt" #>
 <#@ output extension=".cs" #>
 
 namespace Pmad.Geometry.Algorithms
@@ -10,23 +11,10 @@ namespace Pmad.Geometry.Algorithms
 	public static class PointInPolygon
 	{
 <#
-
-	var definitions = new []
-	{
-		"Vector2I",
-		"Vector2F",
-		"Vector2L",
-		"Vector2D",
-        "Vector2IS",
-		"Vector2FS",
-		"Vector2LS",
-		"Vector2DS"
-	};
-
 	foreach(var def in definitions)
 	{
 #>
-        public static PointInPolygonResult TestPointInPolygon(this IReadOnlyList<<#=def#>> path, <#=def#> pt)
+        public static PointInPolygonResult TestPointInPolygon(this IReadOnlyList<<#=def.Struct#>> path, <#=def.Struct#> pt)
         {
             var cnt = path.Count;
             if (cnt < 3) 
@@ -55,7 +43,7 @@ namespace Pmad.Geometry.Algorithms
                         }
                         else
                         {
-                            var d = <#=def#>.CrossProduct(ip - pt, ipNext - pt);
+                            var d = <#=def.Struct#>.CrossProduct(ip - pt, ipNext - pt);
                             if (d == 0) 
                             {
                                 return PointInPolygonResult.Boundary;
@@ -70,7 +58,7 @@ namespace Pmad.Geometry.Algorithms
                     {
                         if (ipNext.X > pt.X)
                         {
-                            var d = <#=def#>.CrossProduct(ip - pt, ipNext - pt);
+                            var d = <#=def.Struct#>.CrossProduct(ip - pt, ipNext - pt);
                             if (d == 0) 
                             {
                                 return PointInPolygonResult.Boundary;

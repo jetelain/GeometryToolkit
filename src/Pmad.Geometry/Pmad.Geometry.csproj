@@ -24,6 +24,21 @@
       <LastGenOutput>PointInPolygon.cs</LastGenOutput>
       <Generator>TextTemplatingFileGenerator</Generator>
     </None>
+    <None Update="Definitions.tt">
+      <Generator></Generator>
+    </None>
+    <None Update="Shapes\Conventions.tt">
+      <LastGenOutput>Conventions.cs</LastGenOutput>
+      <Generator>TextTemplatingFileGenerator</Generator>
+    </None>
+    <None Update="Shapes\Paths.tt">
+      <LastGenOutput>Paths.cs</LastGenOutput>
+      <Generator>TextTemplatingFileGenerator</Generator>
+    </None>
+    <None Update="Shapes\Polygons.tt">
+      <LastGenOutput>Polygons.cs</LastGenOutput>
+      <Generator>TextTemplatingFileGenerator</Generator>
+    </None>
     <None Update="Vectors2Scalar.tt">
       <LastGenOutput>Vectors2Scalar.cs</LastGenOutput>
       <Generator>TextTemplatingFileGenerator</Generator>
@@ -58,6 +73,21 @@
       <DesignTime>True</DesignTime>
       <AutoGen>True</AutoGen>
       <DependentUpon>SignedArea.tt</DependentUpon>
+    </Compile>
+    <Compile Update="Shapes\Conventions.cs">
+      <DependentUpon>Conventions.tt</DependentUpon>
+      <DesignTime>True</DesignTime>
+      <AutoGen>True</AutoGen>
+    </Compile>
+    <Compile Update="Shapes\Paths.cs">
+      <DesignTime>True</DesignTime>
+      <AutoGen>True</AutoGen>
+      <DependentUpon>Paths.tt</DependentUpon>
+    </Compile>
+    <Compile Update="Shapes\Polygons.cs">
+      <DesignTime>True</DesignTime>
+      <AutoGen>True</AutoGen>
+      <DependentUpon>Polygons.tt</DependentUpon>
     </Compile>
     <Compile Update="Vectors2Scalar.cs">
       <DependentUpon>Vectors2Scalar.tt</DependentUpon>

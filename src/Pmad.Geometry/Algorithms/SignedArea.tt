@@ -3,6 +3,7 @@
 <#@ import namespace="System.Linq" #>
 <#@ import namespace="System.Text" #>
 <#@ import namespace="System.Collections.Generic" #>
+<#@ include file="../Definitions.tt" #>
 <#@ output extension=".cs" #>
 
 namespace Pmad.Geometry.Algorithms
@@ -10,19 +11,6 @@ namespace Pmad.Geometry.Algorithms
 	public static class SignedArea
 	{
 <#
-
-	var definitions = new []
-	{
-        (Struct: "Vector2I", ResultType: "double"),
-		(Struct: "Vector2F", ResultType: "float"),
-		(Struct: "Vector2L", ResultType: "double"),
-		(Struct: "Vector2D", ResultType: "double"),
-        (Struct: "Vector2IS", ResultType: "double"),
-		(Struct: "Vector2FS", ResultType: "double"),
-		(Struct: "Vector2LS", ResultType: "double"),
-		(Struct: "Vector2DS", ResultType: "double")
-	};
-
 	foreach(var def in definitions)
 	{
 #>
