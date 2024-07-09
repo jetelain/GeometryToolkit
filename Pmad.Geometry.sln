@@ -7,7 +7,12 @@ Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "Pmad.Geometry", "src\Pmad.G
 EndProject
 Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "Pmad.Geometry.Test", "tests\Pmad.Geometry.Test\Pmad.Geometry.Test.csproj", "{A37D332F-50E4-4F89-912C-105629EBC4A1}"
 EndProject
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Pmad.Geometry.Benchmark", "tests\Pmad.Geometry.Benchmark\Pmad.Geometry.Benchmark.csproj", "{C88D6F86-9DD9-482D-B837-F54196188D10}"
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "Pmad.Geometry.Benchmark", "tests\Pmad.Geometry.Benchmark\Pmad.Geometry.Benchmark.csproj", "{C88D6F86-9DD9-482D-B837-F54196188D10}"
+EndProject
+Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "Éléments de solution", "Éléments de solution", "{8F9857D5-7B05-4A45-A411-8169E82685B0}"
+	ProjectSection(SolutionItems) = preProject
+		README.md = README.md
+	EndProjectSection
 EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
