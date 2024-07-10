@@ -13,16 +13,14 @@ namespace Pmad.Geometry.Benchmark
 
             BenchmarkRunner
                 .Run([
-                    //typeof(AdditionBenchmark),
-                    //typeof(MultiplicationBenchmark),
-                    //typeof(DivisionBenchmark),
-                    //typeof(CrossProductBenchmark),
-                    //typeof(DivisionFloatBenchmark)
+                    typeof(MultiplicationBenchmark),
+                    typeof(DivisionBenchmark),
+                    typeof(DivisionFloatBenchmark),
                     typeof(CrossProductBenchmark),
                     typeof(SumBenchmark),
-                    typeof(LengthBenchmark)
+                    typeof(LengthBenchmark),
+                    typeof(PointInPolygonBenchmark)
                 ]);
-            //BenchmarkRunner.Run<CrossProductBenchmark>();
         }
     }
 }
