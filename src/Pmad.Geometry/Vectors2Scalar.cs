@@ -34,9 +34,13 @@ namespace Pmad.Geometry
             Y = value;
         }
 
-        public int X { get; set; }
+        public int X;
 
-        public int Y { get; set; }
+        public int Y;
+        
+        int IVector2<int, Vector2IS>.X { get => X; set => X = value; }
+        
+        int IVector2<int, Vector2IS>.Y { get => Y; set => Y = value; }
 
         [MethodImpl(MethodImplOptions.AggressiveInlining)]
         public static bool operator !=(Vector2IS left, Vector2IS right)
@@ -143,6 +147,7 @@ namespace Pmad.Geometry
             return X <= other.X && Y <= other.Y;
         }
         
+        [MethodImpl(MethodImplOptions.AggressiveInlining)]
         public static double CrossProduct(Vector2IS v1, Vector2IS v2)
         {
             return v2.Y * v1.X - v2.X * v1.Y;
@@ -182,6 +187,11 @@ namespace Pmad.Geometry
             return new (Y, -X);
         }
 
+        [MethodImpl(MethodImplOptions.AggressiveInlining)]
+        internal static double CrossProduct(Vector2IS pt1, Vector2IS pt2, Vector2IS pt3)
+        {
+            return CrossProduct(pt2-pt1, pt3-pt2);
+        }
 	}
     [DebuggerDisplay("({X};{Y})")]
 	public partial struct Vector2FS : IEquatable<Vector2FS>, IVector2<float,Vector2FS>
@@ -212,9 +222,13 @@ namespace Pmad.Geometry
             Y = value;
         }
 
-        public float X { get; set; }
+        public float X;
 
-        public float Y { get; set; }
+        public float Y;
+        
+        float IVector2<float, Vector2FS>.X { get => X; set => X = value; }
+        
+        float IVector2<float, Vector2FS>.Y { get => Y; set => Y = value; }
 
         [MethodImpl(MethodImplOptions.AggressiveInlining)]
         public static bool operator !=(Vector2FS left, Vector2FS right)
@@ -321,6 +335,7 @@ namespace Pmad.Geometry
             return X <= other.X && Y <= other.Y;
         }
         
+        [MethodImpl(MethodImplOptions.AggressiveInlining)]
         public static double CrossProduct(Vector2FS v1, Vector2FS v2)
         {
             return v2.Y * v1.X - v2.X * v1.Y;
@@ -360,6 +375,11 @@ namespace Pmad.Geometry
             return new (Y, -X);
         }
 
+        [MethodImpl(MethodImplOptions.AggressiveInlining)]
+        internal static double CrossProduct(Vector2FS pt1, Vector2FS pt2, Vector2FS pt3)
+        {
+            return CrossProduct(pt2-pt1, pt3-pt2);
+        }
 	}
     [DebuggerDisplay("({X};{Y})")]
 	public partial struct Vector2LS : IEquatable<Vector2LS>, IVector2<long,Vector2LS>
@@ -390,9 +410,13 @@ namespace Pmad.Geometry
             Y = value;
         }
 
-        public long X { get; set; }
+        public long X;
 
-        public long Y { get; set; }
+        public long Y;
+        
+        long IVector2<long, Vector2LS>.X { get => X; set => X = value; }
+        
+        long IVector2<long, Vector2LS>.Y { get => Y; set => Y = value; }
 
         [MethodImpl(MethodImplOptions.AggressiveInlining)]
         public static bool operator !=(Vector2LS left, Vector2LS right)
@@ -499,6 +523,7 @@ namespace Pmad.Geometry
             return X <= other.X && Y <= other.Y;
         }
         
+        [MethodImpl(MethodImplOptions.AggressiveInlining)]
         public static double CrossProduct(Vector2LS v1, Vector2LS v2)
         {
             return v2.Y * v1.X - v2.X * v1.Y;
@@ -538,6 +563,11 @@ namespace Pmad.Geometry
             return new (Y, -X);
         }
 
+        [MethodImpl(MethodImplOptions.AggressiveInlining)]
+        internal static double CrossProduct(Vector2LS pt1, Vector2LS pt2, Vector2LS pt3)
+        {
+            return CrossProduct(pt2-pt1, pt3-pt2);
+        }
 	}
     [DebuggerDisplay("({X};{Y})")]
 	public partial struct Vector2DS : IEquatable<Vector2DS>, IVector2<double,Vector2DS>
@@ -568,9 +598,13 @@ namespace Pmad.Geometry
             Y = value;
         }
 
-        public double X { get; set; }
+        public double X;
 
-        public double Y { get; set; }
+        public double Y;
+        
+        double IVector2<double, Vector2DS>.X { get => X; set => X = value; }
+        
+        double IVector2<double, Vector2DS>.Y { get => Y; set => Y = value; }
 
         [MethodImpl(MethodImplOptions.AggressiveInlining)]
         public static bool operator !=(Vector2DS left, Vector2DS right)
@@ -677,6 +711,7 @@ namespace Pmad.Geometry
             return X <= other.X && Y <= other.Y;
         }
         
+        [MethodImpl(MethodImplOptions.AggressiveInlining)]
         public static double CrossProduct(Vector2DS v1, Vector2DS v2)
         {
             return v2.Y * v1.X - v2.X * v1.Y;
@@ -716,5 +751,10 @@ namespace Pmad.Geometry
             return new (Y, -X);
         }
 
+        [MethodImpl(MethodImplOptions.AggressiveInlining)]
+        internal static double CrossProduct(Vector2DS pt1, Vector2DS pt2, Vector2DS pt3)
+        {
+            return CrossProduct(pt2-pt1, pt3-pt2);
+        }
 	}
 }

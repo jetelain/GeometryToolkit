@@ -1,4 +1,5 @@
-﻿using System.Runtime.Intrinsics;
+﻿using System.Runtime.CompilerServices;
+using System.Runtime.Intrinsics;
 
 namespace Pmad.Geometry
 {
@@ -14,6 +15,7 @@ namespace Pmad.Geometry
 
         public readonly float LengthSquaredF() => ToFloat().LengthSquared();
 
+        [MethodImpl(MethodImplOptions.AggressiveInlining)]
         public static double CrossProduct(Vector2L v1, Vector2L v2)
         {
             return Vector2D.CrossProduct(v1.ToDouble(), v2.ToDouble());

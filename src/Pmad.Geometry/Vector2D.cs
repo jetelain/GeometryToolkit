@@ -1,4 +1,5 @@
-﻿using System.Runtime.Intrinsics;
+﻿using System.Runtime.CompilerServices;
+using System.Runtime.Intrinsics;
 
 namespace Pmad.Geometry
 {
@@ -28,6 +29,7 @@ namespace Pmad.Geometry
 
         public readonly double LengthSquared() => Vector128.Dot(vector, vector);
 
+        [MethodImpl(MethodImplOptions.AggressiveInlining)]
         public static double CrossProduct(Vector2D v1, Vector2D v2)
         {
             var temp = v1 * v2.SwapXY();
@@ -35,6 +37,7 @@ namespace Pmad.Geometry
             //return v2.Y * v1.X - v2.X * v1.Y;
         }
 
+        [MethodImpl(MethodImplOptions.AggressiveInlining)]
         public static double CrossProductScalar(Vector2D v1, Vector2D v2)
         {
             return v2.Y * v1.X - v2.X * v1.Y;

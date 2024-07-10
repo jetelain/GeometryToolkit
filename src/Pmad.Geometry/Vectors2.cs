@@ -1,15 +1,24 @@
 ﻿using System.Diagnostics;
 using System.Diagnostics.CodeAnalysis;
 using System.Runtime.CompilerServices;
+using System.Runtime.InteropServices;
 using System.Runtime.Intrinsics;
 
 namespace Pmad.Geometry
 {
     [DebuggerDisplay("({X};{Y})")]
+    [StructLayout(LayoutKind.Explicit)]
 	public partial struct Vector2I : IEquatable<Vector2I>, IVector2<int,Vector2I>
 	{
          private static readonly Vector128<int> SwapXYShuffle = Vector128.Create(1, 0, 3, 2);
-	    private Vector128<int> vector;
+	    [FieldOffset(0)]
+        private Vector128<int> vector;
+
+        [FieldOffset(0)]
+        public int X;
+
+        [FieldOffset(4)]
+        public int Y;
 
         public static Vector2I Zero => default;
         
@@ -41,23 +50,9 @@ namespace Pmad.Geometry
             this.vector = vector;
         }
 
-        public int X 
-        {
-            [MethodImpl(MethodImplOptions.AggressiveInlining)]
-            readonly get => vector[0];
+        int IVector2<int, Vector2I>.X { get => X; set => X = value; }
 
-            [MethodImpl(MethodImplOptions.AggressiveInlining)]
-            set => vector = vector.WithElement(0, value);
-        }
-
-        public int Y
-        {
-            [MethodImpl(MethodImplOptions.AggressiveInlining)]
-            readonly get => vector[1];
-
-            [MethodImpl(MethodImplOptions.AggressiveInlining)]
-            set => vector = vector.WithElement(1, value);
-        }
+        int IVector2<int, Vector2I>.Y { get => Y; set => Y = value; }
 
         public Vector128<int> Vector
         {
@@ -210,12 +205,26 @@ namespace Pmad.Geometry
         {
             return SwapXY() * new Vector2I(1, -1);
         }
+
+        [MethodImpl(MethodImplOptions.AggressiveInlining)]
+        internal static double CrossProduct(Vector2I pt1, Vector2I pt2, Vector2I pt3)
+        {
+            return CrossProduct(pt2-pt1, pt3-pt2);
+        }
 	}
     [DebuggerDisplay("({X};{Y})")]
+    [StructLayout(LayoutKind.Explicit)]
 	public partial struct Vector2F : IEquatable<Vector2F>, IVector2<float,Vector2F>
 	{
          private static readonly Vector128<int> SwapXYShuffle = Vector128.Create(1, 0, 3, 2);
-	    private Vector128<float> vector;
+	    [FieldOffset(0)]
+        private Vector128<float> vector;
+
+        [FieldOffset(0)]
+        public float X;
+
+        [FieldOffset(4)]
+        public float Y;
 
         public static Vector2F Zero => default;
         
@@ -247,23 +256,9 @@ namespace Pmad.Geometry
             this.vector = vector;
         }
 
-        public float X 
-        {
-            [MethodImpl(MethodImplOptions.AggressiveInlining)]
-            readonly get => vector[0];
+        float IVector2<float, Vector2F>.X { get => X; set => X = value; }
 
-            [MethodImpl(MethodImplOptions.AggressiveInlining)]
-            set => vector = vector.WithElement(0, value);
-        }
-
-        public float Y
-        {
-            [MethodImpl(MethodImplOptions.AggressiveInlining)]
-            readonly get => vector[1];
-
-            [MethodImpl(MethodImplOptions.AggressiveInlining)]
-            set => vector = vector.WithElement(1, value);
-        }
+        float IVector2<float, Vector2F>.Y { get => Y; set => Y = value; }
 
         public Vector128<float> Vector
         {
@@ -416,12 +411,26 @@ namespace Pmad.Geometry
         {
             return SwapXY() * new Vector2F(1, -1);
         }
+
+        [MethodImpl(MethodImplOptions.AggressiveInlining)]
+        internal static float CrossProduct(Vector2F pt1, Vector2F pt2, Vector2F pt3)
+        {
+            return CrossProduct(pt2-pt1, pt3-pt2);
+        }
 	}
     [DebuggerDisplay("({X};{Y})")]
+    [StructLayout(LayoutKind.Explicit)]
 	public partial struct Vector2L : IEquatable<Vector2L>, IVector2<long,Vector2L>
 	{
          private static readonly Vector128<long> SwapXYShuffle = Vector128.Create(1L, 0L);
-	    private Vector128<long> vector;
+	    [FieldOffset(0)]
+        private Vector128<long> vector;
+
+        [FieldOffset(0)]
+        public long X;
+
+        [FieldOffset(8)]
+        public long Y;
 
         public static Vector2L Zero => default;
         
@@ -453,23 +462,9 @@ namespace Pmad.Geometry
             this.vector = vector;
         }
 
-        public long X 
-        {
-            [MethodImpl(MethodImplOptions.AggressiveInlining)]
-            readonly get => vector[0];
+        long IVector2<long, Vector2L>.X { get => X; set => X = value; }
 
-            [MethodImpl(MethodImplOptions.AggressiveInlining)]
-            set => vector = vector.WithElement(0, value);
-        }
-
-        public long Y
-        {
-            [MethodImpl(MethodImplOptions.AggressiveInlining)]
-            readonly get => vector[1];
-
-            [MethodImpl(MethodImplOptions.AggressiveInlining)]
-            set => vector = vector.WithElement(1, value);
-        }
+        long IVector2<long, Vector2L>.Y { get => Y; set => Y = value; }
 
         public Vector128<long> Vector
         {
@@ -622,12 +617,26 @@ namespace Pmad.Geometry
         {
             return SwapXY() * new Vector2L(1, -1);
         }
+
+        [MethodImpl(MethodImplOptions.AggressiveInlining)]
+        internal static double CrossProduct(Vector2L pt1, Vector2L pt2, Vector2L pt3)
+        {
+            return CrossProduct(pt2-pt1, pt3-pt2);
+        }
 	}
     [DebuggerDisplay("({X};{Y})")]
+    [StructLayout(LayoutKind.Explicit)]
 	public partial struct Vector2D : IEquatable<Vector2D>, IVector2<double,Vector2D>
 	{
          private static readonly Vector128<long> SwapXYShuffle = Vector128.Create(1L, 0L);
-	    private Vector128<double> vector;
+	    [FieldOffset(0)]
+        private Vector128<double> vector;
+
+        [FieldOffset(0)]
+        public double X;
+
+        [FieldOffset(8)]
+        public double Y;
 
         public static Vector2D Zero => default;
         
@@ -659,23 +668,9 @@ namespace Pmad.Geometry
             this.vector = vector;
         }
 
-        public double X 
-        {
-            [MethodImpl(MethodImplOptions.AggressiveInlining)]
-            readonly get => vector[0];
+        double IVector2<double, Vector2D>.X { get => X; set => X = value; }
 
-            [MethodImpl(MethodImplOptions.AggressiveInlining)]
-            set => vector = vector.WithElement(0, value);
-        }
-
-        public double Y
-        {
-            [MethodImpl(MethodImplOptions.AggressiveInlining)]
-            readonly get => vector[1];
-
-            [MethodImpl(MethodImplOptions.AggressiveInlining)]
-            set => vector = vector.WithElement(1, value);
-        }
+        double IVector2<double, Vector2D>.Y { get => Y; set => Y = value; }
 
         public Vector128<double> Vector
         {
@@ -827,6 +822,12 @@ namespace Pmad.Geometry
         public readonly Vector2D RotateM90()
         {
             return SwapXY() * new Vector2D(1, -1);
+        }
+
+        [MethodImpl(MethodImplOptions.AggressiveInlining)]
+        internal static double CrossProduct(Vector2D pt1, Vector2D pt2, Vector2D pt3)
+        {
+            return CrossProduct(pt2-pt1, pt3-pt2);
         }
 	}
 }

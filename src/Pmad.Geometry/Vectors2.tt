@@ -8,6 +8,7 @@
 using System.Diagnostics;
 using System.Diagnostics.CodeAnalysis;
 using System.Runtime.CompilerServices;
+using System.Runtime.InteropServices;
 using System.Runtime.Intrinsics;
 
 namespace Pmad.Geometry
@@ -17,6 +18,7 @@ namespace Pmad.Geometry
 	{
 #>
     [DebuggerDisplay("({X};{Y})")]
+    [StructLayout(LayoutKind.Explicit)]
 	public partial struct <#=def.Struct#> : IEquatable<<#=def.Struct#>>, IVector2<<#=def.Primitive#>,<#=def.Struct#>>
 	{
  <#if (def.HasFiller) {#>
@@ -24,7 +26,14 @@ namespace Pmad.Geometry
 <#} else {#>
         private static readonly Vector128<long> SwapXYShuffle = Vector128.Create(1L, 0L);
 <#}#>
-	    private <#=def.BaseVector#><<#=def.Primitive#>> vector;
+	    [FieldOffset(0)]
+        private <#=def.BaseVector#><<#=def.Primitive#>> vector;
+
+        [FieldOffset(0)]
+        public <#=def.Primitive#> X;
+
+        [FieldOffset(<#=def.PrimitiveSize#>)]
+        public <#=def.Primitive#> Y;
 
         public static <#=def.Struct#> Zero => default;
         
@@ -60,23 +69,9 @@ namespace Pmad.Geometry
             this.vector = vector;
         }
 
-        public <#=def.Primitive#> X 
-        {
-            [MethodImpl(MethodImplOptions.AggressiveInlining)]
-            readonly get => vector[0];
+        <#=def.Primitive#> IVector2<<#=def.Primitive#>, <#=def.Struct#>>.X { get => X; set => X = value; }
 
-            [MethodImpl(MethodImplOptions.AggressiveInlining)]
-            set => vector = vector.WithElement(0, value);
-        }
-
-        public <#=def.Primitive#> Y
-        {
-            [MethodImpl(MethodImplOptions.AggressiveInlining)]
-            readonly get => vector[1];
-
-            [MethodImpl(MethodImplOptions.AggressiveInlining)]
-            set => vector = vector.WithElement(1, value);
-        }
+        <#=def.Primitive#> IVector2<<#=def.Primitive#>, <#=def.Struct#>>.Y { get => Y; set => Y = value; }
 
         public <#=def.BaseVector#><<#=def.Primitive#>> Vector
         {
@@ -237,6 +232,12 @@ namespace Pmad.Geometry
         public readonly <#=def.Struct#> RotateM90()
         {
             return SwapXY() * new <#=def.Struct#>(1, -1);
+        }
+
+        [MethodImpl(MethodImplOptions.AggressiveInlining)]
+        internal static <#=def.ResultType#> CrossProduct(<#=def.Struct#> pt1, <#=def.Struct#> pt2, <#=def.Struct#> pt3)
+        {
+            return CrossProduct(pt2-pt1, pt3-pt2);
         }
 	}
 <#

@@ -3,7 +3,7 @@ namespace Pmad.Geometry.Test
 {
 	public partial class Vector2ITest : Vector2TestBase<int,Vector2I>
 	{
-        public Vector2ITest() : base((x,y) => new Vector2I(x, y)) { }
+        public Vector2ITest() : base((x,y) => new Vector2I(x, y), x => x) { }
 
 	    [Fact]
         public void Add()
@@ -89,7 +89,7 @@ namespace Pmad.Geometry.Test
 	}
 	public partial class Vector2FTest : Vector2TestBase<float,Vector2F>
 	{
-        public Vector2FTest() : base((x,y) => new Vector2F(x, y)) { }
+        public Vector2FTest() : base((x,y) => new Vector2F(x, y), x => x) { }
 
 	    [Fact]
         public void Add()
@@ -175,7 +175,7 @@ namespace Pmad.Geometry.Test
 	}
 	public partial class Vector2LTest : Vector2TestBase<long,Vector2L>
 	{
-        public Vector2LTest() : base((x,y) => new Vector2L(x, y)) { }
+        public Vector2LTest() : base((x,y) => new Vector2L(x, y), x => x) { }
 
 	    [Fact]
         public void Add()
@@ -261,7 +261,7 @@ namespace Pmad.Geometry.Test
 	}
 	public partial class Vector2DTest : Vector2TestBase<double,Vector2D>
 	{
-        public Vector2DTest() : base((x,y) => new Vector2D(x, y)) { }
+        public Vector2DTest() : base((x,y) => new Vector2D(x, y), x => x) { }
 
 	    [Fact]
         public void Add()
@@ -347,7 +347,7 @@ namespace Pmad.Geometry.Test
 	}
 	public partial class Vector2ISTest : Vector2TestBase<int,Vector2IS>
 	{
-        public Vector2ISTest() : base((x,y) => new Vector2IS(x, y)) { }
+        public Vector2ISTest() : base((x,y) => new Vector2IS(x, y), x => x) { }
 
 	    [Fact]
         public void Add()
@@ -433,7 +433,7 @@ namespace Pmad.Geometry.Test
 	}
 	public partial class Vector2FSTest : Vector2TestBase<float,Vector2FS>
 	{
-        public Vector2FSTest() : base((x,y) => new Vector2FS(x, y)) { }
+        public Vector2FSTest() : base((x,y) => new Vector2FS(x, y), x => x) { }
 
 	    [Fact]
         public void Add()
@@ -519,7 +519,7 @@ namespace Pmad.Geometry.Test
 	}
 	public partial class Vector2LSTest : Vector2TestBase<long,Vector2LS>
 	{
-        public Vector2LSTest() : base((x,y) => new Vector2LS(x, y)) { }
+        public Vector2LSTest() : base((x,y) => new Vector2LS(x, y), x => x) { }
 
 	    [Fact]
         public void Add()
@@ -605,7 +605,7 @@ namespace Pmad.Geometry.Test
 	}
 	public partial class Vector2DSTest : Vector2TestBase<double,Vector2DS>
 	{
-        public Vector2DSTest() : base((x,y) => new Vector2DS(x, y)) { }
+        public Vector2DSTest() : base((x,y) => new Vector2DS(x, y), x => x) { }
 
 	    [Fact]
         public void Add()
@@ -691,7 +691,7 @@ namespace Pmad.Geometry.Test
 	}
 	public partial class Vector2FNTest : Vector2TestBase<float,Vector2FN>
 	{
-        public Vector2FNTest() : base((x,y) => new Vector2FN(x, y)) { }
+        public Vector2FNTest() : base((x,y) => new Vector2FN(x, y), x => x) { }
 
 	    [Fact]
         public void Add()

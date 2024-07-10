@@ -40,6 +40,7 @@ namespace Pmad.Geometry
 
         public readonly float LengthSquared() => Vector128.Dot(vector, vector);
 
+        [MethodImpl(MethodImplOptions.AggressiveInlining)]
         public static float CrossProduct(Vector2F v1, Vector2F v2)
         {
             var temp = v1 * v2.SwapXY();

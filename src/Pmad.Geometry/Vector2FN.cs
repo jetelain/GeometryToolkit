@@ -235,6 +235,11 @@ namespace Pmad.Geometry
             return v2.Y * v1.X - v2.X * v1.Y;
         }
 
+        internal static double CrossProduct(Vector2FN pt1, Vector2FN pt2, Vector2FN pt3)
+        {
+            return CrossProduct(pt2-pt1, pt3-pt2);
+        }
+
         public Vector2F ToFloat()
         {
             return new Vector2F(vector);

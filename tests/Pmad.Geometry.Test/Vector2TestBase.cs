@@ -4,11 +4,13 @@
         where TPrimitive : unmanaged
         where TVector : struct, IVector2<TPrimitive, TVector>
     {
-        private Func<int, int, TVector> factory;
+        private readonly Func<int, int, TVector> factory;
+        private readonly Func<int, TPrimitive> scalar;
 
-        public Vector2TestBase(Func<int, int, TVector> factory)
+        public Vector2TestBase(Func<int, int, TVector> factory, Func<int, TPrimitive> scalar)
         {
             this.factory = factory;
+            this.scalar = scalar;
         }
 
         [Fact]
@@ -83,6 +85,28 @@
         public void SwapXY()
         {
             Assert.Equal(factory(15, 5), factory(5, 15).SwapXY());
+        }
+
+        [Fact]
+        public void XProperty()
+        {
+            var value = factory(123, 456);
+            Assert.Equal(scalar(123), value.X);
+
+            value.X = scalar(789);
+            Assert.Equal(scalar(789), value.X);
+            Assert.Equal(factory(789, 456), value);
+        }
+
+        [Fact]
+        public void YProperty()
+        {
+            var value = factory(123, 456);
+            Assert.Equal(scalar(456), value.Y);
+
+            value.Y = scalar(789);
+            Assert.Equal(scalar(789), value.Y);
+            Assert.Equal(factory(123, 789), value);
         }
     }
 }

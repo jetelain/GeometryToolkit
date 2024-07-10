@@ -45,9 +45,13 @@ namespace Pmad.Geometry
             Y = value;
         }
 
-        public <#=def.Primitive#> X { get; set; }
+        public <#=def.Primitive#> X;
 
-        public <#=def.Primitive#> Y { get; set; }
+        public <#=def.Primitive#> Y;
+        
+        <#=def.Primitive#> IVector2<<#=def.Primitive#>, <#=def.Struct#>>.X { get => X; set => X = value; }
+        
+        <#=def.Primitive#> IVector2<<#=def.Primitive#>, <#=def.Struct#>>.Y { get => Y; set => Y = value; }
 
         [MethodImpl(MethodImplOptions.AggressiveInlining)]
         public static bool operator !=(<#=def.Struct#> left, <#=def.Struct#> right)
@@ -154,6 +158,7 @@ namespace Pmad.Geometry
             return X <= other.X && Y <= other.Y;
         }
         
+        [MethodImpl(MethodImplOptions.AggressiveInlining)]
         public static double CrossProduct(<#=def.Struct#> v1, <#=def.Struct#> v2)
         {
             return v2.Y * v1.X - v2.X * v1.Y;
@@ -201,6 +206,11 @@ namespace Pmad.Geometry
             return new (Y, -X);
         }
 
+        [MethodImpl(MethodImplOptions.AggressiveInlining)]
+        internal static double CrossProduct(<#=def.Struct#> pt1, <#=def.Struct#> pt2, <#=def.Struct#> pt3)
+        {
+            return CrossProduct(pt2-pt1, pt3-pt2);
+        }
 	}
 <#
 	}

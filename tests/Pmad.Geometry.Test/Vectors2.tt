@@ -14,7 +14,7 @@ namespace Pmad.Geometry.Test
 #>
 	public partial class <#=def.Struct#>Test : Vector2TestBase<<#=def.Primitive#>,<#=def.Struct#>>
 	{
-        public <#=def.Struct#>Test() : base((x,y) => new <#=def.Struct#>(x, y)) { }
+        public <#=def.Struct#>Test() : base((x,y) => new <#=def.Struct#>(x, y), x => x) { }
 
 	    [Fact]
         public void Add()
