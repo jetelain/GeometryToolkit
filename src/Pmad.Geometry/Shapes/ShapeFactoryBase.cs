@@ -3,12 +3,12 @@ using Pmad.Geometry.Algorithms;
 
 namespace Pmad.Geometry.Shapes
 {
-    public abstract class Vector2ConventionBase<TPrimitive, TVector, TPolygon, TAlgorithms, TConvention>
+    public abstract class ShapeFactoryBase<TPrimitive, TVector, TPolygon, TAlgorithms, TFactory>
         where TPrimitive : unmanaged
         where TVector : struct, IVector2<TPrimitive, TVector>
-        where TPolygon : PolygonBase<TPrimitive, TVector, TPolygon, TAlgorithms, TConvention>
+        where TPolygon : PolygonBase<TPrimitive, TVector, TPolygon, TAlgorithms, TFactory>
         where TAlgorithms : IVectorAlgorithms<TPrimitive, TVector>, new()
-        where TConvention : Vector2ConventionBase<TPrimitive, TVector, TPolygon, TAlgorithms, TConvention>
+        where TFactory : ShapeFactoryBase<TPrimitive, TVector, TPolygon, TAlgorithms, TFactory>
     {
         public readonly TAlgorithms Algorithms = new();
 

@@ -3,8 +3,10 @@ using Pmad.Geometry.Algorithms;
 
 namespace Pmad.Geometry.Shapes
 {
-    public sealed class Vector2IConvention : Vector2ConventionBase<int, Vector2I, Polygon2I, Vector2IAlgorithms, Vector2IConvention>
+    public sealed class Factory2I : ShapeFactoryBase<int, Vector2I, Polygon2I, Vector2IAlgorithms, Factory2I>
     {
+        public static readonly Factory2I Default = new ();
+
         public override Vector2I FromClipper(Point64 value)
         {
             return new ((int)value.X, (int)value.Y);
@@ -31,11 +33,13 @@ namespace Pmad.Geometry.Shapes
 			return Polygon2I.FromClipper(this, polyTree64);
 		}
     }
-    public sealed class Vector2FConvention : Vector2ConventionBase<float, Vector2F, Polygon2F, Vector2FAlgorithms, Vector2FConvention>
+    public sealed class Factory2F : ShapeFactoryBase<float, Vector2F, Polygon2F, Vector2FAlgorithms, Factory2F>
     {
+        public static readonly Factory2F Default = new ();
+
         private readonly float scale;
 
-        public Vector2FConvention(float scale = 1000)
+        public Factory2F(float scale = 1000)
         {
             this.scale = scale;
         }
@@ -67,8 +71,10 @@ namespace Pmad.Geometry.Shapes
 			return Polygon2F.FromClipper(this, polyTree64);
 		}
     }
-    public sealed class Vector2LConvention : Vector2ConventionBase<long, Vector2L, Polygon2L, Vector2LAlgorithms, Vector2LConvention>
+    public sealed class Factory2L : ShapeFactoryBase<long, Vector2L, Polygon2L, Vector2LAlgorithms, Factory2L>
     {
+        public static readonly Factory2L Default = new ();
+
         public override Vector2L FromClipper(Point64 value)
         {
             return new ((long)value.X, (long)value.Y);
@@ -95,11 +101,13 @@ namespace Pmad.Geometry.Shapes
 			return Polygon2L.FromClipper(this, polyTree64);
 		}
     }
-    public sealed class Vector2DConvention : Vector2ConventionBase<double, Vector2D, Polygon2D, Vector2DAlgorithms, Vector2DConvention>
+    public sealed class Factory2D : ShapeFactoryBase<double, Vector2D, Polygon2D, Vector2DAlgorithms, Factory2D>
     {
+        public static readonly Factory2D Default = new ();
+
         private readonly double scale;
 
-        public Vector2DConvention(double scale = 1000)
+        public Factory2D(double scale = 1000)
         {
             this.scale = scale;
         }
@@ -131,8 +139,10 @@ namespace Pmad.Geometry.Shapes
 			return Polygon2D.FromClipper(this, polyTree64);
 		}
     }
-    public sealed class Vector2ISConvention : Vector2ConventionBase<int, Vector2IS, Polygon2IS, Vector2ISAlgorithms, Vector2ISConvention>
+    public sealed class Factory2IS : ShapeFactoryBase<int, Vector2IS, Polygon2IS, Vector2ISAlgorithms, Factory2IS>
     {
+        public static readonly Factory2IS Default = new ();
+
         public override Vector2IS FromClipper(Point64 value)
         {
             return new ((int)value.X, (int)value.Y);
@@ -159,11 +169,13 @@ namespace Pmad.Geometry.Shapes
 			return Polygon2IS.FromClipper(this, polyTree64);
 		}
     }
-    public sealed class Vector2FSConvention : Vector2ConventionBase<float, Vector2FS, Polygon2FS, Vector2FSAlgorithms, Vector2FSConvention>
+    public sealed class Factory2FS : ShapeFactoryBase<float, Vector2FS, Polygon2FS, Vector2FSAlgorithms, Factory2FS>
     {
+        public static readonly Factory2FS Default = new ();
+
         private readonly float scale;
 
-        public Vector2FSConvention(float scale = 1000)
+        public Factory2FS(float scale = 1000)
         {
             this.scale = scale;
         }
@@ -195,8 +207,10 @@ namespace Pmad.Geometry.Shapes
 			return Polygon2FS.FromClipper(this, polyTree64);
 		}
     }
-    public sealed class Vector2LSConvention : Vector2ConventionBase<long, Vector2LS, Polygon2LS, Vector2LSAlgorithms, Vector2LSConvention>
+    public sealed class Factory2LS : ShapeFactoryBase<long, Vector2LS, Polygon2LS, Vector2LSAlgorithms, Factory2LS>
     {
+        public static readonly Factory2LS Default = new ();
+
         public override Vector2LS FromClipper(Point64 value)
         {
             return new ((long)value.X, (long)value.Y);
@@ -223,11 +237,13 @@ namespace Pmad.Geometry.Shapes
 			return Polygon2LS.FromClipper(this, polyTree64);
 		}
     }
-    public sealed class Vector2DSConvention : Vector2ConventionBase<double, Vector2DS, Polygon2DS, Vector2DSAlgorithms, Vector2DSConvention>
+    public sealed class Factory2DS : ShapeFactoryBase<double, Vector2DS, Polygon2DS, Vector2DSAlgorithms, Factory2DS>
     {
+        public static readonly Factory2DS Default = new ();
+
         private readonly double scale;
 
-        public Vector2DSConvention(double scale = 1000)
+        public Factory2DS(double scale = 1000)
         {
             this.scale = scale;
         }
@@ -259,11 +275,13 @@ namespace Pmad.Geometry.Shapes
 			return Polygon2DS.FromClipper(this, polyTree64);
 		}
     }
-    public sealed class Vector2FNConvention : Vector2ConventionBase<float, Vector2FN, Polygon2FN, Vector2FNAlgorithms, Vector2FNConvention>
+    public sealed class Factory2FN : ShapeFactoryBase<float, Vector2FN, Polygon2FN, Vector2FNAlgorithms, Factory2FN>
     {
+        public static readonly Factory2FN Default = new ();
+
         private readonly float scale;
 
-        public Vector2FNConvention(float scale = 1000)
+        public Factory2FN(float scale = 1000)
         {
             this.scale = scale;
         }

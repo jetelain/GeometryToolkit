@@ -27,8 +27,8 @@
     <None Update="Definitions.tt">
       <Generator></Generator>
     </None>
-    <None Update="Shapes\Conventions.tt">
-      <LastGenOutput>Conventions.cs</LastGenOutput>
+    <None Update="Shapes\Factories.tt">
+      <LastGenOutput>Factories.cs</LastGenOutput>
       <Generator>TextTemplatingFileGenerator</Generator>
     </None>
     <None Update="Shapes\Paths.tt">
@@ -74,8 +74,8 @@
       <AutoGen>True</AutoGen>
       <DependentUpon>SignedArea.tt</DependentUpon>
     </Compile>
-    <Compile Update="Shapes\Conventions.cs">
-      <DependentUpon>Conventions.tt</DependentUpon>
+    <Compile Update="Shapes\Factories.cs">
+      <DependentUpon>Factories.tt</DependentUpon>
       <DesignTime>True</DesignTime>
       <AutoGen>True</AutoGen>
     </Compile>

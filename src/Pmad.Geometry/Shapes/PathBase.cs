@@ -3,22 +3,22 @@ using Pmad.Geometry.Algorithms;
 
 namespace Pmad.Geometry.Shapes
 {
-    public abstract class PathBase<TPrimitive, TVector, TPolygon, TPath, TAlgorithms, TConvention> : IWithBounds<TVector>
+    public abstract class PathBase<TPrimitive, TVector, TPolygon, TPath, TAlgorithms, TFactory> : IWithBounds<TVector>
         where TPrimitive : unmanaged
         where TVector : struct, IVector2<TPrimitive, TVector>
-        where TPolygon : PolygonBase<TPrimitive, TVector, TPolygon, TAlgorithms, TConvention>
-        where TPath : PathBase<TPrimitive, TVector, TPolygon, TPath, TAlgorithms, TConvention>
+        where TPolygon : PolygonBase<TPrimitive, TVector, TPolygon, TAlgorithms, TFactory>
+        where TPath : PathBase<TPrimitive, TVector, TPolygon, TPath, TAlgorithms, TFactory>
         where TAlgorithms : IVectorAlgorithms<TPrimitive, TVector>, new()
-        where TConvention : Vector2ConventionBase<TPrimitive, TVector, TPolygon, TAlgorithms, TConvention>
+        where TFactory : ShapeFactoryBase<TPrimitive, TVector, TPolygon, TAlgorithms, TFactory>
     {
-        public PathBase(TConvention convention, IReadOnlyList<TVector> points)
+        public PathBase(TFactory factory, IReadOnlyList<TVector> points)
         {
-            this.Convention = convention;
+            this.Factory = factory;
             this.Points = points;
             Bounds = VectorEnvelope<TVector>.FromList(points);
         }
 
-        public TConvention Convention { get; }
+        public TFactory Factory { get; }
         
         public IReadOnlyList<TVector> Points { get; }
 
@@ -30,9 +30,9 @@ namespace Pmad.Geometry.Shapes
 
         public bool IsClosed => Points[0].Equals(Points[Points.Count-1]);
 
-        public bool IsCounterClockWise => IsClosed && Convention.Algorithms.GetSignedAreaD(Points) > 0;
+        public bool IsCounterClockWise => IsClosed && Factory.Algorithms.GetSignedAreaD(Points) > 0;
 
-        public bool IsClockWise => IsClosed && Convention.Algorithms.GetSignedAreaD(Points) < 0;
+        public bool IsClockWise => IsClosed && Factory.Algorithms.GetSignedAreaD(Points) < 0;
 
         protected abstract TPath This { get; }
 
@@ -41,10 +41,10 @@ namespace Pmad.Geometry.Shapes
         public IEnumerable<TPolygon> ToPolygon(double width, EndType endType = EndType.Butt, JoinType joinType = JoinType.Square)
         {
             var offset = new ClipperOffset();
-            offset.AddPath(new Path64(Points.Select(Convention.ToClipper)), joinType, endType);
+            offset.AddPath(new Path64(Points.Select(Factory.ToClipper)), joinType, endType);
             var solution = new PolyTree64(); ;
-            offset.Execute(width * Convention.ScaleForClipper / 2, solution);
-            return Convention.FromClipper(solution);
+            offset.Execute(width * Factory.ScaleForClipper / 2, solution);
+            return Factory.FromClipper(solution);
         }
 
         /// <summary>
@@ -58,9 +58,9 @@ namespace Pmad.Geometry.Shapes
                 var points = new List<TVector>(Points.Count + 1); 
                 points.AddRange(Points);
                 points.Add(Points[0]);
-                return Convention.CreatePolygon(points);
+                return Factory.CreatePolygon(points);
             }
-            return Convention.CreatePolygon(Points);
+            return Factory.CreatePolygon(Points);
         }
     }
 }

@@ -3,24 +3,24 @@ using Pmad.Geometry.Algorithms;
 
 namespace Pmad.Geometry.Shapes
 {
-    public abstract class PolygonBase<TPrimitive, TVector, TPolygon, TAlgorithms, TConvention> : IWithBounds<TVector>
+    public abstract class PolygonBase<TPrimitive, TVector, TPolygon, TAlgorithms, TFactory> : IWithBounds<TVector>
         where TPrimitive : unmanaged
         where TVector : struct, IVector2<TPrimitive, TVector>
-        where TPolygon : PolygonBase<TPrimitive, TVector, TPolygon, TAlgorithms, TConvention>
+        where TPolygon : PolygonBase<TPrimitive, TVector, TPolygon, TAlgorithms, TFactory>
         where TAlgorithms : IVectorAlgorithms<TPrimitive, TVector>, new()
-        where TConvention : Vector2ConventionBase<TPrimitive, TVector, TPolygon, TAlgorithms, TConvention>
+        where TFactory : ShapeFactoryBase<TPrimitive, TVector, TPolygon, TAlgorithms, TFactory>
     {
         protected static readonly IReadOnlyList<IReadOnlyList<TVector>> NoHoles = new List<IReadOnlyList<TVector>>(0);
 
-        public PolygonBase(TConvention convention, IReadOnlyList<TVector> shell, IReadOnlyList<IReadOnlyList<TVector>> holes)
+        public PolygonBase(TFactory factory, IReadOnlyList<TVector> shell, IReadOnlyList<IReadOnlyList<TVector>> holes)
         {
-            this.Convention = convention;
+            this.Factory = factory;
             this.Shell = shell;
             this.Holes = holes;
             Bounds = VectorEnvelope<TVector>.FromList(shell);
         }
 
-        public TConvention Convention { get; }
+        public TFactory Factory { get; }
 
         public IReadOnlyList<TVector> Shell { get; }
 
@@ -28,9 +28,9 @@ namespace Pmad.Geometry.Shapes
 
         public VectorEnvelope<TVector> Bounds { get; }
 
-        public double AreaD => Math.Abs(Convention.Algorithms.GetSignedAreaD(Shell)) - Holes.Sum(hole => Math.Abs(Convention.Algorithms.GetSignedAreaD(hole)));
+        public double AreaD => Math.Abs(Factory.Algorithms.GetSignedAreaD(Shell)) - Holes.Sum(hole => Math.Abs(Factory.Algorithms.GetSignedAreaD(hole)));
 
-        public float AreaF => Math.Abs(Convention.Algorithms.GetSignedAreaF(Shell)) - Holes.Sum(hole => Math.Abs(Convention.Algorithms.GetSignedAreaF(hole)));
+        public float AreaF => Math.Abs(Factory.Algorithms.GetSignedAreaF(Shell)) - Holes.Sum(hole => Math.Abs(Factory.Algorithms.GetSignedAreaF(hole)));
 
         protected abstract TPolygon This { get; }
 
@@ -39,19 +39,19 @@ namespace Pmad.Geometry.Shapes
         private Paths64 ToClipper()
         {
             var paths = new Paths64(1 + Holes.Count);
-            paths.Add(new Path64(Shell.Select(Convention.ToClipper)));
-            paths.AddRange(Holes.Select(hole => new Path64(hole.Select(Convention.ToClipper))));
+            paths.Add(new Path64(Shell.Select(Factory.ToClipper)));
+            paths.AddRange(Holes.Select(hole => new Path64(hole.Select(Factory.ToClipper))));
             return paths;
         }
 
-        internal static IEnumerable<TPolygon> FromClipper(TConvention convention, PolyPath64 polyTree64)
+        internal static IEnumerable<TPolygon> FromClipper(TFactory convention, PolyPath64 polyTree64)
         {
             var result = new List<TPolygon>();
             FromClipper(convention, result, polyTree64);
             return result;
         }
 
-        private static void FromClipper(TConvention convention, List<TPolygon> result, PolyPath64 polyTree64)
+        private static void FromClipper(TFactory convention, List<TPolygon> result, PolyPath64 polyTree64)
         {
             foreach (PolyPath64 node in polyTree64)
             {
@@ -66,7 +66,7 @@ namespace Pmad.Geometry.Shapes
             }
         }
 
-        private static IReadOnlyList<TVector> CreateRing(TConvention convention, List<Point64> points)
+        private static IReadOnlyList<TVector> CreateRing(TFactory convention, List<Point64> points)
         {
             var ring = new List<TVector>(points.Count + 1);
             ring.AddRange(points.Select(convention.FromClipper));
@@ -77,7 +77,7 @@ namespace Pmad.Geometry.Shapes
         private Paths64 Offset(IEnumerable<TVector> path, double detla)
         {
             var clipper = new ClipperOffset();
-            clipper.AddPath(new Path64(path.Select(Convention.ToClipper)), JoinType.Square, EndType.Polygon);
+            clipper.AddPath(new Path64(path.Select(Factory.ToClipper)), JoinType.Square, EndType.Polygon);
             var solution = new Paths64(); ;
             clipper.Execute(detla, solution);
             return solution;
@@ -90,16 +90,16 @@ namespace Pmad.Geometry.Shapes
             {
                 return [This];
             }
-            var scaledOffset = offset * Convention.ScaleForClipper;
+            var scaledOffset = offset * Factory.ScaleForClipper;
             var shell = Offset(Shell, scaledOffset);
             if (Holes.Count == 0)
             {
-                return shell.Select(s => CreatePolygon(s.Select(Convention.FromClipper).ToList(), NoHoles));
+                return shell.Select(s => CreatePolygon(CreateRing(Factory, s), NoHoles));
             }
             var holes = new Paths64(Holes.SelectMany(h => Offset(h, -scaledOffset)));
             var tree = new PolyTree64();
             Clipper.BooleanOp(ClipType.Difference, shell, holes, tree, FillRule.NonZero);
-            return FromClipper(Convention, tree);
+            return FromClipper(Factory, tree);
         }
 
         public Paths64 OffsetAsPaths(double offset)
@@ -108,7 +108,7 @@ namespace Pmad.Geometry.Shapes
             {
                 return ToClipper();
             }
-            var scaledOffset = offset * Convention.ScaleForClipper;
+            var scaledOffset = offset * Factory.ScaleForClipper;
             var shell = Offset(Shell, scaledOffset);
             if (Holes.Count == 0)
             {
@@ -134,7 +134,7 @@ namespace Pmad.Geometry.Shapes
             var clip = OffsetAsPaths(-innnerOffset);
             var tree = new PolyTree64();
             Clipper.BooleanOp(ClipType.Difference, subject, clip, tree, FillRule.EvenOdd);
-            return FromClipper(Convention, tree);
+            return FromClipper(Factory, tree);
         }
 
         // Polygon arithmetic        
@@ -161,7 +161,7 @@ namespace Pmad.Geometry.Shapes
         {
             var tree = new PolyTree64();
             Clipper.BooleanOp(ClipType.Difference, ToClipper(), new Paths64(others.SelectMany(o => o.ToClipper())), tree, FillRule.EvenOdd);
-            return FromClipper(Convention, tree);
+            return FromClipper(Factory, tree);
         }
 
         public IEnumerable<TPolygon> Substract(TPolygon other)
@@ -186,7 +186,7 @@ namespace Pmad.Geometry.Shapes
         {
             var tree = new PolyTree64();
             Clipper.BooleanOp(op, ToClipper(), other.ToClipper(), tree, FillRule.EvenOdd);
-            return FromClipper(Convention, tree);
+            return FromClipper(Factory, tree);
         }
 
         public IEnumerable<TPolygon> Intersection(TPolygon other)
@@ -204,14 +204,14 @@ namespace Pmad.Geometry.Shapes
             {
                 return PointInPolygonResult.IsOutside;
             }
-            var result = Convention.Algorithms.TestPointInPolygon(Shell, vector);
+            var result = Factory.Algorithms.TestPointInPolygon(Shell, vector);
             if (result != PointInPolygonResult.IsInside)
             {
                 return result;
             }
             foreach (var hole in Holes)
             {
-                result = Convention.Algorithms.TestPointInPolygon(hole, vector);
+                result = Factory.Algorithms.TestPointInPolygon(hole, vector);
                 if (result == PointInPolygonResult.IsInside)
                 {
                     return PointInPolygonResult.IsOutside;

@@ -16,14 +16,16 @@ namespace Pmad.Geometry.Shapes
 
     //<TPrimitive, TVector, TPolygon, TAlgorithms, TConvention>
 #>
-    public sealed class <#=def.Struct#>Convention : Vector2ConventionBase<<#=def.Primitive#>, <#=def.Struct#>, Polygon<#=def.Suffix#>, <#=def.Struct#>Algorithms, <#=def.Struct#>Convention>
+    public sealed class Factory<#=def.Suffix#> : ShapeFactoryBase<<#=def.Primitive#>, <#=def.Struct#>, Polygon<#=def.Suffix#>, <#=def.Struct#>Algorithms, Factory<#=def.Suffix#>>
     {
+        public static readonly Factory<#=def.Suffix#> Default = new ();
+
 <#
 	if ( def.IsFP ) {
 #>
         private readonly <#=def.Primitive#> scale;
 
-        public <#=def.Struct#>Convention(<#=def.Primitive#> scale = 1000)
+        public Factory<#=def.Suffix#>(<#=def.Primitive#> scale = 1000)
         {
             this.scale = scale;
         }

@@ -13,28 +13,27 @@ namespace Pmad.Geometry.Shapes
 
 	foreach(var def in definitions)
 	{
-	// <TPrimitive, TVector, TPolygon, TAlgorithms, TConvention>
 #>
-    public sealed class Polygon<#=def.Suffix#> : PolygonBase<<#=def.Primitive#>, <#=def.Struct#>, Polygon<#=def.Suffix#>, <#=def.Struct#>Algorithms, <#=def.Struct#>Convention>
+    public sealed class Polygon<#=def.Suffix#> : PolygonBase<<#=def.Primitive#>, <#=def.Struct#>, Polygon<#=def.Suffix#>, <#=def.Struct#>Algorithms, Factory<#=def.Suffix#>>
     {
 		public Polygon<#=def.Suffix#>(IReadOnlyList<<#=def.Struct#>> shell, IReadOnlyList<IReadOnlyList<<#=def.Struct#>>> holes)
-            : this(new(), shell, holes)
+            : this(Factory<#=def.Suffix#>.Default, shell, holes)
         {
         }
 		
-		public Polygon<#=def.Suffix#>(<#=def.Struct#>Convention convention, IReadOnlyList<<#=def.Struct#>> shell, IReadOnlyList<IReadOnlyList<<#=def.Struct#>>> holes)
-            : base(convention, shell, holes)
+		public Polygon<#=def.Suffix#>(Factory<#=def.Suffix#> factory, IReadOnlyList<<#=def.Struct#>> shell, IReadOnlyList<IReadOnlyList<<#=def.Struct#>>> holes)
+            : base(factory, shell, holes)
         {
         }
 
-		public Polygon<#=def.Suffix#>(<#=def.Struct#>Convention convention, IReadOnlyList<<#=def.Struct#>> shell)
-            : base(convention, shell, NoHoles)
+		public Polygon<#=def.Suffix#>(Factory<#=def.Suffix#> factory, IReadOnlyList<<#=def.Struct#>> shell)
+            : base(factory, shell, NoHoles)
         {
         }
 
 		protected override Polygon<#=def.Suffix#> CreatePolygon(IReadOnlyList<<#=def.Struct#>> shell, IReadOnlyList<IReadOnlyList<<#=def.Struct#>>> holes)
 		{
-			return new (Convention, shell, holes);
+			return new (Factory, shell, holes);
 		}
 
 		protected override Polygon<#=def.Suffix#> This => this;

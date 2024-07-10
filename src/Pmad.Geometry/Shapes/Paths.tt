@@ -14,21 +14,21 @@ namespace Pmad.Geometry.Shapes
 	foreach(var def in definitions)
 	{
 #>
-    public sealed class Path<#=def.Suffix#> : PathBase<<#=def.Primitive#>, <#=def.Struct#>, Polygon<#=def.Suffix#>, Path<#=def.Suffix#>, <#=def.Struct#>Algorithms, <#=def.Struct#>Convention>
+    public sealed class Path<#=def.Suffix#> : PathBase<<#=def.Primitive#>, <#=def.Struct#>, Polygon<#=def.Suffix#>, Path<#=def.Suffix#>, <#=def.Struct#>Algorithms, Factory<#=def.Suffix#>>
     {
 		public Path<#=def.Suffix#>(IReadOnlyList<<#=def.Struct#>> points)
-            : this(new(), points)
+            : this(Factory<#=def.Suffix#>.Default, points)
         {
         }
 		
-		public Path<#=def.Suffix#>(<#=def.Struct#>Convention convention, IReadOnlyList<<#=def.Struct#>> points)
-            : base(convention, points)
+		public Path<#=def.Suffix#>(Factory<#=def.Suffix#> factory, IReadOnlyList<<#=def.Struct#>> points)
+            : base(factory, points)
         {
         }
 
         protected override Path<#=def.Suffix#> CreatePath(IReadOnlyList<<#=def.Struct#>> points)
 		{
-			return new (Convention, points);
+			return new (Factory, points);
 		}
 
 		protected override Path<#=def.Suffix#> This => this;
