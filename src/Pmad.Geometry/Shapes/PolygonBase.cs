@@ -3,12 +3,11 @@ using Pmad.Geometry.Algorithms;
 
 namespace Pmad.Geometry.Shapes
 {
-    public abstract class PolygonBase<TPrimitive, TVector, TPolygon, TAlgorithms, TFactory> : IWithBounds<TVector>
+    public abstract class PolygonBase<TPrimitive, TVector, TPolygon, TFactory> : IWithBounds<TVector>
         where TPrimitive : unmanaged
         where TVector : struct, IVector2<TPrimitive, TVector>
-        where TPolygon : PolygonBase<TPrimitive, TVector, TPolygon, TAlgorithms, TFactory>
-        where TAlgorithms : IVectorAlgorithms<TPrimitive, TVector>, new()
-        where TFactory : ShapeFactoryBase<TPrimitive, TVector, TPolygon, TAlgorithms, TFactory>
+        where TPolygon : PolygonBase<TPrimitive, TVector, TPolygon, TFactory>
+        where TFactory : ShapeFactoryBase<TPrimitive, TVector, TPolygon, TFactory>
     {
         protected static readonly IReadOnlyList<IReadOnlyList<TVector>> NoHoles = new List<IReadOnlyList<TVector>>(0);
 
@@ -28,9 +27,9 @@ namespace Pmad.Geometry.Shapes
 
         public VectorEnvelope<TVector> Bounds { get; }
 
-        public double AreaD => Math.Abs(Factory.Algorithms.GetSignedAreaD(Shell)) - Holes.Sum(hole => Math.Abs(Factory.Algorithms.GetSignedAreaD(hole)));
+        public double AreaD => Math.Abs(Shell.GetSignedAreaD()) - Holes.Sum(hole => Math.Abs(hole.GetSignedAreaD()));
 
-        public float AreaF => Math.Abs(Factory.Algorithms.GetSignedAreaF(Shell)) - Holes.Sum(hole => Math.Abs(Factory.Algorithms.GetSignedAreaF(hole)));
+        public float AreaF => Math.Abs(Shell.GetSignedAreaF()) - Holes.Sum(hole => Math.Abs(hole.GetSignedAreaF()));
 
         protected abstract TPolygon This { get; }
 
@@ -204,14 +203,14 @@ namespace Pmad.Geometry.Shapes
             {
                 return PointInPolygonResult.IsOutside;
             }
-            var result = Factory.Algorithms.TestPointInPolygon(Shell, vector);
+            var result = Shell.TestPointInPolygon(vector);
             if (result != PointInPolygonResult.IsInside)
             {
                 return result;
             }
             foreach (var hole in Holes)
             {
-                result = Factory.Algorithms.TestPointInPolygon(hole, vector);
+                result = hole.TestPointInPolygon(vector);
                 if (result == PointInPolygonResult.IsInside)
                 {
                     return PointInPolygonResult.IsOutside;

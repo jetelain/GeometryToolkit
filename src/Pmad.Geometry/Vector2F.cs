@@ -53,9 +53,15 @@ namespace Pmad.Geometry
             return value / value.Length();
         }
 
-        public static double Dot(Vector2F v1, Vector2F v2)
+        public static float Dot(Vector2F v1, Vector2F v2)
         {
             return Vector128.Dot(v1.vector, v2.vector);
+        }
+
+        [MethodImpl(MethodImplOptions.AggressiveInlining)]
+        readonly Vector2F IVectorFP<float,Vector2F>.Normalize()
+        {
+            return Normalize(this);
         }
     }
 }

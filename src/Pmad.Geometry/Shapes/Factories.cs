@@ -1,9 +1,8 @@
 ﻿using Clipper2Lib;
-using Pmad.Geometry.Algorithms;
 
 namespace Pmad.Geometry.Shapes
 {
-    public sealed class Factory2I : ShapeFactoryBase<int, Vector2I, Polygon2I, Vector2IAlgorithms, Factory2I>
+    public sealed class Factory2I : ShapeFactoryBase<int, Vector2I, Polygon2I, Factory2I>
     {
         public static readonly Factory2I Default = new ();
 
@@ -33,7 +32,7 @@ namespace Pmad.Geometry.Shapes
 			return Polygon2I.FromClipper(this, polyTree64);
 		}
     }
-    public sealed class Factory2F : ShapeFactoryBase<float, Vector2F, Polygon2F, Vector2FAlgorithms, Factory2F>
+    public sealed class Factory2F : ShapeFactoryBase<float, Vector2F, Polygon2F, Factory2F>
     {
         public static readonly Factory2F Default = new ();
 
@@ -71,7 +70,7 @@ namespace Pmad.Geometry.Shapes
 			return Polygon2F.FromClipper(this, polyTree64);
 		}
     }
-    public sealed class Factory2L : ShapeFactoryBase<long, Vector2L, Polygon2L, Vector2LAlgorithms, Factory2L>
+    public sealed class Factory2L : ShapeFactoryBase<long, Vector2L, Polygon2L, Factory2L>
     {
         public static readonly Factory2L Default = new ();
 
@@ -101,7 +100,7 @@ namespace Pmad.Geometry.Shapes
 			return Polygon2L.FromClipper(this, polyTree64);
 		}
     }
-    public sealed class Factory2D : ShapeFactoryBase<double, Vector2D, Polygon2D, Vector2DAlgorithms, Factory2D>
+    public sealed class Factory2D : ShapeFactoryBase<double, Vector2D, Polygon2D, Factory2D>
     {
         public static readonly Factory2D Default = new ();
 
@@ -139,7 +138,7 @@ namespace Pmad.Geometry.Shapes
 			return Polygon2D.FromClipper(this, polyTree64);
 		}
     }
-    public sealed class Factory2IS : ShapeFactoryBase<int, Vector2IS, Polygon2IS, Vector2ISAlgorithms, Factory2IS>
+    public sealed class Factory2IS : ShapeFactoryBase<int, Vector2IS, Polygon2IS, Factory2IS>
     {
         public static readonly Factory2IS Default = new ();
 
@@ -169,7 +168,7 @@ namespace Pmad.Geometry.Shapes
 			return Polygon2IS.FromClipper(this, polyTree64);
 		}
     }
-    public sealed class Factory2FS : ShapeFactoryBase<float, Vector2FS, Polygon2FS, Vector2FSAlgorithms, Factory2FS>
+    public sealed class Factory2FS : ShapeFactoryBase<float, Vector2FS, Polygon2FS, Factory2FS>
     {
         public static readonly Factory2FS Default = new ();
 
@@ -207,7 +206,7 @@ namespace Pmad.Geometry.Shapes
 			return Polygon2FS.FromClipper(this, polyTree64);
 		}
     }
-    public sealed class Factory2LS : ShapeFactoryBase<long, Vector2LS, Polygon2LS, Vector2LSAlgorithms, Factory2LS>
+    public sealed class Factory2LS : ShapeFactoryBase<long, Vector2LS, Polygon2LS, Factory2LS>
     {
         public static readonly Factory2LS Default = new ();
 
@@ -237,7 +236,7 @@ namespace Pmad.Geometry.Shapes
 			return Polygon2LS.FromClipper(this, polyTree64);
 		}
     }
-    public sealed class Factory2DS : ShapeFactoryBase<double, Vector2DS, Polygon2DS, Vector2DSAlgorithms, Factory2DS>
+    public sealed class Factory2DS : ShapeFactoryBase<double, Vector2DS, Polygon2DS, Factory2DS>
     {
         public static readonly Factory2DS Default = new ();
 
@@ -275,7 +274,7 @@ namespace Pmad.Geometry.Shapes
 			return Polygon2DS.FromClipper(this, polyTree64);
 		}
     }
-    public sealed class Factory2FN : ShapeFactoryBase<float, Vector2FN, Polygon2FN, Vector2FNAlgorithms, Factory2FN>
+    public sealed class Factory2FN : ShapeFactoryBase<float, Vector2FN, Polygon2FN, Factory2FN>
     {
         public static readonly Factory2FN Default = new ();
 

@@ -2,7 +2,7 @@
 
 namespace Pmad.Geometry.Shapes
 {
-    public sealed class Polygon2I : PolygonBase<int, Vector2I, Polygon2I, Vector2IAlgorithms, Factory2I>
+    public sealed class Polygon2I : PolygonBase<int, Vector2I, Polygon2I, Factory2I>
     {
 		public Polygon2I(IReadOnlyList<Vector2I> shell, IReadOnlyList<IReadOnlyList<Vector2I>> holes)
             : this(Factory2I.Default, shell, holes)
@@ -26,7 +26,7 @@ namespace Pmad.Geometry.Shapes
 
 		protected override Polygon2I This => this;
     }
-    public sealed class Polygon2F : PolygonBase<float, Vector2F, Polygon2F, Vector2FAlgorithms, Factory2F>
+    public sealed class Polygon2F : PolygonBase<float, Vector2F, Polygon2F, Factory2F>
     {
 		public Polygon2F(IReadOnlyList<Vector2F> shell, IReadOnlyList<IReadOnlyList<Vector2F>> holes)
             : this(Factory2F.Default, shell, holes)
@@ -50,7 +50,7 @@ namespace Pmad.Geometry.Shapes
 
 		protected override Polygon2F This => this;
     }
-    public sealed class Polygon2L : PolygonBase<long, Vector2L, Polygon2L, Vector2LAlgorithms, Factory2L>
+    public sealed class Polygon2L : PolygonBase<long, Vector2L, Polygon2L, Factory2L>
     {
 		public Polygon2L(IReadOnlyList<Vector2L> shell, IReadOnlyList<IReadOnlyList<Vector2L>> holes)
             : this(Factory2L.Default, shell, holes)
@@ -74,7 +74,7 @@ namespace Pmad.Geometry.Shapes
 
 		protected override Polygon2L This => this;
     }
-    public sealed class Polygon2D : PolygonBase<double, Vector2D, Polygon2D, Vector2DAlgorithms, Factory2D>
+    public sealed class Polygon2D : PolygonBase<double, Vector2D, Polygon2D, Factory2D>
     {
 		public Polygon2D(IReadOnlyList<Vector2D> shell, IReadOnlyList<IReadOnlyList<Vector2D>> holes)
             : this(Factory2D.Default, shell, holes)
@@ -98,7 +98,7 @@ namespace Pmad.Geometry.Shapes
 
 		protected override Polygon2D This => this;
     }
-    public sealed class Polygon2IS : PolygonBase<int, Vector2IS, Polygon2IS, Vector2ISAlgorithms, Factory2IS>
+    public sealed class Polygon2IS : PolygonBase<int, Vector2IS, Polygon2IS, Factory2IS>
     {
 		public Polygon2IS(IReadOnlyList<Vector2IS> shell, IReadOnlyList<IReadOnlyList<Vector2IS>> holes)
             : this(Factory2IS.Default, shell, holes)
@@ -122,7 +122,7 @@ namespace Pmad.Geometry.Shapes
 
 		protected override Polygon2IS This => this;
     }
-    public sealed class Polygon2FS : PolygonBase<float, Vector2FS, Polygon2FS, Vector2FSAlgorithms, Factory2FS>
+    public sealed class Polygon2FS : PolygonBase<float, Vector2FS, Polygon2FS, Factory2FS>
     {
 		public Polygon2FS(IReadOnlyList<Vector2FS> shell, IReadOnlyList<IReadOnlyList<Vector2FS>> holes)
             : this(Factory2FS.Default, shell, holes)
@@ -146,7 +146,7 @@ namespace Pmad.Geometry.Shapes
 
 		protected override Polygon2FS This => this;
     }
-    public sealed class Polygon2LS : PolygonBase<long, Vector2LS, Polygon2LS, Vector2LSAlgorithms, Factory2LS>
+    public sealed class Polygon2LS : PolygonBase<long, Vector2LS, Polygon2LS, Factory2LS>
     {
 		public Polygon2LS(IReadOnlyList<Vector2LS> shell, IReadOnlyList<IReadOnlyList<Vector2LS>> holes)
             : this(Factory2LS.Default, shell, holes)
@@ -170,7 +170,7 @@ namespace Pmad.Geometry.Shapes
 
 		protected override Polygon2LS This => this;
     }
-    public sealed class Polygon2DS : PolygonBase<double, Vector2DS, Polygon2DS, Vector2DSAlgorithms, Factory2DS>
+    public sealed class Polygon2DS : PolygonBase<double, Vector2DS, Polygon2DS, Factory2DS>
     {
 		public Polygon2DS(IReadOnlyList<Vector2DS> shell, IReadOnlyList<IReadOnlyList<Vector2DS>> holes)
             : this(Factory2DS.Default, shell, holes)
@@ -194,7 +194,7 @@ namespace Pmad.Geometry.Shapes
 
 		protected override Polygon2DS This => this;
     }
-    public sealed class Polygon2FN : PolygonBase<float, Vector2FN, Polygon2FN, Vector2FNAlgorithms, Factory2FN>
+    public sealed class Polygon2FN : PolygonBase<float, Vector2FN, Polygon2FN, Factory2FN>
     {
 		public Polygon2FN(IReadOnlyList<Vector2FN> shell, IReadOnlyList<IReadOnlyList<Vector2FN>> holes)
             : this(Factory2FN.Default, shell, holes)

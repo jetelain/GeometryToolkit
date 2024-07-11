@@ -22,5 +22,8 @@ namespace Pmad.Geometry
         /// </summary>
         /// <returns>X^2 + Y^2</returns>
         TPrimitive LengthSquared();
+
+
+        TVector Normalize();
     }
 }

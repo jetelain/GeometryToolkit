@@ -6,7 +6,6 @@
 <#@ include file="../Definitions.tt" #>
 <#@ output extension=".cs" #>
 using Clipper2Lib;
-using Pmad.Geometry.Algorithms;
 
 namespace Pmad.Geometry.Shapes
 {
@@ -16,7 +15,7 @@ namespace Pmad.Geometry.Shapes
 
     //<TPrimitive, TVector, TPolygon, TAlgorithms, TConvention>
 #>
-    public sealed class Factory<#=def.Suffix#> : ShapeFactoryBase<<#=def.Primitive#>, <#=def.Struct#>, Polygon<#=def.Suffix#>, <#=def.Struct#>Algorithms, Factory<#=def.Suffix#>>
+    public sealed class Factory<#=def.Suffix#> : ShapeFactoryBase<<#=def.Primitive#>, <#=def.Struct#>, Polygon<#=def.Suffix#>, Factory<#=def.Suffix#>>
     {
         public static readonly Factory<#=def.Suffix#> Default = new ();
 

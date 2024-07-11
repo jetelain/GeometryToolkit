@@ -3,13 +3,12 @@ using Pmad.Geometry.Algorithms;
 
 namespace Pmad.Geometry.Shapes
 {
-    public abstract class PathBase<TPrimitive, TVector, TPolygon, TPath, TAlgorithms, TFactory> : IWithBounds<TVector>
+    public abstract class PathBase<TPrimitive, TVector, TPolygon, TPath, TFactory> : IWithBounds<TVector>
         where TPrimitive : unmanaged
         where TVector : struct, IVector2<TPrimitive, TVector>
-        where TPolygon : PolygonBase<TPrimitive, TVector, TPolygon, TAlgorithms, TFactory>
-        where TPath : PathBase<TPrimitive, TVector, TPolygon, TPath, TAlgorithms, TFactory>
-        where TAlgorithms : IVectorAlgorithms<TPrimitive, TVector>, new()
-        where TFactory : ShapeFactoryBase<TPrimitive, TVector, TPolygon, TAlgorithms, TFactory>
+        where TPolygon : PolygonBase<TPrimitive, TVector, TPolygon, TFactory>
+        where TPath : PathBase<TPrimitive, TVector, TPolygon, TPath, TFactory>
+        where TFactory : ShapeFactoryBase<TPrimitive, TVector, TPolygon, TFactory>
     {
         public PathBase(TFactory factory, IReadOnlyList<TVector> points)
         {
@@ -30,9 +29,9 @@ namespace Pmad.Geometry.Shapes
 
         public bool IsClosed => Points[0].Equals(Points[Points.Count-1]);
 
-        public bool IsCounterClockWise => IsClosed && Factory.Algorithms.GetSignedAreaD(Points) > 0;
+        public bool IsCounterClockWise => IsClosed && Points.GetSignedAreaD() > 0;
 
-        public bool IsClockWise => IsClosed && Factory.Algorithms.GetSignedAreaD(Points) < 0;
+        public bool IsClockWise => IsClosed && Points.GetSignedAreaD() < 0;
 
         protected abstract TPath This { get; }
 

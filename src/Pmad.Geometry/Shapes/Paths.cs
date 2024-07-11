@@ -2,7 +2,7 @@
 
 namespace Pmad.Geometry.Shapes
 {
-    public sealed class Path2I : PathBase<int, Vector2I, Polygon2I, Path2I, Vector2IAlgorithms, Factory2I>
+    public sealed class Path2I : PathBase<int, Vector2I, Polygon2I, Path2I, Factory2I>
     {
 		public Path2I(IReadOnlyList<Vector2I> points)
             : this(Factory2I.Default, points)
@@ -21,7 +21,7 @@ namespace Pmad.Geometry.Shapes
 
 		protected override Path2I This => this;
     }
-    public sealed class Path2F : PathBase<float, Vector2F, Polygon2F, Path2F, Vector2FAlgorithms, Factory2F>
+    public sealed class Path2F : PathBase<float, Vector2F, Polygon2F, Path2F, Factory2F>
     {
 		public Path2F(IReadOnlyList<Vector2F> points)
             : this(Factory2F.Default, points)
@@ -40,7 +40,7 @@ namespace Pmad.Geometry.Shapes
 
 		protected override Path2F This => this;
     }
-    public sealed class Path2L : PathBase<long, Vector2L, Polygon2L, Path2L, Vector2LAlgorithms, Factory2L>
+    public sealed class Path2L : PathBase<long, Vector2L, Polygon2L, Path2L, Factory2L>
     {
 		public Path2L(IReadOnlyList<Vector2L> points)
             : this(Factory2L.Default, points)
@@ -59,7 +59,7 @@ namespace Pmad.Geometry.Shapes
 
 		protected override Path2L This => this;
     }
-    public sealed class Path2D : PathBase<double, Vector2D, Polygon2D, Path2D, Vector2DAlgorithms, Factory2D>
+    public sealed class Path2D : PathBase<double, Vector2D, Polygon2D, Path2D, Factory2D>
     {
 		public Path2D(IReadOnlyList<Vector2D> points)
             : this(Factory2D.Default, points)
@@ -78,7 +78,7 @@ namespace Pmad.Geometry.Shapes
 
 		protected override Path2D This => this;
     }
-    public sealed class Path2IS : PathBase<int, Vector2IS, Polygon2IS, Path2IS, Vector2ISAlgorithms, Factory2IS>
+    public sealed class Path2IS : PathBase<int, Vector2IS, Polygon2IS, Path2IS, Factory2IS>
     {
 		public Path2IS(IReadOnlyList<Vector2IS> points)
             : this(Factory2IS.Default, points)
@@ -97,7 +97,7 @@ namespace Pmad.Geometry.Shapes
 
 		protected override Path2IS This => this;
     }
-    public sealed class Path2FS : PathBase<float, Vector2FS, Polygon2FS, Path2FS, Vector2FSAlgorithms, Factory2FS>
+    public sealed class Path2FS : PathBase<float, Vector2FS, Polygon2FS, Path2FS, Factory2FS>
     {
 		public Path2FS(IReadOnlyList<Vector2FS> points)
             : this(Factory2FS.Default, points)
@@ -116,7 +116,7 @@ namespace Pmad.Geometry.Shapes
 
 		protected override Path2FS This => this;
     }
-    public sealed class Path2LS : PathBase<long, Vector2LS, Polygon2LS, Path2LS, Vector2LSAlgorithms, Factory2LS>
+    public sealed class Path2LS : PathBase<long, Vector2LS, Polygon2LS, Path2LS, Factory2LS>
     {
 		public Path2LS(IReadOnlyList<Vector2LS> points)
             : this(Factory2LS.Default, points)
@@ -135,7 +135,7 @@ namespace Pmad.Geometry.Shapes
 
 		protected override Path2LS This => this;
     }
-    public sealed class Path2DS : PathBase<double, Vector2DS, Polygon2DS, Path2DS, Vector2DSAlgorithms, Factory2DS>
+    public sealed class Path2DS : PathBase<double, Vector2DS, Polygon2DS, Path2DS, Factory2DS>
     {
 		public Path2DS(IReadOnlyList<Vector2DS> points)
             : this(Factory2DS.Default, points)
@@ -154,7 +154,7 @@ namespace Pmad.Geometry.Shapes
 
 		protected override Path2DS This => this;
     }
-    public sealed class Path2FN : PathBase<float, Vector2FN, Polygon2FN, Path2FN, Vector2FNAlgorithms, Factory2FN>
+    public sealed class Path2FN : PathBase<float, Vector2FN, Polygon2FN, Path2FN, Factory2FN>
     {
 		public Path2FN(IReadOnlyList<Vector2FN> points)
             : this(Factory2FN.Default, points)

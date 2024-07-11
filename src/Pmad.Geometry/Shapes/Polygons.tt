@@ -14,7 +14,7 @@ namespace Pmad.Geometry.Shapes
 	foreach(var def in definitions)
 	{
 #>
-    public sealed class Polygon<#=def.Suffix#> : PolygonBase<<#=def.Primitive#>, <#=def.Struct#>, Polygon<#=def.Suffix#>, <#=def.Struct#>Algorithms, Factory<#=def.Suffix#>>
+    public sealed class Polygon<#=def.Suffix#> : PolygonBase<<#=def.Primitive#>, <#=def.Struct#>, Polygon<#=def.Suffix#>, Factory<#=def.Suffix#>>
     {
 		public Polygon<#=def.Suffix#>(IReadOnlyList<<#=def.Struct#>> shell, IReadOnlyList<IReadOnlyList<<#=def.Struct#>>> holes)
             : this(Factory<#=def.Suffix#>.Default, shell, holes)

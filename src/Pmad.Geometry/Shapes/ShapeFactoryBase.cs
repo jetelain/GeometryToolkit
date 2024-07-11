@@ -3,14 +3,12 @@ using Pmad.Geometry.Algorithms;
 
 namespace Pmad.Geometry.Shapes
 {
-    public abstract class ShapeFactoryBase<TPrimitive, TVector, TPolygon, TAlgorithms, TFactory>
+    public abstract class ShapeFactoryBase<TPrimitive, TVector, TPolygon, TFactory>
         where TPrimitive : unmanaged
         where TVector : struct, IVector2<TPrimitive, TVector>
-        where TPolygon : PolygonBase<TPrimitive, TVector, TPolygon, TAlgorithms, TFactory>
-        where TAlgorithms : IVectorAlgorithms<TPrimitive, TVector>, new()
-        where TFactory : ShapeFactoryBase<TPrimitive, TVector, TPolygon, TAlgorithms, TFactory>
+        where TPolygon : PolygonBase<TPrimitive, TVector, TPolygon, TFactory>
+        where TFactory : ShapeFactoryBase<TPrimitive, TVector, TPolygon, TFactory>
     {
-        public readonly TAlgorithms Algorithms = new();
 
         public abstract Clipper2Lib.Point64 ToClipper(TVector vector);
 
@@ -34,9 +32,9 @@ namespace Pmad.Geometry.Shapes
             return CreatePolygon(new List<TVector>(5)
             {
                 p1,
-                Algorithms.Create(p1.X, p2.X),
+                Vectors.Create<TPrimitive,TVector>(p1.X, p2.X),
                 p2,
-                Algorithms.Create(p2.X, p1.X),
+                Vectors.Create<TPrimitive,TVector>(p2.X, p1.X),
                 p1
             });
         }

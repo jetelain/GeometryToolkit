@@ -17,11 +17,12 @@ namespace Pmad.Geometry.Benchmark
                     //typeof(DivisionBenchmark),
                     //typeof(DivisionFloatBenchmark),
                     //typeof(CrossProductBenchmark),
-                    typeof(CrossProduct3Benchmark),
+                    //typeof(CrossProduct3Benchmark),
                     //typeof(SumBenchmark),
                     //typeof(LengthBenchmark),
-                    //typeof(PointInPolygonBenchmark),
-                    //typeof(SwapXYBenchmark)
+                    typeof(PointInPolygonBenchmark),
+                    //typeof(SwapXYBenchmark),
+                    //typeof(AdditionBenchmark)
                 ]);
         }
     }

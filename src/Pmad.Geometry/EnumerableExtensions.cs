@@ -31,7 +31,8 @@
                 }
                 return value;
             }
-            return default; // TODO: Throws
+            ThrowHelper.ThrowNoElementsException();
+            return default;
         }
 
         public static TVector Min<TVector>(this IEnumerable<TVector> list)
@@ -47,7 +48,8 @@
                 }
                 return value;
             }
-            return default; // TODO: Throws
+            ThrowHelper.ThrowNoElementsException();
+            return default;
         }
 
         public static double GetLengthD<TVector>(this IEnumerable<TVector> list)

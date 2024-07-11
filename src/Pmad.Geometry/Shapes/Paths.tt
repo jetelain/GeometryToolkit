@@ -14,7 +14,7 @@ namespace Pmad.Geometry.Shapes
 	foreach(var def in definitions)
 	{
 #>
-    public sealed class Path<#=def.Suffix#> : PathBase<<#=def.Primitive#>, <#=def.Struct#>, Polygon<#=def.Suffix#>, Path<#=def.Suffix#>, <#=def.Struct#>Algorithms, Factory<#=def.Suffix#>>
+    public sealed class Path<#=def.Suffix#> : PathBase<<#=def.Primitive#>, <#=def.Struct#>, Polygon<#=def.Suffix#>, Path<#=def.Suffix#>, Factory<#=def.Suffix#>>
     {
 		public Path<#=def.Suffix#>(IReadOnlyList<<#=def.Struct#>> points)
             : this(Factory<#=def.Suffix#>.Default, points)

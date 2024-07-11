@@ -251,5 +251,11 @@ namespace Pmad.Geometry
         {
             return new Vector2F(vector);
         }
+
+        [MethodImpl(MethodImplOptions.AggressiveInlining)]
+        readonly Vector2FN IVectorFP<float, Vector2FN>.Normalize()
+        {
+            return Normalize(this);
+        }
     }
 }

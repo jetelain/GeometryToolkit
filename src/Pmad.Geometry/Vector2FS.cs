@@ -47,5 +47,11 @@ namespace Pmad.Geometry
         {
             return value1.X * value2.X + value1.Y * value2.Y;
         }
+
+        [MethodImpl(MethodImplOptions.AggressiveInlining)]
+        readonly Vector2FS IVectorFP<float, Vector2FS>.Normalize()
+        {
+            return Normalize(this);
+        }
     }
 }

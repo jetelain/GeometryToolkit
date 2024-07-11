@@ -39,6 +39,10 @@
       <LastGenOutput>Polygons.cs</LastGenOutput>
       <Generator>TextTemplatingFileGenerator</Generator>
     </None>
+    <None Update="Vectors.tt">
+      <LastGenOutput>Vectors.cs</LastGenOutput>
+      <Generator>TextTemplatingFileGenerator</Generator>
+    </None>
     <None Update="Vectors2Scalar.tt">
       <LastGenOutput>Vectors2Scalar.cs</LastGenOutput>
       <Generator>TextTemplatingFileGenerator</Generator>
@@ -88,6 +92,11 @@
       <DesignTime>True</DesignTime>
       <AutoGen>True</AutoGen>
       <DependentUpon>Polygons.tt</DependentUpon>
+    </Compile>
+    <Compile Update="Vectors.cs">
+      <DependentUpon>Vectors.tt</DependentUpon>
+      <DesignTime>True</DesignTime>
+      <AutoGen>True</AutoGen>
     </Compile>
     <Compile Update="Vectors2Scalar.cs">
       <DependentUpon>Vectors2Scalar.tt</DependentUpon>
