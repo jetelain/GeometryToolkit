@@ -106,7 +106,7 @@
                 if (!MoveNextPoint())
                 {
                     hasReachedEnd = true;
-                    if (Vectors.NotEquals(position,previousPoint))
+                    if (!position.Equals(previousPoint))
                     {
                         previousPosition = position;
                         position = previousPoint;
@@ -117,7 +117,7 @@
                 if (KeepRightAngles)
                 {
                     var angle = Math.Abs(Math.Abs(Math.Acos(Vectors.DotD<TPrimitive, TVector>(delta.Normalize(), previousDelta.Normalize()))) - (Math.PI / 2));
-                    if (angle < 0.1d && Vectors.NotEquals(position, previousPoint))
+                    if (angle < 0.1d && !position.Equals(previousPoint))
                     {
                         index--;
                         previousPosition = position;

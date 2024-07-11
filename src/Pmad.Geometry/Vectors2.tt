@@ -229,6 +229,18 @@ namespace Pmad.Geometry
         }
 
         [MethodImpl(MethodImplOptions.AggressiveInlining)]
+        readonly <#=def.Struct#> IVector<<#=def.Struct#>>.Multiply(<#=def.Struct#> value)
+        {
+            return this * value;
+        }
+
+        [MethodImpl(MethodImplOptions.AggressiveInlining)]
+        readonly <#=def.Struct#> IVector<<#=def.Struct#>>.Divide(<#=def.Struct#> value)
+        {
+            return this / value;
+        }
+
+        [MethodImpl(MethodImplOptions.AggressiveInlining)]
         readonly <#=def.Struct#> IVector<<#=def.Struct#>>.Min(<#=def.Struct#> other)
         {
             return Min(this, other);

@@ -26,6 +26,36 @@ namespace Pmad.Geometry
             return default;
         }
 
+        [MethodImpl(MethodImplOptions.AggressiveInlining)]
+        public static TVector Create<TPrimitive,TVector>(int x, int y)
+            where TVector : struct, IVector<TVector>, IVector2<TPrimitive,TVector>
+            where TPrimitive : unmanaged
+        {
+<# foreach(var def in definitions) { #>
+            if (typeof(TVector) == typeof(<#=def.Struct#>))
+            {
+                return (TVector)(object)new <#=def.Struct#>(x, y);
+            }
+<# } #>
+            ThrowHelper.ThrowNotSupportedException();
+            return default;
+        }
+
+        [MethodImpl(MethodImplOptions.AggressiveInlining)]
+        public static TVector Create<TPrimitive,TVector>(long x, long y)
+            where TVector : struct, IVector<TVector>, IVector2<TPrimitive,TVector>
+            where TPrimitive : unmanaged
+        {
+<# foreach(var def in definitions) { #>
+            if (typeof(TVector) == typeof(<#=def.Struct#>))
+            {
+                return (TVector)(object)new <#=def.Struct#>((<#=def.Primitive#>)x, (<#=def.Primitive#>)y);
+            }
+<# } #>
+            ThrowHelper.ThrowNotSupportedException();
+            return default;
+        }
+
 <# foreach(var op in new[]{
     (Operator :"+", Name: "Add"),
     (Operator :"-", Name: "Substract"),

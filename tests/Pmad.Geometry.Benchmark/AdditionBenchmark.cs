@@ -1,6 +1,5 @@
 ﻿using System.Runtime.CompilerServices;
 using BenchmarkDotNet.Attributes;
-using static System.Runtime.InteropServices.JavaScript.JSType;
 
 namespace Pmad.Geometry.Benchmark
 {

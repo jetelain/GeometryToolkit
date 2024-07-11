@@ -209,6 +209,18 @@ namespace Pmad.Geometry
         }
 
         [MethodImpl(MethodImplOptions.AggressiveInlining)]
+        readonly Vector2FN IVector<Vector2FN>.Multiply(Vector2FN value)
+        {
+            return this * value;
+        }
+
+        [MethodImpl(MethodImplOptions.AggressiveInlining)]
+        readonly Vector2FN IVector<Vector2FN>.Divide(Vector2FN value)
+        {
+            return this / value;
+        }
+
+        [MethodImpl(MethodImplOptions.AggressiveInlining)]
         readonly Vector2FN IVector<Vector2FN>.Min(Vector2FN other)
         {
             return Min(this, other);

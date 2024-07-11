@@ -49,6 +49,96 @@ namespace Pmad.Geometry
             return default;
         }
 
+        [MethodImpl(MethodImplOptions.AggressiveInlining)]
+        public static TVector Create<TPrimitive,TVector>(int x, int y)
+            where TVector : struct, IVector<TVector>, IVector2<TPrimitive,TVector>
+            where TPrimitive : unmanaged
+        {
+            if (typeof(TVector) == typeof(Vector2I))
+            {
+                return (TVector)(object)new Vector2I(x, y);
+            }
+            if (typeof(TVector) == typeof(Vector2F))
+            {
+                return (TVector)(object)new Vector2F(x, y);
+            }
+            if (typeof(TVector) == typeof(Vector2L))
+            {
+                return (TVector)(object)new Vector2L(x, y);
+            }
+            if (typeof(TVector) == typeof(Vector2D))
+            {
+                return (TVector)(object)new Vector2D(x, y);
+            }
+            if (typeof(TVector) == typeof(Vector2IS))
+            {
+                return (TVector)(object)new Vector2IS(x, y);
+            }
+            if (typeof(TVector) == typeof(Vector2FS))
+            {
+                return (TVector)(object)new Vector2FS(x, y);
+            }
+            if (typeof(TVector) == typeof(Vector2LS))
+            {
+                return (TVector)(object)new Vector2LS(x, y);
+            }
+            if (typeof(TVector) == typeof(Vector2DS))
+            {
+                return (TVector)(object)new Vector2DS(x, y);
+            }
+            if (typeof(TVector) == typeof(Vector2FN))
+            {
+                return (TVector)(object)new Vector2FN(x, y);
+            }
+            ThrowHelper.ThrowNotSupportedException();
+            return default;
+        }
+
+        [MethodImpl(MethodImplOptions.AggressiveInlining)]
+        public static TVector Create<TPrimitive,TVector>(long x, long y)
+            where TVector : struct, IVector<TVector>, IVector2<TPrimitive,TVector>
+            where TPrimitive : unmanaged
+        {
+            if (typeof(TVector) == typeof(Vector2I))
+            {
+                return (TVector)(object)new Vector2I((int)x, (int)y);
+            }
+            if (typeof(TVector) == typeof(Vector2F))
+            {
+                return (TVector)(object)new Vector2F((float)x, (float)y);
+            }
+            if (typeof(TVector) == typeof(Vector2L))
+            {
+                return (TVector)(object)new Vector2L((long)x, (long)y);
+            }
+            if (typeof(TVector) == typeof(Vector2D))
+            {
+                return (TVector)(object)new Vector2D((double)x, (double)y);
+            }
+            if (typeof(TVector) == typeof(Vector2IS))
+            {
+                return (TVector)(object)new Vector2IS((int)x, (int)y);
+            }
+            if (typeof(TVector) == typeof(Vector2FS))
+            {
+                return (TVector)(object)new Vector2FS((float)x, (float)y);
+            }
+            if (typeof(TVector) == typeof(Vector2LS))
+            {
+                return (TVector)(object)new Vector2LS((long)x, (long)y);
+            }
+            if (typeof(TVector) == typeof(Vector2DS))
+            {
+                return (TVector)(object)new Vector2DS((double)x, (double)y);
+            }
+            if (typeof(TVector) == typeof(Vector2FN))
+            {
+                return (TVector)(object)new Vector2FN((float)x, (float)y);
+            }
+            ThrowHelper.ThrowNotSupportedException();
+            return default;
+        }
+
 
         [MethodImpl(MethodImplOptions.AggressiveInlining)]
         public static TVector Add<TVector>(TVector left, TVector right)

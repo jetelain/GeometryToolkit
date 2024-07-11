@@ -22,6 +22,20 @@
         T Substract(T value);
 
         /// <summary>
+        /// Compute the multiplication of this and an other vector
+        /// </summary>
+        /// <param name="value"></param>
+        /// <returns>this * value</returns>
+        T Multiply(T value);
+
+        /// <summary>
+        /// Compute the division of this and an other vector
+        /// </summary>
+        /// <param name="value"></param>
+        /// <returns>this / value</returns>
+        T Divide(T value);
+
+        /// <summary>
         /// Length of vector as a <see langword="double"/>.
         /// </summary>
         /// <returns>sqrt(X^2 + Y^2)</returns>

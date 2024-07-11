@@ -8,10 +8,6 @@
   </PropertyGroup>
 
   <ItemGroup>
-    <None Update="Algorithms\PathFollower.tt">
-      <LastGenOutput>PathFollower.cs</LastGenOutput>
-      <Generator>TextTemplatingFileGenerator</Generator>
-    </None>
     <None Update="Algorithms\Algorithms.tt">
       <LastGenOutput>Algorithms.cs</LastGenOutput>
       <Generator>TextTemplatingFileGenerator</Generator>
@@ -26,18 +22,6 @@
     </None>
     <None Update="Definitions.tt">
       <Generator></Generator>
-    </None>
-    <None Update="Shapes\Factories.tt">
-      <LastGenOutput>Factories.cs</LastGenOutput>
-      <Generator>TextTemplatingFileGenerator</Generator>
-    </None>
-    <None Update="Shapes\Paths.tt">
-      <LastGenOutput>Paths.cs</LastGenOutput>
-      <Generator>TextTemplatingFileGenerator</Generator>
-    </None>
-    <None Update="Shapes\Polygons.tt">
-      <LastGenOutput>Polygons.cs</LastGenOutput>
-      <Generator>TextTemplatingFileGenerator</Generator>
     </None>
     <None Update="Vectors.tt">
       <LastGenOutput>Vectors.cs</LastGenOutput>
@@ -63,11 +47,6 @@
       <AutoGen>True</AutoGen>
       <DependentUpon>Algorithms.tt</DependentUpon>
     </Compile>
-    <Compile Update="Algorithms\PathFollower.cs">
-      <DesignTime>True</DesignTime>
-      <AutoGen>True</AutoGen>
-      <DependentUpon>PathFollower.tt</DependentUpon>
-    </Compile>
     <Compile Update="Algorithms\PointInPolygon.cs">
       <DesignTime>True</DesignTime>
       <AutoGen>True</AutoGen>
@@ -77,21 +56,6 @@
       <DesignTime>True</DesignTime>
       <AutoGen>True</AutoGen>
       <DependentUpon>SignedArea.tt</DependentUpon>
-    </Compile>
-    <Compile Update="Shapes\Factories.cs">
-      <DependentUpon>Factories.tt</DependentUpon>
-      <DesignTime>True</DesignTime>
-      <AutoGen>True</AutoGen>
-    </Compile>
-    <Compile Update="Shapes\Paths.cs">
-      <DesignTime>True</DesignTime>
-      <AutoGen>True</AutoGen>
-      <DependentUpon>Paths.tt</DependentUpon>
-    </Compile>
-    <Compile Update="Shapes\Polygons.cs">
-      <DesignTime>True</DesignTime>
-      <AutoGen>True</AutoGen>
-      <DependentUpon>Polygons.tt</DependentUpon>
     </Compile>
     <Compile Update="Vectors.cs">
       <DependentUpon>Vectors.tt</DependentUpon>

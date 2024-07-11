@@ -197,6 +197,18 @@ namespace Pmad.Geometry
         }
 
         [MethodImpl(MethodImplOptions.AggressiveInlining)]
+        readonly Vector2I IVector<Vector2I>.Multiply(Vector2I value)
+        {
+            return this * value;
+        }
+
+        [MethodImpl(MethodImplOptions.AggressiveInlining)]
+        readonly Vector2I IVector<Vector2I>.Divide(Vector2I value)
+        {
+            return this / value;
+        }
+
+        [MethodImpl(MethodImplOptions.AggressiveInlining)]
         readonly Vector2I IVector<Vector2I>.Min(Vector2I other)
         {
             return Min(this, other);
@@ -419,6 +431,18 @@ namespace Pmad.Geometry
         readonly Vector2F IVector<Vector2F>.Substract(Vector2F value)
         {
             return this - value;
+        }
+
+        [MethodImpl(MethodImplOptions.AggressiveInlining)]
+        readonly Vector2F IVector<Vector2F>.Multiply(Vector2F value)
+        {
+            return this * value;
+        }
+
+        [MethodImpl(MethodImplOptions.AggressiveInlining)]
+        readonly Vector2F IVector<Vector2F>.Divide(Vector2F value)
+        {
+            return this / value;
         }
 
         [MethodImpl(MethodImplOptions.AggressiveInlining)]
@@ -647,6 +671,18 @@ namespace Pmad.Geometry
         }
 
         [MethodImpl(MethodImplOptions.AggressiveInlining)]
+        readonly Vector2L IVector<Vector2L>.Multiply(Vector2L value)
+        {
+            return this * value;
+        }
+
+        [MethodImpl(MethodImplOptions.AggressiveInlining)]
+        readonly Vector2L IVector<Vector2L>.Divide(Vector2L value)
+        {
+            return this / value;
+        }
+
+        [MethodImpl(MethodImplOptions.AggressiveInlining)]
         readonly Vector2L IVector<Vector2L>.Min(Vector2L other)
         {
             return Min(this, other);
@@ -869,6 +905,18 @@ namespace Pmad.Geometry
         readonly Vector2D IVector<Vector2D>.Substract(Vector2D value)
         {
             return this - value;
+        }
+
+        [MethodImpl(MethodImplOptions.AggressiveInlining)]
+        readonly Vector2D IVector<Vector2D>.Multiply(Vector2D value)
+        {
+            return this * value;
+        }
+
+        [MethodImpl(MethodImplOptions.AggressiveInlining)]
+        readonly Vector2D IVector<Vector2D>.Divide(Vector2D value)
+        {
+            return this / value;
         }
 
         [MethodImpl(MethodImplOptions.AggressiveInlining)]

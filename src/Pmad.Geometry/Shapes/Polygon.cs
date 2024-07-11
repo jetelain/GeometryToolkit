@@ -3,23 +3,39 @@ using Pmad.Geometry.Algorithms;
 
 namespace Pmad.Geometry.Shapes
 {
-    public abstract class PolygonBase<TPrimitive, TVector, TPolygon, TFactory> : IWithBounds<TVector>
+    public sealed class Polygon<TPrimitive, TVector> : IWithBounds<TVector>
         where TPrimitive : unmanaged
         where TVector : struct, IVector2<TPrimitive, TVector>
-        where TPolygon : PolygonBase<TPrimitive, TVector, TPolygon, TFactory>
-        where TFactory : ShapeFactoryBase<TPrimitive, TVector, TPolygon, TFactory>
     {
-        protected static readonly IReadOnlyList<IReadOnlyList<TVector>> NoHoles = new List<IReadOnlyList<TVector>>(0);
-
-        public PolygonBase(TFactory factory, IReadOnlyList<TVector> shell, IReadOnlyList<IReadOnlyList<TVector>> holes)
+        private static readonly IReadOnlyList<IReadOnlyList<TVector>> NoHoles = new List<IReadOnlyList<TVector>>(0);
+        
+        public Polygon(IReadOnlyList<TVector> shell)
+            : this(ShapeSettings<TPrimitive, TVector>.Default, shell, NoHoles)
         {
-            this.Factory = factory;
+
+        }
+        
+        public Polygon(IReadOnlyList<TVector> shell, IReadOnlyList<IReadOnlyList<TVector>> holes)
+            : this(ShapeSettings<TPrimitive,TVector>.Default, shell, holes)
+        {
+
+        }
+        
+        public Polygon(ShapeSettings<TPrimitive, TVector> settings, IReadOnlyList<TVector> shell)
+             : this(settings, shell, NoHoles)
+        {
+
+        }
+
+        public Polygon(ShapeSettings<TPrimitive, TVector> settings, IReadOnlyList<TVector> shell, IReadOnlyList<IReadOnlyList<TVector>> holes)
+        {
+            this.Settings = settings;
             this.Shell = shell;
             this.Holes = holes;
             Bounds = VectorEnvelope<TVector>.FromList(shell);
         }
 
-        public TFactory Factory { get; }
+        public ShapeSettings<TPrimitive, TVector> Settings { get; }
 
         public IReadOnlyList<TVector> Shell { get; }
 
@@ -31,74 +47,40 @@ namespace Pmad.Geometry.Shapes
 
         public float AreaF => Math.Abs(Shell.GetSignedAreaF()) - Holes.Sum(hole => Math.Abs(hole.GetSignedAreaF()));
 
-        protected abstract TPolygon This { get; }
-
-        protected abstract TPolygon CreatePolygon(IReadOnlyList<TVector> shell, IReadOnlyList<IReadOnlyList<TVector>> holes);
-
         private Paths64 ToClipper()
         {
             var paths = new Paths64(1 + Holes.Count);
-            paths.Add(new Path64(Shell.Select(Factory.ToClipper)));
-            paths.AddRange(Holes.Select(hole => new Path64(hole.Select(Factory.ToClipper))));
+            paths.Add(Settings.ToClipper(Shell));
+            paths.AddRange(Holes.Select(Settings.ToClipper));
             return paths;
         }
 
-        internal static IEnumerable<TPolygon> FromClipper(TFactory convention, PolyPath64 polyTree64)
-        {
-            var result = new List<TPolygon>();
-            FromClipper(convention, result, polyTree64);
-            return result;
-        }
-
-        private static void FromClipper(TFactory convention, List<TPolygon> result, PolyPath64 polyTree64)
-        {
-            foreach (PolyPath64 node in polyTree64)
-            {
-                var children = node.Cast<PolyPath64>();
-                var shell = CreateRing(convention, node.Polygon!);
-                var holes = children.Select(h => CreateRing(convention, h.Polygon!)).ToList();
-                result.Add(convention.CreatePolygon(shell, holes));
-                foreach (var subchild in children.SelectMany(h => h.Cast<PolyPath64>()))
-                {
-                    FromClipper(convention, result, subchild);
-                }
-            }
-        }
-
-        private static IReadOnlyList<TVector> CreateRing(TFactory convention, List<Point64> points)
-        {
-            var ring = new List<TVector>(points.Count + 1);
-            ring.AddRange(points.Select(convention.FromClipper));
-            ring.Add(convention.FromClipper(points[0]));
-            return ring;
-        }
-
-        private Paths64 Offset(IEnumerable<TVector> path, double detla)
+        private Paths64 Offset(IReadOnlyList<TVector> path, double detla)
         {
             var clipper = new ClipperOffset();
-            clipper.AddPath(new Path64(path.Select(Factory.ToClipper)), JoinType.Square, EndType.Polygon);
+            clipper.AddPath(Settings.ToClipper(path), JoinType.Square, EndType.Polygon);
             var solution = new Paths64(); ;
             clipper.Execute(detla, solution);
             return solution;
         }
 
         // Offsetting
-        public IEnumerable<TPolygon> Offset(double offset)
+        public IEnumerable<Polygon<TPrimitive, TVector>> Offset(double offset)
         {
             if (offset == 0)
             {
-                return [This];
+                return [this];
             }
-            var scaledOffset = offset * Factory.ScaleForClipper;
+            var scaledOffset = offset * Settings.ScaleForClipper;
             var shell = Offset(Shell, scaledOffset);
             if (Holes.Count == 0)
             {
-                return shell.Select(s => CreatePolygon(CreateRing(Factory, s), NoHoles));
+                return shell.Select(s => new Polygon<TPrimitive, TVector>(Settings, Settings.FromClipperToRing(s)));
             }
             var holes = new Paths64(Holes.SelectMany(h => Offset(h, -scaledOffset)));
             var tree = new PolyTree64();
             Clipper.BooleanOp(ClipType.Difference, shell, holes, tree, FillRule.NonZero);
-            return FromClipper(Factory, tree);
+            return Settings.FromClipper(tree);
         }
 
         public Paths64 OffsetAsPaths(double offset)
@@ -107,7 +89,7 @@ namespace Pmad.Geometry.Shapes
             {
                 return ToClipper();
             }
-            var scaledOffset = offset * Factory.ScaleForClipper;
+            var scaledOffset = offset * Settings.ScaleForClipper;
             var shell = Offset(Shell, scaledOffset);
             if (Holes.Count == 0)
             {
@@ -117,29 +99,29 @@ namespace Pmad.Geometry.Shapes
             return Clipper.BooleanOp(ClipType.Difference, shell, holes, FillRule.NonZero);
         }
 
-        public IEnumerable<TPolygon> Crown(double offset) => Crown(offset, offset);
+        public IEnumerable<Polygon<TPrimitive, TVector>> Crown(double offset) => Crown(offset, offset);
         
-        public IEnumerable<TPolygon> OuterCrown(double offset) => Crown(0, offset);
+        public IEnumerable<Polygon<TPrimitive, TVector>> OuterCrown(double offset) => Crown(0, offset);
 
-        public IEnumerable<TPolygon> InnerCrown(double offset) => Crown(offset, 0);
+        public IEnumerable<Polygon<TPrimitive, TVector>> InnerCrown(double offset) => Crown(offset, 0);
 
-        public IEnumerable<TPolygon> Crown(double innnerOffset, double outerOffset)
+        public IEnumerable<Polygon<TPrimitive, TVector>> Crown(double innnerOffset, double outerOffset)
         {
             if (innnerOffset == 0 && outerOffset == 0)
             {
-                return Enumerable.Empty<TPolygon>();
+                return Enumerable.Empty<Polygon<TPrimitive, TVector>>();
             }
             var subject = OffsetAsPaths(outerOffset);
             var clip = OffsetAsPaths(-innnerOffset);
             var tree = new PolyTree64();
             Clipper.BooleanOp(ClipType.Difference, subject, clip, tree, FillRule.EvenOdd);
-            return FromClipper(Factory, tree);
+            return Settings.FromClipper(tree);
         }
 
         // Polygon arithmetic        
-        public IEnumerable<TPolygon> SubstractAll(IEnumerable<TPolygon> others)
+        public IEnumerable<Polygon<TPrimitive, TVector>> SubstractAll(IEnumerable<Polygon<TPrimitive, TVector>> others)
         {
-            var result = new List<TPolygon>() { This };
+            var result = new List<Polygon<TPrimitive, TVector>>() { this };
             foreach (var other in others.Where(o => Bounds.Intersects(o.Bounds)))
             {
                 var previousResult = result.ToList();
@@ -156,43 +138,43 @@ namespace Pmad.Geometry.Shapes
             return result;
         }
 
-        public IEnumerable<TPolygon> SubstractAllNoOverlap(IEnumerable<TPolygon> others)
+        public IEnumerable<Polygon<TPrimitive, TVector>> SubstractAllNoOverlap(IEnumerable<Polygon<TPrimitive, TVector>> others)
         {
             var tree = new PolyTree64();
             Clipper.BooleanOp(ClipType.Difference, ToClipper(), new Paths64(others.SelectMany(o => o.ToClipper())), tree, FillRule.EvenOdd);
-            return FromClipper(Factory, tree);
+            return Settings.FromClipper(tree);
         }
 
-        public IEnumerable<TPolygon> Substract(TPolygon other)
+        public IEnumerable<Polygon<TPrimitive, TVector>> Substract(Polygon<TPrimitive, TVector> other)
         {
             if (!Bounds.Intersects(other.Bounds))
             {
-                return [This];
+                return [this];
             }
             return BooleanOp(other, ClipType.Difference);
         }
 
-        public IEnumerable<TPolygon> Union(TPolygon other)
+        public IEnumerable<Polygon<TPrimitive, TVector>> Union(Polygon<TPrimitive, TVector> other)
         {
             if (!Bounds.Intersects(other.Bounds))
             {
-                return [This, other];
+                return [this, other];
             }
             return BooleanOp(other, ClipType.Union);
         }
 
-        private IEnumerable<TPolygon> BooleanOp(TPolygon other, ClipType op)
+        private IEnumerable<Polygon<TPrimitive, TVector>> BooleanOp(Polygon<TPrimitive, TVector> other, ClipType op)
         {
             var tree = new PolyTree64();
             Clipper.BooleanOp(op, ToClipper(), other.ToClipper(), tree, FillRule.EvenOdd);
-            return FromClipper(Factory, tree);
+            return Settings.FromClipper(tree);
         }
 
-        public IEnumerable<TPolygon> Intersection(TPolygon other)
+        public IEnumerable<Polygon<TPrimitive, TVector>> Intersection(Polygon<TPrimitive, TVector> other)
         {
             if (!Bounds.Intersects(other.Bounds))
             {
-                return Enumerable.Empty<TPolygon>();
+                return Enumerable.Empty<Polygon<TPrimitive, TVector>>();
             }
             return BooleanOp(other, ClipType.Intersection);
         }

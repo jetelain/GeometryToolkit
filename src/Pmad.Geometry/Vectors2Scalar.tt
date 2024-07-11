@@ -177,21 +177,37 @@ namespace Pmad.Geometry
                     (double) (pt2.Y - pt1.Y) * (pt3.X - pt2.X));
         }
 
+        [MethodImpl(MethodImplOptions.AggressiveInlining)]
         readonly <#=def.Struct#> IVector<<#=def.Struct#>>.Add(<#=def.Struct#> value)
         {
             return this + value;
         }
 
+        [MethodImpl(MethodImplOptions.AggressiveInlining)]
         readonly <#=def.Struct#> IVector<<#=def.Struct#>>.Substract(<#=def.Struct#> value)
         {
             return this - value;
         }
+        
+        [MethodImpl(MethodImplOptions.AggressiveInlining)]
+        readonly <#=def.Struct#> IVector<<#=def.Struct#>>.Multiply(<#=def.Struct#> value)
+        {
+            return this * value;
+        }
 
+        [MethodImpl(MethodImplOptions.AggressiveInlining)]
+        readonly <#=def.Struct#> IVector<<#=def.Struct#>>.Divide(<#=def.Struct#> value)
+        {
+            return this / value;
+        }
+
+        [MethodImpl(MethodImplOptions.AggressiveInlining)]
         readonly <#=def.Struct#> IVector<<#=def.Struct#>>.Min(<#=def.Struct#> other)
         {
             return Min(this, other);
         }
 
+        [MethodImpl(MethodImplOptions.AggressiveInlining)]
         readonly <#=def.Struct#> IVector<<#=def.Struct#>>.Max(<#=def.Struct#> other)
         {
             return Max(this, other);

@@ -3,21 +3,24 @@ using Pmad.Geometry.Algorithms;
 
 namespace Pmad.Geometry.Shapes
 {
-    public abstract class PathBase<TPrimitive, TVector, TPolygon, TPath, TFactory> : IWithBounds<TVector>
+    public sealed class Path<TPrimitive, TVector> : IWithBounds<TVector>
         where TPrimitive : unmanaged
         where TVector : struct, IVector2<TPrimitive, TVector>
-        where TPolygon : PolygonBase<TPrimitive, TVector, TPolygon, TFactory>
-        where TPath : PathBase<TPrimitive, TVector, TPolygon, TPath, TFactory>
-        where TFactory : ShapeFactoryBase<TPrimitive, TVector, TPolygon, TFactory>
     {
-        public PathBase(TFactory factory, IReadOnlyList<TVector> points)
+        public Path(IReadOnlyList<TVector> points)
+            : this(ShapeSettings<TPrimitive,TVector>.Default, points)
         {
-            this.Factory = factory;
+
+        }
+
+        public Path(ShapeSettings<TPrimitive, TVector> settings, IReadOnlyList<TVector> points)
+        {
+            this.Settings = settings;
             this.Points = points;
             Bounds = VectorEnvelope<TVector>.FromList(points);
         }
 
-        public TFactory Factory { get; }
+        public ShapeSettings<TPrimitive, TVector> Settings { get; }
         
         public IReadOnlyList<TVector> Points { get; }
 
@@ -33,33 +36,29 @@ namespace Pmad.Geometry.Shapes
 
         public bool IsClockWise => IsClosed && Points.GetSignedAreaD() < 0;
 
-        protected abstract TPath This { get; }
-
-        protected abstract TPath CreatePath(IReadOnlyList<TVector> points);
-
-        public IEnumerable<TPolygon> ToPolygon(double width, EndType endType = EndType.Butt, JoinType joinType = JoinType.Square)
+        public IEnumerable<Polygon<TPrimitive, TVector>> ToPolygon(double width, EndType endType = EndType.Butt, JoinType joinType = JoinType.Square)
         {
             var offset = new ClipperOffset();
-            offset.AddPath(new Path64(Points.Select(Factory.ToClipper)), joinType, endType);
+            offset.AddPath(Settings.ToClipper(Points), joinType, endType);
             var solution = new PolyTree64(); ;
-            offset.Execute(width * Factory.ScaleForClipper / 2, solution);
-            return Factory.FromClipper(solution);
+            offset.Execute(width * Settings.ScaleForClipper / 2, solution);
+            return Settings.FromClipper(solution);
         }
 
         /// <summary>
         /// Create a polygon whose shell is the current path
         /// </summary>
         /// <returns></returns>
-        public TPolygon ToPolygonAsShell()
+        public Polygon<TPrimitive, TVector> ToPolygonAsShell()
         {
             if (!IsClosed)
             {
                 var points = new List<TVector>(Points.Count + 1); 
                 points.AddRange(Points);
                 points.Add(Points[0]);
-                return Factory.CreatePolygon(points);
+                return new Polygon<TPrimitive, TVector>(Settings, points);
             }
-            return Factory.CreatePolygon(Points);
+            return new Polygon<TPrimitive, TVector>(Settings, Points);
         }
     }
 }

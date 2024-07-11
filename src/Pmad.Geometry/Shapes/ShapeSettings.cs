@@ -1,0 +1,148 @@
+﻿using Clipper2Lib;
+
+namespace Pmad.Geometry.Shapes
+{
+    public sealed class ShapeSettings<TPrimitive, TVector>
+        where TPrimitive : unmanaged
+        where TVector : struct, IVector2<TPrimitive, TVector>
+    {
+        public static readonly ShapeSettings<TPrimitive, TVector> Default = new ShapeSettings<TPrimitive, TVector>();
+
+        private readonly TVector scale;
+
+        public ShapeSettings()
+            : this(GetDefaultScale())
+        {
+
+        }
+
+        public ShapeSettings(int scaleForClipper) 
+        {
+            if (typeof(TPrimitive) == typeof(long) || typeof(TPrimitive) == typeof(int))
+            {
+                if (scaleForClipper != 1)
+                {
+                    ThrowHelper.ThrowNotSupportedException();
+                }
+            }
+            scale = Vectors.Create<TPrimitive,TVector>(scaleForClipper, scaleForClipper);
+            ScaleForClipper = scaleForClipper;
+        }
+
+        public double ScaleForClipper { get; }
+
+        private static int GetDefaultScale()
+        {
+            if (typeof(TPrimitive) == typeof(long) || typeof(TPrimitive) == typeof(int))
+            {
+                return 1;
+            }
+            return 1000;
+        }
+
+        internal IEnumerable<Polygon<TPrimitive, TVector>> FromClipper(PolyPath64 polyTree64)
+        {
+            var result = new List<Polygon<TPrimitive, TVector>>();
+            FromClipper(result, polyTree64);
+            return result;
+        }
+
+        private void FromClipper(List<Polygon<TPrimitive, TVector>> result, PolyPath64 polyTree64)
+        {
+            foreach (PolyPath64 node in polyTree64)
+            {
+                var children = node.Cast<PolyPath64>();
+                var shell = FromClipperToRing(node.Polygon!);
+                var holes = children.Select(h => FromClipperToRing(h.Polygon!)).ToList();
+                result.Add(new Polygon<TPrimitive, TVector>(this, shell, holes));
+                foreach (var subchild in children.SelectMany(h => h.Cast<PolyPath64>()))
+                {
+                    FromClipper(result, subchild);
+                }
+            }
+        }
+
+        internal IReadOnlyList<TVector> FromClipperToRing(List<Point64> points)
+        {
+            var ring = new List<TVector>(points.Count + 1);
+            ring.AddRange(points.Select(FromClipper));
+            ring.Add(FromClipper(points[0]));
+            return ring;
+        }
+
+        internal Path64 ToClipper(IReadOnlyList<TVector> shell)
+        {
+            var path = new Path64(shell.Count);
+            path.AddRange(shell.Select(ToClipper));
+            return path;
+        }
+
+        public Point64 ToClipper(TVector value)
+        {
+            if (typeof(TPrimitive) == typeof(long))
+            {
+                return new((long)(object)value.X, (long)(object)value.Y);
+            }
+            if (typeof(TPrimitive) == typeof(int))
+            {
+                return new((int)(object)value.X, (int)(object)value.Y);
+            }
+            var scaled = value.Multiply(scale);
+            if (typeof(TPrimitive) == typeof(double))
+            {
+                return new((double)(object)scaled.X, (double)(object)scaled.Y);
+            }
+            if (typeof(TPrimitive) == typeof(float))
+            {
+                return new((double)(object)scaled.X, (double)(object)scaled.Y);
+            }
+            ThrowHelper.ThrowNotSupportedException();
+            return default;
+        }
+
+        public TVector FromClipper(Point64 value)
+        {
+            if (typeof(TPrimitive) == typeof(long))
+            {
+                return Vectors.Create<TPrimitive, TVector>(value.X, value.Y);
+            }
+            if (typeof(TPrimitive) == typeof(int))
+            {
+                return Vectors.Create<TPrimitive, TVector>(value.X, value.Y);
+            }
+            return Vectors.Create<TPrimitive,TVector>(value.X, value.Y).Divide(scale);
+        }
+
+        public Polygon<TPrimitive, TVector> CreateRectangle(VectorEnvelope<TVector> envelope)
+        {
+            return CreateRectangle(envelope.Min, envelope.Max);
+        }
+
+        public Polygon<TPrimitive, TVector> CreateRectangle(TVector p1, TVector p2)
+        {
+            return new Polygon<TPrimitive, TVector>(this, new List<TVector>(5)
+            {
+                p1,
+                Vectors.Create<TPrimitive,TVector>(p1.X, p2.X),
+                p2,
+                Vectors.Create<TPrimitive,TVector>(p2.X, p1.X),
+                p1
+            });
+        }
+
+        public Polygon<TPrimitive, TVector> CreatePolygon(IReadOnlyList<TVector> shell, IReadOnlyList<IReadOnlyList<TVector>> holes)
+        {
+            return new Polygon<TPrimitive, TVector>(this, shell, holes);
+        }
+
+        public Polygon<TPrimitive, TVector> CreatePolygon(IReadOnlyList<TVector> shell)
+        {
+            return new Polygon<TPrimitive, TVector>(this, shell);
+        }
+
+        public Path<TPrimitive, TVector> CreatePath(IReadOnlyList<TVector> points)
+        {
+            return new Path<TPrimitive, TVector>(this, points);
+        }
+    }
+}

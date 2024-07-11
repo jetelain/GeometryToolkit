@@ -166,21 +166,37 @@ namespace Pmad.Geometry
                     (double) (pt2.Y - pt1.Y) * (pt3.X - pt2.X));
         }
 
+        [MethodImpl(MethodImplOptions.AggressiveInlining)]
         readonly Vector2IS IVector<Vector2IS>.Add(Vector2IS value)
         {
             return this + value;
         }
 
+        [MethodImpl(MethodImplOptions.AggressiveInlining)]
         readonly Vector2IS IVector<Vector2IS>.Substract(Vector2IS value)
         {
             return this - value;
         }
+        
+        [MethodImpl(MethodImplOptions.AggressiveInlining)]
+        readonly Vector2IS IVector<Vector2IS>.Multiply(Vector2IS value)
+        {
+            return this * value;
+        }
 
+        [MethodImpl(MethodImplOptions.AggressiveInlining)]
+        readonly Vector2IS IVector<Vector2IS>.Divide(Vector2IS value)
+        {
+            return this / value;
+        }
+
+        [MethodImpl(MethodImplOptions.AggressiveInlining)]
         readonly Vector2IS IVector<Vector2IS>.Min(Vector2IS other)
         {
             return Min(this, other);
         }
 
+        [MethodImpl(MethodImplOptions.AggressiveInlining)]
         readonly Vector2IS IVector<Vector2IS>.Max(Vector2IS other)
         {
             return Max(this, other);
@@ -361,21 +377,37 @@ namespace Pmad.Geometry
                     (double) (pt2.Y - pt1.Y) * (pt3.X - pt2.X));
         }
 
+        [MethodImpl(MethodImplOptions.AggressiveInlining)]
         readonly Vector2FS IVector<Vector2FS>.Add(Vector2FS value)
         {
             return this + value;
         }
 
+        [MethodImpl(MethodImplOptions.AggressiveInlining)]
         readonly Vector2FS IVector<Vector2FS>.Substract(Vector2FS value)
         {
             return this - value;
         }
+        
+        [MethodImpl(MethodImplOptions.AggressiveInlining)]
+        readonly Vector2FS IVector<Vector2FS>.Multiply(Vector2FS value)
+        {
+            return this * value;
+        }
 
+        [MethodImpl(MethodImplOptions.AggressiveInlining)]
+        readonly Vector2FS IVector<Vector2FS>.Divide(Vector2FS value)
+        {
+            return this / value;
+        }
+
+        [MethodImpl(MethodImplOptions.AggressiveInlining)]
         readonly Vector2FS IVector<Vector2FS>.Min(Vector2FS other)
         {
             return Min(this, other);
         }
 
+        [MethodImpl(MethodImplOptions.AggressiveInlining)]
         readonly Vector2FS IVector<Vector2FS>.Max(Vector2FS other)
         {
             return Max(this, other);
@@ -556,21 +588,37 @@ namespace Pmad.Geometry
                     (double) (pt2.Y - pt1.Y) * (pt3.X - pt2.X));
         }
 
+        [MethodImpl(MethodImplOptions.AggressiveInlining)]
         readonly Vector2LS IVector<Vector2LS>.Add(Vector2LS value)
         {
             return this + value;
         }
 
+        [MethodImpl(MethodImplOptions.AggressiveInlining)]
         readonly Vector2LS IVector<Vector2LS>.Substract(Vector2LS value)
         {
             return this - value;
         }
+        
+        [MethodImpl(MethodImplOptions.AggressiveInlining)]
+        readonly Vector2LS IVector<Vector2LS>.Multiply(Vector2LS value)
+        {
+            return this * value;
+        }
 
+        [MethodImpl(MethodImplOptions.AggressiveInlining)]
+        readonly Vector2LS IVector<Vector2LS>.Divide(Vector2LS value)
+        {
+            return this / value;
+        }
+
+        [MethodImpl(MethodImplOptions.AggressiveInlining)]
         readonly Vector2LS IVector<Vector2LS>.Min(Vector2LS other)
         {
             return Min(this, other);
         }
 
+        [MethodImpl(MethodImplOptions.AggressiveInlining)]
         readonly Vector2LS IVector<Vector2LS>.Max(Vector2LS other)
         {
             return Max(this, other);
@@ -751,21 +799,37 @@ namespace Pmad.Geometry
                     (double) (pt2.Y - pt1.Y) * (pt3.X - pt2.X));
         }
 
+        [MethodImpl(MethodImplOptions.AggressiveInlining)]
         readonly Vector2DS IVector<Vector2DS>.Add(Vector2DS value)
         {
             return this + value;
         }
 
+        [MethodImpl(MethodImplOptions.AggressiveInlining)]
         readonly Vector2DS IVector<Vector2DS>.Substract(Vector2DS value)
         {
             return this - value;
         }
+        
+        [MethodImpl(MethodImplOptions.AggressiveInlining)]
+        readonly Vector2DS IVector<Vector2DS>.Multiply(Vector2DS value)
+        {
+            return this * value;
+        }
 
+        [MethodImpl(MethodImplOptions.AggressiveInlining)]
+        readonly Vector2DS IVector<Vector2DS>.Divide(Vector2DS value)
+        {
+            return this / value;
+        }
+
+        [MethodImpl(MethodImplOptions.AggressiveInlining)]
         readonly Vector2DS IVector<Vector2DS>.Min(Vector2DS other)
         {
             return Min(this, other);
         }
 
+        [MethodImpl(MethodImplOptions.AggressiveInlining)]
         readonly Vector2DS IVector<Vector2DS>.Max(Vector2DS other)
         {
             return Max(this, other);
