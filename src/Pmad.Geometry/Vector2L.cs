@@ -20,5 +20,11 @@ namespace Pmad.Geometry
         {
             return Vector2D.CrossProduct(v1.ToDouble(), v2.ToDouble());
         }
+
+        [MethodImpl(MethodImplOptions.AggressiveInlining)]
+        public static double CrossProductScalar(Vector2L v1, Vector2L v2)
+        {
+            return Vector2D.CrossProductScalar(v1.ToDouble(), v2.ToDouble());
+        }
     }
 }

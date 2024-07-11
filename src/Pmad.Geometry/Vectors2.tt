@@ -20,8 +20,8 @@ namespace Pmad.Geometry
     [DebuggerDisplay("({X};{Y})")]
     [StructLayout(LayoutKind.Explicit)]
 	public partial struct <#=def.Struct#> : IEquatable<<#=def.Struct#>>, IVector2<<#=def.Primitive#>,<#=def.Struct#>>
-	{
- <#if (def.HasFiller) {#>
+	{ 
+<#if (def.HasFiller) {#>
         private static readonly Vector128<int> SwapXYShuffle = Vector128.Create(1, 0, 3, 2);
 <#} else {#>
         private static readonly Vector128<long> SwapXYShuffle = Vector128.Create(1L, 0L);
@@ -127,9 +127,25 @@ namespace Pmad.Geometry
             => new (-value.vector);
 
         [MethodImpl(MethodImplOptions.AggressiveInlining)]
+        public readonly <#=def.Struct#> SwapXYInline()
+        { 
+<#if (def.HasFiller) {#>
+            return new(Vector128.Shuffle(vector,Vector128.Create(1, 0, 3, 2)));
+<#} else {#>
+            return new(Vector128.Shuffle(vector,Vector128.Create(1L, 0L)));
+<#}#>
+        }
+        
+        [MethodImpl(MethodImplOptions.AggressiveInlining)]
+        public readonly <#=def.Struct#> SwapXYStatic()
+        { 
+            return new(Vector128.Shuffle(vector,SwapXYShuffle));
+        }
+
+        [MethodImpl(MethodImplOptions.AggressiveInlining)]
         public readonly <#=def.Struct#> SwapXY()
-        {
-            return new(Vector128.Shuffle(vector, SwapXYShuffle));
+        { 
+            return new(Y, X);
         }
 
         public readonly override int GetHashCode()
@@ -235,9 +251,16 @@ namespace Pmad.Geometry
         }
 
         [MethodImpl(MethodImplOptions.AggressiveInlining)]
-        internal static <#=def.ResultType#> CrossProduct(<#=def.Struct#> pt1, <#=def.Struct#> pt2, <#=def.Struct#> pt3)
-        {
+        public static <#=def.ResultType#> CrossProduct(<#=def.Struct#> pt1, <#=def.Struct#> pt2, <#=def.Struct#> pt3)
+        {            
             return CrossProduct(pt2-pt1, pt3-pt2);
+        }
+
+        [MethodImpl(MethodImplOptions.AggressiveInlining)]
+        public static <#=def.ResultType#> CrossProductScalar(<#=def.Struct#> pt1, <#=def.Struct#> pt2, <#=def.Struct#> pt3)
+        {            
+            return ((<#=def.ResultType#>) (pt2.X - pt1.X) * (pt3.Y - pt2.Y) -
+                    (<#=def.ResultType#>) (pt2.Y - pt1.Y) * (pt3.X - pt2.X));
         }
 	}
 <#

@@ -164,6 +164,19 @@ namespace Pmad.Geometry
             return v2.Y * v1.X - v2.X * v1.Y;
         }
 
+        [MethodImpl(MethodImplOptions.AggressiveInlining)]
+        public static double CrossProduct(<#=def.Struct#> pt1, <#=def.Struct#> pt2, <#=def.Struct#> pt3)
+        {
+            return CrossProduct(pt2-pt1, pt3-pt2);
+        }
+
+        [MethodImpl(MethodImplOptions.AggressiveInlining)]
+        public static double CrossProductScalar(<#=def.Struct#> pt1, <#=def.Struct#> pt2, <#=def.Struct#> pt3)
+        {
+            return ((double) (pt2.X - pt1.X) * (pt3.Y - pt2.Y) -
+                    (double) (pt2.Y - pt1.Y) * (pt3.X - pt2.X));
+        }
+
         readonly <#=def.Struct#> IVector<<#=def.Struct#>>.Add(<#=def.Struct#> value)
         {
             return this + value;
@@ -204,12 +217,6 @@ namespace Pmad.Geometry
         public readonly <#=def.Struct#> RotateM90()
         {
             return new (Y, -X);
-        }
-
-        [MethodImpl(MethodImplOptions.AggressiveInlining)]
-        internal static double CrossProduct(<#=def.Struct#> pt1, <#=def.Struct#> pt2, <#=def.Struct#> pt3)
-        {
-            return CrossProduct(pt2-pt1, pt3-pt2);
         }
 	}
 <#

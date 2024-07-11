@@ -9,8 +9,8 @@ namespace Pmad.Geometry
     [DebuggerDisplay("({X};{Y})")]
     [StructLayout(LayoutKind.Explicit)]
 	public partial struct Vector2I : IEquatable<Vector2I>, IVector2<int,Vector2I>
-	{
-         private static readonly Vector128<int> SwapXYShuffle = Vector128.Create(1, 0, 3, 2);
+	{ 
+        private static readonly Vector128<int> SwapXYShuffle = Vector128.Create(1, 0, 3, 2);
 	    [FieldOffset(0)]
         private Vector128<int> vector;
 
@@ -104,9 +104,21 @@ namespace Pmad.Geometry
             => new (-value.vector);
 
         [MethodImpl(MethodImplOptions.AggressiveInlining)]
+        public readonly Vector2I SwapXYInline()
+        { 
+            return new(Vector128.Shuffle(vector,Vector128.Create(1, 0, 3, 2)));
+        }
+        
+        [MethodImpl(MethodImplOptions.AggressiveInlining)]
+        public readonly Vector2I SwapXYStatic()
+        { 
+            return new(Vector128.Shuffle(vector,SwapXYShuffle));
+        }
+
+        [MethodImpl(MethodImplOptions.AggressiveInlining)]
         public readonly Vector2I SwapXY()
-        {
-            return new(Vector128.Shuffle(vector, SwapXYShuffle));
+        { 
+            return new(Y, X);
         }
 
         public readonly override int GetHashCode()
@@ -207,16 +219,23 @@ namespace Pmad.Geometry
         }
 
         [MethodImpl(MethodImplOptions.AggressiveInlining)]
-        internal static double CrossProduct(Vector2I pt1, Vector2I pt2, Vector2I pt3)
-        {
+        public static double CrossProduct(Vector2I pt1, Vector2I pt2, Vector2I pt3)
+        {            
             return CrossProduct(pt2-pt1, pt3-pt2);
+        }
+
+        [MethodImpl(MethodImplOptions.AggressiveInlining)]
+        public static double CrossProductScalar(Vector2I pt1, Vector2I pt2, Vector2I pt3)
+        {            
+            return ((double) (pt2.X - pt1.X) * (pt3.Y - pt2.Y) -
+                    (double) (pt2.Y - pt1.Y) * (pt3.X - pt2.X));
         }
 	}
     [DebuggerDisplay("({X};{Y})")]
     [StructLayout(LayoutKind.Explicit)]
 	public partial struct Vector2F : IEquatable<Vector2F>, IVector2<float,Vector2F>
-	{
-         private static readonly Vector128<int> SwapXYShuffle = Vector128.Create(1, 0, 3, 2);
+	{ 
+        private static readonly Vector128<int> SwapXYShuffle = Vector128.Create(1, 0, 3, 2);
 	    [FieldOffset(0)]
         private Vector128<float> vector;
 
@@ -310,9 +329,21 @@ namespace Pmad.Geometry
             => new (-value.vector);
 
         [MethodImpl(MethodImplOptions.AggressiveInlining)]
+        public readonly Vector2F SwapXYInline()
+        { 
+            return new(Vector128.Shuffle(vector,Vector128.Create(1, 0, 3, 2)));
+        }
+        
+        [MethodImpl(MethodImplOptions.AggressiveInlining)]
+        public readonly Vector2F SwapXYStatic()
+        { 
+            return new(Vector128.Shuffle(vector,SwapXYShuffle));
+        }
+
+        [MethodImpl(MethodImplOptions.AggressiveInlining)]
         public readonly Vector2F SwapXY()
-        {
-            return new(Vector128.Shuffle(vector, SwapXYShuffle));
+        { 
+            return new(Y, X);
         }
 
         public readonly override int GetHashCode()
@@ -413,16 +444,23 @@ namespace Pmad.Geometry
         }
 
         [MethodImpl(MethodImplOptions.AggressiveInlining)]
-        internal static float CrossProduct(Vector2F pt1, Vector2F pt2, Vector2F pt3)
-        {
+        public static float CrossProduct(Vector2F pt1, Vector2F pt2, Vector2F pt3)
+        {            
             return CrossProduct(pt2-pt1, pt3-pt2);
+        }
+
+        [MethodImpl(MethodImplOptions.AggressiveInlining)]
+        public static float CrossProductScalar(Vector2F pt1, Vector2F pt2, Vector2F pt3)
+        {            
+            return ((float) (pt2.X - pt1.X) * (pt3.Y - pt2.Y) -
+                    (float) (pt2.Y - pt1.Y) * (pt3.X - pt2.X));
         }
 	}
     [DebuggerDisplay("({X};{Y})")]
     [StructLayout(LayoutKind.Explicit)]
 	public partial struct Vector2L : IEquatable<Vector2L>, IVector2<long,Vector2L>
-	{
-         private static readonly Vector128<long> SwapXYShuffle = Vector128.Create(1L, 0L);
+	{ 
+        private static readonly Vector128<long> SwapXYShuffle = Vector128.Create(1L, 0L);
 	    [FieldOffset(0)]
         private Vector128<long> vector;
 
@@ -516,9 +554,21 @@ namespace Pmad.Geometry
             => new (-value.vector);
 
         [MethodImpl(MethodImplOptions.AggressiveInlining)]
+        public readonly Vector2L SwapXYInline()
+        { 
+            return new(Vector128.Shuffle(vector,Vector128.Create(1L, 0L)));
+        }
+        
+        [MethodImpl(MethodImplOptions.AggressiveInlining)]
+        public readonly Vector2L SwapXYStatic()
+        { 
+            return new(Vector128.Shuffle(vector,SwapXYShuffle));
+        }
+
+        [MethodImpl(MethodImplOptions.AggressiveInlining)]
         public readonly Vector2L SwapXY()
-        {
-            return new(Vector128.Shuffle(vector, SwapXYShuffle));
+        { 
+            return new(Y, X);
         }
 
         public readonly override int GetHashCode()
@@ -619,16 +669,23 @@ namespace Pmad.Geometry
         }
 
         [MethodImpl(MethodImplOptions.AggressiveInlining)]
-        internal static double CrossProduct(Vector2L pt1, Vector2L pt2, Vector2L pt3)
-        {
+        public static double CrossProduct(Vector2L pt1, Vector2L pt2, Vector2L pt3)
+        {            
             return CrossProduct(pt2-pt1, pt3-pt2);
+        }
+
+        [MethodImpl(MethodImplOptions.AggressiveInlining)]
+        public static double CrossProductScalar(Vector2L pt1, Vector2L pt2, Vector2L pt3)
+        {            
+            return ((double) (pt2.X - pt1.X) * (pt3.Y - pt2.Y) -
+                    (double) (pt2.Y - pt1.Y) * (pt3.X - pt2.X));
         }
 	}
     [DebuggerDisplay("({X};{Y})")]
     [StructLayout(LayoutKind.Explicit)]
 	public partial struct Vector2D : IEquatable<Vector2D>, IVector2<double,Vector2D>
-	{
-         private static readonly Vector128<long> SwapXYShuffle = Vector128.Create(1L, 0L);
+	{ 
+        private static readonly Vector128<long> SwapXYShuffle = Vector128.Create(1L, 0L);
 	    [FieldOffset(0)]
         private Vector128<double> vector;
 
@@ -722,9 +779,21 @@ namespace Pmad.Geometry
             => new (-value.vector);
 
         [MethodImpl(MethodImplOptions.AggressiveInlining)]
+        public readonly Vector2D SwapXYInline()
+        { 
+            return new(Vector128.Shuffle(vector,Vector128.Create(1L, 0L)));
+        }
+        
+        [MethodImpl(MethodImplOptions.AggressiveInlining)]
+        public readonly Vector2D SwapXYStatic()
+        { 
+            return new(Vector128.Shuffle(vector,SwapXYShuffle));
+        }
+
+        [MethodImpl(MethodImplOptions.AggressiveInlining)]
         public readonly Vector2D SwapXY()
-        {
-            return new(Vector128.Shuffle(vector, SwapXYShuffle));
+        { 
+            return new(Y, X);
         }
 
         public readonly override int GetHashCode()
@@ -825,9 +894,16 @@ namespace Pmad.Geometry
         }
 
         [MethodImpl(MethodImplOptions.AggressiveInlining)]
-        internal static double CrossProduct(Vector2D pt1, Vector2D pt2, Vector2D pt3)
-        {
+        public static double CrossProduct(Vector2D pt1, Vector2D pt2, Vector2D pt3)
+        {            
             return CrossProduct(pt2-pt1, pt3-pt2);
+        }
+
+        [MethodImpl(MethodImplOptions.AggressiveInlining)]
+        public static double CrossProductScalar(Vector2D pt1, Vector2D pt2, Vector2D pt3)
+        {            
+            return ((double) (pt2.X - pt1.X) * (pt3.Y - pt2.Y) -
+                    (double) (pt2.Y - pt1.Y) * (pt3.X - pt2.X));
         }
 	}
 }

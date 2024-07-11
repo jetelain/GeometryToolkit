@@ -235,9 +235,16 @@ namespace Pmad.Geometry
             return v2.Y * v1.X - v2.X * v1.Y;
         }
 
-        internal static double CrossProduct(Vector2FN pt1, Vector2FN pt2, Vector2FN pt3)
+        public static double CrossProduct(Vector2FN pt1, Vector2FN pt2, Vector2FN pt3)
         {
             return CrossProduct(pt2-pt1, pt3-pt2);
+        }
+
+        [MethodImpl(MethodImplOptions.AggressiveInlining)]
+        public static float CrossProductScalar(Vector2F pt1, Vector2F pt2, Vector2F pt3)
+        {
+            return ((float)(pt2.X - pt1.X) * (pt3.Y - pt2.Y) -
+                    (float)(pt2.Y - pt1.Y) * (pt3.X - pt2.X));
         }
 
         public Vector2F ToFloat()

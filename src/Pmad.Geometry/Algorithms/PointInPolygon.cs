@@ -37,7 +37,8 @@ namespace Pmad.Geometry.Algorithms
 
             double d;
             bool isAbove = polygon[start].Y < pt.Y, startingAbove = isAbove;
-            int val = 0, i = start + 1, end = len;
+            bool val = false;
+            int i = start + 1, end = len;
             while (true)
             {
                 if (i == end)
@@ -77,13 +78,13 @@ namespace Pmad.Geometry.Algorithms
                 }
                 else if (pt.X > prev.X && pt.X > curr.X)
                 {
-                    val = 1 - val; // toggle val
+                    val = !val; // toggle val
                 }
                 else
                 {
                     d = Vector2I.CrossProduct(prev, curr, pt);
                     if (d == 0) return PointInPolygonResult.IsOn;
-                    if ((d < 0) == isAbove) val = 1 - val;
+                    if ((d < 0) == isAbove) val = !val;
                 }
                 isAbove = !isAbove;
                 i++;
@@ -97,10 +98,10 @@ namespace Pmad.Geometry.Algorithms
                 else
                     d = Vector2I.CrossProduct(polygon[i - 1], polygon[i], pt);
                 if (d == 0) return PointInPolygonResult.IsOn;
-                if ((d < 0) == isAbove) val = 1 - val;
+                if ((d < 0) == isAbove) val = !val;
             }
 
-            if (val == 0)
+            if (!val)
                 return PointInPolygonResult.IsOutside;
             return PointInPolygonResult.IsInside;
             
@@ -116,7 +117,8 @@ namespace Pmad.Geometry.Algorithms
 
             double d;
             bool isAbove = polygon[start].Y < pt.Y, startingAbove = isAbove;
-            int val = 0, i = start + 1, end = len;
+            bool val = false;
+            int i = start + 1, end = len;
             while (true)
             {
                 if (i == end)
@@ -156,13 +158,13 @@ namespace Pmad.Geometry.Algorithms
                 }
                 else if (pt.X > prev.X && pt.X > curr.X)
                 {
-                    val = 1 - val; // toggle val
+                    val = !val; // toggle val
                 }
                 else
                 {
                     d = Vector2I.CrossProduct(prev, curr, pt);
                     if (d == 0) return PointInPolygonResult.IsOn;
-                    if ((d < 0) == isAbove) val = 1 - val;
+                    if ((d < 0) == isAbove) val = !val;
                 }
                 isAbove = !isAbove;
                 i++;
@@ -176,10 +178,10 @@ namespace Pmad.Geometry.Algorithms
                 else
                     d = Vector2I.CrossProduct(polygon[i - 1], polygon[i], pt);
                 if (d == 0) return PointInPolygonResult.IsOn;
-                if ((d < 0) == isAbove) val = 1 - val;
+                if ((d < 0) == isAbove) val = !val;
             }
 
-            if (val == 0)
+            if (!val)
                 return PointInPolygonResult.IsOutside;
             return PointInPolygonResult.IsInside;
         }
@@ -211,7 +213,8 @@ namespace Pmad.Geometry.Algorithms
 
             double d;
             bool isAbove = polygon[start].Y < pt.Y, startingAbove = isAbove;
-            int val = 0, i = start + 1, end = len;
+            bool val = false;
+            int i = start + 1, end = len;
             while (true)
             {
                 if (i == end)
@@ -251,13 +254,13 @@ namespace Pmad.Geometry.Algorithms
                 }
                 else if (pt.X > prev.X && pt.X > curr.X)
                 {
-                    val = 1 - val; // toggle val
+                    val = !val; // toggle val
                 }
                 else
                 {
                     d = Vector2F.CrossProduct(prev, curr, pt);
                     if (d == 0) return PointInPolygonResult.IsOn;
-                    if ((d < 0) == isAbove) val = 1 - val;
+                    if ((d < 0) == isAbove) val = !val;
                 }
                 isAbove = !isAbove;
                 i++;
@@ -271,10 +274,10 @@ namespace Pmad.Geometry.Algorithms
                 else
                     d = Vector2F.CrossProduct(polygon[i - 1], polygon[i], pt);
                 if (d == 0) return PointInPolygonResult.IsOn;
-                if ((d < 0) == isAbove) val = 1 - val;
+                if ((d < 0) == isAbove) val = !val;
             }
 
-            if (val == 0)
+            if (!val)
                 return PointInPolygonResult.IsOutside;
             return PointInPolygonResult.IsInside;
             
@@ -290,7 +293,8 @@ namespace Pmad.Geometry.Algorithms
 
             double d;
             bool isAbove = polygon[start].Y < pt.Y, startingAbove = isAbove;
-            int val = 0, i = start + 1, end = len;
+            bool val = false;
+            int i = start + 1, end = len;
             while (true)
             {
                 if (i == end)
@@ -330,13 +334,13 @@ namespace Pmad.Geometry.Algorithms
                 }
                 else if (pt.X > prev.X && pt.X > curr.X)
                 {
-                    val = 1 - val; // toggle val
+                    val = !val; // toggle val
                 }
                 else
                 {
                     d = Vector2F.CrossProduct(prev, curr, pt);
                     if (d == 0) return PointInPolygonResult.IsOn;
-                    if ((d < 0) == isAbove) val = 1 - val;
+                    if ((d < 0) == isAbove) val = !val;
                 }
                 isAbove = !isAbove;
                 i++;
@@ -350,10 +354,10 @@ namespace Pmad.Geometry.Algorithms
                 else
                     d = Vector2F.CrossProduct(polygon[i - 1], polygon[i], pt);
                 if (d == 0) return PointInPolygonResult.IsOn;
-                if ((d < 0) == isAbove) val = 1 - val;
+                if ((d < 0) == isAbove) val = !val;
             }
 
-            if (val == 0)
+            if (!val)
                 return PointInPolygonResult.IsOutside;
             return PointInPolygonResult.IsInside;
         }
@@ -385,7 +389,8 @@ namespace Pmad.Geometry.Algorithms
 
             double d;
             bool isAbove = polygon[start].Y < pt.Y, startingAbove = isAbove;
-            int val = 0, i = start + 1, end = len;
+            bool val = false;
+            int i = start + 1, end = len;
             while (true)
             {
                 if (i == end)
@@ -425,13 +430,13 @@ namespace Pmad.Geometry.Algorithms
                 }
                 else if (pt.X > prev.X && pt.X > curr.X)
                 {
-                    val = 1 - val; // toggle val
+                    val = !val; // toggle val
                 }
                 else
                 {
                     d = Vector2L.CrossProduct(prev, curr, pt);
                     if (d == 0) return PointInPolygonResult.IsOn;
-                    if ((d < 0) == isAbove) val = 1 - val;
+                    if ((d < 0) == isAbove) val = !val;
                 }
                 isAbove = !isAbove;
                 i++;
@@ -445,10 +450,10 @@ namespace Pmad.Geometry.Algorithms
                 else
                     d = Vector2L.CrossProduct(polygon[i - 1], polygon[i], pt);
                 if (d == 0) return PointInPolygonResult.IsOn;
-                if ((d < 0) == isAbove) val = 1 - val;
+                if ((d < 0) == isAbove) val = !val;
             }
 
-            if (val == 0)
+            if (!val)
                 return PointInPolygonResult.IsOutside;
             return PointInPolygonResult.IsInside;
             
@@ -464,7 +469,8 @@ namespace Pmad.Geometry.Algorithms
 
             double d;
             bool isAbove = polygon[start].Y < pt.Y, startingAbove = isAbove;
-            int val = 0, i = start + 1, end = len;
+            bool val = false;
+            int i = start + 1, end = len;
             while (true)
             {
                 if (i == end)
@@ -504,13 +510,13 @@ namespace Pmad.Geometry.Algorithms
                 }
                 else if (pt.X > prev.X && pt.X > curr.X)
                 {
-                    val = 1 - val; // toggle val
+                    val = !val; // toggle val
                 }
                 else
                 {
                     d = Vector2L.CrossProduct(prev, curr, pt);
                     if (d == 0) return PointInPolygonResult.IsOn;
-                    if ((d < 0) == isAbove) val = 1 - val;
+                    if ((d < 0) == isAbove) val = !val;
                 }
                 isAbove = !isAbove;
                 i++;
@@ -524,10 +530,10 @@ namespace Pmad.Geometry.Algorithms
                 else
                     d = Vector2L.CrossProduct(polygon[i - 1], polygon[i], pt);
                 if (d == 0) return PointInPolygonResult.IsOn;
-                if ((d < 0) == isAbove) val = 1 - val;
+                if ((d < 0) == isAbove) val = !val;
             }
 
-            if (val == 0)
+            if (!val)
                 return PointInPolygonResult.IsOutside;
             return PointInPolygonResult.IsInside;
         }
@@ -559,7 +565,8 @@ namespace Pmad.Geometry.Algorithms
 
             double d;
             bool isAbove = polygon[start].Y < pt.Y, startingAbove = isAbove;
-            int val = 0, i = start + 1, end = len;
+            bool val = false;
+            int i = start + 1, end = len;
             while (true)
             {
                 if (i == end)
@@ -599,13 +606,13 @@ namespace Pmad.Geometry.Algorithms
                 }
                 else if (pt.X > prev.X && pt.X > curr.X)
                 {
-                    val = 1 - val; // toggle val
+                    val = !val; // toggle val
                 }
                 else
                 {
                     d = Vector2D.CrossProduct(prev, curr, pt);
                     if (d == 0) return PointInPolygonResult.IsOn;
-                    if ((d < 0) == isAbove) val = 1 - val;
+                    if ((d < 0) == isAbove) val = !val;
                 }
                 isAbove = !isAbove;
                 i++;
@@ -619,10 +626,10 @@ namespace Pmad.Geometry.Algorithms
                 else
                     d = Vector2D.CrossProduct(polygon[i - 1], polygon[i], pt);
                 if (d == 0) return PointInPolygonResult.IsOn;
-                if ((d < 0) == isAbove) val = 1 - val;
+                if ((d < 0) == isAbove) val = !val;
             }
 
-            if (val == 0)
+            if (!val)
                 return PointInPolygonResult.IsOutside;
             return PointInPolygonResult.IsInside;
             
@@ -638,7 +645,8 @@ namespace Pmad.Geometry.Algorithms
 
             double d;
             bool isAbove = polygon[start].Y < pt.Y, startingAbove = isAbove;
-            int val = 0, i = start + 1, end = len;
+            bool val = false;
+            int i = start + 1, end = len;
             while (true)
             {
                 if (i == end)
@@ -678,13 +686,13 @@ namespace Pmad.Geometry.Algorithms
                 }
                 else if (pt.X > prev.X && pt.X > curr.X)
                 {
-                    val = 1 - val; // toggle val
+                    val = !val; // toggle val
                 }
                 else
                 {
                     d = Vector2D.CrossProduct(prev, curr, pt);
                     if (d == 0) return PointInPolygonResult.IsOn;
-                    if ((d < 0) == isAbove) val = 1 - val;
+                    if ((d < 0) == isAbove) val = !val;
                 }
                 isAbove = !isAbove;
                 i++;
@@ -698,10 +706,10 @@ namespace Pmad.Geometry.Algorithms
                 else
                     d = Vector2D.CrossProduct(polygon[i - 1], polygon[i], pt);
                 if (d == 0) return PointInPolygonResult.IsOn;
-                if ((d < 0) == isAbove) val = 1 - val;
+                if ((d < 0) == isAbove) val = !val;
             }
 
-            if (val == 0)
+            if (!val)
                 return PointInPolygonResult.IsOutside;
             return PointInPolygonResult.IsInside;
         }
@@ -733,7 +741,8 @@ namespace Pmad.Geometry.Algorithms
 
             double d;
             bool isAbove = polygon[start].Y < pt.Y, startingAbove = isAbove;
-            int val = 0, i = start + 1, end = len;
+            bool val = false;
+            int i = start + 1, end = len;
             while (true)
             {
                 if (i == end)
@@ -773,13 +782,13 @@ namespace Pmad.Geometry.Algorithms
                 }
                 else if (pt.X > prev.X && pt.X > curr.X)
                 {
-                    val = 1 - val; // toggle val
+                    val = !val; // toggle val
                 }
                 else
                 {
                     d = Vector2IS.CrossProduct(prev, curr, pt);
                     if (d == 0) return PointInPolygonResult.IsOn;
-                    if ((d < 0) == isAbove) val = 1 - val;
+                    if ((d < 0) == isAbove) val = !val;
                 }
                 isAbove = !isAbove;
                 i++;
@@ -793,10 +802,10 @@ namespace Pmad.Geometry.Algorithms
                 else
                     d = Vector2IS.CrossProduct(polygon[i - 1], polygon[i], pt);
                 if (d == 0) return PointInPolygonResult.IsOn;
-                if ((d < 0) == isAbove) val = 1 - val;
+                if ((d < 0) == isAbove) val = !val;
             }
 
-            if (val == 0)
+            if (!val)
                 return PointInPolygonResult.IsOutside;
             return PointInPolygonResult.IsInside;
             
@@ -812,7 +821,8 @@ namespace Pmad.Geometry.Algorithms
 
             double d;
             bool isAbove = polygon[start].Y < pt.Y, startingAbove = isAbove;
-            int val = 0, i = start + 1, end = len;
+            bool val = false;
+            int i = start + 1, end = len;
             while (true)
             {
                 if (i == end)
@@ -852,13 +862,13 @@ namespace Pmad.Geometry.Algorithms
                 }
                 else if (pt.X > prev.X && pt.X > curr.X)
                 {
-                    val = 1 - val; // toggle val
+                    val = !val; // toggle val
                 }
                 else
                 {
                     d = Vector2IS.CrossProduct(prev, curr, pt);
                     if (d == 0) return PointInPolygonResult.IsOn;
-                    if ((d < 0) == isAbove) val = 1 - val;
+                    if ((d < 0) == isAbove) val = !val;
                 }
                 isAbove = !isAbove;
                 i++;
@@ -872,10 +882,10 @@ namespace Pmad.Geometry.Algorithms
                 else
                     d = Vector2IS.CrossProduct(polygon[i - 1], polygon[i], pt);
                 if (d == 0) return PointInPolygonResult.IsOn;
-                if ((d < 0) == isAbove) val = 1 - val;
+                if ((d < 0) == isAbove) val = !val;
             }
 
-            if (val == 0)
+            if (!val)
                 return PointInPolygonResult.IsOutside;
             return PointInPolygonResult.IsInside;
         }
@@ -907,7 +917,8 @@ namespace Pmad.Geometry.Algorithms
 
             double d;
             bool isAbove = polygon[start].Y < pt.Y, startingAbove = isAbove;
-            int val = 0, i = start + 1, end = len;
+            bool val = false;
+            int i = start + 1, end = len;
             while (true)
             {
                 if (i == end)
@@ -947,13 +958,13 @@ namespace Pmad.Geometry.Algorithms
                 }
                 else if (pt.X > prev.X && pt.X > curr.X)
                 {
-                    val = 1 - val; // toggle val
+                    val = !val; // toggle val
                 }
                 else
                 {
                     d = Vector2FS.CrossProduct(prev, curr, pt);
                     if (d == 0) return PointInPolygonResult.IsOn;
-                    if ((d < 0) == isAbove) val = 1 - val;
+                    if ((d < 0) == isAbove) val = !val;
                 }
                 isAbove = !isAbove;
                 i++;
@@ -967,10 +978,10 @@ namespace Pmad.Geometry.Algorithms
                 else
                     d = Vector2FS.CrossProduct(polygon[i - 1], polygon[i], pt);
                 if (d == 0) return PointInPolygonResult.IsOn;
-                if ((d < 0) == isAbove) val = 1 - val;
+                if ((d < 0) == isAbove) val = !val;
             }
 
-            if (val == 0)
+            if (!val)
                 return PointInPolygonResult.IsOutside;
             return PointInPolygonResult.IsInside;
             
@@ -986,7 +997,8 @@ namespace Pmad.Geometry.Algorithms
 
             double d;
             bool isAbove = polygon[start].Y < pt.Y, startingAbove = isAbove;
-            int val = 0, i = start + 1, end = len;
+            bool val = false;
+            int i = start + 1, end = len;
             while (true)
             {
                 if (i == end)
@@ -1026,13 +1038,13 @@ namespace Pmad.Geometry.Algorithms
                 }
                 else if (pt.X > prev.X && pt.X > curr.X)
                 {
-                    val = 1 - val; // toggle val
+                    val = !val; // toggle val
                 }
                 else
                 {
                     d = Vector2FS.CrossProduct(prev, curr, pt);
                     if (d == 0) return PointInPolygonResult.IsOn;
-                    if ((d < 0) == isAbove) val = 1 - val;
+                    if ((d < 0) == isAbove) val = !val;
                 }
                 isAbove = !isAbove;
                 i++;
@@ -1046,10 +1058,10 @@ namespace Pmad.Geometry.Algorithms
                 else
                     d = Vector2FS.CrossProduct(polygon[i - 1], polygon[i], pt);
                 if (d == 0) return PointInPolygonResult.IsOn;
-                if ((d < 0) == isAbove) val = 1 - val;
+                if ((d < 0) == isAbove) val = !val;
             }
 
-            if (val == 0)
+            if (!val)
                 return PointInPolygonResult.IsOutside;
             return PointInPolygonResult.IsInside;
         }
@@ -1081,7 +1093,8 @@ namespace Pmad.Geometry.Algorithms
 
             double d;
             bool isAbove = polygon[start].Y < pt.Y, startingAbove = isAbove;
-            int val = 0, i = start + 1, end = len;
+            bool val = false;
+            int i = start + 1, end = len;
             while (true)
             {
                 if (i == end)
@@ -1121,13 +1134,13 @@ namespace Pmad.Geometry.Algorithms
                 }
                 else if (pt.X > prev.X && pt.X > curr.X)
                 {
-                    val = 1 - val; // toggle val
+                    val = !val; // toggle val
                 }
                 else
                 {
                     d = Vector2LS.CrossProduct(prev, curr, pt);
                     if (d == 0) return PointInPolygonResult.IsOn;
-                    if ((d < 0) == isAbove) val = 1 - val;
+                    if ((d < 0) == isAbove) val = !val;
                 }
                 isAbove = !isAbove;
                 i++;
@@ -1141,10 +1154,10 @@ namespace Pmad.Geometry.Algorithms
                 else
                     d = Vector2LS.CrossProduct(polygon[i - 1], polygon[i], pt);
                 if (d == 0) return PointInPolygonResult.IsOn;
-                if ((d < 0) == isAbove) val = 1 - val;
+                if ((d < 0) == isAbove) val = !val;
             }
 
-            if (val == 0)
+            if (!val)
                 return PointInPolygonResult.IsOutside;
             return PointInPolygonResult.IsInside;
             
@@ -1160,7 +1173,8 @@ namespace Pmad.Geometry.Algorithms
 
             double d;
             bool isAbove = polygon[start].Y < pt.Y, startingAbove = isAbove;
-            int val = 0, i = start + 1, end = len;
+            bool val = false;
+            int i = start + 1, end = len;
             while (true)
             {
                 if (i == end)
@@ -1200,13 +1214,13 @@ namespace Pmad.Geometry.Algorithms
                 }
                 else if (pt.X > prev.X && pt.X > curr.X)
                 {
-                    val = 1 - val; // toggle val
+                    val = !val; // toggle val
                 }
                 else
                 {
                     d = Vector2LS.CrossProduct(prev, curr, pt);
                     if (d == 0) return PointInPolygonResult.IsOn;
-                    if ((d < 0) == isAbove) val = 1 - val;
+                    if ((d < 0) == isAbove) val = !val;
                 }
                 isAbove = !isAbove;
                 i++;
@@ -1220,10 +1234,10 @@ namespace Pmad.Geometry.Algorithms
                 else
                     d = Vector2LS.CrossProduct(polygon[i - 1], polygon[i], pt);
                 if (d == 0) return PointInPolygonResult.IsOn;
-                if ((d < 0) == isAbove) val = 1 - val;
+                if ((d < 0) == isAbove) val = !val;
             }
 
-            if (val == 0)
+            if (!val)
                 return PointInPolygonResult.IsOutside;
             return PointInPolygonResult.IsInside;
         }
@@ -1255,7 +1269,8 @@ namespace Pmad.Geometry.Algorithms
 
             double d;
             bool isAbove = polygon[start].Y < pt.Y, startingAbove = isAbove;
-            int val = 0, i = start + 1, end = len;
+            bool val = false;
+            int i = start + 1, end = len;
             while (true)
             {
                 if (i == end)
@@ -1295,13 +1310,13 @@ namespace Pmad.Geometry.Algorithms
                 }
                 else if (pt.X > prev.X && pt.X > curr.X)
                 {
-                    val = 1 - val; // toggle val
+                    val = !val; // toggle val
                 }
                 else
                 {
                     d = Vector2DS.CrossProduct(prev, curr, pt);
                     if (d == 0) return PointInPolygonResult.IsOn;
-                    if ((d < 0) == isAbove) val = 1 - val;
+                    if ((d < 0) == isAbove) val = !val;
                 }
                 isAbove = !isAbove;
                 i++;
@@ -1315,10 +1330,10 @@ namespace Pmad.Geometry.Algorithms
                 else
                     d = Vector2DS.CrossProduct(polygon[i - 1], polygon[i], pt);
                 if (d == 0) return PointInPolygonResult.IsOn;
-                if ((d < 0) == isAbove) val = 1 - val;
+                if ((d < 0) == isAbove) val = !val;
             }
 
-            if (val == 0)
+            if (!val)
                 return PointInPolygonResult.IsOutside;
             return PointInPolygonResult.IsInside;
             
@@ -1334,7 +1349,8 @@ namespace Pmad.Geometry.Algorithms
 
             double d;
             bool isAbove = polygon[start].Y < pt.Y, startingAbove = isAbove;
-            int val = 0, i = start + 1, end = len;
+            bool val = false;
+            int i = start + 1, end = len;
             while (true)
             {
                 if (i == end)
@@ -1374,13 +1390,13 @@ namespace Pmad.Geometry.Algorithms
                 }
                 else if (pt.X > prev.X && pt.X > curr.X)
                 {
-                    val = 1 - val; // toggle val
+                    val = !val; // toggle val
                 }
                 else
                 {
                     d = Vector2DS.CrossProduct(prev, curr, pt);
                     if (d == 0) return PointInPolygonResult.IsOn;
-                    if ((d < 0) == isAbove) val = 1 - val;
+                    if ((d < 0) == isAbove) val = !val;
                 }
                 isAbove = !isAbove;
                 i++;
@@ -1394,10 +1410,10 @@ namespace Pmad.Geometry.Algorithms
                 else
                     d = Vector2DS.CrossProduct(polygon[i - 1], polygon[i], pt);
                 if (d == 0) return PointInPolygonResult.IsOn;
-                if ((d < 0) == isAbove) val = 1 - val;
+                if ((d < 0) == isAbove) val = !val;
             }
 
-            if (val == 0)
+            if (!val)
                 return PointInPolygonResult.IsOutside;
             return PointInPolygonResult.IsInside;
         }
@@ -1429,7 +1445,8 @@ namespace Pmad.Geometry.Algorithms
 
             double d;
             bool isAbove = polygon[start].Y < pt.Y, startingAbove = isAbove;
-            int val = 0, i = start + 1, end = len;
+            bool val = false;
+            int i = start + 1, end = len;
             while (true)
             {
                 if (i == end)
@@ -1469,13 +1486,13 @@ namespace Pmad.Geometry.Algorithms
                 }
                 else if (pt.X > prev.X && pt.X > curr.X)
                 {
-                    val = 1 - val; // toggle val
+                    val = !val; // toggle val
                 }
                 else
                 {
                     d = Vector2FN.CrossProduct(prev, curr, pt);
                     if (d == 0) return PointInPolygonResult.IsOn;
-                    if ((d < 0) == isAbove) val = 1 - val;
+                    if ((d < 0) == isAbove) val = !val;
                 }
                 isAbove = !isAbove;
                 i++;
@@ -1489,10 +1506,10 @@ namespace Pmad.Geometry.Algorithms
                 else
                     d = Vector2FN.CrossProduct(polygon[i - 1], polygon[i], pt);
                 if (d == 0) return PointInPolygonResult.IsOn;
-                if ((d < 0) == isAbove) val = 1 - val;
+                if ((d < 0) == isAbove) val = !val;
             }
 
-            if (val == 0)
+            if (!val)
                 return PointInPolygonResult.IsOutside;
             return PointInPolygonResult.IsInside;
             
@@ -1508,7 +1525,8 @@ namespace Pmad.Geometry.Algorithms
 
             double d;
             bool isAbove = polygon[start].Y < pt.Y, startingAbove = isAbove;
-            int val = 0, i = start + 1, end = len;
+            bool val = false;
+            int i = start + 1, end = len;
             while (true)
             {
                 if (i == end)
@@ -1548,13 +1566,13 @@ namespace Pmad.Geometry.Algorithms
                 }
                 else if (pt.X > prev.X && pt.X > curr.X)
                 {
-                    val = 1 - val; // toggle val
+                    val = !val; // toggle val
                 }
                 else
                 {
                     d = Vector2FN.CrossProduct(prev, curr, pt);
                     if (d == 0) return PointInPolygonResult.IsOn;
-                    if ((d < 0) == isAbove) val = 1 - val;
+                    if ((d < 0) == isAbove) val = !val;
                 }
                 isAbove = !isAbove;
                 i++;
@@ -1568,10 +1586,10 @@ namespace Pmad.Geometry.Algorithms
                 else
                     d = Vector2FN.CrossProduct(polygon[i - 1], polygon[i], pt);
                 if (d == 0) return PointInPolygonResult.IsOn;
-                if ((d < 0) == isAbove) val = 1 - val;
+                if ((d < 0) == isAbove) val = !val;
             }
 
-            if (val == 0)
+            if (!val)
                 return PointInPolygonResult.IsOutside;
             return PointInPolygonResult.IsInside;
         }

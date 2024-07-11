@@ -14,9 +14,9 @@ namespace Pmad.Geometry.Benchmark
         public static Vector2F Divide2(Vector2F left, Vector2F right) => new(left.ToVector2() / right.ToVector2());
 
         [Benchmark]
-        public void Divide_Vector128() => SampleValues.RandomNonZeroList2F.ForEach(p => Divide1(p, p));
+        public void Divide_Vector128() => SampleValues.RandomPairList2F.ForEach(p => Divide1(p.Item1, p.Item2));
 
         [Benchmark]
-        public void Divide_Vector2() => SampleValues.RandomNonZeroList2F.ForEach(p => Divide2(p, p));
+        public void Divide_Vector2() => SampleValues.RandomPairList2F.ForEach(p => Divide2(p.Item1, p.Item2));
     }
 }

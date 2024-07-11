@@ -153,6 +153,19 @@ namespace Pmad.Geometry
             return v2.Y * v1.X - v2.X * v1.Y;
         }
 
+        [MethodImpl(MethodImplOptions.AggressiveInlining)]
+        public static double CrossProduct(Vector2IS pt1, Vector2IS pt2, Vector2IS pt3)
+        {
+            return CrossProduct(pt2-pt1, pt3-pt2);
+        }
+
+        [MethodImpl(MethodImplOptions.AggressiveInlining)]
+        public static double CrossProductScalar(Vector2IS pt1, Vector2IS pt2, Vector2IS pt3)
+        {
+            return ((double) (pt2.X - pt1.X) * (pt3.Y - pt2.Y) -
+                    (double) (pt2.Y - pt1.Y) * (pt3.X - pt2.X));
+        }
+
         readonly Vector2IS IVector<Vector2IS>.Add(Vector2IS value)
         {
             return this + value;
@@ -185,12 +198,6 @@ namespace Pmad.Geometry
         public readonly Vector2IS RotateM90()
         {
             return new (Y, -X);
-        }
-
-        [MethodImpl(MethodImplOptions.AggressiveInlining)]
-        internal static double CrossProduct(Vector2IS pt1, Vector2IS pt2, Vector2IS pt3)
-        {
-            return CrossProduct(pt2-pt1, pt3-pt2);
         }
 	}
     [DebuggerDisplay("({X};{Y})")]
@@ -341,6 +348,19 @@ namespace Pmad.Geometry
             return v2.Y * v1.X - v2.X * v1.Y;
         }
 
+        [MethodImpl(MethodImplOptions.AggressiveInlining)]
+        public static double CrossProduct(Vector2FS pt1, Vector2FS pt2, Vector2FS pt3)
+        {
+            return CrossProduct(pt2-pt1, pt3-pt2);
+        }
+
+        [MethodImpl(MethodImplOptions.AggressiveInlining)]
+        public static double CrossProductScalar(Vector2FS pt1, Vector2FS pt2, Vector2FS pt3)
+        {
+            return ((double) (pt2.X - pt1.X) * (pt3.Y - pt2.Y) -
+                    (double) (pt2.Y - pt1.Y) * (pt3.X - pt2.X));
+        }
+
         readonly Vector2FS IVector<Vector2FS>.Add(Vector2FS value)
         {
             return this + value;
@@ -373,12 +393,6 @@ namespace Pmad.Geometry
         public readonly Vector2FS RotateM90()
         {
             return new (Y, -X);
-        }
-
-        [MethodImpl(MethodImplOptions.AggressiveInlining)]
-        internal static double CrossProduct(Vector2FS pt1, Vector2FS pt2, Vector2FS pt3)
-        {
-            return CrossProduct(pt2-pt1, pt3-pt2);
         }
 	}
     [DebuggerDisplay("({X};{Y})")]
@@ -529,6 +543,19 @@ namespace Pmad.Geometry
             return v2.Y * v1.X - v2.X * v1.Y;
         }
 
+        [MethodImpl(MethodImplOptions.AggressiveInlining)]
+        public static double CrossProduct(Vector2LS pt1, Vector2LS pt2, Vector2LS pt3)
+        {
+            return CrossProduct(pt2-pt1, pt3-pt2);
+        }
+
+        [MethodImpl(MethodImplOptions.AggressiveInlining)]
+        public static double CrossProductScalar(Vector2LS pt1, Vector2LS pt2, Vector2LS pt3)
+        {
+            return ((double) (pt2.X - pt1.X) * (pt3.Y - pt2.Y) -
+                    (double) (pt2.Y - pt1.Y) * (pt3.X - pt2.X));
+        }
+
         readonly Vector2LS IVector<Vector2LS>.Add(Vector2LS value)
         {
             return this + value;
@@ -561,12 +588,6 @@ namespace Pmad.Geometry
         public readonly Vector2LS RotateM90()
         {
             return new (Y, -X);
-        }
-
-        [MethodImpl(MethodImplOptions.AggressiveInlining)]
-        internal static double CrossProduct(Vector2LS pt1, Vector2LS pt2, Vector2LS pt3)
-        {
-            return CrossProduct(pt2-pt1, pt3-pt2);
         }
 	}
     [DebuggerDisplay("({X};{Y})")]
@@ -717,6 +738,19 @@ namespace Pmad.Geometry
             return v2.Y * v1.X - v2.X * v1.Y;
         }
 
+        [MethodImpl(MethodImplOptions.AggressiveInlining)]
+        public static double CrossProduct(Vector2DS pt1, Vector2DS pt2, Vector2DS pt3)
+        {
+            return CrossProduct(pt2-pt1, pt3-pt2);
+        }
+
+        [MethodImpl(MethodImplOptions.AggressiveInlining)]
+        public static double CrossProductScalar(Vector2DS pt1, Vector2DS pt2, Vector2DS pt3)
+        {
+            return ((double) (pt2.X - pt1.X) * (pt3.Y - pt2.Y) -
+                    (double) (pt2.Y - pt1.Y) * (pt3.X - pt2.X));
+        }
+
         readonly Vector2DS IVector<Vector2DS>.Add(Vector2DS value)
         {
             return this + value;
@@ -749,12 +783,6 @@ namespace Pmad.Geometry
         public readonly Vector2DS RotateM90()
         {
             return new (Y, -X);
-        }
-
-        [MethodImpl(MethodImplOptions.AggressiveInlining)]
-        internal static double CrossProduct(Vector2DS pt1, Vector2DS pt2, Vector2DS pt3)
-        {
-            return CrossProduct(pt2-pt1, pt3-pt2);
         }
 	}
 }
