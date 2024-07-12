@@ -93,11 +93,16 @@ namespace Pmad.Geometry.Collections
             length = newLength;
         }
 
-        private void EnsureCapacity(int requested)
+        public void EnsureCapacity(int requested)
         {
             if (requested > array.Length)
             {
-                Array.Resize(ref array, array.Length * 2);
+                var newSize = array.Length * 2;
+                while (requested > newSize)
+                {
+                    newSize = newSize * 2;
+                }
+                Array.Resize(ref array, newSize);
             }
         }
 
