@@ -1,4 +1,5 @@
 ﻿using Clipper2Lib;
+using Pmad.Geometry.Collections;
 
 namespace Pmad.Geometry.Shapes
 {
@@ -29,7 +30,7 @@ namespace Pmad.Geometry.Shapes
             ScaleForClipper = scaleForClipper;
         }
 
-        public double ScaleForClipper { get; }
+        public int ScaleForClipper { get; }
 
         private static int GetDefaultScale()
         {
@@ -51,26 +52,32 @@ namespace Pmad.Geometry.Shapes
         {
             foreach (PolyPath64 node in polyTree64)
             {
-                var children = node.Cast<PolyPath64>();
                 var shell = FromClipperToRing(node.Polygon!);
-                var holes = children.Select(h => FromClipperToRing(h.Polygon!)).ToList();
-                result.Add(new Polygon<TPrimitive, TVector>(this, shell, holes));
-                foreach (var subchild in children.SelectMany(h => h.Cast<PolyPath64>()))
+                var holes = new ReadOnlyArray<TVector>[node.Count];
+                for (int i = 0; i < node.Count; ++i)
+                {
+                    holes[i] = FromClipperToRing(node[i].Polygon!);
+                }
+                result.Add(new Polygon<TPrimitive, TVector>(this, shell, new (holes)));
+                foreach (var subchild in node.Cast<PolyPath64>().SelectMany(h => h.Cast<PolyPath64>()))
                 {
                     FromClipper(result, subchild);
                 }
             }
         }
 
-        internal IReadOnlyList<TVector> FromClipperToRing(List<Point64> points)
+        internal ReadOnlyArray<TVector> FromClipperToRing(List<Point64> points)
         {
-            var ring = new List<TVector>(points.Count + 1);
-            ring.AddRange(points.Select(FromClipper));
-            ring.Add(FromClipper(points[0]));
-            return ring;
+            var ring = new TVector[points.Count + 1];
+            for (int i = 0; i < points.Count; i++)
+            {
+                ring[i] = FromClipper(points[i]);
+            }
+            ring[points.Count] = FromClipper(points[0]);
+            return new ReadOnlyArray<TVector>(ring);
         }
 
-        internal Path64 ToClipper(IReadOnlyList<TVector> shell)
+        internal Path64 ToClipper(ReadOnlyArray<TVector> shell)
         {
             var path = new Path64(shell.Count);
             path.AddRange(shell.Select(ToClipper));
@@ -120,27 +127,26 @@ namespace Pmad.Geometry.Shapes
 
         public Polygon<TPrimitive, TVector> CreateRectangle(TVector p1, TVector p2)
         {
-            return new Polygon<TPrimitive, TVector>(this, new List<TVector>(5)
-            {
+            return new Polygon<TPrimitive, TVector>(this, new ReadOnlyArray<TVector>(
                 p1,
                 Vectors.Create<TPrimitive,TVector>(p1.X, p2.X),
                 p2,
                 Vectors.Create<TPrimitive,TVector>(p2.X, p1.X),
                 p1
-            });
+            ));
         }
 
-        public Polygon<TPrimitive, TVector> CreatePolygon(IReadOnlyList<TVector> shell, IReadOnlyList<IReadOnlyList<TVector>> holes)
+        public Polygon<TPrimitive, TVector> CreatePolygon(ReadOnlyArray<TVector> shell, ReadOnlyArray<ReadOnlyArray<TVector>> holes)
         {
             return new Polygon<TPrimitive, TVector>(this, shell, holes);
         }
 
-        public Polygon<TPrimitive, TVector> CreatePolygon(IReadOnlyList<TVector> shell)
+        public Polygon<TPrimitive, TVector> CreatePolygon(ReadOnlyArray<TVector> shell)
         {
             return new Polygon<TPrimitive, TVector>(this, shell);
         }
 
-        public Path<TPrimitive, TVector> CreatePath(IReadOnlyList<TVector> points)
+        public Path<TPrimitive, TVector> CreatePath(ReadOnlyArray<TVector> points)
         {
             return new Path<TPrimitive, TVector>(this, points);
         }

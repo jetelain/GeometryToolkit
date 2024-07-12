@@ -1,5 +1,6 @@
 ﻿using Clipper2Lib;
 using Pmad.Geometry.Algorithms;
+using Pmad.Geometry.Collections;
 
 namespace Pmad.Geometry.Shapes
 {
@@ -7,27 +8,27 @@ namespace Pmad.Geometry.Shapes
         where TPrimitive : unmanaged
         where TVector : struct, IVector2<TPrimitive, TVector>
     {
-        private static readonly IReadOnlyList<IReadOnlyList<TVector>> NoHoles = new List<IReadOnlyList<TVector>>(0);
+        private static readonly ReadOnlyArray<ReadOnlyArray<TVector>> NoHoles = new ReadOnlyArray<ReadOnlyArray<TVector>>([]);
         
-        public Polygon(IReadOnlyList<TVector> shell)
+        public Polygon(ReadOnlyArray<TVector> shell)
             : this(ShapeSettings<TPrimitive, TVector>.Default, shell, NoHoles)
         {
 
         }
         
-        public Polygon(IReadOnlyList<TVector> shell, IReadOnlyList<IReadOnlyList<TVector>> holes)
+        public Polygon(ReadOnlyArray<TVector> shell, ReadOnlyArray<ReadOnlyArray<TVector>> holes)
             : this(ShapeSettings<TPrimitive,TVector>.Default, shell, holes)
         {
 
         }
         
-        public Polygon(ShapeSettings<TPrimitive, TVector> settings, IReadOnlyList<TVector> shell)
+        public Polygon(ShapeSettings<TPrimitive, TVector> settings, ReadOnlyArray<TVector> shell)
              : this(settings, shell, NoHoles)
         {
 
         }
 
-        public Polygon(ShapeSettings<TPrimitive, TVector> settings, IReadOnlyList<TVector> shell, IReadOnlyList<IReadOnlyList<TVector>> holes)
+        public Polygon(ShapeSettings<TPrimitive, TVector> settings, ReadOnlyArray<TVector> shell, ReadOnlyArray<ReadOnlyArray<TVector>> holes)
         {
             this.Settings = settings;
             this.Shell = shell;
@@ -37,9 +38,9 @@ namespace Pmad.Geometry.Shapes
 
         public ShapeSettings<TPrimitive, TVector> Settings { get; }
 
-        public IReadOnlyList<TVector> Shell { get; }
+        public ReadOnlyArray<TVector> Shell { get; }
 
-        public IReadOnlyList<IReadOnlyList<TVector>> Holes { get; }
+        public ReadOnlyArray<ReadOnlyArray<TVector>> Holes { get; }
 
         public VectorEnvelope<TVector> Bounds { get; }
 
@@ -55,7 +56,7 @@ namespace Pmad.Geometry.Shapes
             return paths;
         }
 
-        private Paths64 Offset(IReadOnlyList<TVector> path, double detla)
+        private Paths64 Offset(ReadOnlyArray<TVector> path, double detla)
         {
             var clipper = new ClipperOffset();
             clipper.AddPath(Settings.ToClipper(path), JoinType.Square, EndType.Polygon);

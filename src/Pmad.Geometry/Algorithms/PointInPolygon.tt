@@ -11,8 +11,10 @@
 * Purpose   :  PointInPolygon for each supported vector type, to avoid conversion *
 * License   :  http://www.boost.org/LICENSE_1_0.txt                               *
 ***********************************************************************************/
+using System.Runtime.CompilerServices;
 using System.Runtime.InteropServices;
 using Clipper2Lib;
+using Pmad.Geometry.Collections;
 
 namespace Pmad.Geometry.Algorithms
 {
@@ -27,6 +29,12 @@ namespace Pmad.Geometry.Algorithms
             // We achieve 20% faster processing using a Span compared to List<<#=def.Struct#>>
             // and 25% faster than sticking to IReadOnlyList<<#=def.Struct#>>
             return TestPointInPolygon(CollectionsMarshal.AsSpan(polygon), pt);
+        }
+
+        [MethodImpl(MethodImplOptions.AggressiveInlining)]
+        public static PointInPolygonResult TestPointInPolygon(this ReadOnlyArray<<#=def.Struct#>> polygon, <#=def.Struct#> pt)
+        {
+            return TestPointInPolygon(polygon.AsSpan(), pt);
         }
 
         public static PointInPolygonResult TestPointInPolygon(this IReadOnlyList<<#=def.Struct#>> polygon, <#=def.Struct#> pt)
@@ -118,7 +126,7 @@ namespace Pmad.Geometry.Algorithms
             
         }
 
-        public static PointInPolygonResult TestPointInPolygon(this Span<<#=def.Struct#>> polygon, <#=def.Struct#> pt)
+        public static PointInPolygonResult TestPointInPolygon(this ReadOnlySpan<<#=def.Struct#>> polygon, <#=def.Struct#> pt)
         {
             int len = polygon.Length, start = 0;
             if (len < 3) return PointInPolygonResult.IsOutside;

@@ -5,6 +5,7 @@
 <#@ import namespace="System.Collections.Generic" #>
 <#@ include file="../Definitions.tt" #>
 <#@ output extension=".cs" #>
+using Pmad.Geometry.Collections;
 
 namespace Pmad.Geometry.Algorithms
 {
@@ -15,6 +16,23 @@ namespace Pmad.Geometry.Algorithms
 	{
 #>
         public static <#=def.ResultType#> GetSignedArea(this IReadOnlyList<<#=def.Struct#>> points)
+        {
+            if (points.Count < 3)
+            {
+                return 0;
+            }
+            var v1 = points[points.Count-1];
+            <#=def.ResultType#> area = 0;
+            for (var i = 0; i < points.Count; i++)
+            {
+                var v2 = points[i];
+                area += <#=def.Struct#>.CrossProduct(v1, v2);
+                v1 = v2;
+            }
+            return area / 2;
+        }
+
+        public static <#=def.ResultType#> GetSignedArea(this ReadOnlyArray<<#=def.Struct#>> points)
         {
             if (points.Count < 3)
             {

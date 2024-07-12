@@ -1,4 +1,7 @@
-﻿namespace Pmad.Geometry
+﻿using System.Runtime.CompilerServices;
+using Pmad.Geometry.Collections;
+
+namespace Pmad.Geometry
 {
     public static class EnumerableExtensions
     {
@@ -18,6 +21,28 @@
             return default;
         }
 
+        public static TVector Sum<TVector>(this ReadOnlySpan<TVector> list)
+            where TVector : struct, IVector<TVector>
+        {
+            if (list.Length == 0)
+            {
+                return default;
+            }
+            TVector result = list[0];
+            for (var i = 1; i < list.Length; i++)
+            {
+                result = result.Add(list[i]);
+            }
+            return result;
+        }
+
+        [MethodImpl(MethodImplOptions.AggressiveInlining)]
+        public static TVector Sum<TVector>(this ReadOnlyArray<TVector> list)
+            where TVector : struct, IVector<TVector>
+        {
+            return Sum(list.AsSpan());
+        }
+
         public static TVector Max<TVector>(this IEnumerable<TVector> list)
             where TVector : struct, IVector<TVector>
         {
@@ -35,6 +60,28 @@
             return default;
         }
 
+        public static TVector Max<TVector>(this ReadOnlySpan<TVector> list)
+            where TVector : struct, IVector<TVector>
+        {
+            if (list.Length == 0)
+            {
+                return default;
+            }
+            TVector result = list[0];
+            for (var i = 1; i < list.Length; i++)
+            {
+                result = result.Max(list[i]);
+            }
+            return result;
+        }
+
+        [MethodImpl(MethodImplOptions.AggressiveInlining)]
+        public static TVector Max<TVector>(this ReadOnlyArray<TVector> list)
+            where TVector : struct, IVector<TVector>
+        {
+            return Max(list.AsSpan());
+        }
+
         public static TVector Min<TVector>(this IEnumerable<TVector> list)
             where TVector : struct, IVector<TVector>
         {
@@ -50,6 +97,28 @@
             }
             ThrowHelper.ThrowNoElementsException();
             return default;
+        }
+
+        public static TVector Min<TVector>(this ReadOnlySpan<TVector> list)
+            where TVector : struct, IVector<TVector>
+        {
+            if (list.Length == 0)
+            {
+                return default;
+            }
+            TVector result = list[0];
+            for (var i = 1; i < list.Length; i++)
+            {
+                result = result.Max(list[i]);
+            }
+            return result;
+        }
+
+        [MethodImpl(MethodImplOptions.AggressiveInlining)]
+        public static TVector Min<TVector>(this ReadOnlyArray<TVector> list)
+            where TVector : struct, IVector<TVector>
+        {
+            return Min(list.AsSpan());
         }
 
         public static double GetLengthD<TVector>(this IEnumerable<TVector> list)
@@ -71,6 +140,31 @@
             return 0;
         }
 
+        [MethodImpl(MethodImplOptions.AggressiveInlining)]
+        public static double GetLengthD<TVector>(this ReadOnlyArray<TVector> list)
+            where TVector : struct, IVector<TVector>
+        {
+            return GetLengthD(list.AsSpan());
+        }
+
+        public static double GetLengthD<TVector>(this ReadOnlySpan<TVector> list)
+            where TVector : struct, IVector<TVector>
+        {
+            if (list.Length < 2)
+            {
+                return 0;
+            }
+            double result = 0;
+            var p1 = list[0];
+            for (var i = 1; i < list.Length; i++)
+            {
+                var p2 = list[i];
+                result += p2.Substract(p1).LengthD();
+                p1 = p2;
+            }
+            return result;
+        }
+
         public static float GetLengthF<TVector>(this IEnumerable<TVector> list)
             where TVector : struct, IVector<TVector>
         {
@@ -88,6 +182,31 @@
                 return result;
             }
             return 0;
+        }
+
+        [MethodImpl(MethodImplOptions.AggressiveInlining)]
+        public static float GetLengthF<TVector>(this ReadOnlyArray<TVector> list)
+            where TVector : struct, IVector<TVector>
+        {
+            return GetLengthF(list.AsSpan());
+        }
+
+        public static float GetLengthF<TVector>(this ReadOnlySpan<TVector> list)
+            where TVector : struct, IVector<TVector>
+        {
+            if (list.Length < 2)
+            {
+                return 0;
+            }
+            float result = 0;
+            var p1 = list[0];
+            for (var i = 1; i < list.Length; i++)
+            {
+                var p2 = list[i];
+                result += p2.Substract(p1).LengthF();
+                p1 = p2;
+            }
+            return result;
         }
     }
 }

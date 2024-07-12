@@ -1,5 +1,6 @@
 ﻿using Clipper2Lib;
 using Pmad.Geometry.Algorithms;
+using Pmad.Geometry.Collections;
 
 namespace Pmad.Geometry.Shapes
 {
@@ -7,13 +8,13 @@ namespace Pmad.Geometry.Shapes
         where TPrimitive : unmanaged
         where TVector : struct, IVector2<TPrimitive, TVector>
     {
-        public Path(IReadOnlyList<TVector> points)
+        public Path(ReadOnlyArray<TVector> points)
             : this(ShapeSettings<TPrimitive,TVector>.Default, points)
         {
 
         }
 
-        public Path(ShapeSettings<TPrimitive, TVector> settings, IReadOnlyList<TVector> points)
+        public Path(ShapeSettings<TPrimitive, TVector> settings, ReadOnlyArray<TVector> points)
         {
             this.Settings = settings;
             this.Points = points;
@@ -22,7 +23,7 @@ namespace Pmad.Geometry.Shapes
 
         public ShapeSettings<TPrimitive, TVector> Settings { get; }
         
-        public IReadOnlyList<TVector> Points { get; }
+        public ReadOnlyArray<TVector> Points { get; }
 
         public VectorEnvelope<TVector> Bounds { get; }
 
@@ -30,7 +31,11 @@ namespace Pmad.Geometry.Shapes
 
         public float LengthF => Points.GetLengthF();
 
-        public bool IsClosed => Points[0].Equals(Points[Points.Count-1]);
+        public TVector First => Points[0];
+
+        public TVector Last => Points[Points.Count - 1];
+
+        public bool IsClosed => First.Equals(Last);
 
         public bool IsCounterClockWise => IsClosed && Points.GetSignedAreaD() > 0;
 
@@ -53,10 +58,10 @@ namespace Pmad.Geometry.Shapes
         {
             if (!IsClosed)
             {
-                var points = new List<TVector>(Points.Count + 1); 
+                var points = new ReadOnlyArrayBuilder<TVector>(Points.Count + 1); 
                 points.AddRange(Points);
                 points.Add(Points[0]);
-                return new Polygon<TPrimitive, TVector>(Settings, points);
+                return new Polygon<TPrimitive, TVector>(Settings, points.Build());
             }
             return new Polygon<TPrimitive, TVector>(Settings, Points);
         }

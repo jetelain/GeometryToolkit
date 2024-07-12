@@ -7,11 +7,25 @@
 <#@ output extension=".cs" #>
 using System.Runtime.CompilerServices;
 using Clipper2Lib;
+using Pmad.Geometry.Collections;
 
 namespace Pmad.Geometry.Algorithms
 {
     public static class AlgorithmsDispatcher
     {
+        [MethodImpl(MethodImplOptions.AggressiveInlining)]
+        public static PointInPolygonResult TestPointInPolygon<TVector>(this ReadOnlyArray<TVector> points, TVector pt)
+            where TVector : struct, IVector<TVector>
+        {
+<# foreach(var def in definitions) { #>
+            if (typeof(TVector) == typeof(<#=def.Struct#>))
+            {
+                return ((ReadOnlyArray<<#=def.Struct#>>)(object)points).TestPointInPolygon((<#=def.Struct#>)(object)pt);
+            }
+<# } #>
+            ThrowHelper.ThrowNotSupportedException();
+            return default;
+        }
 
 	    [MethodImpl(MethodImplOptions.AggressiveInlining)]
         public static PointInPolygonResult TestPointInPolygon<TVector>(this IReadOnlyList<TVector> points, TVector pt)
@@ -42,19 +56,46 @@ namespace Pmad.Geometry.Algorithms
         }
 
 	    [MethodImpl(MethodImplOptions.AggressiveInlining)]
-        public static double GetSignedAreaD<TVector>(this IReadOnlyList<TVector> points)
+        public static double GetSignedAreaD<TVector>(this ReadOnlyArray<TVector> points)
             where TVector : struct, IVector<TVector>
         {
 <# foreach(var def in definitions) { #>
             if (typeof(TVector) == typeof(<#=def.Struct#>))
             {
-                return ((List<<#=def.Struct#>>)(object)points).GetSignedArea();
+                return ((ReadOnlyArray<<#=def.Struct#>>)(object)points).GetSignedArea();
             }
 <# } #>
             ThrowHelper.ThrowNotSupportedException();
             return default;
         }
 
+	    [MethodImpl(MethodImplOptions.AggressiveInlining)]
+        public static double GetSignedAreaD<TVector>(this IReadOnlyList<TVector> points)
+            where TVector : struct, IVector<TVector>
+        {
+<# foreach(var def in definitions) { #>
+            if (typeof(TVector) == typeof(<#=def.Struct#>))
+            {
+                return ((IReadOnlyList<<#=def.Struct#>>)(object)points).GetSignedArea();
+            }
+<# } #>
+            ThrowHelper.ThrowNotSupportedException();
+            return default;
+        }
+
+	    [MethodImpl(MethodImplOptions.AggressiveInlining)]
+        public static float GetSignedAreaF<TVector>(this ReadOnlyArray<TVector> points)
+            where TVector : struct, IVector<TVector>
+        {
+<# foreach(var def in definitions) { #>
+            if (typeof(TVector) == typeof(<#=def.Struct#>))
+            {
+                return (float)((ReadOnlyArray<<#=def.Struct#>>)(object)points).GetSignedArea();
+            }
+<# } #>
+            ThrowHelper.ThrowNotSupportedException();
+            return default;
+        }
 
 	    [MethodImpl(MethodImplOptions.AggressiveInlining)]
         public static float GetSignedAreaF<TVector>(this IReadOnlyList<TVector> points)
@@ -63,7 +104,7 @@ namespace Pmad.Geometry.Algorithms
 <# foreach(var def in definitions) { #>
             if (typeof(TVector) == typeof(<#=def.Struct#>))
             {
-                return (float)((List<<#=def.Struct#>>)(object)points).GetSignedArea();
+                return (float)((IReadOnlyList<<#=def.Struct#>>)(object)points).GetSignedArea();
             }
 <# } #>
             ThrowHelper.ThrowNotSupportedException();

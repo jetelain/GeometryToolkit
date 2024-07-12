@@ -11,6 +11,10 @@ namespace Pmad.Geometry
 
         [DoesNotReturn]
         internal static void ThrowNoElementsException()
-            => throw new InvalidOperationException("No elements.");
+            => throw new InvalidOperationException("No elements."); 
+        
+        [DoesNotReturn]
+        internal static void ThrowIndexOutOfRangeException()
+            => throw new IndexOutOfRangeException();
     }
 }
