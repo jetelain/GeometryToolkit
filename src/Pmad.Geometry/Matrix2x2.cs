@@ -35,7 +35,7 @@ namespace Pmad.Geometry
         [MethodImpl(MethodImplOptions.AggressiveInlining)]
         public TVector Transform(TVector value)
         {
-            return X.Multiply(value.X).Add(Y.Multiply(value.Y));
+            return Vectors.Add(Vectors.Multiply(X,value.X), Vectors.Multiply(Y,value.Y));
         }
 
         public bool Equals(Matrix2x2<TPrimitive, TVector> other)

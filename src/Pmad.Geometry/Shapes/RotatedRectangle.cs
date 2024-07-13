@@ -58,17 +58,17 @@ namespace Pmad.Geometry.Shapes
             return new Polygon<TPrimitive, TVector>(Settings, shell.Build());
         }
 
-        public static RotatedRectangle<TPrimitive,TVector> GetSmallestContaining(ReadOnlyArray<TVector> points)
+        public static RotatedRectangle<TPrimitive, TVector> GetSmallestContaining_Virtual(ReadOnlyArray<TVector> points)
         {
-            return GetSmallestContaining(ShapeSettings<TPrimitive,TVector>.Default, points.AsSpan());
+            return GetSmallestContaining_Virtual(ShapeSettings<TPrimitive, TVector>.Default, points.AsSpan());
         }
 
-        public static RotatedRectangle<TPrimitive, TVector> GetSmallestContaining(ShapeSettings<TPrimitive, TVector> settings, ReadOnlyArray<TVector> points)
+        public static RotatedRectangle<TPrimitive, TVector> GetSmallestContaining_Virtual(ShapeSettings<TPrimitive, TVector> settings, ReadOnlyArray<TVector> points)
         {
-            return GetSmallestContaining(settings, points.AsSpan());
+            return GetSmallestContaining_Virtual(settings, points.AsSpan());
         }
 
-        public static RotatedRectangle<TPrimitive,TVector> GetSmallestContaining(ShapeSettings<TPrimitive,TVector> settings, ReadOnlySpan<TVector> points)
+        private static RotatedRectangle<TPrimitive, TVector> GetSmallestContaining_Virtual(ShapeSettings<TPrimitive, TVector> settings, ReadOnlySpan<TVector> points)
         {
             TVector resultSize = default;
             TVector resultCenter = default;
@@ -109,7 +109,61 @@ namespace Pmad.Geometry.Shapes
                 a = b;
             }
 
-            return new (settings, resultCenter, resultSize, resultAngle);
+            return new(settings, resultCenter, resultSize, resultAngle);
+        }
+
+        public static RotatedRectangle<TPrimitive, TVector> GetSmallestContaining(ReadOnlyArray<TVector> points)
+        {
+            return GetSmallestContaining_Dispatch(ShapeSettings<TPrimitive, TVector>.Default, points.AsSpan());
+        }
+
+        public static RotatedRectangle<TPrimitive, TVector> GetSmallestContaining(ShapeSettings<TPrimitive, TVector> settings, ReadOnlyArray<TVector> points)
+        {
+            return GetSmallestContaining_Dispatch(settings, points.AsSpan());
+        }
+
+        private static RotatedRectangle<TPrimitive,TVector> GetSmallestContaining_Dispatch(ShapeSettings<TPrimitive,TVector> settings, ReadOnlySpan<TVector> points)
+        {
+            TVector resultSize = default;
+            TVector resultCenter = default;
+            double resultAngle = 0;
+            double resultArea = double.MaxValue;
+
+            var a = points[points.Length - 1];
+
+            for (var i = 0; i < points.Length; i++)
+            {
+                var b = points[i];
+
+                var theta = Vectors.Substract(a, b).Atan2D();
+
+                var rotate = Matrix2x2<TPrimitive, TVector>.CreateRotation(-theta);
+
+                var max = rotate.Transform(Vectors.Substract(points[0], a));
+                var min = max;
+                for (var j = 1; j < points.Length; j++)
+                {
+                    var r = rotate.Transform(Vectors.Substract(points[j], a));
+                    max = Vectors.Max(r,max);
+                    min = Vectors.Min(r,min);
+                }
+                var size = Vectors.Substract(max, min);
+                var area = size.AreaD();
+                if (area < resultArea)
+                {
+                    resultArea = area;
+                    resultSize = size;
+                    resultAngle = theta;
+
+                    var reverseRotate = Matrix2x2<TPrimitive, TVector>.CreateRotation(theta);
+                    var resultP3 = reverseRotate.Transform(max);
+                    var resultP1 = reverseRotate.Transform(min);
+                    resultCenter = Vectors.Add(Vectors.Divide(Vectors.Add(resultP3, resultP1), 2), a);
+                }
+                a = b;
+            }
+
+            return new(settings, resultCenter, resultSize, resultAngle);
         }
 
         public static RotatedRectangle<TPrimitive, TVector>? GetLargestBetween(ReadOnlyArray<TVector> points)

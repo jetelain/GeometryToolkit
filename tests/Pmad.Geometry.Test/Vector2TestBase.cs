@@ -194,7 +194,49 @@ namespace Pmad.Geometry.Test
         }
 
         [Fact]
-        public void HasLineIntersection()
+        public void VectorsAdd()
+        {
+            Assert.Equal(Vector(123, 456), Vectors.Add(Vector(100, 56), Vector(23, 400)));
+        }
+
+        [Fact]
+        public void VectorsSubstract()
+        {
+            Assert.Equal(Vector(100, 56), Vectors.Substract(Vector(123, 456), Vector(23, 400)));
+        }
+
+        [Fact]
+        public void VectorsMultiply()
+        {
+            Assert.Equal(Vector(2000, 8000), Vectors.Multiply(Vector(200, 400), Vector(10, 20)));
+        }
+
+        [Fact]
+        public void VectorsMultiplyScalar()
+        {
+            Assert.Equal(Vector(2000, 4000), Vectors.Multiply(Vector(200, 400), Scalar(10)));
+        }
+
+        [Fact]
+        public void VectorsMultiplyInteger()
+        {
+            Assert.Equal(Vector(2000, 4000), Vectors.Multiply(Vector(200, 400), 10));
+        }
+
+        [Fact]
+        public void VectorsDivide()
+        {
+            Assert.Equal(Vector(10, 40), Vectors.Divide(Vector(200, 400), Vector(20, 10)));
+        }
+
+        [Fact]
+        public void VectorsDivideScalar()
+        {
+            Assert.Equal(Vector(20, 40), Vectors.Divide(Vector(200, 400), 10));
+        }
+
+        [Fact]
+        public void VectorsHasLineIntersection()
         {
             TVector result;
 
@@ -211,7 +253,7 @@ namespace Pmad.Geometry.Test
         }
 
         [Fact]
-        public void HasSegmentIntersection()
+        public void VectorsHasSegmentIntersection()
         {
             TVector result;
 
