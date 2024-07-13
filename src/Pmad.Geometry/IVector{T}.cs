@@ -29,11 +29,32 @@
         T Multiply(T value);
 
         /// <summary>
+        /// Compute the multiplication of this and an other vector
+        /// </summary>
+        /// <param name="value"></param>
+        /// <returns>this * value</returns>
+        T Multiply(int value);
+
+        /// <summary>
+        /// Compute the multiplication of this and an other vector
+        /// </summary>
+        /// <param name="value"></param>
+        /// <returns>this * value</returns>
+        T Multiply(double value);
+
+        /// <summary>
         /// Compute the division of this and an other vector
         /// </summary>
         /// <param name="value"></param>
         /// <returns>this / value</returns>
         T Divide(T value);
+
+        /// <summary>
+        /// Compute the division of this and an other vector
+        /// </summary>
+        /// <param name="value"></param>
+        /// <returns>this / value</returns>
+        T Divide(int value);
 
         /// <summary>
         /// Length of vector as a <see langword="double"/>.
@@ -86,5 +107,6 @@
 
         T SwapXY();
 
+        T Negate();
     }
 }

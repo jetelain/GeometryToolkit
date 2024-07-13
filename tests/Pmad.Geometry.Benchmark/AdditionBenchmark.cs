@@ -47,6 +47,12 @@ namespace Pmad.Geometry.Benchmark
             return item1 + item2;
         }
 
+        [MethodImpl(MethodImplOptions.AggressiveInlining)]
+        private Vector2F Direct(Vector2F item1, Vector2F item2)
+        {
+            return item1 + item2;
+        }
+
         [Benchmark]
         public void AddVector2D_Direct() => SampleValues.RandomPairList2D.ForEach(p => _ = Direct(p.Item1, p.Item2));
 
@@ -71,6 +77,8 @@ namespace Pmad.Geometry.Benchmark
         public void AddVector2LS_Direct() => SampleValues.RandomPairList2LS.ForEach(p => _ = Direct(p.Item1, p.Item2));
         [Benchmark]
         public void AddVector2FN_Direct() => SampleValues.RandomPairList2FN.ForEach(p => _ = Direct(p.Item1, p.Item2));
+        [Benchmark]
+        public void AddVector2F_Direct() => SampleValues.RandomPairList2F.ForEach(p => _ = Direct(p.Item1, p.Item2));
 
     }
 }

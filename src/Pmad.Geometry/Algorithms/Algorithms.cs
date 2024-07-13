@@ -1,6 +1,7 @@
 ﻿using System.Runtime.CompilerServices;
 using Clipper2Lib;
 using Pmad.Geometry.Collections;
+using Pmad.Geometry.Shapes;
 
 namespace Pmad.Geometry.Algorithms
 {
@@ -309,6 +310,35 @@ namespace Pmad.Geometry.Algorithms
             if (typeof(TVector) == typeof(Vector2FN))
             {
                 return (float)((IReadOnlyList<Vector2FN>)(object)points).GetSignedArea();
+            }
+            ThrowHelper.ThrowNotSupportedException();
+            return default;
+        }
+
+	    [MethodImpl(MethodImplOptions.AggressiveInlining)]
+        public static RotatedRectangle<TPrimitive, TVector> GetSmallestRotatedRectangleContaining<TPrimitive,TVector>(ShapeSettings<TPrimitive, TVector> settings, ReadOnlyArray<TVector> points)
+            where TPrimitive : unmanaged
+            where TVector : struct, IVector2<TPrimitive, TVector>, IVectorFP<TPrimitive, TVector>
+        {
+            if (typeof(TVector) == typeof(Vector2F))
+            {
+                return (RotatedRectangle<TPrimitive, TVector>)(object)SmallestRotatedRectangle.Compute((ShapeSettings<float,Vector2F>)(object)settings, ((ReadOnlyArray<Vector2F>)(object)points).AsSpan());
+            }
+            if (typeof(TVector) == typeof(Vector2D))
+            {
+                return (RotatedRectangle<TPrimitive, TVector>)(object)SmallestRotatedRectangle.Compute((ShapeSettings<double,Vector2D>)(object)settings, ((ReadOnlyArray<Vector2D>)(object)points).AsSpan());
+            }
+            if (typeof(TVector) == typeof(Vector2FS))
+            {
+                return (RotatedRectangle<TPrimitive, TVector>)(object)SmallestRotatedRectangle.Compute((ShapeSettings<float,Vector2FS>)(object)settings, ((ReadOnlyArray<Vector2FS>)(object)points).AsSpan());
+            }
+            if (typeof(TVector) == typeof(Vector2DS))
+            {
+                return (RotatedRectangle<TPrimitive, TVector>)(object)SmallestRotatedRectangle.Compute((ShapeSettings<double,Vector2DS>)(object)settings, ((ReadOnlyArray<Vector2DS>)(object)points).AsSpan());
+            }
+            if (typeof(TVector) == typeof(Vector2FN))
+            {
+                return (RotatedRectangle<TPrimitive, TVector>)(object)SmallestRotatedRectangle.Compute((ShapeSettings<float,Vector2FN>)(object)settings, ((ReadOnlyArray<Vector2FN>)(object)points).AsSpan());
             }
             ThrowHelper.ThrowNotSupportedException();
             return default;

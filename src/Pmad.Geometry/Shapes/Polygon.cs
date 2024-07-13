@@ -180,6 +180,11 @@ namespace Pmad.Geometry.Shapes
             return BooleanOp(other, ClipType.Intersection);
         }
 
+        public IEnumerable<Polygon<TPrimitive, TVector>> ClippedBy(VectorEnvelope<TVector> rect)
+        {
+            return Intersection(Settings.CreateRectangle(rect));
+        }
+
         public PointInPolygonResult TestPointInPolygon(TVector vector)
         {
             if (!Bounds.Contains(vector))

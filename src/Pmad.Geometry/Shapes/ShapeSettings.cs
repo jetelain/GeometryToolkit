@@ -150,5 +150,22 @@ namespace Pmad.Geometry.Shapes
         {
             return new Path<TPrimitive, TVector>(this, points);
         }
+
+        internal Rect64 ToClipper(VectorEnvelope<TVector> rect)
+        {
+            var min = ToClipper(rect.Min);
+            var max = ToClipper(rect.Max);
+            return new Rect64(min.X, min.Y, max.X, max.Y);
+        }
+
+        internal ReadOnlyArray<TVector> FromClipper(Path64 points)
+        {
+            var path = new TVector[points.Count];
+            for (int i = 0; i < points.Count; i++)
+            {
+                path[i] = FromClipper(points[i]);
+            }
+            return new ReadOnlyArray<TVector>(path);
+        }
     }
 }

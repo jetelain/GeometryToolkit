@@ -65,5 +65,12 @@ namespace Pmad.Geometry.Shapes
             }
             return new Polygon<TPrimitive, TVector>(Settings, Points);
         }
+
+        public IEnumerable<Path<TPrimitive, TVector>> ClippedBy(VectorEnvelope<TVector> rect)
+        {
+            var result = Clipper.RectClip(Settings.ToClipper(rect), Settings.ToClipper(Points));
+
+            return result.Select(r => new Path<TPrimitive, TVector>(Settings, Settings.FromClipper(r)));
+        }
     }
 }

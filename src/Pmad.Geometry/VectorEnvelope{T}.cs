@@ -1,4 +1,6 @@
-﻿namespace Pmad.Geometry
+﻿using Pmad.Geometry.Collections;
+
+namespace Pmad.Geometry
 {
     public struct VectorEnvelope<TVector> 
         where TVector : struct, IVector<TVector>
@@ -19,22 +21,26 @@
             return new(p1.Min(p2), p1.Max(p2));
         }
 
-        public static VectorEnvelope<TVector> FromList(IEnumerable<TVector> list)
+        public static VectorEnvelope<TVector> FromList(ReadOnlyArray<TVector> list)
         {
-            var enumerator = list.GetEnumerator();
-            if (enumerator.MoveNext())
+            return FromList(list.AsSpan());
+        }
+
+        public static VectorEnvelope<TVector> FromList(ReadOnlySpan<TVector> list)
+        {
+            if (list.Length == 0)
             {
-                var min = enumerator.Current;
-                var max = min;
-                while (enumerator.MoveNext())
-                {
-                    var current = enumerator.Current;
-                    min = current.Min(min);
-                    max = current.Max(max);
-                }
-                return new (min, max);
+                return None;
             }
-            return None;
+            var min = list[0];
+            var max = min;
+            for (var i = 1; i < list.Length; i++)
+            {
+                var current = list[i];
+                min = current.Min(min);
+                max = current.Max(max);
+            }
+            return new (min, max);
         }
 
         public TVector Min => min;

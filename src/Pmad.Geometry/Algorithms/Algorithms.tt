@@ -8,6 +8,7 @@
 using System.Runtime.CompilerServices;
 using Clipper2Lib;
 using Pmad.Geometry.Collections;
+using Pmad.Geometry.Shapes;
 
 namespace Pmad.Geometry.Algorithms
 {
@@ -105,6 +106,21 @@ namespace Pmad.Geometry.Algorithms
             if (typeof(TVector) == typeof(<#=def.Struct#>))
             {
                 return (float)((IReadOnlyList<<#=def.Struct#>>)(object)points).GetSignedArea();
+            }
+<# } #>
+            ThrowHelper.ThrowNotSupportedException();
+            return default;
+        }
+
+	    [MethodImpl(MethodImplOptions.AggressiveInlining)]
+        public static RotatedRectangle<TPrimitive, TVector> GetSmallestRotatedRectangleContaining<TPrimitive,TVector>(ShapeSettings<TPrimitive, TVector> settings, ReadOnlyArray<TVector> points)
+            where TPrimitive : unmanaged
+            where TVector : struct, IVector2<TPrimitive, TVector>, IVectorFP<TPrimitive, TVector>
+        {
+<# foreach(var def in definitions.Where(def => def.IsFP)) { #>
+            if (typeof(TVector) == typeof(<#=def.Struct#>))
+            {
+                return (RotatedRectangle<TPrimitive, TVector>)(object)SmallestRotatedRectangle.Compute((ShapeSettings<<#=def.Primitive#>,<#=def.Struct#>>)(object)settings, ((ReadOnlyArray<<#=def.Struct#>>)(object)points).AsSpan());
             }
 <# } #>
             ThrowHelper.ThrowNotSupportedException();

@@ -196,7 +196,29 @@ namespace Pmad.Geometry
         }
 
         [MethodImpl(MethodImplOptions.AggressiveInlining)]
+        readonly <#=def.Struct#> IVector<<#=def.Struct#>>.Multiply(double value)
+        {
+<#      if (def.IsFP) { #>
+            return this * (<#=def.Primitive#>)value;
+<#      } else { #>
+            return new ((<#=def.Primitive#>)(X * value), (<#=def.Primitive#>)(Y * value));
+<#      } #>
+        }
+        
+        [MethodImpl(MethodImplOptions.AggressiveInlining)]
+        readonly <#=def.Struct#> IVector<<#=def.Struct#>>.Multiply(int value)
+        {
+            return this * value;
+        }
+
+        [MethodImpl(MethodImplOptions.AggressiveInlining)]
         readonly <#=def.Struct#> IVector<<#=def.Struct#>>.Divide(<#=def.Struct#> value)
+        {
+            return this / value;
+        }
+                
+        [MethodImpl(MethodImplOptions.AggressiveInlining)]
+        readonly <#=def.Struct#> IVector<<#=def.Struct#>>.Divide(int value)
         {
             return this / value;
         }
@@ -211,6 +233,12 @@ namespace Pmad.Geometry
         readonly <#=def.Struct#> IVector<<#=def.Struct#>>.Max(<#=def.Struct#> other)
         {
             return Max(this, other);
+        }
+        
+        [MethodImpl(MethodImplOptions.AggressiveInlining)]
+        readonly <#=def.Struct#> IVector<<#=def.Struct#>>.Negate()
+        {
+            return -this;
         }
 
 <#      if (def.Struct != "Vector2FS") { #>
@@ -233,6 +261,24 @@ namespace Pmad.Geometry
         public readonly <#=def.Struct#> RotateM90()
         {
             return new (Y, -X);
+        }
+
+        [MethodImpl(MethodImplOptions.AggressiveInlining)]
+        public readonly double Atan2D()
+        {
+            return Math.Atan2(Y, X);
+        }
+        
+        [MethodImpl(MethodImplOptions.AggressiveInlining)]
+        public readonly double AreaD()
+        {
+            return X * Y;
+        }
+
+        [MethodImpl(MethodImplOptions.AggressiveInlining)]
+        readonly <#=def.Struct#> IVector2<<#=def.Primitive#>,<#=def.Struct#>>.Multiply(<#=def.Primitive#> value)
+        {
+            return this * value;
         }
 	}
 <#

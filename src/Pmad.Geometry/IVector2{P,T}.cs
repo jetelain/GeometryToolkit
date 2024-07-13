@@ -34,5 +34,11 @@
         TVector Rotate90();
 
         TVector RotateM90();
+
+        double Atan2D();
+
+        TVector Multiply(TPrimitive value);
+
+        double AreaD();
     }
 }

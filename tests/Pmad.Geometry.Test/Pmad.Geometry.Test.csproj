@@ -10,6 +10,16 @@
   </PropertyGroup>
 
   <ItemGroup>
+	  <Compile Update="Matrixes.cs">
+	    <DependentUpon>Matrixes.tt</DependentUpon>
+	    <DesignTime>True</DesignTime>
+	    <AutoGen>True</AutoGen>
+	  </Compile>
+	  <Compile Update="Shapes\RotatedRectangle.cs">
+	    <DesignTime>True</DesignTime>
+	    <AutoGen>True</AutoGen>
+	    <DependentUpon>RotatedRectangle.tt</DependentUpon>
+	  </Compile>
 	  <Compile Update="Vectors2.cs">
       <DependentUpon>Vectors2.tt</DependentUpon>
       <DesignTime>True</DesignTime>
@@ -33,6 +43,14 @@
   </ItemGroup>
 
   <ItemGroup>
+    <None Update="Matrixes.tt">
+      <LastGenOutput>Matrixes.cs</LastGenOutput>
+      <Generator>TextTemplatingFileGenerator</Generator>
+    </None>
+    <None Update="Shapes\RotatedRectangle.tt">
+      <LastGenOutput>RotatedRectangle.cs</LastGenOutput>
+      <Generator>TextTemplatingFileGenerator</Generator>
+    </None>
     <None Update="Vectors2.tt">
       <LastGenOutput>Vectors2.cs</LastGenOutput>
       <Generator>TextTemplatingFileGenerator</Generator>

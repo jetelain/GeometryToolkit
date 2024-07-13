@@ -49,6 +49,7 @@ namespace Pmad.Geometry
         [MethodImpl(MethodImplOptions.AggressiveInlining)]
         public readonly Vector2 ToVector2() => vector;
 
+        [MethodImpl(MethodImplOptions.AggressiveInlining)]
         public readonly float Atan2()
         {
             return MathF.Atan2(Y, X);
@@ -165,19 +166,22 @@ namespace Pmad.Geometry
             return FormattableString.Invariant($"({X};{Y})");
         }
 
+        [MethodImpl(MethodImplOptions.AggressiveInlining)]
         public static Vector2FN Max(Vector2FN value1, Vector2FN value2)
         {
-            return new(Math.Max(value1.X, value2.X), Math.Max(value1.Y, value2.Y));
+            return new(Vector2.Max(value1.vector, value2.vector));
         }
 
+        [MethodImpl(MethodImplOptions.AggressiveInlining)]
         public static Vector2FN Min(Vector2FN value1, Vector2FN value2)
         {
-            return new(Math.Min(value1.X, value2.X), Math.Min(value1.Y, value2.Y));
+            return new(Vector2.Min(value1.vector, value2.vector));
         }
 
+        [MethodImpl(MethodImplOptions.AggressiveInlining)]
         public static Vector2FN Clamp(Vector2FN value, Vector2FN min, Vector2FN max)
         {
-            return new(Math.Clamp(value.X, min.X, max.X), Math.Clamp(value.Y, min.Y, max.Y));
+            return new(Vector2.Clamp(value.vector, min.vector, max.vector));
         }
 
         public readonly bool IsInRange(Vector2FN min, Vector2FN max)
@@ -215,7 +219,25 @@ namespace Pmad.Geometry
         }
 
         [MethodImpl(MethodImplOptions.AggressiveInlining)]
+        readonly Vector2FN IVector<Vector2FN>.Multiply(double value)
+        {
+            return this * (float)value;
+        }
+
+        [MethodImpl(MethodImplOptions.AggressiveInlining)]
+        readonly Vector2FN IVector<Vector2FN>.Multiply(int value)
+        {
+            return this * value;
+        }
+
+        [MethodImpl(MethodImplOptions.AggressiveInlining)]
         readonly Vector2FN IVector<Vector2FN>.Divide(Vector2FN value)
+        {
+            return this / value;
+        }
+
+        [MethodImpl(MethodImplOptions.AggressiveInlining)]
+        readonly Vector2FN IVector<Vector2FN>.Divide(int value)
         {
             return this / value;
         }
@@ -230,6 +252,12 @@ namespace Pmad.Geometry
         readonly Vector2FN IVector<Vector2FN>.Max(Vector2FN other)
         {
             return Max(this, other);
+        }
+
+        [MethodImpl(MethodImplOptions.AggressiveInlining)]
+        readonly Vector2FN IVector<Vector2FN>.Negate()
+        {
+            return -this;
         }
 
         public readonly Vector2FN Rotate90()
@@ -268,6 +296,28 @@ namespace Pmad.Geometry
         readonly Vector2FN IVectorFP<float, Vector2FN>.Normalize()
         {
             return Normalize(this);
+        }
+
+        public readonly double Atan2D()
+        {
+            return Math.Atan2(Y, X);
+        }
+
+        Vector2FN IVector2<float, Vector2FN>.Multiply(float value)
+        {
+            return this * value;
+        }
+
+        [MethodImpl(MethodImplOptions.AggressiveInlining)]
+        public readonly float Area()
+        {
+            return X * Y;
+        }
+
+        [MethodImpl(MethodImplOptions.AggressiveInlining)]
+        public readonly double AreaD()
+        {
+            return X * Y;
         }
     }
 }

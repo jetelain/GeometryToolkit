@@ -25,5 +25,7 @@ namespace Pmad.Geometry
 
 
         TVector Normalize();
+
+        TPrimitive Area();
     }
 }
