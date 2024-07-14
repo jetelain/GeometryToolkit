@@ -290,6 +290,12 @@ namespace Pmad.Geometry
             return v2.Y * v1.X - v2.X * v1.Y;
         }
 
+        [MethodImpl(MethodImplOptions.AggressiveInlining)]
+        public static double CrossProductD(Vector2FN v1, Vector2FN v2) => CrossProduct(v1, v2);
+
+        [MethodImpl(MethodImplOptions.AggressiveInlining)]
+        public static float CrossProductF(Vector2FN v1, Vector2FN v2) => CrossProduct(v1, v2);
+
         public static float CrossProduct(Vector2FN pt1, Vector2FN pt2, Vector2FN pt3)
         {
             return CrossProduct(pt2-pt1, pt3-pt2);

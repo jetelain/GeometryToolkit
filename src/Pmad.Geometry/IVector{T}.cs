@@ -1,4 +1,6 @@
-﻿namespace Pmad.Geometry
+﻿using System.Runtime.CompilerServices;
+
+namespace Pmad.Geometry
 {
     /// <summary>
     /// Number vector
@@ -140,8 +142,16 @@
 
         abstract static TVector One { get; }
 
-        static abstract bool operator ==(TVector left, TVector right);
+        abstract static bool operator ==(TVector left, TVector right);
 
-        static abstract bool operator !=(TVector left, TVector right);
+        abstract static bool operator !=(TVector left, TVector right);
+
+        abstract static double CrossProductD(TVector left, TVector right);
+
+        [MethodImpl(MethodImplOptions.AggressiveInlining)]
+        virtual static float CrossProductF(TVector left, TVector right) => (float)TVector.CrossProductD(left, right);
+
+        [MethodImpl(MethodImplOptions.AggressiveInlining)]
+        virtual static double CrossProduct(TVector pt1, TVector pt2, TVector pt3) => TVector.CrossProductD(pt2 - pt1, pt3 - pt2);
     }
 }

@@ -49,6 +49,10 @@ namespace Pmad.Geometry
             //return (double)v2.Y * v1.X - (double)v2.X * v1.Y;
         }
 
+        [MethodImpl(MethodImplOptions.AggressiveInlining)]
+        public static float CrossProductF(Vector2F v1, Vector2F v2) => CrossProduct(v1, v2);
+
+
         public static Vector2F Normalize(Vector2F value)
         {
             return value / value.Length();

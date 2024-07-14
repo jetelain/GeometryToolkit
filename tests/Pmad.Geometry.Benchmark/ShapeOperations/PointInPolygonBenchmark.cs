@@ -14,14 +14,16 @@ namespace Pmad.Geometry.Benchmark.ShapeOperations
         [Benchmark(Baseline = true)]
         public void PointInPolygon() => SampleValues.PosListP64.ForEach(p => InternalClipper.PointInPolygon(p, SampleValues.CircleP64));
 
-        [Benchmark] public void PointInPolygon_2D() => SampleValues.PosList2D.ForEach(p => SampleValues.Circle2D.TestPointInPolygon(p));
-        [Benchmark] public void PointInPolygon_2F() => SampleValues.PosList2F.ForEach(p => SampleValues.Circle2F.TestPointInPolygon(p));
-        [Benchmark] public void PointInPolygon_2I() => SampleValues.PosList2I.ForEach(p => SampleValues.Circle2I.TestPointInPolygon(p));
-        [Benchmark] public void PointInPolygon_2L() => SampleValues.PosList2L.ForEach(p => SampleValues.Circle2L.TestPointInPolygon(p));
-        [Benchmark] public void PointInPolygon_2DS() => SampleValues.PosList2DS.ForEach(p => SampleValues.Circle2DS.TestPointInPolygon(p));
-        [Benchmark] public void PointInPolygon_2FS() => SampleValues.PosList2FS.ForEach(p => SampleValues.Circle2FS.TestPointInPolygon(p));
-        [Benchmark] public void PointInPolygon_2IS() => SampleValues.PosList2IS.ForEach(p => SampleValues.Circle2IS.TestPointInPolygon(p));
-        [Benchmark] public void PointInPolygon_2LS() => SampleValues.PosList2LS.ForEach(p => SampleValues.Circle2LS.TestPointInPolygon(p));
-        [Benchmark] public void PointInPolygon_2FN() => SampleValues.PosList2FN.ForEach(p => SampleValues.Circle2FN.TestPointInPolygon(p));
+        [Benchmark] public void PointInPolygon_2D() => SampleValuesRO.PosList2D.ForEach(p => SampleValuesRO.Circle2D.TestPointInPolygon(p));
+        [Benchmark] public void PointInPolygon_2D_Generic() => SampleValuesRO.PosList2D.ForEach(p => PointInPolygon<double,Vector2D>.Test(SampleValuesRO.Circle2D.AsSpan(), p));
+        [Benchmark] public void PointInPolygon_2F() => SampleValuesRO.PosList2F.ForEach(p => SampleValuesRO.Circle2F.TestPointInPolygon(p));
+        [Benchmark] public void PointInPolygon_2I() => SampleValuesRO.PosList2I.ForEach(p => SampleValuesRO.Circle2I.TestPointInPolygon(p));
+        [Benchmark] public void PointInPolygon_2L() => SampleValuesRO.PosList2L.ForEach(p => SampleValuesRO.Circle2L.TestPointInPolygon(p));
+        [Benchmark] public void PointInPolygon_2L_Generic() => SampleValuesRO.PosList2L.ForEach(p => PointInPolygon<long, Vector2L>.Test(SampleValuesRO.Circle2L.AsSpan(), p));
+        [Benchmark] public void PointInPolygon_2DS() => SampleValuesRO.PosList2DS.ForEach(p => SampleValuesRO.Circle2DS.TestPointInPolygon(p));
+        [Benchmark] public void PointInPolygon_2FS() => SampleValuesRO.PosList2FS.ForEach(p => SampleValuesRO.Circle2FS.TestPointInPolygon(p));
+        [Benchmark] public void PointInPolygon_2IS() => SampleValuesRO.PosList2IS.ForEach(p => SampleValuesRO.Circle2IS.TestPointInPolygon(p));
+        [Benchmark] public void PointInPolygon_2LS() => SampleValuesRO.PosList2LS.ForEach(p => SampleValuesRO.Circle2LS.TestPointInPolygon(p));
+        [Benchmark] public void PointInPolygon_2FN() => SampleValuesRO.PosList2FN.ForEach(p => SampleValuesRO.Circle2FN.TestPointInPolygon(p));
     }
 }

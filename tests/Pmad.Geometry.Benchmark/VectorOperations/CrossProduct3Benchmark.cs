@@ -1,4 +1,6 @@
-﻿using BenchmarkDotNet.Attributes;
+﻿using System.Runtime.CompilerServices;
+using BenchmarkDotNet.Attributes;
+using Pmad.Geometry.Algorithms;
 
 namespace Pmad.Geometry.Benchmark.VectorOperations
 {
@@ -9,6 +11,9 @@ namespace Pmad.Geometry.Benchmark.VectorOperations
 
         [Benchmark]
         public void CrossProductVector2D_Scalar() => SampleValues.RandomTripletList2D.ForEach(p => Vector2D.CrossProductScalar(p.Item1, p.Item2, p.Item3));
+
+        [Benchmark]
+        public void CrossProductVector2D_StaticD() => SampleValues.RandomTripletList2D.ForEach(p => PointInPolygon<double,Vector2D>.CrossProduct(p.Item1, p.Item2, p.Item3));
 
         //[Benchmark]
         //public void CrossProductVector2F() => SampleValues.RandomTripletList2F.ForEach(p => Vector2F.CrossProduct(p.Item1, p.Item2, p.Item3));
@@ -21,6 +26,9 @@ namespace Pmad.Geometry.Benchmark.VectorOperations
 
         [Benchmark]
         public void CrossProductVector2L_Scalar() => SampleValues.RandomTripletList2L.ForEach(p => Vector2L.CrossProductScalar(p.Item1, p.Item2, p.Item3));
+
+        [Benchmark]
+        public void CrossProductVector2L_StaticD() => SampleValues.RandomTripletList2L.ForEach(p => PointInPolygon<long,Vector2L>.CrossProduct(p.Item1, p.Item2, p.Item3));
 
         //[Benchmark]
         //public void CrossProductVector2DS() => SampleValues.RandomTripletList2DS.ForEach(p => Vector2DS.CrossProduct(p.Item1, p.Item2, p.Item3));

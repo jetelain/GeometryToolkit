@@ -31,7 +31,10 @@ namespace Pmad.Geometry.Benchmark
                     typeof(SmallestRotatedRectangleBenchmark),
                     typeof(MaxBenchmark),
                     typeof(LargestRotatedRectangleBenchmark),
-                    typeof(ReadOnlyArrayBenchmark)
+                    typeof(ReadOnlyArrayBenchmark),
+                    typeof(GetSignedAreaBenchmark),
+                    typeof(CircleFromTwoPointsBenchmark),
+                    typeof(CircleFromThreePointsBenchmark),
                 ]);
         }
     }

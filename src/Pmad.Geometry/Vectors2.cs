@@ -262,6 +262,9 @@ namespace Pmad.Geometry
         }
 
         [MethodImpl(MethodImplOptions.AggressiveInlining)]
+        public static double CrossProductD(Vector2I v1, Vector2I v2) => CrossProduct(v1, v2);
+
+        [MethodImpl(MethodImplOptions.AggressiveInlining)]
         public static double CrossProduct(Vector2I pt1, Vector2I pt2, Vector2I pt3)
         {            
             return CrossProduct(pt2-pt1, pt3-pt2);
@@ -554,6 +557,9 @@ namespace Pmad.Geometry
         {
             return SwapXY() * new Vector2F(1, -1);
         }
+
+        [MethodImpl(MethodImplOptions.AggressiveInlining)]
+        public static double CrossProductD(Vector2F v1, Vector2F v2) => CrossProduct(v1, v2);
 
         [MethodImpl(MethodImplOptions.AggressiveInlining)]
         public static float CrossProduct(Vector2F pt1, Vector2F pt2, Vector2F pt3)
@@ -850,6 +856,9 @@ namespace Pmad.Geometry
         }
 
         [MethodImpl(MethodImplOptions.AggressiveInlining)]
+        public static double CrossProductD(Vector2L v1, Vector2L v2) => CrossProduct(v1, v2);
+
+        [MethodImpl(MethodImplOptions.AggressiveInlining)]
         public static double CrossProduct(Vector2L pt1, Vector2L pt2, Vector2L pt3)
         {            
             return CrossProduct(pt2-pt1, pt3-pt2);
@@ -1139,6 +1148,9 @@ namespace Pmad.Geometry
         {
             return SwapXY() * new Vector2D(1, -1);
         }
+
+        [MethodImpl(MethodImplOptions.AggressiveInlining)]
+        public static double CrossProductD(Vector2D v1, Vector2D v2) => CrossProduct(v1, v2);
 
         [MethodImpl(MethodImplOptions.AggressiveInlining)]
         public static double CrossProduct(Vector2D pt1, Vector2D pt2, Vector2D pt3)

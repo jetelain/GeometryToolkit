@@ -53,7 +53,7 @@ namespace Pmad.Geometry.Collections
         public SimpleSpacialIndex(TVector origin, TVector size, int cellCount)
         {
             this.origin = origin;
-            this.cellSize = Vectors.Divide(size, cellCount);
+            this.cellSize = size / cellCount;
             cells = new List<DataNode>[cellCount, cellCount];
             for (int x = 0; x < cellCount; ++x)
             {
@@ -71,8 +71,8 @@ namespace Pmad.Geometry.Collections
 
         public bool TryLock(VectorEnvelope<TVector> lockRange, out IDisposable? cookie)
         {
-            var p1 = Vectors.Clamp(Vectors.Divide(Vectors.Substract(lockRange.Min, origin), cellSize), default, maxCellIndex).FloorI();
-            var p2 = Vectors.Clamp(Vectors.Divide(Vectors.Substract(lockRange.Max, origin), cellSize), default, maxCellIndex).CeilingI();
+            var p1 = TVector.Clamp((lockRange.Min - origin) / cellSize, default, maxCellIndex).FloorI();
+            var p2 = TVector.Clamp((lockRange.Max - origin) / cellSize, default, maxCellIndex).CeilingI();
             var indexRange = new VectorEnvelope<Vector2I>(p1, p2);
             lock (locks)
             {
@@ -90,8 +90,8 @@ namespace Pmad.Geometry.Collections
 
         private IEnumerable<List<DataNode>> GetCells(VectorEnvelope<TVector> requested)
         {
-            var p1 = Vectors.Clamp(Vectors.Divide(Vectors.Substract(requested.Min, origin), cellSize), default, maxCellIndex).FloorI();
-            var p2 = Vectors.Clamp(Vectors.Divide(Vectors.Substract(requested.Max, origin), cellSize), default, maxCellIndex).CeilingI();
+            var p1 = TVector.Clamp((requested.Min - origin) / cellSize, default, maxCellIndex).FloorI();
+            var p2 = TVector.Clamp((requested.Max - origin) / cellSize, default, maxCellIndex).CeilingI();
             for (int x = p1.X; x <= p2.X; ++x)
             {
                 for (int y = p1.Y; y <= p2.Y; ++y)

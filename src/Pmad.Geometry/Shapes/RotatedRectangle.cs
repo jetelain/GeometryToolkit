@@ -41,14 +41,14 @@ namespace Pmad.Geometry.Shapes
         public ReadOnlyArray<TVector> GetPoints()
         {
             var matrix = Matrix3x2<TPrimitive,TVector>.CreateRotation(Radians, Center);
-            var halfSize = Size.Divide(2);
-            var p1 = Center.Substract(halfSize);
-            var p3 = Center.Add(halfSize);
+            var halfSize = Size / 2;
+            var p1 = Center - halfSize;
+            var p3 = Center + halfSize;
             return new ReadOnlyArray<TVector>(
                 matrix.Transform(p1),
-                matrix.Transform(Vectors.Create<TPrimitive,TVector>(p3.X, p1.Y)),
+                matrix.Transform(TVector.Create(p3.X, p1.Y)),
                 matrix.Transform(p3),
-                matrix.Transform(Vectors.Create<TPrimitive,TVector>(p1.X, p3.Y))
+                matrix.Transform(TVector.Create(p1.X, p3.Y))
             );
         }
 

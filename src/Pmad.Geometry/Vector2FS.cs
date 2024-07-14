@@ -84,5 +84,8 @@ namespace Pmad.Geometry
         {
             return new((int)MathF.Ceiling(X), (int)MathF.Ceiling(Y));
         }
+
+        [MethodImpl(MethodImplOptions.AggressiveInlining)]
+        public static float CrossProductF(Vector2FS v1, Vector2FS v2) => CrossProduct(v1, v2);
     }
 }

@@ -29,17 +29,17 @@ namespace Pmad.Geometry.Shapes
             Radius = radius;
             Settings = settings;
             var radiusVector = Vectors.Create<TPrimitive, TVector>(radius, radius);
-            Bounds = new (Vectors.Substract(center, radiusVector), Vectors.Add(center, radiusVector));
+            Bounds = new (center - radiusVector, center + radiusVector);
         }
 
         public bool IsInside(TVector point)
         {
-            return Vectors.Substract(Center, point).LengthD() < Radius;
+            return (Center - point).LengthD() < Radius;
         }
 
         public bool IsInsideOrOnBoundary(TVector point)
         {
-            return Vectors.Substract(Center, point).LengthD() <= Radius;
+            return (Center - point).LengthD() <= Radius;
         }
 
         public bool Contains(TVector point) => IsInsideOrOnBoundary(point);
@@ -148,14 +148,14 @@ namespace Pmad.Geometry.Shapes
 
         private static Circle<TPrimitive, TVector> CreateFromRitter(ShapeSettings<TPrimitive, TVector> settings, IReadOnlyList<TVector> points, TVector p)
         {
-            var othersByDistance = points.Where(e => !e.Equals(p)).OrderByDescending(e => Vectors.Substract(e, p).LengthSquared()).ToList();
+            var othersByDistance = points.Where(e => !e.Equals(p)).OrderByDescending(e => (e - p).LengthSquared()).ToList();
             var q = othersByDistance[0];
             var c = FromTwoPoints(settings, p, q);
             foreach (var e in othersByDistance.Skip(1))
             {
                 if (!c.IsInsideOrOnBoundary(e))
                 {
-                    c = new (c.Center, Vectors.Substract(e, c.Center).LengthD());
+                    c = new (c.Center, (e - c.Center).LengthD());
                 }
             }
             return c;
