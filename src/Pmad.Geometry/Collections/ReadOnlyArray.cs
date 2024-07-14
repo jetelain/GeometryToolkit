@@ -1,5 +1,6 @@
 ﻿using System;
 using System.Collections;
+using System.Diagnostics;
 using System.Runtime.CompilerServices;
 
 namespace Pmad.Geometry.Collections
@@ -10,10 +11,13 @@ namespace Pmad.Geometry.Collections
     /// Provide access with a ReadOnlySpan to acheive memory-aligned operations. 
     /// </summary>
     /// <typeparam name="T"></typeparam>
+    [DebuggerDisplay("Count = {Count}")]
     public struct ReadOnlyArray<T> : IReadOnlyList<T>
     {
         private readonly T[] array;
         private readonly int length;
+
+        public static ReadOnlyArray<T> Empty() => new ReadOnlyArray<T>(Array.Empty<T>());
 
         public readonly T this[int index] 
         { 
@@ -39,12 +43,6 @@ namespace Pmad.Geometry.Collections
         {
             this.array = array;
             this.length = Math.Min(length, array.Length);
-        }
-
-        public ReadOnlyArray(IEnumerable<T> list)
-            : this(list.ToArray())
-        {
-
         }
 
         readonly IEnumerator<T> IEnumerable<T>.GetEnumerator()

@@ -1,4 +1,5 @@
 ﻿using System.Collections;
+using System.Diagnostics;
 
 namespace Pmad.Geometry.Collections
 {
@@ -6,6 +7,7 @@ namespace Pmad.Geometry.Collections
     /// Grow-only list that can create a snapshot as a <see cref="ReadOnlyArray{T}"/>
     /// </summary>
     /// <typeparam name="T"></typeparam>
+    [DebuggerDisplay("Count = {Count}")]
     public sealed class ReadOnlyArrayBuilder<T> : IReadOnlyCollection<T>, ICollection<T>
     {
         private T[] array;
