@@ -65,5 +65,31 @@ namespace Pmad.Geometry
         {
             return X * Y;
         }
+
+        [MethodImpl(MethodImplOptions.AggressiveInlining)]
+        public readonly Vector2D Floor()
+        {
+            return new (Vector128.Floor(vector));
+        }
+
+        [MethodImpl(MethodImplOptions.AggressiveInlining)]
+        public readonly Vector2D Ceiling()
+        {
+            return new(Vector128.Ceiling(vector));
+        }
+
+        [MethodImpl(MethodImplOptions.AggressiveInlining)]
+        public readonly Vector2I FloorI()
+        {
+            var temp = Floor();
+            return new((int)temp.X, (int)temp.Y);
+        }
+
+        [MethodImpl(MethodImplOptions.AggressiveInlining)]
+        public readonly Vector2I CeilingI()
+        {
+            var temp = Ceiling();
+            return new((int)temp.X, (int)temp.Y);
+        }
     }
 }

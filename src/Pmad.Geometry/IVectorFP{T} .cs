@@ -27,5 +27,13 @@ namespace Pmad.Geometry
         TVector Normalize();
 
         TPrimitive Area();
+
+        TVector Floor();
+
+        TVector Ceiling();
+
+        Vector2I FloorI();
+
+        Vector2I CeilingI();
     }
 }

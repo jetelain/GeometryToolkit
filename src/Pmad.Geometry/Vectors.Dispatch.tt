@@ -259,6 +259,19 @@ namespace Pmad.Geometry
             return default;
         }
 
+        [MethodImpl(MethodImplOptions.AggressiveInlining)]
+        public static TVector Clamp<TVector>(TVector value, TVector min, TVector max)
+            where TVector : struct, IVector<TVector>
+        {
+<# foreach(var def in definitions) { #>
+            if (typeof(TVector) == typeof(<#=def.Struct#>))
+            {
+                return (TVector)(object)<#=def.Struct#>.Clamp((<#=def.Struct#>)(object)value,(<#=def.Struct#>)(object)min,(<#=def.Struct#>)(object)max);
+            }
+<# } #>
+            ThrowHelper.ThrowNotSupportedException();
+            return default;
+        }
 	}
 
 }

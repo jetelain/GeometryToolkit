@@ -1,4 +1,6 @@
-﻿using System.Runtime.CompilerServices;
+﻿using System.Numerics;
+using System.Runtime.CompilerServices;
+using System.Runtime.Intrinsics;
 
 namespace Pmad.Geometry
 {
@@ -47,6 +49,30 @@ namespace Pmad.Geometry
         public readonly double Area()
         {
             return X * Y;
+        }
+
+        [MethodImpl(MethodImplOptions.AggressiveInlining)]
+        public readonly Vector2DS Floor()
+        {
+            return new(Math.Floor(X), Math.Floor(Y));
+        }
+
+        [MethodImpl(MethodImplOptions.AggressiveInlining)]
+        public readonly Vector2DS Ceiling()
+        {
+            return new(Math.Ceiling(X), Math.Ceiling(Y));
+        }
+
+        [MethodImpl(MethodImplOptions.AggressiveInlining)]
+        public readonly Vector2I FloorI()
+        {
+            return new((int)Math.Floor(X), (int)Math.Floor(Y));
+        }
+
+        [MethodImpl(MethodImplOptions.AggressiveInlining)]
+        public readonly Vector2I CeilingI()
+        {
+            return new((int)Math.Ceiling(X), (int)Math.Ceiling(Y));
         }
     }
 }

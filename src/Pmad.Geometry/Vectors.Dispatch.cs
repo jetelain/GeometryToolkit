@@ -895,6 +895,49 @@ namespace Pmad.Geometry
             return default;
         }
 
+        [MethodImpl(MethodImplOptions.AggressiveInlining)]
+        public static TVector Clamp<TVector>(TVector value, TVector min, TVector max)
+            where TVector : struct, IVector<TVector>
+        {
+            if (typeof(TVector) == typeof(Vector2I))
+            {
+                return (TVector)(object)Vector2I.Clamp((Vector2I)(object)value,(Vector2I)(object)min,(Vector2I)(object)max);
+            }
+            if (typeof(TVector) == typeof(Vector2F))
+            {
+                return (TVector)(object)Vector2F.Clamp((Vector2F)(object)value,(Vector2F)(object)min,(Vector2F)(object)max);
+            }
+            if (typeof(TVector) == typeof(Vector2L))
+            {
+                return (TVector)(object)Vector2L.Clamp((Vector2L)(object)value,(Vector2L)(object)min,(Vector2L)(object)max);
+            }
+            if (typeof(TVector) == typeof(Vector2D))
+            {
+                return (TVector)(object)Vector2D.Clamp((Vector2D)(object)value,(Vector2D)(object)min,(Vector2D)(object)max);
+            }
+            if (typeof(TVector) == typeof(Vector2IS))
+            {
+                return (TVector)(object)Vector2IS.Clamp((Vector2IS)(object)value,(Vector2IS)(object)min,(Vector2IS)(object)max);
+            }
+            if (typeof(TVector) == typeof(Vector2FS))
+            {
+                return (TVector)(object)Vector2FS.Clamp((Vector2FS)(object)value,(Vector2FS)(object)min,(Vector2FS)(object)max);
+            }
+            if (typeof(TVector) == typeof(Vector2LS))
+            {
+                return (TVector)(object)Vector2LS.Clamp((Vector2LS)(object)value,(Vector2LS)(object)min,(Vector2LS)(object)max);
+            }
+            if (typeof(TVector) == typeof(Vector2DS))
+            {
+                return (TVector)(object)Vector2DS.Clamp((Vector2DS)(object)value,(Vector2DS)(object)min,(Vector2DS)(object)max);
+            }
+            if (typeof(TVector) == typeof(Vector2FN))
+            {
+                return (TVector)(object)Vector2FN.Clamp((Vector2FN)(object)value,(Vector2FN)(object)min,(Vector2FN)(object)max);
+            }
+            ThrowHelper.ThrowNotSupportedException();
+            return default;
+        }
 	}
 
 }
