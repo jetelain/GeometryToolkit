@@ -14,6 +14,8 @@ namespace Pmad.Geometry.Shapes
 
         public TVector Size { get; }
 
+        public double AreaD => Size.AreaD();
+
         public double Radians { get; }
 
         public double Degrees => Radians * 180 / Math.PI;

@@ -343,5 +343,36 @@ namespace Pmad.Geometry.Algorithms
             ThrowHelper.ThrowNotSupportedException();
             return default;
         }
+
+        
+	    [MethodImpl(MethodImplOptions.AggressiveInlining)]
+        public static Circle<TPrimitive, TVector> GetCircleFromThreePoints<TPrimitive,TVector>(ShapeSettings<TPrimitive, TVector> settings, TVector a, TVector b, TVector c)
+            where TPrimitive : unmanaged
+            where TVector : struct, IVector2<TPrimitive, TVector>, IVectorFP<TPrimitive, TVector>
+        {
+            if (typeof(TVector) == typeof(Vector2F))
+            {
+                return (Circle<TPrimitive, TVector>)(object)CircleFromThreePoints.Compute((ShapeSettings<float,Vector2F>)(object)settings, (Vector2F)(object)a, (Vector2F)(object)b, (Vector2F)(object)c);
+            }
+            if (typeof(TVector) == typeof(Vector2D))
+            {
+                return (Circle<TPrimitive, TVector>)(object)CircleFromThreePoints.Compute((ShapeSettings<double,Vector2D>)(object)settings, (Vector2D)(object)a, (Vector2D)(object)b, (Vector2D)(object)c);
+            }
+            if (typeof(TVector) == typeof(Vector2FS))
+            {
+                return (Circle<TPrimitive, TVector>)(object)CircleFromThreePoints.Compute((ShapeSettings<float,Vector2FS>)(object)settings, (Vector2FS)(object)a, (Vector2FS)(object)b, (Vector2FS)(object)c);
+            }
+            if (typeof(TVector) == typeof(Vector2DS))
+            {
+                return (Circle<TPrimitive, TVector>)(object)CircleFromThreePoints.Compute((ShapeSettings<double,Vector2DS>)(object)settings, (Vector2DS)(object)a, (Vector2DS)(object)b, (Vector2DS)(object)c);
+            }
+            if (typeof(TVector) == typeof(Vector2FN))
+            {
+                return (Circle<TPrimitive, TVector>)(object)CircleFromThreePoints.Compute((ShapeSettings<float,Vector2FN>)(object)settings, (Vector2FN)(object)a, (Vector2FN)(object)b, (Vector2FN)(object)c);
+            }
+            ThrowHelper.ThrowNotSupportedException();
+            return default;
+        }
+
 	}
 }

@@ -1,0 +1,42 @@
+﻿<#@ template debug="false" hostspecific="false" language="C#" #>
+<#@ assembly name="System.Core" #>
+<#@ import namespace="System.Linq" #>
+<#@ import namespace="System.Text" #>
+<#@ import namespace="System.Collections.Generic" #>
+<#@ include file="../Definitions.tt" #>
+<#@ output extension=".cs" #>
+using Pmad.Geometry.Shapes;
+
+namespace Pmad.Geometry.Algorithms
+{
+	public static class CircleFromThreePoints
+	{
+<#
+	foreach(var def in definitions.Where(def => def.IsFP))
+	{
+#>
+        public static Circle<<#=def.Primitive#>,<#=def.Struct#>> Compute(ShapeSettings<<#=def.Primitive#>,<#=def.Struct#>> settings, <#=def.Struct#> a, <#=def.Struct#> b, <#=def.Struct#> c)
+        {
+            var o = (<#=def.Struct#>.Min(<#=def.Struct#>.Min(a, b), c) + <#=def.Struct#>.Max(<#=def.Struct#>.Max(a, b), c)) / 2;
+            var da = a - o;
+            var db = b - o;
+            var dc = c - o;
+            var d = (da.X * (db.Y - dc.Y) + db.X * (dc.Y - da.Y) + dc.X * (da.Y - db.Y)) * 2;
+            if (d == 0)
+            {
+                // XXX: Fallback to FromTwoPoints ?
+                return new (settings, <#=def.Struct#>.Zero, 0);
+            }
+            //var x = ((da.X * da.X + da.Y * da.Y) * (db.Y - dc.Y) + (db.X * db.X + db.Y * db.Y) * (dc.Y - da.Y) + (dc.X * dc.X + dc.Y * dc.Y) * (da.Y - db.Y)) / d;
+            var x =   (da.LengthSquared()          * (db.Y - dc.Y) + db.LengthSquared()          * (dc.Y - da.Y) + dc.LengthSquared()          * (da.Y - db.Y)) / d;
+            //var y = ((da.X * da.X + da.Y * da.Y) * (dc.X - db.X) + (db.X * db.X + db.Y * db.Y) * (da.X - dc.X) + (dc.X * dc.X + dc.Y * dc.Y) * (db.X - da.X)) / d;
+            var y =   (da.LengthSquared()          * (dc.X - db.X) + db.LengthSquared()          * (da.X - dc.X) + dc.LengthSquared()          * (db.X - da.X)) / d;
+            var p = o + new <#=def.Struct#>(x, y);
+            var sqR = <#=def.Math#>.Max((p - a).LengthSquared(), <#=def.Math#>.Max((p - b).LengthSquared(), (p - c).LengthSquared()));
+            return new (settings,p, <#=def.Math#>.Sqrt(sqR));
+        }
+<#
+	}
+#>
+	}
+}

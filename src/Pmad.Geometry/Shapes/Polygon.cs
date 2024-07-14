@@ -220,5 +220,7 @@ namespace Pmad.Geometry.Shapes
         {
             return TestPointInPolygon(vector) != PointInPolygonResult.IsOutside;
         }
+
+        public bool Contains(TVector point) => IsInsideOrOnBoundary(point);
     }
 }
