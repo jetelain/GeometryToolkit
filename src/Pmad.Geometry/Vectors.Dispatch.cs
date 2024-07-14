@@ -1,4 +1,5 @@
-﻿using System.Runtime.CompilerServices;
+﻿using System.Numerics;
+using System.Runtime.CompilerServices;
 
 namespace Pmad.Geometry
 {
@@ -7,7 +8,7 @@ namespace Pmad.Geometry
         [MethodImpl(MethodImplOptions.AggressiveInlining)]
         public static TVector Create<TPrimitive,TVector>(TPrimitive x, TPrimitive y)
             where TVector : struct, IVector<TVector>, IVector2<TPrimitive,TVector>
-            where TPrimitive : unmanaged
+            where TPrimitive : unmanaged, INumber<TPrimitive>
         {
             if (typeof(TVector) == typeof(Vector2I))
             {
@@ -52,7 +53,7 @@ namespace Pmad.Geometry
         [MethodImpl(MethodImplOptions.AggressiveInlining)]
         public static TVector Create<TPrimitive,TVector>(int x, int y)
             where TVector : struct, IVector<TVector>, IVector2<TPrimitive,TVector>
-            where TPrimitive : unmanaged
+            where TPrimitive : unmanaged, INumber<TPrimitive>
         {
             if (typeof(TVector) == typeof(Vector2I))
             {
@@ -97,7 +98,7 @@ namespace Pmad.Geometry
         [MethodImpl(MethodImplOptions.AggressiveInlining)]
         public static TVector Create<TPrimitive,TVector>(long x, long y)
             where TVector : struct, IVector<TVector>, IVector2<TPrimitive,TVector>
-            where TPrimitive : unmanaged
+            where TPrimitive : unmanaged, INumber<TPrimitive>
         {
             if (typeof(TVector) == typeof(Vector2I))
             {
@@ -142,7 +143,7 @@ namespace Pmad.Geometry
         [MethodImpl(MethodImplOptions.AggressiveInlining)]
         public static TVector Create<TPrimitive,TVector>(double x, double y)
             where TVector : struct, IVector<TVector>, IVector2<TPrimitive,TVector>, IVectorFP<TPrimitive,TVector>
-            where TPrimitive : unmanaged
+            where TPrimitive : unmanaged, IFloatingPointIeee754<TPrimitive>
         {
             if (typeof(TVector) == typeof(Vector2F))
             {
@@ -439,7 +440,7 @@ namespace Pmad.Geometry
         [MethodImpl(MethodImplOptions.AggressiveInlining)]
         public static TVector Divide<TVector,TPrimitive>(TVector left, TPrimitive right)
             where TVector : struct, IVector<TVector>, IVector2<TPrimitive,TVector>
-            where TPrimitive : unmanaged
+            where TPrimitive : unmanaged, INumber<TPrimitive>
         {
             if (typeof(TVector) == typeof(Vector2I))
             {
@@ -530,7 +531,7 @@ namespace Pmad.Geometry
         [MethodImpl(MethodImplOptions.AggressiveInlining)]
         public static TVector Multiply<TVector,TPrimitive>(TVector left, TPrimitive right)
             where TVector : struct, IVector<TVector>, IVector2<TPrimitive,TVector>
-            where TPrimitive : unmanaged
+            where TPrimitive : unmanaged, INumber<TPrimitive>
         {
             if (typeof(TVector) == typeof(Vector2I))
             {
@@ -752,7 +753,7 @@ namespace Pmad.Geometry
         [MethodImpl(MethodImplOptions.AggressiveInlining)]
         public static TPrimitive Dot<TPrimitive,TVector>(TVector left, TVector right)
             where TVector : struct, IVector<TVector>, IVectorFP<TPrimitive,TVector>
-            where TPrimitive : unmanaged
+            where TPrimitive : unmanaged, IFloatingPointIeee754<TPrimitive>
         {
             if (typeof(TVector) == typeof(Vector2F))
             {
@@ -781,7 +782,7 @@ namespace Pmad.Geometry
         [MethodImpl(MethodImplOptions.AggressiveInlining)]
         public static double DotD<TPrimitive,TVector>(TVector left, TVector right)
             where TVector : struct, IVector<TVector>, IVectorFP<TPrimitive,TVector>
-            where TPrimitive : unmanaged
+            where TPrimitive : unmanaged, IFloatingPointIeee754<TPrimitive>
         {
             if (typeof(TVector) == typeof(Vector2F))
             {
@@ -811,7 +812,7 @@ namespace Pmad.Geometry
         [MethodImpl(MethodImplOptions.AggressiveInlining)]
         public static TVector Lerp<TPrimitive,TVector>(TVector left, TVector right, TPrimitive amount)
             where TVector : struct, IVector<TVector>, IVectorFP<TPrimitive,TVector>
-            where TPrimitive : unmanaged
+            where TPrimitive : unmanaged, IFloatingPointIeee754<TPrimitive>
         {
             if (typeof(TVector) == typeof(Vector2F))
             {
@@ -840,7 +841,7 @@ namespace Pmad.Geometry
         [MethodImpl(MethodImplOptions.AggressiveInlining)]
         public static TVector Lerp<TPrimitive,TVector>(TVector left, TVector right, double amount)
             where TVector : struct, IVector<TVector>, IVectorFP<TPrimitive,TVector>
-            where TPrimitive : unmanaged
+            where TPrimitive : unmanaged, IFloatingPointIeee754<TPrimitive>
         {
             if (typeof(TVector) == typeof(Vector2F))
             {
@@ -869,7 +870,7 @@ namespace Pmad.Geometry
         [MethodImpl(MethodImplOptions.AggressiveInlining)]
         public static TVector Normalize<TPrimitive,TVector>(TVector left)
             where TVector : struct, IVector<TVector>, IVectorFP<TPrimitive,TVector>
-            where TPrimitive : unmanaged
+            where TPrimitive : unmanaged, IFloatingPointIeee754<TPrimitive>
         {
             if (typeof(TVector) == typeof(Vector2F))
             {

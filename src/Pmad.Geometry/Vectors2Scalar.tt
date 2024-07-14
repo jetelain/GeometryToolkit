@@ -31,6 +31,8 @@ namespace Pmad.Geometry
 
         public static <#=def.Struct#> MinValue => new (<#=def.Primitive#>.MinValue);
 
+        public static <#=def.Struct#> Create(<#=def.Primitive#> x, <#=def.Primitive#> y) => new (x, y);
+
         [MethodImpl(MethodImplOptions.AggressiveInlining)]
         public <#=def.Struct#>(<#=def.Primitive#> x, <#=def.Primitive#> y)
         {
@@ -80,6 +82,22 @@ namespace Pmad.Geometry
         [MethodImpl(MethodImplOptions.AggressiveInlining)]
         public static <#=def.Struct#> operator /(<#=def.Struct#> left, <#=def.Primitive#> right)
             => new (left.X / right, left.Y / right);
+
+<#if (def.Primitive != "int") {#>
+        [MethodImpl(MethodImplOptions.AggressiveInlining)]
+        public static <#=def.Struct#> operator /(<#=def.Struct#> left, int right)
+            => new (left.X / right, left.Y / right);
+
+        [MethodImpl(MethodImplOptions.AggressiveInlining)]
+        public static <#=def.Struct#> operator *(<#=def.Struct#> left, int right)
+            => new (left.X * right, left.Y * right);
+<#}#>
+
+<#if (def.Primitive != "double") {#>
+        [MethodImpl(MethodImplOptions.AggressiveInlining)]
+        public static <#=def.Struct#> operator *(<#=def.Struct#> left, double right)
+            => new((<#=def.Primitive#>)(left.X * right), (<#=def.Primitive#>)(left.Y * right));
+<#}#>
 
         [MethodImpl(MethodImplOptions.AggressiveInlining)]
         public static <#=def.Struct#> operator +(<#=def.Struct#> left, <#=def.Struct#> right)
@@ -159,22 +177,22 @@ namespace Pmad.Geometry
         }
         
         [MethodImpl(MethodImplOptions.AggressiveInlining)]
-        public static double CrossProduct(<#=def.Struct#> v1, <#=def.Struct#> v2)
+        public static <#=def.ResultType#> CrossProduct(<#=def.Struct#> v1, <#=def.Struct#> v2)
         {
             return v2.Y * v1.X - v2.X * v1.Y;
         }
 
         [MethodImpl(MethodImplOptions.AggressiveInlining)]
-        public static double CrossProduct(<#=def.Struct#> pt1, <#=def.Struct#> pt2, <#=def.Struct#> pt3)
+        public static <#=def.ResultType#> CrossProduct(<#=def.Struct#> pt1, <#=def.Struct#> pt2, <#=def.Struct#> pt3)
         {
             return CrossProduct(pt2-pt1, pt3-pt2);
         }
 
         [MethodImpl(MethodImplOptions.AggressiveInlining)]
-        public static double CrossProductScalar(<#=def.Struct#> pt1, <#=def.Struct#> pt2, <#=def.Struct#> pt3)
+        public static <#=def.ResultType#> CrossProductScalar(<#=def.Struct#> pt1, <#=def.Struct#> pt2, <#=def.Struct#> pt3)
         {
-            return ((double) (pt2.X - pt1.X) * (pt3.Y - pt2.Y) -
-                    (double) (pt2.Y - pt1.Y) * (pt3.X - pt2.X));
+            return ((<#=def.ResultType#>) (pt2.X - pt1.X) * (pt3.Y - pt2.Y) -
+                    (<#=def.ResultType#>) (pt2.Y - pt1.Y) * (pt3.X - pt2.X));
         }
 
         [MethodImpl(MethodImplOptions.AggressiveInlining)]

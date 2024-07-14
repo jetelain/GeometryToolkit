@@ -20,6 +20,8 @@ namespace Pmad.Geometry
 
         public static Vector2IS MinValue => new (int.MinValue);
 
+        public static Vector2IS Create(int x, int y) => new (x, y);
+
         [MethodImpl(MethodImplOptions.AggressiveInlining)]
         public Vector2IS(int x, int y)
         {
@@ -69,6 +71,11 @@ namespace Pmad.Geometry
         [MethodImpl(MethodImplOptions.AggressiveInlining)]
         public static Vector2IS operator /(Vector2IS left, int right)
             => new (left.X / right, left.Y / right);
+
+
+        [MethodImpl(MethodImplOptions.AggressiveInlining)]
+        public static Vector2IS operator *(Vector2IS left, double right)
+            => new((int)(left.X * right), (int)(left.Y * right));
 
         [MethodImpl(MethodImplOptions.AggressiveInlining)]
         public static Vector2IS operator +(Vector2IS left, Vector2IS right)
@@ -273,6 +280,8 @@ namespace Pmad.Geometry
 
         public static Vector2FS MinValue => new (float.MinValue);
 
+        public static Vector2FS Create(float x, float y) => new (x, y);
+
         [MethodImpl(MethodImplOptions.AggressiveInlining)]
         public Vector2FS(float x, float y)
         {
@@ -322,6 +331,18 @@ namespace Pmad.Geometry
         [MethodImpl(MethodImplOptions.AggressiveInlining)]
         public static Vector2FS operator /(Vector2FS left, float right)
             => new (left.X / right, left.Y / right);
+
+        [MethodImpl(MethodImplOptions.AggressiveInlining)]
+        public static Vector2FS operator /(Vector2FS left, int right)
+            => new (left.X / right, left.Y / right);
+
+        [MethodImpl(MethodImplOptions.AggressiveInlining)]
+        public static Vector2FS operator *(Vector2FS left, int right)
+            => new (left.X * right, left.Y * right);
+
+        [MethodImpl(MethodImplOptions.AggressiveInlining)]
+        public static Vector2FS operator *(Vector2FS left, double right)
+            => new((float)(left.X * right), (float)(left.Y * right));
 
         [MethodImpl(MethodImplOptions.AggressiveInlining)]
         public static Vector2FS operator +(Vector2FS left, Vector2FS right)
@@ -401,22 +422,22 @@ namespace Pmad.Geometry
         }
         
         [MethodImpl(MethodImplOptions.AggressiveInlining)]
-        public static double CrossProduct(Vector2FS v1, Vector2FS v2)
+        public static float CrossProduct(Vector2FS v1, Vector2FS v2)
         {
             return v2.Y * v1.X - v2.X * v1.Y;
         }
 
         [MethodImpl(MethodImplOptions.AggressiveInlining)]
-        public static double CrossProduct(Vector2FS pt1, Vector2FS pt2, Vector2FS pt3)
+        public static float CrossProduct(Vector2FS pt1, Vector2FS pt2, Vector2FS pt3)
         {
             return CrossProduct(pt2-pt1, pt3-pt2);
         }
 
         [MethodImpl(MethodImplOptions.AggressiveInlining)]
-        public static double CrossProductScalar(Vector2FS pt1, Vector2FS pt2, Vector2FS pt3)
+        public static float CrossProductScalar(Vector2FS pt1, Vector2FS pt2, Vector2FS pt3)
         {
-            return ((double) (pt2.X - pt1.X) * (pt3.Y - pt2.Y) -
-                    (double) (pt2.Y - pt1.Y) * (pt3.X - pt2.X));
+            return ((float) (pt2.X - pt1.X) * (pt3.Y - pt2.Y) -
+                    (float) (pt2.Y - pt1.Y) * (pt3.X - pt2.X));
         }
 
         [MethodImpl(MethodImplOptions.AggressiveInlining)]
@@ -526,6 +547,8 @@ namespace Pmad.Geometry
 
         public static Vector2LS MinValue => new (long.MinValue);
 
+        public static Vector2LS Create(long x, long y) => new (x, y);
+
         [MethodImpl(MethodImplOptions.AggressiveInlining)]
         public Vector2LS(long x, long y)
         {
@@ -575,6 +598,18 @@ namespace Pmad.Geometry
         [MethodImpl(MethodImplOptions.AggressiveInlining)]
         public static Vector2LS operator /(Vector2LS left, long right)
             => new (left.X / right, left.Y / right);
+
+        [MethodImpl(MethodImplOptions.AggressiveInlining)]
+        public static Vector2LS operator /(Vector2LS left, int right)
+            => new (left.X / right, left.Y / right);
+
+        [MethodImpl(MethodImplOptions.AggressiveInlining)]
+        public static Vector2LS operator *(Vector2LS left, int right)
+            => new (left.X * right, left.Y * right);
+
+        [MethodImpl(MethodImplOptions.AggressiveInlining)]
+        public static Vector2LS operator *(Vector2LS left, double right)
+            => new((long)(left.X * right), (long)(left.Y * right));
 
         [MethodImpl(MethodImplOptions.AggressiveInlining)]
         public static Vector2LS operator +(Vector2LS left, Vector2LS right)
@@ -779,6 +814,8 @@ namespace Pmad.Geometry
 
         public static Vector2DS MinValue => new (double.MinValue);
 
+        public static Vector2DS Create(double x, double y) => new (x, y);
+
         [MethodImpl(MethodImplOptions.AggressiveInlining)]
         public Vector2DS(double x, double y)
         {
@@ -828,6 +865,15 @@ namespace Pmad.Geometry
         [MethodImpl(MethodImplOptions.AggressiveInlining)]
         public static Vector2DS operator /(Vector2DS left, double right)
             => new (left.X / right, left.Y / right);
+
+        [MethodImpl(MethodImplOptions.AggressiveInlining)]
+        public static Vector2DS operator /(Vector2DS left, int right)
+            => new (left.X / right, left.Y / right);
+
+        [MethodImpl(MethodImplOptions.AggressiveInlining)]
+        public static Vector2DS operator *(Vector2DS left, int right)
+            => new (left.X * right, left.Y * right);
+
 
         [MethodImpl(MethodImplOptions.AggressiveInlining)]
         public static Vector2DS operator +(Vector2DS left, Vector2DS right)

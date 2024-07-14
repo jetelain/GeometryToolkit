@@ -1,4 +1,6 @@
-﻿namespace Pmad.Geometry
+﻿using System.Numerics;
+
+namespace Pmad.Geometry
 {
     /// <summary>
     /// 2 dimensions vector
@@ -6,7 +8,7 @@
     /// <typeparam name="TPrimitive">Primtive number type</typeparam>
     /// <typeparam name="TVector">Vector type</typeparam>
     public interface IVector2<TPrimitive,TVector> : IVector<TVector>
-        where TPrimitive : unmanaged
+        where TPrimitive : unmanaged, INumber<TPrimitive>
         where TVector: struct, IVector2<TPrimitive,TVector>
     {
         /// <summary>
@@ -40,5 +42,17 @@
         TVector Multiply(TPrimitive value);
 
         double AreaD();
+
+        abstract static TVector operator *(TVector left, TPrimitive right);
+
+        abstract static TVector operator *(TPrimitive left, TVector right);
+
+        abstract static TVector operator /(TVector left, TPrimitive right);
+
+        static TVector UnitX { get; }
+
+        static TVector UnitY { get; }
+
+        abstract static TVector Create (TPrimitive x, TPrimitive y);
     }
 }

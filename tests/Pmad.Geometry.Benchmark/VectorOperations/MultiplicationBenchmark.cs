@@ -1,12 +1,12 @@
 ﻿using System.Numerics;
 using BenchmarkDotNet.Attributes;
 
-namespace Pmad.Geometry.Benchmark
+namespace Pmad.Geometry.Benchmark.VectorOperations
 {
     public class MultiplicationBenchmark
     {
         [Benchmark]
-        public void MultiplicationVector2D() => SampleValues.RandomPairList2D.ForEach(p => _ = p.Item1 * p.Item2);  
+        public void MultiplicationVector2D() => SampleValues.RandomPairList2D.ForEach(p => _ = p.Item1 * p.Item2);
 
         [Benchmark]
         public void MultiplicationVector2F() => SampleValues.RandomPairList2F.ForEach(p => _ = p.Item1 * p.Item2);

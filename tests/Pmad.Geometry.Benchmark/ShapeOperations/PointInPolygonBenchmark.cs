@@ -7,11 +7,11 @@ using BenchmarkDotNet.Attributes;
 using Clipper2Lib;
 using Pmad.Geometry.Algorithms;
 
-namespace Pmad.Geometry.Benchmark
+namespace Pmad.Geometry.Benchmark.ShapeOperations
 {
     public class PointInPolygonBenchmark
     {
-        [Benchmark(Baseline=true)] 
+        [Benchmark(Baseline = true)]
         public void PointInPolygon() => SampleValues.PosListP64.ForEach(p => InternalClipper.PointInPolygon(p, SampleValues.CircleP64));
 
         [Benchmark] public void PointInPolygon_2D() => SampleValues.PosList2D.ForEach(p => SampleValues.Circle2D.TestPointInPolygon(p));

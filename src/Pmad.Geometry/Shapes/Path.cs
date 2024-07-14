@@ -1,11 +1,12 @@
-﻿using Clipper2Lib;
+﻿using System.Numerics;
+using Clipper2Lib;
 using Pmad.Geometry.Algorithms;
 using Pmad.Geometry.Collections;
 
 namespace Pmad.Geometry.Shapes
 {
     public sealed class Path<TPrimitive, TVector> : IWithBounds<TVector>
-        where TPrimitive : unmanaged
+        where TPrimitive : unmanaged, INumber<TPrimitive>
         where TVector : struct, IVector2<TPrimitive, TVector>
     {
         public Path(ReadOnlyArray<TVector> points)

@@ -21,6 +21,8 @@ namespace Pmad.Geometry
 
         private Vector2 vector;
 
+        public static Vector2FN Create(float x, float y) => new(x, y);
+
         [MethodImpl(MethodImplOptions.AggressiveInlining)]
         public Vector2FN(Vector2 vector)
         {
@@ -122,6 +124,18 @@ namespace Pmad.Geometry
         [MethodImpl(MethodImplOptions.AggressiveInlining)]
         public static Vector2FN operator /(Vector2FN left, float right)
             => new(left.vector / right);
+
+        [MethodImpl(MethodImplOptions.AggressiveInlining)]
+        public static Vector2FN operator /(Vector2FN left, int right)
+            => new(left.vector / right);
+
+        [MethodImpl(MethodImplOptions.AggressiveInlining)]
+        public static Vector2FN operator *(Vector2FN left, int right)
+            => new(left.vector * right);
+
+        [MethodImpl(MethodImplOptions.AggressiveInlining)]
+        public static Vector2FN operator *(Vector2FN left, double right)
+            => new(left.vector * (float)right);
 
         [MethodImpl(MethodImplOptions.AggressiveInlining)]
         public static Vector2FN operator +(Vector2FN left, Vector2FN right)
@@ -276,7 +290,7 @@ namespace Pmad.Geometry
             return v2.Y * v1.X - v2.X * v1.Y;
         }
 
-        public static double CrossProduct(Vector2FN pt1, Vector2FN pt2, Vector2FN pt3)
+        public static float CrossProduct(Vector2FN pt1, Vector2FN pt2, Vector2FN pt3)
         {
             return CrossProduct(pt2-pt1, pt3-pt2);
         }

@@ -3,7 +3,7 @@
 namespace Pmad.Geometry.Test
 {
     public abstract class Vector2TestBase<TPrimitive, TVector> 
-        where TPrimitive : unmanaged
+        where TPrimitive : unmanaged, INumber<TPrimitive>
         where TVector : struct, IVector2<TPrimitive, TVector>
     {
         protected abstract TVector Vector(int x, int y);

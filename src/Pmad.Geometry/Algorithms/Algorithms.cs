@@ -1,4 +1,5 @@
-﻿using System.Runtime.CompilerServices;
+﻿using System.Numerics;
+using System.Runtime.CompilerServices;
 using Clipper2Lib;
 using Pmad.Geometry.Collections;
 using Pmad.Geometry.Shapes;
@@ -317,7 +318,7 @@ namespace Pmad.Geometry.Algorithms
 
 	    [MethodImpl(MethodImplOptions.AggressiveInlining)]
         public static RotatedRectangle<TPrimitive, TVector> GetSmallestRotatedRectangleContaining<TPrimitive,TVector>(ShapeSettings<TPrimitive, TVector> settings, ReadOnlyArray<TVector> points)
-            where TPrimitive : unmanaged
+            where TPrimitive : unmanaged, IFloatingPointIeee754<TPrimitive>
             where TVector : struct, IVector2<TPrimitive, TVector>, IVectorFP<TPrimitive, TVector>
         {
             if (typeof(TVector) == typeof(Vector2F))
@@ -347,7 +348,7 @@ namespace Pmad.Geometry.Algorithms
         
 	    [MethodImpl(MethodImplOptions.AggressiveInlining)]
         public static Circle<TPrimitive, TVector> GetCircleFromThreePoints<TPrimitive,TVector>(ShapeSettings<TPrimitive, TVector> settings, TVector a, TVector b, TVector c)
-            where TPrimitive : unmanaged
+            where TPrimitive : unmanaged, IFloatingPointIeee754<TPrimitive>
             where TVector : struct, IVector2<TPrimitive, TVector>, IVectorFP<TPrimitive, TVector>
         {
             if (typeof(TVector) == typeof(Vector2F))

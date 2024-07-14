@@ -1,7 +1,9 @@
-﻿namespace Pmad.Geometry.Test
+﻿using System.Numerics;
+
+namespace Pmad.Geometry.Test
 {
     public abstract class Matrix2x2TestBase<TPrimitive, TVector, TMatrix>
-        where TPrimitive : unmanaged
+        where TPrimitive : unmanaged, IFloatingPointIeee754<TPrimitive>
         where TVector : struct, IVector2<TPrimitive, TVector>, IVectorFP<TPrimitive, TVector>
         where TMatrix : struct, IMatrix2x2<TPrimitive, TVector, TMatrix>
     {

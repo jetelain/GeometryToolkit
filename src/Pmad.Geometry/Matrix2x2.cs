@@ -1,10 +1,11 @@
 ﻿using System.Diagnostics.CodeAnalysis;
+using System.Numerics;
 using System.Runtime.CompilerServices;
 
 namespace Pmad.Geometry
 {
     public struct Matrix2x2<TPrimitive, TVector> : IMatrix2x2<TPrimitive, TVector, Matrix2x2<TPrimitive, TVector>>
-        where TPrimitive : unmanaged
+        where TPrimitive : unmanaged, IFloatingPointIeee754<TPrimitive>
         where TVector : struct, IVector2<TPrimitive, TVector>, IVectorFP<TPrimitive, TVector>
     {
         public readonly TVector X;
@@ -24,6 +25,11 @@ namespace Pmad.Geometry
             Y = y;
         }
 
+        public static Matrix2x2<TPrimitive, TVector> CreateRotation(TPrimitive radians)
+        {
+            return CreateRotation(double.CreateChecked(radians));
+        }
+
         public static Matrix2x2<TPrimitive, TVector> CreateRotation(double radians)
         {
             //var cos = Math.Cos(radians);
@@ -35,7 +41,7 @@ namespace Pmad.Geometry
         [MethodImpl(MethodImplOptions.AggressiveInlining)]
         public TVector Transform(TVector value)
         {
-            return Vectors.Add(Vectors.Multiply(X,value.X), Vectors.Multiply(Y,value.Y));
+            return (X * value.X) + (Y * value.Y);
         }
 
         public bool Equals(Matrix2x2<TPrimitive, TVector> other)

@@ -1,7 +1,8 @@
 ﻿using System.Numerics;
 using BenchmarkDotNet.Attributes;
+using Pmad.Geometry;
 
-namespace Pmad.Geometry.Benchmark
+namespace Pmad.Geometry.Benchmark.VectorOperations
 {
     public class MaxBenchmark
     {

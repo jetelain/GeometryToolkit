@@ -1,10 +1,11 @@
 ﻿using System.Collections;
 using System.Collections.Concurrent;
+using System.Numerics;
 
 namespace Pmad.Geometry.Collections
 {
     internal class SimpleSpacialIndex<TPrimitive, TVector, TItem> : IEnumerable<TItem>
-        where TPrimitive : unmanaged
+        where TPrimitive : unmanaged, IFloatingPointIeee754<TPrimitive>
         where TVector : struct, IVector<TVector>, IVector2<TPrimitive, TVector>, IVectorFP<TPrimitive, TVector>
         where TItem : class
     {

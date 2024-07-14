@@ -1,7 +1,7 @@
 ﻿using BenchmarkDotNet.Attributes;
 using Pmad.Geometry.Collections;
 
-namespace Pmad.Geometry.Benchmark
+namespace Pmad.Geometry.Benchmark.Collections
 {
     public class ReadOnlyArrayBenchmark
     {

@@ -1,9 +1,10 @@
-﻿using Pmad.Geometry.Collections;
+﻿using System.Numerics;
+using Pmad.Geometry.Collections;
 
 namespace Pmad.Geometry.Shapes
 {
     public sealed class RotatedRectangle<TPrimitive, TVector> : IWithBounds<TVector>
-        where TPrimitive : unmanaged
+        where TPrimitive : unmanaged, IFloatingPointIeee754<TPrimitive>
         where TVector : struct, IVector2<TPrimitive, TVector>, IVectorFP<TPrimitive, TVector>
     {
         private Lazy<VectorEnvelope<TVector>> bounds;
@@ -167,6 +168,62 @@ namespace Pmad.Geometry.Shapes
 
             return new(settings, resultCenter, resultSize, resultAngle);
         }
+
+        public static RotatedRectangle<TPrimitive, TVector> GetSmallestContaining_StaticOperators(ReadOnlyArray<TVector> points)
+        {
+            return GetSmallestContaining_StaticOperators(ShapeSettings<TPrimitive, TVector>.Default, points.AsSpan());
+        }
+
+        public static RotatedRectangle<TPrimitive, TVector> GetSmallestContaining_StaticOperators(ShapeSettings<TPrimitive, TVector> settings, ReadOnlyArray<TVector> points)
+        {
+            return GetSmallestContaining_StaticOperators(settings, points.AsSpan());
+        }
+
+        public static RotatedRectangle<TPrimitive, TVector> GetSmallestContaining_StaticOperators(ShapeSettings<TPrimitive, TVector> settings, ReadOnlySpan<TVector> points)
+        {
+            TVector resultSize = default;
+            TVector resultCenter = default;
+            double resultAngle = default;
+            double resultArea = double.MaxValue;
+
+            var a = points[points.Length - 1];
+
+            for (var i = 0; i < points.Length; i++)
+            {
+                var b = points[i];
+
+                var theta = (a - b).Atan2D();
+
+                var rotate = Matrix2x2<TPrimitive, TVector>.CreateRotation(-theta);
+
+                var max = rotate.Transform(points[0] - a);
+                var min = max;
+
+                for (int j = 1; j < points.Length; j++)
+                {
+                    var r = rotate.Transform(points[j] - a);
+                    max = TVector.Max(r, max);
+                    min = TVector.Min(r, min);
+                }
+                var size = max - min;
+                var area = size.AreaD();
+                if (area < resultArea)
+                {
+                    resultArea = area;
+                    resultSize = size;
+                    resultAngle = theta;
+
+                    var reverseRotate = Matrix2x2<TPrimitive, TVector>.CreateRotation(theta);
+                    var resultP3 = reverseRotate.Transform(max);
+                    var resultP1 = reverseRotate.Transform(min);
+                    resultCenter = ((resultP3 + resultP1) / 2) + a;
+                }
+                a = b;
+            }
+
+            return new(settings, resultCenter, resultSize, resultAngle);
+        }
+
 
         public static RotatedRectangle<TPrimitive, TVector>? GetLargestBetween(ReadOnlyArray<TVector> points)
         {

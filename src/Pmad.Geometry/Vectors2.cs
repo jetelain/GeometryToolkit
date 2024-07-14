@@ -32,6 +32,8 @@ namespace Pmad.Geometry
 
         public static Vector2I MinValue => new (int.MinValue);
 
+        public static Vector2I Create(int x, int y) => new (x, y);
+
         [MethodImpl(MethodImplOptions.AggressiveInlining)]
         public Vector2I(int x, int y)
         {
@@ -90,6 +92,11 @@ namespace Pmad.Geometry
         [MethodImpl(MethodImplOptions.AggressiveInlining)]
         public static Vector2I operator /(Vector2I left, int right)
             => new (left.vector / right);
+
+
+        [MethodImpl(MethodImplOptions.AggressiveInlining)]
+        public static Vector2I operator *(Vector2I left, double right)
+            => new((int)(left.X * right), (int)(left.Y * right));
 
         [MethodImpl(MethodImplOptions.AggressiveInlining)]
         public static Vector2I operator +(Vector2I left, Vector2I right)
@@ -312,6 +319,8 @@ namespace Pmad.Geometry
 
         public static Vector2F MinValue => new (float.MinValue);
 
+        public static Vector2F Create(float x, float y) => new (x, y);
+
         [MethodImpl(MethodImplOptions.AggressiveInlining)]
         public Vector2F(float x, float y)
         {
@@ -370,6 +379,18 @@ namespace Pmad.Geometry
         [MethodImpl(MethodImplOptions.AggressiveInlining)]
         public static Vector2F operator /(Vector2F left, float right)
             => new (left.vector / right);
+
+        [MethodImpl(MethodImplOptions.AggressiveInlining)]
+        public static Vector2F operator /(Vector2F left, int right)
+            => new (left.vector / right);
+
+        [MethodImpl(MethodImplOptions.AggressiveInlining)]
+        public static Vector2F operator *(Vector2F left, int right)
+            => new (left.vector * right);
+
+        [MethodImpl(MethodImplOptions.AggressiveInlining)]
+        public static Vector2F operator *(Vector2F left, double right)
+            => new (left.vector * (float)right);
 
         [MethodImpl(MethodImplOptions.AggressiveInlining)]
         public static Vector2F operator +(Vector2F left, Vector2F right)
@@ -592,6 +613,8 @@ namespace Pmad.Geometry
 
         public static Vector2L MinValue => new (long.MinValue);
 
+        public static Vector2L Create(long x, long y) => new (x, y);
+
         [MethodImpl(MethodImplOptions.AggressiveInlining)]
         public Vector2L(long x, long y)
         {
@@ -650,6 +673,18 @@ namespace Pmad.Geometry
         [MethodImpl(MethodImplOptions.AggressiveInlining)]
         public static Vector2L operator /(Vector2L left, long right)
             => new (left.vector / right);
+
+        [MethodImpl(MethodImplOptions.AggressiveInlining)]
+        public static Vector2L operator /(Vector2L left, int right)
+            => new (left.vector / right);
+
+        [MethodImpl(MethodImplOptions.AggressiveInlining)]
+        public static Vector2L operator *(Vector2L left, int right)
+            => new (left.vector * right);
+
+        [MethodImpl(MethodImplOptions.AggressiveInlining)]
+        public static Vector2L operator *(Vector2L left, double right)
+            => new((long)(left.X * right), (long)(left.Y * right));
 
         [MethodImpl(MethodImplOptions.AggressiveInlining)]
         public static Vector2L operator +(Vector2L left, Vector2L right)
@@ -872,6 +907,8 @@ namespace Pmad.Geometry
 
         public static Vector2D MinValue => new (double.MinValue);
 
+        public static Vector2D Create(double x, double y) => new (x, y);
+
         [MethodImpl(MethodImplOptions.AggressiveInlining)]
         public Vector2D(double x, double y)
         {
@@ -930,6 +967,15 @@ namespace Pmad.Geometry
         [MethodImpl(MethodImplOptions.AggressiveInlining)]
         public static Vector2D operator /(Vector2D left, double right)
             => new (left.vector / right);
+
+        [MethodImpl(MethodImplOptions.AggressiveInlining)]
+        public static Vector2D operator /(Vector2D left, int right)
+            => new (left.vector / right);
+
+        [MethodImpl(MethodImplOptions.AggressiveInlining)]
+        public static Vector2D operator *(Vector2D left, int right)
+            => new (left.vector * right);
+
 
         [MethodImpl(MethodImplOptions.AggressiveInlining)]
         public static Vector2D operator +(Vector2D left, Vector2D right)

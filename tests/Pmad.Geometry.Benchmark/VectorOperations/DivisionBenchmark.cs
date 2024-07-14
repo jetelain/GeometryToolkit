@@ -1,7 +1,7 @@
 ﻿using System.Numerics;
 using BenchmarkDotNet.Attributes;
 
-namespace Pmad.Geometry.Benchmark
+namespace Pmad.Geometry.Benchmark.VectorOperations
 {
     public class DivisionBenchmark
     {

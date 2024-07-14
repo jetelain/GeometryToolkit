@@ -47,6 +47,8 @@ namespace Pmad.Geometry
 
         public static <#=def.Struct#> MinValue => new (<#=def.Primitive#>.MinValue);
 
+        public static <#=def.Struct#> Create(<#=def.Primitive#> x, <#=def.Primitive#> y) => new (x, y);
+
         [MethodImpl(MethodImplOptions.AggressiveInlining)]
         public <#=def.Struct#>(<#=def.Primitive#> x, <#=def.Primitive#> y)
         {
@@ -113,6 +115,26 @@ namespace Pmad.Geometry
         [MethodImpl(MethodImplOptions.AggressiveInlining)]
         public static <#=def.Struct#> operator /(<#=def.Struct#> left, <#=def.Primitive#> right)
             => new (left.vector / right);
+
+<#if (def.Primitive != "int") {#>
+        [MethodImpl(MethodImplOptions.AggressiveInlining)]
+        public static <#=def.Struct#> operator /(<#=def.Struct#> left, int right)
+            => new (left.vector / right);
+
+        [MethodImpl(MethodImplOptions.AggressiveInlining)]
+        public static <#=def.Struct#> operator *(<#=def.Struct#> left, int right)
+            => new (left.vector * right);
+<#}#>
+
+<#if (def.Primitive != "double") {#>
+        [MethodImpl(MethodImplOptions.AggressiveInlining)]
+        public static <#=def.Struct#> operator *(<#=def.Struct#> left, double right)
+<#      if (def.Primitive == "float") { #>
+            => new (left.vector * (float)right);
+<#} else {#>
+            => new((<#=def.Primitive#>)(left.X * right), (<#=def.Primitive#>)(left.Y * right));
+<#}#>
+<#}#>
 
         [MethodImpl(MethodImplOptions.AggressiveInlining)]
         public static <#=def.Struct#> operator +(<#=def.Struct#> left, <#=def.Struct#> right)

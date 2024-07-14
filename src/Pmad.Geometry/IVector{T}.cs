@@ -3,58 +3,58 @@
     /// <summary>
     /// Number vector
     /// </summary>
-    /// <typeparam name="T">Type of vector</typeparam>
-    public interface IVector<T> : IEquatable<T>
-        where T : struct, IVector<T>
+    /// <typeparam name="TVector">Type of vector</typeparam>
+    public interface IVector<TVector> : IEquatable<TVector>
+        where TVector : struct, IVector<TVector>
     {
         /// <summary>
         /// Compute the addition of this and an other vector
         /// </summary>
         /// <param name="value"></param>
         /// <returns>this + value</returns>
-        T Add(T value);
+        TVector Add(TVector value);
 
         /// <summary>
         /// Compute the substraction of this and an other vector
         /// </summary>
         /// <param name="value"></param>
         /// <returns>this - value</returns>
-        T Substract(T value);
+        TVector Substract(TVector value);
 
         /// <summary>
         /// Compute the multiplication of this and an other vector
         /// </summary>
         /// <param name="value"></param>
         /// <returns>this * value</returns>
-        T Multiply(T value);
+        TVector Multiply(TVector value);
 
         /// <summary>
         /// Compute the multiplication of this and an other vector
         /// </summary>
         /// <param name="value"></param>
         /// <returns>this * value</returns>
-        T Multiply(int value);
+        TVector Multiply(int value);
 
         /// <summary>
         /// Compute the multiplication of this and an other vector
         /// </summary>
         /// <param name="value"></param>
         /// <returns>this * value</returns>
-        T Multiply(double value);
+        TVector Multiply(double value);
 
         /// <summary>
         /// Compute the division of this and an other vector
         /// </summary>
         /// <param name="value"></param>
         /// <returns>this / value</returns>
-        T Divide(T value);
+        TVector Divide(TVector value);
 
         /// <summary>
         /// Compute the division of this and an other vector
         /// </summary>
         /// <param name="value"></param>
         /// <returns>this / value</returns>
-        T Divide(int value);
+        TVector Divide(int value);
 
         /// <summary>
         /// Length of vector as a <see langword="double"/>.
@@ -84,14 +84,14 @@
         /// Test if components of this vector are greater or equal to same components of the other vector
         /// </summary>
         /// <returns><see langword="true"/> if X &gt;= other.X and Y &gt;= other.Y ...</returns>
-        bool IsGreaterThanOrEqualAll(T other);
+        bool IsGreaterThanOrEqualAll(TVector other);
 
         /// <summary>
         /// Test if components of this vector are less or equal to same components of the other vector
         /// </summary>
         /// <returns><see langword="true"/> if X &lt;= other.X and Y &lt;= other.Y ...</returns>
 
-        bool IsLessThanOrEqualAll(T other);
+        bool IsLessThanOrEqualAll(TVector other);
 
         /// <summary>
         /// Test if components of this vector are in the range of other vectors
@@ -99,14 +99,49 @@
         /// <param name="min"></param>
         /// <param name="max"></param>
         /// <returns><see langword="true"/> if min.X &lt; X &lt;= max.X and  min.Y &lt; Y &lt;= max.Y ...</returns>
-        bool IsInRange(T min, T max);
+        bool IsInRange(TVector min, TVector max);
 
-        T Min(T other);
+        TVector Min(TVector other);
 
-        T Max(T other);
+        TVector Max(TVector other);
 
-        T SwapXY();
+        TVector SwapXY();
 
-        T Negate();
+        TVector Negate();
+
+
+        abstract static TVector Min(TVector left, TVector right);
+
+        abstract static TVector Max(TVector left, TVector right);
+
+        abstract static TVector Clamp(TVector value, TVector min, TVector max);
+
+        abstract static TVector operator+(TVector left, TVector right);
+
+        abstract static TVector operator-(TVector left, TVector right);
+
+        abstract static TVector operator-(TVector value);
+
+        abstract static TVector operator*(TVector left, TVector right);
+
+        abstract static TVector operator/(TVector left, TVector right);
+
+        abstract static TVector operator/(TVector left, int right);
+
+        abstract static TVector operator*(TVector left, double right);
+
+        abstract static TVector operator*(TVector left, int right);
+
+        abstract static TVector MaxValue { get; }
+
+        abstract static TVector MinValue { get; }
+
+        abstract static TVector Zero { get; }
+
+        abstract static TVector One { get; }
+
+        static abstract bool operator ==(TVector left, TVector right);
+
+        static abstract bool operator !=(TVector left, TVector right);
     }
 }

@@ -1,9 +1,10 @@
-﻿using Pmad.Geometry.Algorithms;
+﻿using System.Numerics;
+using Pmad.Geometry.Algorithms;
 
 namespace Pmad.Geometry.Shapes
 {
     public class Circle<TPrimitive, TVector> : IWithBounds<TVector>
-        where TPrimitive : unmanaged
+        where TPrimitive : unmanaged, IFloatingPointIeee754<TPrimitive>
         where TVector : struct, IVector2<TPrimitive, TVector>, IVectorFP<TPrimitive, TVector>
     {
         public VectorEnvelope<TVector> Bounds { get; }
@@ -48,10 +49,37 @@ namespace Pmad.Geometry.Shapes
             return new (settings, Vectors.Divide(Vectors.Add(b, a), 2), Vectors.Substract(b, a).LengthD() / 2);
         }
 
+        public static Circle<TPrimitive, TVector> FromTwoPoints_StaticOperators(ShapeSettings<TPrimitive, TVector> settings, TVector a, TVector b)
+        {
+            return new(settings, (b + a) / 2, (b - a).LengthD() / 2);
+        }
+
         public static Circle<TPrimitive, TVector> FromThreePoints(ShapeSettings<TPrimitive, TVector> settings, TVector a, TVector b, TVector c)
         {
             return AlgorithmsDispatcher.GetCircleFromThreePoints(settings, a, b, c);
         }
+
+        public static Circle<TPrimitive, TVector> FromThreePoints_StaticOperators(ShapeSettings<TPrimitive, TVector> settings, TVector a, TVector b, TVector c)
+        {
+            var o = (TVector.Min(TVector.Min(a, b), c) + TVector.Max(TVector.Max(a, b), c)) / 2;
+            var da = a - o;
+            var db = b - o;
+            var dc = c - o;
+            var d = (da.X * (db.Y - dc.Y) + db.X * (dc.Y - da.Y) + dc.X * (da.Y - db.Y)) * TPrimitive.CreateChecked(2);
+            if (d == TPrimitive.Zero)
+            {
+                // XXX: Fallback to FromTwoPoints ?
+                return new(settings, TVector.Zero, 0);
+            }
+            //var x = ((da.X * da.X + da.Y * da.Y) * (db.Y - dc.Y) + (db.X * db.X + db.Y * db.Y) * (dc.Y - da.Y) + (dc.X * dc.X + dc.Y * dc.Y) * (da.Y - db.Y)) / d;
+            var x = (da.LengthSquared() * (db.Y - dc.Y) + db.LengthSquared() * (dc.Y - da.Y) + dc.LengthSquared() * (da.Y - db.Y)) / d;
+            //var y = ((da.X * da.X + da.Y * da.Y) * (dc.X - db.X) + (db.X * db.X + db.Y * db.Y) * (da.X - dc.X) + (dc.X * dc.X + dc.Y * dc.Y) * (db.X - da.X)) / d;
+            var y = (da.LengthSquared() * (dc.X - db.X) + db.LengthSquared() * (da.X - dc.X) + dc.LengthSquared() * (db.X - da.X)) / d;
+            var p = o + TVector.Create(x, y);
+            var sqR = TPrimitive.Max((p - a).LengthSquared(), TPrimitive.Max((p - b).LengthSquared(), (p - c).LengthSquared()));
+            return new(settings, p, double.CreateChecked(TPrimitive.Sqrt(sqR)));
+        }
+
 
         private static Circle<TPrimitive, TVector> Create(ShapeSettings<TPrimitive, TVector> settings, IReadOnlyList<TVector> points)
         {

@@ -1,7 +1,9 @@
-﻿namespace Pmad.Geometry
+﻿using System.Numerics;
+
+namespace Pmad.Geometry
 {
     public interface IMatrix2x2<TPrimitive, TVector, TMatrix> : IMatrix<TVector>, IEquatable<TMatrix>
-        where TPrimitive : unmanaged
+        where TPrimitive : unmanaged, IFloatingPointIeee754<TPrimitive>
         where TVector : struct, IVector2<TPrimitive, TVector>, IVectorFP<TPrimitive, TVector>
         where TMatrix : struct, IMatrix2x2<TPrimitive, TVector, TMatrix>
     {

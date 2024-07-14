@@ -3,7 +3,7 @@ using System.Runtime.CompilerServices;
 using System.Runtime.Intrinsics;
 using BenchmarkDotNet.Attributes;
 
-namespace Pmad.Geometry.Benchmark
+namespace Pmad.Geometry.Benchmark.VectorOperations
 {
     public class DivisionFloatBenchmark
     {

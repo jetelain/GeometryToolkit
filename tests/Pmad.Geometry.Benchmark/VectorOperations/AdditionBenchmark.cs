@@ -1,7 +1,7 @@
 ﻿using System.Runtime.CompilerServices;
 using BenchmarkDotNet.Attributes;
 
-namespace Pmad.Geometry.Benchmark
+namespace Pmad.Geometry.Benchmark.VectorOperations
 {
     public class AdditionBenchmark
     {
@@ -60,14 +60,14 @@ namespace Pmad.Geometry.Benchmark
         public void AddVector2D_Virtual() => SampleValues.RandomPairList2D.ForEach(p => _ = Virtual(p.Item1, p.Item2));
 
         [Benchmark]
-        public void AddVector2D_Dispatch() => SampleValues.RandomPairList2D.ForEach(p => _ = Dispatcher(p.Item1,p.Item2));
+        public void AddVector2D_Dispatch() => SampleValues.RandomPairList2D.ForEach(p => _ = Dispatcher(p.Item1, p.Item2));
 
         [Benchmark]
         public void AddVector2L_Direct() => SampleValues.RandomPairList2L.ForEach(p => _ = Direct(p.Item1, p.Item2));
-        
+
         [Benchmark]
         public void AddVector2L_Virtual() => SampleValues.RandomPairList2L.ForEach(p => _ = Virtual(p.Item1, p.Item2));
-        
+
         [Benchmark]
         public void AddVector2L_Dispatch() => SampleValues.RandomPairList2L.ForEach(p => _ = Dispatcher(p.Item1, p.Item2));
 

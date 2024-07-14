@@ -1,10 +1,11 @@
-﻿using Pmad.Geometry.Collections;
+﻿using System.Numerics;
+using Pmad.Geometry.Collections;
 using Pmad.Geometry.Shapes;
 
 namespace Pmad.Geometry.Test.Shapes
 {
     public abstract class RotatedRectangleTestBase<TPrimitive, TVector>
-        where TPrimitive : unmanaged
+        where TPrimitive : unmanaged, IFloatingPointIeee754<TPrimitive>
         where TVector : struct, IVector2<TPrimitive, TVector>, IVectorFP<TPrimitive, TVector>
     {
         protected abstract TVector Vector(double x, double y);

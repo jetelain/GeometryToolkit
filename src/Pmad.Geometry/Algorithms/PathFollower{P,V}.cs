@@ -1,7 +1,9 @@
-﻿namespace Pmad.Geometry.Algorithms
+﻿using System.Numerics;
+
+namespace Pmad.Geometry.Algorithms
 {
     public sealed class PathFollower<TPrimitive,TVector>
-        where TPrimitive : unmanaged
+        where TPrimitive : unmanaged, IFloatingPointIeee754<TPrimitive>
         where TVector : struct, IVector2<TPrimitive, TVector>, IVectorFP<TPrimitive, TVector>
     {
         private readonly IEnumerator<TVector> enumerator;

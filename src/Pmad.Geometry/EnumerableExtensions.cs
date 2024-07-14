@@ -14,7 +14,7 @@ namespace Pmad.Geometry
                 var value = enumerator.Current;
                 while (enumerator.MoveNext())
                 {
-                    value = value.Add(enumerator.Current);
+                    value = value + enumerator.Current;
                 }
                 return value;
             }
@@ -31,7 +31,7 @@ namespace Pmad.Geometry
             TVector result = list[0];
             for (var i = 1; i < list.Length; i++)
             {
-                result = result.Add(list[i]);
+                result = result + list[i];
             }
             return result;
         }
@@ -52,7 +52,7 @@ namespace Pmad.Geometry
                 var value = enumerator.Current;
                 while (enumerator.MoveNext())
                 {
-                    value = value.Max(enumerator.Current);
+                    value = TVector.Max(value, enumerator.Current);
                 }
                 return value;
             }
@@ -70,7 +70,7 @@ namespace Pmad.Geometry
             TVector result = list[0];
             for (var i = 1; i < list.Length; i++)
             {
-                result = result.Max(list[i]);
+                result = TVector.Max(result, list[i]);
             }
             return result;
         }
@@ -91,7 +91,7 @@ namespace Pmad.Geometry
                 var value = enumerator.Current;
                 while (enumerator.MoveNext())
                 {
-                    value = value.Min(enumerator.Current);
+                    value = TVector.Min(value, enumerator.Current);
                 }
                 return value;
             }
@@ -109,7 +109,7 @@ namespace Pmad.Geometry
             TVector result = list[0];
             for (var i = 1; i < list.Length; i++)
             {
-                result = result.Max(list[i]);
+                result = TVector.Min(result, list[i]);
             }
             return result;
         }
@@ -132,7 +132,7 @@ namespace Pmad.Geometry
                 while (enumerator.MoveNext())
                 {
                     var p2 = enumerator.Current;
-                    result += p2.Substract(p1).LengthD();
+                    result += (p2 - p1).LengthD();
                     p1 = p2;
                 }
                 return result;
@@ -159,7 +159,7 @@ namespace Pmad.Geometry
             for (var i = 1; i < list.Length; i++)
             {
                 var p2 = list[i];
-                result += p2.Substract(p1).LengthD();
+                result += (p2 - p1).LengthD();
                 p1 = p2;
             }
             return result;
@@ -176,7 +176,7 @@ namespace Pmad.Geometry
                 while (enumerator.MoveNext())
                 {
                     var p2 = enumerator.Current;
-                    result += p2.Substract(p1).LengthF();
+                    result += (p2 - p1).LengthF();
                     p1 = p2;
                 }
                 return result;
@@ -203,7 +203,7 @@ namespace Pmad.Geometry
             for (var i = 1; i < list.Length; i++)
             {
                 var p2 = list[i];
-                result += p2.Substract(p1).LengthF();
+                result += (p2 - p1).LengthF();
                 p1 = p2;
             }
             return result;
