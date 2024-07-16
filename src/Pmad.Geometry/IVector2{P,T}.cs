@@ -1,4 +1,5 @@
 ﻿using System.Numerics;
+using System.Runtime.CompilerServices;
 
 namespace Pmad.Geometry
 {
@@ -54,5 +55,8 @@ namespace Pmad.Geometry
         static TVector UnitY { get; }
 
         abstract static TVector Create (TPrimitive x, TPrimitive y);
+
+        //[MethodImpl(MethodImplOptions.AggressiveInlining)]
+        abstract static TVector Create(double x, double y);// => TVector.Create(TPrimitive.CreateTruncating(x), TPrimitive.CreateTruncating(y));
     }
 }

@@ -20,7 +20,11 @@ namespace Pmad.Geometry
 
         public static Vector2IS MinValue => new (int.MinValue);
 
+        [MethodImpl(MethodImplOptions.AggressiveInlining)]
         public static Vector2IS Create(int x, int y) => new (x, y);
+
+        [MethodImpl(MethodImplOptions.AggressiveInlining)]
+        public static Vector2IS Create(double x, double y) => new ((int)x, (int)y);
 
         [MethodImpl(MethodImplOptions.AggressiveInlining)]
         public Vector2IS(int x, int y)
@@ -283,7 +287,11 @@ namespace Pmad.Geometry
 
         public static Vector2FS MinValue => new (float.MinValue);
 
+        [MethodImpl(MethodImplOptions.AggressiveInlining)]
         public static Vector2FS Create(float x, float y) => new (x, y);
+
+        [MethodImpl(MethodImplOptions.AggressiveInlining)]
+        public static Vector2FS Create(double x, double y) => new ((float)x, (float)y);
 
         [MethodImpl(MethodImplOptions.AggressiveInlining)]
         public Vector2FS(float x, float y)
@@ -553,7 +561,11 @@ namespace Pmad.Geometry
 
         public static Vector2LS MinValue => new (long.MinValue);
 
+        [MethodImpl(MethodImplOptions.AggressiveInlining)]
         public static Vector2LS Create(long x, long y) => new (x, y);
+
+        [MethodImpl(MethodImplOptions.AggressiveInlining)]
+        public static Vector2LS Create(double x, double y) => new ((long)x, (long)y);
 
         [MethodImpl(MethodImplOptions.AggressiveInlining)]
         public Vector2LS(long x, long y)
@@ -823,7 +835,9 @@ namespace Pmad.Geometry
 
         public static Vector2DS MinValue => new (double.MinValue);
 
+        [MethodImpl(MethodImplOptions.AggressiveInlining)]
         public static Vector2DS Create(double x, double y) => new (x, y);
+
 
         [MethodImpl(MethodImplOptions.AggressiveInlining)]
         public Vector2DS(double x, double y)

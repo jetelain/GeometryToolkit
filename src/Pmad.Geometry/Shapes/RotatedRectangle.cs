@@ -57,125 +57,17 @@ namespace Pmad.Geometry.Shapes
 
         public Polygon<TPrimitive, TVector> ToPolygon() => polygon.Value;
 
-        public static RotatedRectangle<TPrimitive, TVector> GetSmallestContaining_Virtual(ReadOnlyArray<TVector> points)
-        {
-            return GetSmallestContaining_Virtual(ShapeSettings<TPrimitive, TVector>.Default, points.AsSpan());
-        }
-
-        public static RotatedRectangle<TPrimitive, TVector> GetSmallestContaining_Virtual(ShapeSettings<TPrimitive, TVector> settings, ReadOnlyArray<TVector> points)
-        {
-            return GetSmallestContaining_Virtual(settings, points.AsSpan());
-        }
-
-        private static RotatedRectangle<TPrimitive, TVector> GetSmallestContaining_Virtual(ShapeSettings<TPrimitive, TVector> settings, ReadOnlySpan<TVector> points)
-        {
-            TVector resultSize = default;
-            TVector resultCenter = default;
-            double resultAngle = 0;
-            double resultArea = double.MaxValue;
-
-            var a = points[points.Length - 1];
-
-            for (var i = 0; i < points.Length; i++)
-            {
-                var b = points[i];
-
-                var theta = a.Substract(b).Atan2D();
-
-                var rotate = Matrix2x2<TPrimitive, TVector>.CreateRotation(-theta);
-
-                var max = rotate.Transform(points[0].Substract(a));
-                var min = max;
-                for (var j = 1; j < points.Length; j++)
-                {
-                    var r = rotate.Transform(points[j].Substract(a));
-                    max = r.Max(max);
-                    min = r.Min(min);
-                }
-                var size = max.Substract(min);
-                var area = size.AreaD();
-                if (area < resultArea)
-                {
-                    resultArea = area;
-                    resultSize = size;
-                    resultAngle = theta;
-
-                    var reverseRotate = Matrix2x2<TPrimitive, TVector>.CreateRotation(theta);
-                    var resultP3 = reverseRotate.Transform(max);
-                    var resultP1 = reverseRotate.Transform(min);
-                    resultCenter = resultP3.Add(resultP1).Divide(2).Add(a);
-                }
-                a = b;
-            }
-
-            return new(settings, resultCenter, resultSize, resultAngle);
-        }
-
         public static RotatedRectangle<TPrimitive, TVector> GetSmallestContaining(ReadOnlyArray<TVector> points)
         {
-            return GetSmallestContaining_Dispatch(ShapeSettings<TPrimitive, TVector>.Default, points.AsSpan());
+            return GetSmallestContaining(ShapeSettings<TPrimitive, TVector>.Default, points.AsSpan());
         }
 
         public static RotatedRectangle<TPrimitive, TVector> GetSmallestContaining(ShapeSettings<TPrimitive, TVector> settings, ReadOnlyArray<TVector> points)
         {
-            return GetSmallestContaining_Dispatch(settings, points.AsSpan());
+            return GetSmallestContaining(settings, points.AsSpan());
         }
 
-        private static RotatedRectangle<TPrimitive,TVector> GetSmallestContaining_Dispatch(ShapeSettings<TPrimitive,TVector> settings, ReadOnlySpan<TVector> points)
-        {
-            TVector resultSize = default;
-            TVector resultCenter = default;
-            double resultAngle = 0;
-            double resultArea = double.MaxValue;
-
-            var a = points[points.Length - 1];
-
-            for (var i = 0; i < points.Length; i++)
-            {
-                var b = points[i];
-
-                var theta = Vectors.Substract(a, b).Atan2D();
-
-                var rotate = Matrix2x2<TPrimitive, TVector>.CreateRotation(-theta);
-
-                var max = rotate.Transform(Vectors.Substract(points[0], a));
-                var min = max;
-                for (var j = 1; j < points.Length; j++)
-                {
-                    var r = rotate.Transform(Vectors.Substract(points[j], a));
-                    max = Vectors.Max(r,max);
-                    min = Vectors.Min(r,min);
-                }
-                var size = Vectors.Substract(max, min);
-                var area = size.AreaD();
-                if (area < resultArea)
-                {
-                    resultArea = area;
-                    resultSize = size;
-                    resultAngle = theta;
-
-                    var reverseRotate = Matrix2x2<TPrimitive, TVector>.CreateRotation(theta);
-                    var resultP3 = reverseRotate.Transform(max);
-                    var resultP1 = reverseRotate.Transform(min);
-                    resultCenter = Vectors.Add(Vectors.Divide(Vectors.Add(resultP3, resultP1), 2), a);
-                }
-                a = b;
-            }
-
-            return new(settings, resultCenter, resultSize, resultAngle);
-        }
-
-        public static RotatedRectangle<TPrimitive, TVector> GetSmallestContaining_StaticOperators(ReadOnlyArray<TVector> points)
-        {
-            return GetSmallestContaining_StaticOperators(ShapeSettings<TPrimitive, TVector>.Default, points.AsSpan());
-        }
-
-        public static RotatedRectangle<TPrimitive, TVector> GetSmallestContaining_StaticOperators(ShapeSettings<TPrimitive, TVector> settings, ReadOnlyArray<TVector> points)
-        {
-            return GetSmallestContaining_StaticOperators(settings, points.AsSpan());
-        }
-
-        public static RotatedRectangle<TPrimitive, TVector> GetSmallestContaining_StaticOperators(ShapeSettings<TPrimitive, TVector> settings, ReadOnlySpan<TVector> points)
+        public static RotatedRectangle<TPrimitive, TVector> GetSmallestContaining(ShapeSettings<TPrimitive, TVector> settings, ReadOnlySpan<TVector> points)
         {
             TVector resultSize = default;
             TVector resultCenter = default;
@@ -275,7 +167,7 @@ namespace Pmad.Geometry.Shapes
                 TVector intersection;
                 if (Vectors.HasSegmentIntersection(start, end, segment.First, segment.Second, out intersection))
                 {
-                    var intersectionFromStart = start.Substract(intersection).LengthD();
+                    var intersectionFromStart = (start - intersection).LengthD();
                     if (intersectionFromStart != 0 && (result == null || intersectionFromStart < resultFromStart))
                     {
                         result = intersection;
@@ -294,10 +186,10 @@ namespace Pmad.Geometry.Shapes
 
             public InnerCandidate(TVector a, TVector b, TVector c)
             {
-                ab = b.Substract(a);
-                var ac = c.Substract(a);
-                size = Vectors.Create<TPrimitive, TVector>(ab.Length(), ac.Length());
-                center = a.Add(ab.Add(ac).Divide(2));
+                ab = b-a;
+                var ac = c-a;
+                size = TVector.Create(ab.Length(), ac.Length());
+                center = a + ( ( ab + ac ) / 2);
                 Area = size.AreaD();
             }
 
@@ -333,9 +225,9 @@ namespace Pmad.Geometry.Shapes
 
         private static InnerCandidate? Consider(List<(TVector First, TVector Second)> outerSegments, TVector p1, TVector p2, out TVector? xp1, out TVector? xp2)
         {
-            var delta = p2.Substract(p1).Normalize().Rotate90().Multiply(1000);
-            var x1 = ClosestSegmentIntersection(outerSegments, p1, p1.Add(delta));
-            var x2 = ClosestSegmentIntersection(outerSegments, p2, p2.Add(delta));
+            var delta = TVector.Normalize(p2 - p1).Rotate90() * 1000;
+            var x1 = ClosestSegmentIntersection(outerSegments, p1, p1 + delta);
+            var x2 = ClosestSegmentIntersection(outerSegments, p2, p2 + delta);
             xp1 = x1.Point;
             xp2 = x2.Point;
             if (x1.Point != null && x2.Point != null)

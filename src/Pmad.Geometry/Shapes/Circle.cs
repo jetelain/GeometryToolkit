@@ -28,7 +28,7 @@ namespace Pmad.Geometry.Shapes
             Center = center;
             Radius = radius;
             Settings = settings;
-            var radiusVector = Vectors.Create<TPrimitive, TVector>(radius, radius);
+            var radiusVector = TVector.Create(radius, radius);
             Bounds = new (center - radiusVector, center + radiusVector);
         }
 
@@ -46,20 +46,10 @@ namespace Pmad.Geometry.Shapes
 
         public static Circle<TPrimitive, TVector> FromTwoPoints(ShapeSettings<TPrimitive, TVector> settings, TVector a, TVector b)
         {
-            return new (settings, Vectors.Divide(Vectors.Add(b, a), 2), Vectors.Substract(b, a).LengthD() / 2);
-        }
-
-        public static Circle<TPrimitive, TVector> FromTwoPoints_StaticOperators(ShapeSettings<TPrimitive, TVector> settings, TVector a, TVector b)
-        {
             return new(settings, (b + a) / 2, (b - a).LengthD() / 2);
         }
 
         public static Circle<TPrimitive, TVector> FromThreePoints(ShapeSettings<TPrimitive, TVector> settings, TVector a, TVector b, TVector c)
-        {
-            return AlgorithmsDispatcher.GetCircleFromThreePoints(settings, a, b, c);
-        }
-
-        public static Circle<TPrimitive, TVector> FromThreePoints_StaticOperators(ShapeSettings<TPrimitive, TVector> settings, TVector a, TVector b, TVector c)
         {
             var o = (TVector.Min(TVector.Min(a, b), c) + TVector.Max(TVector.Max(a, b), c)) / 2;
             var da = a - o;

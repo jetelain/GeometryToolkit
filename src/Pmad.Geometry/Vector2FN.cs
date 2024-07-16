@@ -21,7 +21,11 @@ namespace Pmad.Geometry
 
         private Vector2 vector;
 
+        [MethodImpl(MethodImplOptions.AggressiveInlining)]
         public static Vector2FN Create(float x, float y) => new(x, y);
+
+        [MethodImpl(MethodImplOptions.AggressiveInlining)]
+        public static Vector2FN Create(double x, double y) => new((float)x, (float)y);
 
         [MethodImpl(MethodImplOptions.AggressiveInlining)]
         public Vector2FN(Vector2 vector)
