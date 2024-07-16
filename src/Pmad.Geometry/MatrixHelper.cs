@@ -4,6 +4,7 @@
     {
         public static (double Sin, double Cos) SinCos(double radians)
         {
+            radians = Math.IEEERemainder(radians, Math.PI * 2.0);
             if (radians > -1.7453294E-05 && radians < 1.7453294E-05)
             {
                 return (0,1);
@@ -25,6 +26,7 @@
 
         public static (float Sin, float Cos) SinCos(float radians)
         {
+            radians = MathF.IEEERemainder(radians, (float)Math.PI * 2f);
             if (radians > -1.7453294E-05f && radians < 1.7453294E-05f)
             {
                 return (0, 1);

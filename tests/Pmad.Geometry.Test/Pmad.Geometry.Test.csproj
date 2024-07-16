@@ -15,6 +15,11 @@
 	    <DesignTime>True</DesignTime>
 	    <AutoGen>True</AutoGen>
 	  </Compile>
+	  <Compile Update="Shapes\PathSegment.cs">
+	    <DependentUpon>PathSegment.tt</DependentUpon>
+	    <DesignTime>True</DesignTime>
+	    <AutoGen>True</AutoGen>
+	  </Compile>
 	  <Compile Update="Shapes\Polygon.cs">
 	    <DependentUpon>Polygon.tt</DependentUpon>
 	    <DesignTime>True</DesignTime>
@@ -55,6 +60,10 @@
   <ItemGroup>
     <None Update="Matrixes.tt">
       <LastGenOutput>Matrixes.cs</LastGenOutput>
+      <Generator>TextTemplatingFileGenerator</Generator>
+    </None>
+    <None Update="Shapes\PathSegment.tt">
+      <LastGenOutput>PathSegment.cs</LastGenOutput>
       <Generator>TextTemplatingFileGenerator</Generator>
     </None>
     <None Update="Shapes\Polygon.tt">
