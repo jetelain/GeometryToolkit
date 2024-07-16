@@ -1,13 +1,14 @@
-﻿using System.Numerics;
+﻿using System.Drawing;
+using System.Numerics;
 using Pmad.Geometry.Collections;
 
 namespace Pmad.Geometry.Shapes
 {
-    public sealed class RotatedRectangle<TPrimitive, TVector> : IWithBounds<TVector>
+    public sealed class RotatedRectangle<TPrimitive, TVector> : IWithBounds<TVector>, IShape<TPrimitive, TVector>
         where TPrimitive : unmanaged, IFloatingPointIeee754<TPrimitive>
         where TVector : struct, IVector2<TPrimitive, TVector>, IVectorFP<TPrimitive, TVector>
     {
-        private Lazy<VectorEnvelope<TVector>> bounds;
+        private Lazy<Polygon<TPrimitive,TVector>> polygon;
 
         public ShapeSettings<TPrimitive, TVector> Settings { get; }
 
@@ -21,7 +22,7 @@ namespace Pmad.Geometry.Shapes
 
         public double Degrees => Radians * 180 / Math.PI;
 
-        public VectorEnvelope<TVector> Bounds => bounds.Value;
+        public VectorEnvelope<TVector> Bounds => polygon.Value.Bounds;
 
         public RotatedRectangle(TVector center, TVector size, double radians) 
             : this(ShapeSettings<TPrimitive, TVector>.Default, center, size, radians)
@@ -35,31 +36,26 @@ namespace Pmad.Geometry.Shapes
             Center = center;
             Size = size;
             Radians = radians;
-            bounds = new Lazy<VectorEnvelope<TVector>>(() => VectorEnvelope<TVector>.FromList(GetPoints()));
+            polygon = new (ToPolygonImpl);
         }
 
-        public ReadOnlyArray<TVector> GetPoints()
+        private Polygon<TPrimitive, TVector> ToPolygonImpl()
         {
-            var matrix = Matrix3x2<TPrimitive,TVector>.CreateRotation(Radians, Center);
+            var matrix = Matrix3x2<TPrimitive, TVector>.CreateRotation(Radians, Center);
             var halfSize = Size / 2;
             var p1 = Center - halfSize;
             var p3 = Center + halfSize;
-            return new ReadOnlyArray<TVector>(
-                matrix.Transform(p1),
+            var r0 = matrix.Transform(p1);
+            return new Polygon<TPrimitive, TVector>(Settings, new ReadOnlyArray<TVector>(
+                r0,
                 matrix.Transform(TVector.Create(p3.X, p1.Y)),
                 matrix.Transform(p3),
-                matrix.Transform(TVector.Create(p1.X, p3.Y))
-            );
+                matrix.Transform(TVector.Create(p1.X, p3.Y)),
+                r0
+            ));
         }
 
-        public Polygon<TPrimitive, TVector> ToPolygon()
-        {
-            var points = GetPoints();
-            var shell = new ReadOnlyArrayBuilder<TVector>(5);
-            shell.AddRange(points);
-            shell.Add(points[0]);
-            return new Polygon<TPrimitive, TVector>(Settings, shell.Build());
-        }
+        public Polygon<TPrimitive, TVector> ToPolygon() => polygon.Value;
 
         public static RotatedRectangle<TPrimitive, TVector> GetSmallestContaining_Virtual(ReadOnlyArray<TVector> points)
         {
@@ -350,5 +346,23 @@ namespace Pmad.Geometry.Shapes
             }
             return null;
         }
+
+        public bool IsInside(TVector point)
+            => polygon.Value.IsInside(point);
+
+        public bool IsInsideOrOnBoundary(TVector point)
+            => polygon.Value.IsInsideOrOnBoundary(point);
+
+        public bool Contains(TVector point)
+            => polygon.Value.Contains(point);
+
+        public double Distance(TVector point)
+            => polygon.Value.Distance(point);
+
+        public TVector NearestPointBoundary(TVector point)
+            => polygon.Value.NearestPointBoundary(point);
+
+        public (TVector Point, double Distance) NearestPointDistanceBoundary(TVector point)
+            => polygon.Value.NearestPointDistanceBoundary(point);
     }
 }

@@ -3,7 +3,7 @@ using Pmad.Geometry.Algorithms;
 
 namespace Pmad.Geometry.Shapes
 {
-    public class Circle<TPrimitive, TVector> : IWithBounds<TVector>
+    public class Circle<TPrimitive, TVector> : IWithBounds<TVector>, IShape<TPrimitive, TVector>
         where TPrimitive : unmanaged, IFloatingPointIeee754<TPrimitive>
         where TVector : struct, IVector2<TPrimitive, TVector>, IVectorFP<TPrimitive, TVector>
     {
@@ -196,6 +196,25 @@ namespace Pmad.Geometry.Shapes
                 return right;
             }
             return left;
+        }
+
+        public double Distance(TVector p)
+        {
+            return Math.Max(0, (p - Center).LengthD() - Radius);
+        }
+
+        public TVector NearestPointBoundary(TVector point)
+        {
+            var delta = (point - Center);
+            var deltaLength = delta.LengthD();
+            return Center + delta * (Radius / deltaLength);
+        }
+
+        public (TVector Point, double Distance) NearestPointDistanceBoundary(TVector point)
+        {
+            var delta = (point - Center);
+            var deltaLength = delta.LengthD();
+            return (Center + delta * (Radius / deltaLength), Math.Abs(deltaLength - Radius));
         }
     }
 }

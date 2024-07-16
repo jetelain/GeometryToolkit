@@ -53,6 +53,10 @@ namespace Pmad.Geometry
         {
             return Vector128.Dot(v1.vector, v2.vector);
         }
+        public static double DotD(Vector2D v1, Vector2D v2)
+        {
+            return Vector128.Dot(v1.vector, v2.vector);
+        }
 
         [MethodImpl(MethodImplOptions.AggressiveInlining)]
         readonly Vector2D IVectorFP<double, Vector2D>.Normalize()

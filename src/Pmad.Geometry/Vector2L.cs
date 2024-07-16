@@ -26,5 +26,10 @@ namespace Pmad.Geometry
         {
             return Vector2D.CrossProductScalar(v1.ToDouble(), v2.ToDouble());
         }
+
+        public static double DotD(Vector2L value1, Vector2L value2)
+        {
+            return Vector2D.Dot(value1.ToDouble(), value2.ToDouble());
+        }
     }
 }

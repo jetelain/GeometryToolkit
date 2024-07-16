@@ -208,5 +208,44 @@ namespace Pmad.Geometry
             }
             return result;
         }
+
+
+        [MethodImpl(MethodImplOptions.AggressiveInlining)]
+        public static (TVector Point, double Distance) NearestPointPath<TVector>(this ReadOnlyArray<TVector> list, TVector p)
+            where TVector : struct, IVector<TVector>
+        {
+            return NearestPointPath(list.AsSpan(), p);
+        }
+
+        public static (TVector Point, double Distance) NearestPointPath<TVector>(this ReadOnlySpan<TVector> list, TVector p)
+            where TVector : struct, IVector<TVector>
+        {
+            if (list.Length == 0)
+            {
+                return (TVector.Zero, double.NaN);
+            }
+            if (list.Length == 1)
+            {
+                return (list[0], (list[0] - p).LengthD());
+            }
+            var p1 = list[1];
+            var result = Vectors.NearestPointSegment(list[0], p1, p);
+            var resultDistanceSquared = (result - p).LengthSquaredD();
+            for (var i = 2; i < list.Length; i++)
+            {
+                var p2 = list[i];
+                var candidate = Vectors.NearestPointSegment(p1, p2, p);
+                var candidateDistanceSquared = (candidate - p).LengthSquaredD();
+                if (candidateDistanceSquared < resultDistanceSquared)
+                {
+                    resultDistanceSquared = candidateDistanceSquared;
+                    result = candidate;
+                }
+                p1 = p2;
+            }
+            return (result, Math.Sqrt(resultDistanceSquared));
+        }
+
+
     }
 }

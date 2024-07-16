@@ -79,6 +79,11 @@ namespace Pmad.Geometry
             return Vector2.Dot(value1.vector, value2.vector);
         }
 
+        public static double DotD(Vector2FN value1, Vector2FN value2)
+        {
+            return Vector2.Dot(value1.vector, value2.vector);
+        }
+
         public float X
         {
             [MethodImpl(MethodImplOptions.AggressiveInlining)]

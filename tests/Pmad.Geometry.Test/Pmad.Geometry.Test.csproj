@@ -15,6 +15,16 @@
 	    <DesignTime>True</DesignTime>
 	    <AutoGen>True</AutoGen>
 	  </Compile>
+	  <Compile Update="Shapes\Polygon.cs">
+	    <DependentUpon>Polygon.tt</DependentUpon>
+	    <DesignTime>True</DesignTime>
+	    <AutoGen>True</AutoGen>
+	  </Compile>
+	  <Compile Update="Shapes\Path.cs">
+	    <DependentUpon>Path.tt</DependentUpon>
+	    <DesignTime>True</DesignTime>
+	    <AutoGen>True</AutoGen>
+	  </Compile>
 	  <Compile Update="Shapes\RotatedRectangle.cs">
 	    <DesignTime>True</DesignTime>
 	    <AutoGen>True</AutoGen>
@@ -45,6 +55,14 @@
   <ItemGroup>
     <None Update="Matrixes.tt">
       <LastGenOutput>Matrixes.cs</LastGenOutput>
+      <Generator>TextTemplatingFileGenerator</Generator>
+    </None>
+    <None Update="Shapes\Polygon.tt">
+      <LastGenOutput>Polygon.cs</LastGenOutput>
+      <Generator>TextTemplatingFileGenerator</Generator>
+    </None>
+    <None Update="Shapes\Path.tt">
+      <LastGenOutput>Path.cs</LastGenOutput>
       <Generator>TextTemplatingFileGenerator</Generator>
     </None>
     <None Update="Shapes\RotatedRectangle.tt">

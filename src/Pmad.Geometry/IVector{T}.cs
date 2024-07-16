@@ -148,6 +148,8 @@ namespace Pmad.Geometry
 
         abstract static double CrossProductD(TVector left, TVector right);
 
+        abstract static double DotD(TVector left, TVector right);
+
         [MethodImpl(MethodImplOptions.AggressiveInlining)]
         virtual static float CrossProductF(TVector left, TVector right) => (float)TVector.CrossProductD(left, right);
 

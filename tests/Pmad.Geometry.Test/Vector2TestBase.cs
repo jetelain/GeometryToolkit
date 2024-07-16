@@ -272,5 +272,37 @@ namespace Pmad.Geometry.Test
             Assert.False(Vectors.HasSegmentIntersection(Vector(0, 0), Vector(10, 10), Vector(100, 0), Vector(0, 100), out _));
             Assert.False(Vectors.HasSegmentIntersection(Vector(0, 0), Vector(1, 1), Vector(500, 100), Vector(600, 0), out _));
         }
+
+
+        [Fact]
+
+        public void NearestPointSegment()
+        {
+            Assert.Equal(Vector(5, 5), Vectors.NearestPointSegment(Vector(5, 5), Vector(15, 5), Vector(0, 10)));
+            Assert.Equal(Vector(5, 5), Vectors.NearestPointSegment(Vector(5, 5), Vector(15, 5), Vector(0, 5)));
+            Assert.Equal(Vector(5, 5), Vectors.NearestPointSegment(Vector(5, 5), Vector(15, 5), Vector(0, 0)));
+
+            Assert.Equal(Vector(15, 5), Vectors.NearestPointSegment(Vector(5, 5), Vector(15, 5), Vector(20, 10)));
+            Assert.Equal(Vector(15, 5), Vectors.NearestPointSegment(Vector(5, 5), Vector(15, 5), Vector(20, 5)));
+            Assert.Equal(Vector(15, 5), Vectors.NearestPointSegment(Vector(5, 5), Vector(15, 5), Vector(20, 0)));
+
+            Assert.Equal(Vector(10, 5), Vectors.NearestPointSegment(Vector(5, 5), Vector(15, 5), Vector(10, 10)));
+            Assert.Equal(Vector(10, 5), Vectors.NearestPointSegment(Vector(5, 5), Vector(15, 5), Vector(10, 5)));
+            Assert.Equal(Vector(10, 5), Vectors.NearestPointSegment(Vector(5, 5), Vector(15, 5), Vector(10, 0)));
+
+
+            Assert.Equal(Vector(5, 5), Vectors.NearestPointSegment(Vector(5, 5), Vector(5, 15), Vector(10, 0)));
+            Assert.Equal(Vector(5, 5), Vectors.NearestPointSegment(Vector(5, 5), Vector(5, 15), Vector(5, 0)));
+            Assert.Equal(Vector(5, 5), Vectors.NearestPointSegment(Vector(5, 5), Vector(5, 15), Vector(0, 0)));
+
+            Assert.Equal(Vector(5, 15), Vectors.NearestPointSegment(Vector(5, 5), Vector(5, 15), Vector(10, 20)));
+            Assert.Equal(Vector(5, 15), Vectors.NearestPointSegment(Vector(5, 5), Vector(5, 15), Vector(5, 20)));
+            Assert.Equal(Vector(5, 15), Vectors.NearestPointSegment(Vector(5, 5), Vector(5, 15), Vector(0, 20)));
+
+            Assert.Equal(Vector(5, 10), Vectors.NearestPointSegment(Vector(5, 5), Vector(5, 15), Vector(10, 10)));
+            Assert.Equal(Vector(5, 10), Vectors.NearestPointSegment(Vector(5, 5), Vector(5, 15), Vector(5, 10)));
+            Assert.Equal(Vector(5, 10), Vectors.NearestPointSegment(Vector(5, 5), Vector(5, 15), Vector(0, 10)));
+
+        }
     }
 }

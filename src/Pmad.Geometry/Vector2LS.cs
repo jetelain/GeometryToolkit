@@ -9,5 +9,10 @@
         public readonly double LengthSquaredD() => ToDoubleS().LengthSquared();
 
         public readonly float LengthSquaredF() => ToFloatS().LengthSquared();
+
+        public static double DotD(Vector2LS value1, Vector2LS value2)
+        {
+            return Vector2DS.Dot(value1.ToDoubleS(), value2.ToDoubleS());
+        }
     }
 }

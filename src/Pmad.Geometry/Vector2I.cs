@@ -1,4 +1,5 @@
-﻿using System.Runtime.CompilerServices;
+﻿using System.Numerics;
+using System.Runtime.CompilerServices;
 using System.Runtime.Intrinsics;
 
 namespace Pmad.Geometry
@@ -19,6 +20,11 @@ namespace Pmad.Geometry
         public static double CrossProduct(Vector2I v1, Vector2I v2)
         {
             return Vector2F.CrossProduct(v1.ToFloat(), v2.ToFloat());
+        }
+
+        public static double DotD(Vector2I value1, Vector2I value2)
+        {
+            return Vector2F.Dot(value1.ToFloat(), value2.ToFloat());
         }
     }
 }

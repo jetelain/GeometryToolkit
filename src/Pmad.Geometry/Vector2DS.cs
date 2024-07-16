@@ -38,6 +38,10 @@ namespace Pmad.Geometry
         {
             return value1.X * value2.X + value1.Y * value2.Y;
         }
+        public static double DotD(Vector2DS value1, Vector2DS value2)
+        {
+            return value1.X * value2.X + value1.Y * value2.Y;
+        }
 
         [MethodImpl(MethodImplOptions.AggressiveInlining)]
         readonly Vector2DS IVectorFP<double, Vector2DS>.Normalize()

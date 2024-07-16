@@ -102,7 +102,7 @@ namespace Pmad.Geometry.Shapes
             }
             if (typeof(TPrimitive) == typeof(float))
             {
-                return new((double)(object)scaled.X, (double)(object)scaled.Y);
+                return new((float)(object)scaled.X, (float)(object)scaled.Y);
             }
             ThrowHelper.ThrowNotSupportedException();
             return default;

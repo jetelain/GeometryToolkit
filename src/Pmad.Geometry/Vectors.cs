@@ -42,5 +42,20 @@ namespace Pmad.Geometry
             intersection = ((B2 - B1) * mu1) + B1;
             return true;
         }
+
+        public static TVector NearestPointSegment<TVector>(TVector a1, TVector a2, TVector p)
+            where TVector : struct, IVector<TVector>
+        {
+            var d = a2 - a1;
+            var lengthSquared = d.LengthSquaredD();
+            if (lengthSquared == 0)
+            {
+                return a1;
+            }
+            var t = Math.Clamp(TVector.DotD(p - a1, d) / lengthSquared, 0, 1);
+            return a1 + (d * t);
+        }
+
+
     }
 }

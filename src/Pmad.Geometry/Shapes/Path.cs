@@ -9,6 +9,12 @@ namespace Pmad.Geometry.Shapes
         where TPrimitive : unmanaged, INumber<TPrimitive>
         where TVector : struct, IVector2<TPrimitive, TVector>
     {
+        public Path(params TVector[] points)
+            : this(ShapeSettings<TPrimitive, TVector>.Default, new ReadOnlyArray<TVector>(points))
+        {
+
+        }
+
         public Path(ReadOnlyArray<TVector> points)
             : this(ShapeSettings<TPrimitive,TVector>.Default, points)
         {
@@ -69,9 +75,24 @@ namespace Pmad.Geometry.Shapes
 
         public IEnumerable<Path<TPrimitive, TVector>> ClippedBy(VectorEnvelope<TVector> rect)
         {
-            var result = Clipper.RectClip(Settings.ToClipper(rect), Settings.ToClipper(Points));
+            var result = Clipper.RectClipLines(Settings.ToClipper(rect), Settings.ToClipper(Points));
 
             return result.Select(r => new Path<TPrimitive, TVector>(Settings, Settings.FromClipper(r)));
+        }
+
+        public double Distance(TVector point)
+        {
+            return Points.NearestPointPath(point).Distance;
+        }
+
+        public TVector NearestPointBoundary(TVector point)
+        {
+            return Points.NearestPointPath(point).Point;
+        }
+
+        public (TVector Point, double Distance) NearestPointDistanceBoundary(TVector point)
+        {
+            return Points.NearestPointPath(point);
         }
     }
 }

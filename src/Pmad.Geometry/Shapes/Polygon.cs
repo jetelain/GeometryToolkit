@@ -1,11 +1,12 @@
-﻿using System.Numerics;
+﻿using System.Drawing;
+using System.Numerics;
 using Clipper2Lib;
 using Pmad.Geometry.Algorithms;
 using Pmad.Geometry.Collections;
 
 namespace Pmad.Geometry.Shapes
 {
-    public sealed class Polygon<TPrimitive, TVector> : IWithBounds<TVector>
+    public sealed class Polygon<TPrimitive, TVector> : IWithBounds<TVector>, IShape<TPrimitive, TVector>
         where TPrimitive : unmanaged, INumber<TPrimitive>
         where TVector : struct, IVector2<TPrimitive, TVector>
     {
@@ -223,5 +224,41 @@ namespace Pmad.Geometry.Shapes
         }
 
         public bool Contains(TVector point) => IsInsideOrOnBoundary(point);
+
+        public double Distance(TVector point)
+        {
+            var test = TestPointInPolygon(point);
+            if (test != PointInPolygonResult.IsOutside)
+            {
+                return 0;
+            }
+            return NearestPointDistanceBoundary(point).Distance;
+        }
+
+        public (TVector Point,double Distance) NearestPointDistanceBoundary(TVector point)
+        {
+            var (result, resultDistance) = Shell.NearestPointPath(point);
+            foreach (var hole in Holes)
+            {
+                var (candidate, candidateDistance) = hole.NearestPointPath(point);
+                if (resultDistance > candidateDistance)
+                {
+                    result = candidate;
+                    resultDistance = candidateDistance;
+                }
+            }
+            return (result, resultDistance);
+        }
+
+        public double DistanceFromBoundary(TVector point)
+        {
+            return NearestPointDistanceBoundary(point).Distance;
+        }
+
+        public TVector NearestPointBoundary(TVector point)
+        {
+            return NearestPointDistanceBoundary(point).Point;
+        }
+
     }
 }
