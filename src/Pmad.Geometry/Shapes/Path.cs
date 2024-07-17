@@ -44,9 +44,9 @@ namespace Pmad.Geometry.Shapes
 
         public bool IsClosed => First.Equals(Last);
 
-        public bool IsCounterClockWise => IsClosed && Points.GetSignedAreaD() > 0;
+        public bool IsCounterClockWise => IsClosed && SignedArea<TPrimitive, TVector>.GetSignedAreaD(Points) > 0;
 
-        public bool IsClockWise => IsClosed && Points.GetSignedAreaD() < 0;
+        public bool IsClockWise => IsClosed && SignedArea<TPrimitive, TVector>.GetSignedAreaD(Points) < 0;
 
         public IEnumerable<Polygon<TPrimitive, TVector>> ToPolygon(double width, EndType endType = EndType.Butt, JoinType joinType = JoinType.Square)
         {

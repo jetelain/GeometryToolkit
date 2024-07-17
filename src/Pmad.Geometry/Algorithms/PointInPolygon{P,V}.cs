@@ -1,4 +1,10 @@
-﻿using System.Numerics;
+﻿/**********************************************************************************
+* Author    :  Angus Johnson, Julien Etelain                                      *
+* Copyright :  Angus Johnson 2010-2024, Julien Etelain 2024                       *
+* Purpose   :  PointInPolygon for each supported vector type, to avoid conversion *
+* License   :  http://www.boost.org/LICENSE_1_0.txt                               *
+***********************************************************************************/
+using System.Numerics;
 using System.Runtime.CompilerServices;
 using Clipper2Lib;
 

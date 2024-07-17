@@ -46,9 +46,9 @@ namespace Pmad.Geometry.Shapes
 
         public VectorEnvelope<TVector> Bounds { get; }
 
-        public double AreaD => Math.Abs(Shell.GetSignedAreaD()) - Holes.Sum(hole => Math.Abs(hole.GetSignedAreaD()));
+        public double AreaD => Math.Abs(SignedArea<TPrimitive,TVector>.GetSignedAreaD(Shell)) - Holes.Sum(hole => Math.Abs(SignedArea<TPrimitive, TVector>.GetSignedAreaD(hole)));
 
-        public float AreaF => Math.Abs(Shell.GetSignedAreaF()) - Holes.Sum(hole => Math.Abs(hole.GetSignedAreaF()));
+        public float AreaF => Math.Abs(SignedArea<TPrimitive,TVector>.GetSignedAreaF(Shell)) - Holes.Sum(hole => Math.Abs(SignedArea<TPrimitive, TVector>.GetSignedAreaF(hole)));
 
         private Paths64 ToClipper()
         {

@@ -55,7 +55,7 @@ namespace Pmad.Geometry.Shapes
             var da = a - o;
             var db = b - o;
             var dc = c - o;
-            var d = (da.X * (db.Y - dc.Y) + db.X * (dc.Y - da.Y) + dc.X * (da.Y - db.Y)) * TPrimitive.CreateChecked(2);
+            var d = (da.X * (db.Y - dc.Y) + db.X * (dc.Y - da.Y) + dc.X * (da.Y - db.Y)) * TPrimitive.CreateTruncating(2);
             if (d == TPrimitive.Zero)
             {
                 // XXX: Fallback to FromTwoPoints ?
@@ -67,7 +67,7 @@ namespace Pmad.Geometry.Shapes
             var y = (da.LengthSquared() * (dc.X - db.X) + db.LengthSquared() * (da.X - dc.X) + dc.LengthSquared() * (db.X - da.X)) / d;
             var p = o + TVector.Create(x, y);
             var sqR = TPrimitive.Max((p - a).LengthSquared(), TPrimitive.Max((p - b).LengthSquared(), (p - c).LengthSquared()));
-            return new(settings, p, double.CreateChecked(TPrimitive.Sqrt(sqR)));
+            return new(settings, p, double.CreateTruncating(TPrimitive.Sqrt(sqR)));
         }
 
 

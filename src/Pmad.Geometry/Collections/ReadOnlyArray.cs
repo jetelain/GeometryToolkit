@@ -72,6 +72,16 @@ namespace Pmad.Geometry.Collections
             Array.Copy(this.array, 0, array, arrayIndex, length);
         }
 
+        public ReadOnlyArray<T> ToReverse()
+        {
+            var result = new T[length];
+            for (int i = 0; i < length; i++)
+            {
+                result[i] = array[length-1-i];
+            }
+            return new (result);
+        }
+
         private class Enumerator : IEnumerator<T>
         {
             private readonly T[] array;

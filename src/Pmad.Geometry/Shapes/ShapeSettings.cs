@@ -13,12 +13,12 @@ namespace Pmad.Geometry.Shapes
         private readonly TVector scale;
 
         public ShapeSettings()
-            : this(GetDefaultScale())
+            : this(GetDefaultScale(), 4)
         {
 
         }
 
-        public ShapeSettings(int scaleForClipper) 
+        public ShapeSettings(int scaleForClipper, int negligibleClipperDistance) 
         {
             if (typeof(TPrimitive) == typeof(long) || typeof(TPrimitive) == typeof(int))
             {
@@ -29,9 +29,19 @@ namespace Pmad.Geometry.Shapes
             }
             scale = TVector.Create(TPrimitive.CreateChecked(scaleForClipper), TPrimitive.CreateChecked(scaleForClipper));
             ScaleForClipper = scaleForClipper;
+
+            NegligibleClipperArea = (long)(negligibleClipperDistance * negligibleClipperDistance);
+            NegligibleDistance = (double)negligibleClipperDistance / scaleForClipper;
+            NegligibleArea = NegligibleDistance * NegligibleDistance;
         }
 
         public int ScaleForClipper { get; }
+
+        public double NegligibleArea { get; }
+
+        public double NegligibleDistance { get; }
+
+        public long NegligibleClipperArea { get; }
 
         private static int GetDefaultScale()
         {
@@ -53,6 +63,10 @@ namespace Pmad.Geometry.Shapes
         {
             foreach (PolyPath64 node in polyTree64)
             {
+                if (Math.Abs(Clipper.Area(node.Polygon!)) < NegligibleClipperArea)
+                {
+                    continue;
+                }
                 var shell = FromClipperToRing(node.Polygon!);
                 var holes = new ReadOnlyArray<TVector>[node.Count];
                 for (int i = 0; i < node.Count; ++i)
@@ -167,6 +181,11 @@ namespace Pmad.Geometry.Shapes
                 path[i] = FromClipper(points[i]);
             }
             return new ReadOnlyArray<TVector>(path);
+        }
+
+        public bool AlmostEquals(TVector a, TVector b)
+        {
+            return (a - b).LengthSquaredD() < NegligibleArea;
         }
     }
 }

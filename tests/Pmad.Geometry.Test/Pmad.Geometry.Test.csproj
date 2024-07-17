@@ -10,6 +10,11 @@
   </PropertyGroup>
 
   <ItemGroup>
+	  <Compile Update="Algorithms\SignedArea.cs">
+	    <DesignTime>True</DesignTime>
+	    <AutoGen>True</AutoGen>
+	    <DependentUpon>SignedArea.tt</DependentUpon>
+	  </Compile>
 	  <Compile Update="Matrixes.cs">
 	    <DependentUpon>Matrixes.tt</DependentUpon>
 	    <DesignTime>True</DesignTime>
@@ -58,6 +63,10 @@
   </ItemGroup>
 
   <ItemGroup>
+    <None Update="Algorithms\SignedArea.tt">
+      <LastGenOutput>SignedArea.cs</LastGenOutput>
+      <Generator>TextTemplatingFileGenerator</Generator>
+    </None>
     <None Update="Matrixes.tt">
       <LastGenOutput>Matrixes.cs</LastGenOutput>
       <Generator>TextTemplatingFileGenerator</Generator>
