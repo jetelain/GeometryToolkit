@@ -35,12 +35,28 @@ namespace Pmad.Geometry.Shapes
             NegligibleArea = NegligibleDistance * NegligibleDistance;
         }
 
+        /// <summary>
+        /// Scale used for Clipper2 operations
+        /// </summary>
         public int ScaleForClipper { get; }
 
+        /// <summary>
+        /// Polygons with area below this value (in vector units) are considered negligible, and will be filtered out.
+        /// 
+        /// This is intend to avoid rounding error artefacs.
+        /// </summary>
         public double NegligibleArea { get; }
 
+        /// <summary>
+        /// Points that distance is below this value (in vector units) are considered the same.
+        /// </summary>
         public double NegligibleDistance { get; }
 
+        /// <summary>
+        /// Polygons with area below this value (in clipper units) are considered negligible, and will be filtered out.
+        /// 
+        /// This is intend to avoid rounding error artefacs.
+        /// </summary>
         public long NegligibleClipperArea { get; }
 
         private static int GetDefaultScale()
@@ -74,7 +90,7 @@ namespace Pmad.Geometry.Shapes
                     holes[i] = FromClipperToRing(node[i].Polygon!);
                 }
                 result.Add(new Polygon<TPrimitive, TVector>(this, shell, new (holes)));
-                foreach (var subchild in node.Cast<PolyPath64>().SelectMany(h => h.Cast<PolyPath64>()))
+                foreach (var subchild in node.Cast<PolyPath64>())
                 {
                     FromClipper(result, subchild);
                 }

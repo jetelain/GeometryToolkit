@@ -73,6 +73,164 @@ namespace Pmad.Geometry.Test.Shapes
             };
         }
 
+        [Fact]
+        public void AreaD()
+        {
+            Assert.Equal(10000, Square100x100().AreaD);
+            Assert.Equal(100, Square10x10().AreaD);
+            Assert.Equal(2500, Square50x50().AreaD);
+        }
+
+        [Fact]
+        public void AreaF()
+        {
+            Assert.Equal(10000, Square100x100().AreaF);
+            Assert.Equal(100, Square10x10().AreaF);
+            Assert.Equal(2500, Square50x50().AreaF);
+        }
+
+        [Fact]
+        public void InnerCrown_NoHole()
+        {
+            var poly = Square100x100();
+
+            var innerPoly = Assert.Single(poly.InnerCrown(10));
+            Assert.Equal(Vector(0, 0), innerPoly.Bounds.Min);
+            Assert.Equal(Vector(100, 100), innerPoly.Bounds.Max);
+            Assert.Equal(new List<TVector>() {
+                Vector(100,100),
+                Vector(0,100),
+                Vector(0,0),
+                Vector(100,0),
+                Vector(100,100)
+            }, innerPoly.Shell);
+            Assert.Equal(new List<TVector>() {
+                Vector(10,10),
+                Vector(10,90),
+                Vector(90,90),
+                Vector(90,10),
+                Vector(10,10)
+            }, Assert.Single(innerPoly.Holes));
+        }
+
+        [Fact]
+        public void InnerCrown_Hole()
+        {
+            var poly = Square100x100WithHole();
+
+            var innerPolyList = poly.InnerCrown(5).ToList();
+
+            Assert.Equal(2, innerPolyList.Count);
+
+            var innerPoly = innerPolyList[0];
+            Assert.Equal(Vector(0, 0), innerPoly.Bounds.Min);
+            Assert.Equal(Vector(100, 100), innerPoly.Bounds.Max);
+            Assert.Equal(new List<TVector>() {
+                Vector(100,100),
+                Vector(0,100),
+                Vector(0,0),
+                Vector(100,0),
+                Vector(100,100)
+            }, innerPoly.Shell);
+            Assert.Equal(new List<TVector>() {
+                Vector(5,5),
+                Vector(5,95),
+                Vector(95,95),
+                Vector(95,5),
+                Vector(5,5)
+            }, Assert.Single(innerPoly.Holes));
+
+            innerPoly = innerPolyList[1];
+            Assert.Equal(Vector(20, 20), innerPoly.Bounds.Min);
+            Assert.Equal(Vector(80, 80), innerPoly.Bounds.Max);
+            Assert.Equal(9, innerPoly.Shell.Count);
+            Assert.Equal(new List<TVector>() {
+                Vector(25,75),
+                Vector(75,75),
+                Vector(75,25),
+                Vector(25,25),
+                Vector(25,75)
+            }, Assert.Single(innerPoly.Holes));
+        }
+
+
+        [Fact]
+        public void Offset_NoHole()
+        {
+            var poly = Square100x100();
+
+            var offsetPoly = Assert.Single(poly.Offset(10));
+            Assert.Equal(Vector(-10, -10), offsetPoly.Bounds.Min);
+            Assert.Equal(Vector(110, 110), offsetPoly.Bounds.Max);
+            Assert.Equal(9, offsetPoly.Shell.Count);
+            Assert.Empty(offsetPoly.Holes);
+        }
+
+        [Fact]
+        public void Offset_Hole()
+        {
+            var poly = Square100x100WithHole();
+
+            var offsetPoly = Assert.Single(poly.Offset(10));
+            Assert.Equal(Vector(-10, -10), offsetPoly.Bounds.Min);
+            Assert.Equal(Vector(110, 110), offsetPoly.Bounds.Max);
+            Assert.Equal(9, offsetPoly.Shell.Count);
+            Assert.Equal(new List<TVector>() {
+                Vector(35,65),
+                Vector(65,65),
+                Vector(65,35),
+                Vector(35,35),
+                Vector(35,65)
+            }, Assert.Single(offsetPoly.Holes));
+
+            offsetPoly = Assert.Single(poly.Offset(-10));
+            Assert.Equal(Vector(10, 10), offsetPoly.Bounds.Min);
+            Assert.Equal(Vector(90, 90), offsetPoly.Bounds.Max);
+            Assert.Equal(new List<TVector>() {
+                Vector(90,90),
+                Vector(10,90),
+                Vector(10,10),
+                Vector(90,10),
+                Vector(90,90)
+            }, offsetPoly.Shell);
+            Assert.Equal(9, Assert.Single(offsetPoly.Holes).Count);
+        }
+
+        [Fact]
+        public void OuterCrown_NoHole()
+        {
+            var poly = Square100x100();
+
+            var outerPoly = Assert.Single(poly.OuterCrown(10));
+            Assert.Equal(Vector(-10, -10), outerPoly.Bounds.Min);
+            Assert.Equal(Vector(110, 110), outerPoly.Bounds.Max);
+            Assert.Equal(9, outerPoly.Shell.Count);
+            Assert.Equal(new List<TVector>() {
+                Vector(0,0),
+                Vector(0,100),
+                Vector(100,100),
+                Vector(100,0),
+                Vector(0,0)
+            }, Assert.Single(outerPoly.Holes));
+        }
+
+        [Fact]
+        public void Crown_NoHole()
+        {
+            var poly = Square100x100();
+
+            var crown = Assert.Single(poly.Crown(10, 10));
+            Assert.Equal(Vector(-10, -10), crown.Bounds.Min);
+            Assert.Equal(Vector(110, 110), crown.Bounds.Max);
+            Assert.Equal(9, crown.Shell.Count);
+            Assert.Equal(new List<TVector>() {
+                Vector(10,10),
+                Vector(10,90),
+                Vector(90,90),
+                Vector(90,10),
+                Vector(10,10)
+            }, Assert.Single(crown.Holes));
+        }
 
         [Fact]
         public void NearestPoint()
@@ -130,6 +288,42 @@ namespace Pmad.Geometry.Test.Shapes
             Assert.Equal(5, polygon.Distance(Vector(70, 50)));
         }
 
+        [Fact]
+        public void SubstractNoOverlap()
+        {
+            var result = Square100x100().SubstractAllNoOverlap(new[] { Square50x50() });
+            var polygon = Assert.Single(result);
+            Assert.Equal("POLYGON ((100 100, 0 100, 0 0, 100 0, 100 100), (25 75, 75 75, 75 25, 25 25, 25 75))", polygon.ToString());
+
+            result = Square50x50().SubstractAllNoOverlap(new[] { Square100x100() });
+            Assert.Empty(result);
+        }
+
+        [Fact]
+        public void SubstractAll()
+        {
+            var result = Square100x100().SubstractAll(new[] { Square50x50() });
+            var polygon = Assert.Single(result);
+            Assert.Equal(Vector(0, 0), polygon.Bounds.Min);
+            Assert.Equal(Vector(100, 100), polygon.Bounds.Max);
+            Assert.Single(polygon.Holes);
+            Assert.Equal("POLYGON ((100 100, 0 100, 0 0, 100 0, 100 100), (25 75, 75 75, 75 25, 25 25, 25 75))", polygon.ToString());
+
+            result = Square100x100().SubstractAll(SquareBands100x100WithHole());
+            polygon = Assert.Single(result);
+            Assert.Equal(Vector(25, 25), polygon.Bounds.Min);
+            Assert.Equal(Vector(75, 75), polygon.Bounds.Max);
+            Assert.Equal("POLYGON ((75 75, 25 75, 25 25, 75 25, 75 75))", polygon.ToString());
+
+            result = Square50x50().SubstractAll(new[] { Square100x100() });
+            Assert.Empty(result);
+
+            result = Square100x100().SubstractAll(new[] { Square100x100WithHole() });
+            polygon = Assert.Single(result);
+            Assert.Equal(Vector(25, 25), polygon.Bounds.Min);
+            Assert.Equal(Vector(75, 75), polygon.Bounds.Max);
+            Assert.Equal("POLYGON ((75 25, 75 75, 25 75, 25 25, 75 25))", polygon.ToString());
+        }
 
     }
 }

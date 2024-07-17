@@ -1,5 +1,5 @@
-﻿using System.Drawing;
-using System.Numerics;
+﻿using System.Numerics;
+using System.Text;
 using Clipper2Lib;
 using Pmad.Geometry.Algorithms;
 using Pmad.Geometry.Collections;
@@ -260,5 +260,18 @@ namespace Pmad.Geometry.Shapes
             return NearestPointDistanceBoundary(point).Point;
         }
 
+        public override string ToString()
+        {
+            var sb = new StringBuilder();
+            sb.Append("POLYGON (");
+            ToStringHelper<TPrimitive, TVector>.ToStringAppend(sb, Shell.AsSpan());
+            foreach (var hole in Holes)
+            {
+                sb.Append(", ");
+                ToStringHelper<TPrimitive, TVector>.ToStringAppend(sb, hole.AsSpan());
+            }
+            sb.Append(")");
+            return sb.ToString();
+        }
     }
 }

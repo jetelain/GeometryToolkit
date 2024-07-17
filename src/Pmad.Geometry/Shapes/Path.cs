@@ -1,4 +1,5 @@
 ﻿using System.Numerics;
+using System.Text;
 using Clipper2Lib;
 using Pmad.Geometry.Algorithms;
 using Pmad.Geometry.Collections;
@@ -93,6 +94,13 @@ namespace Pmad.Geometry.Shapes
         public (TVector Point, double Distance) NearestPointDistanceBoundary(TVector point)
         {
             return Points.NearestPointPath(point);
+        }
+        public override string ToString()
+        {
+            var sb = new StringBuilder();
+            sb.Append("LINESTRING ");
+            ToStringHelper<TPrimitive, TVector>.ToStringAppend(sb, Points.AsSpan());
+            return sb.ToString();
         }
     }
 }

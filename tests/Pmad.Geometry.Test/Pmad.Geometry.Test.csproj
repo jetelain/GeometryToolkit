@@ -10,6 +10,11 @@
   </PropertyGroup>
 
   <ItemGroup>
+	  <Compile Update="Algorithms\PathFollower.cs">
+	    <DesignTime>True</DesignTime>
+	    <AutoGen>True</AutoGen>
+	    <DependentUpon>PathFollower.tt</DependentUpon>
+	  </Compile>
 	  <Compile Update="Algorithms\SignedArea.cs">
 	    <DesignTime>True</DesignTime>
 	    <AutoGen>True</AutoGen>
@@ -63,6 +68,10 @@
   </ItemGroup>
 
   <ItemGroup>
+    <None Update="Algorithms\PathFollower.tt">
+      <LastGenOutput>PathFollower.cs</LastGenOutput>
+      <Generator>TextTemplatingFileGenerator</Generator>
+    </None>
     <None Update="Algorithms\SignedArea.tt">
       <LastGenOutput>SignedArea.cs</LastGenOutput>
       <Generator>TextTemplatingFileGenerator</Generator>
