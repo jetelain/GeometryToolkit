@@ -41,6 +41,8 @@ namespace Pmad.Geometry
 
         static abstract TVector Lerp(TVector left, TVector right, TPrimitive amount);
 
+        static abstract TVector Lerp(TVector left, TVector right, double amount);
+
         static abstract TVector Normalize(TVector left);
 
         static abstract TPrimitive CrossProduct(TVector pt1, TVector pt2, TVector pt3);

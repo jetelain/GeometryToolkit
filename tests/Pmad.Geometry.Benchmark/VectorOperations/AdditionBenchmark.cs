@@ -12,12 +12,6 @@ namespace Pmad.Geometry.Benchmark.VectorOperations
         }
 
         [MethodImpl(MethodImplOptions.AggressiveInlining)]
-        private TVector Dispatcher<TVector>(TVector item1, TVector item2) where TVector : struct, IVector<TVector>
-        {
-            return Vectors.Add(item1, item2);
-        }
-
-        [MethodImpl(MethodImplOptions.AggressiveInlining)]
         private Vector2D Direct(Vector2D item1, Vector2D item2)
         {
             return item1 + item2;
@@ -60,16 +54,10 @@ namespace Pmad.Geometry.Benchmark.VectorOperations
         public void AddVector2D_StaticOperator() => SampleValuesRO.RandomPairList2D.ForEach(p => _ = StaticOperator(p.Item1, p.Item2));
 
         [Benchmark]
-        public void AddVector2D_Dispatch() => SampleValuesRO.RandomPairList2D.ForEach(p => _ = Dispatcher(p.Item1, p.Item2));
-
-        [Benchmark]
         public void AddVector2L_Direct() => SampleValuesRO.RandomPairList2L.ForEach(p => _ = Direct(p.Item1, p.Item2));
 
         [Benchmark]
         public void AddVector2L_StaticOperator() => SampleValuesRO.RandomPairList2L.ForEach(p => _ = StaticOperator(p.Item1, p.Item2));
-
-        [Benchmark]
-        public void AddVector2L_Dispatch() => SampleValuesRO.RandomPairList2L.ForEach(p => _ = Dispatcher(p.Item1, p.Item2));
 
         [Benchmark]
         public void AddVector2DS_Direct() => SampleValuesRO.RandomPairList2DS.ForEach(p => _ = Direct(p.Item1, p.Item2));

@@ -27,6 +27,9 @@ namespace Pmad.Geometry
         public static Vector2IS Create(double x, double y) => new ((int)x, (int)y);
 
         [MethodImpl(MethodImplOptions.AggressiveInlining)]
+        public static Vector2IS Create(long x, long y) => new ((int)x, (int)y);
+
+        [MethodImpl(MethodImplOptions.AggressiveInlining)]
         public Vector2IS(int x, int y)
         {
             X = x;
@@ -226,6 +229,9 @@ namespace Pmad.Geometry
 
         [MethodImpl(MethodImplOptions.AggressiveInlining)]
         public static Vector2FS Create(double x, double y) => new ((float)x, (float)y);
+
+        [MethodImpl(MethodImplOptions.AggressiveInlining)]
+        public static Vector2FS Create(long x, long y) => new ((float)x, (float)y);
 
         [MethodImpl(MethodImplOptions.AggressiveInlining)]
         public Vector2FS(float x, float y)
@@ -435,6 +441,7 @@ namespace Pmad.Geometry
         [MethodImpl(MethodImplOptions.AggressiveInlining)]
         public static Vector2LS Create(double x, double y) => new ((long)x, (long)y);
 
+
         [MethodImpl(MethodImplOptions.AggressiveInlining)]
         public Vector2LS(long x, long y)
         {
@@ -640,6 +647,9 @@ namespace Pmad.Geometry
         [MethodImpl(MethodImplOptions.AggressiveInlining)]
         public static Vector2DS Create(double x, double y) => new (x, y);
 
+
+        [MethodImpl(MethodImplOptions.AggressiveInlining)]
+        public static Vector2DS Create(long x, long y) => new ((double)x, (double)y);
 
         [MethodImpl(MethodImplOptions.AggressiveInlining)]
         public Vector2DS(double x, double y)

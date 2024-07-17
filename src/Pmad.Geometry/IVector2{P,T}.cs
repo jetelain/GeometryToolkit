@@ -55,5 +55,7 @@ namespace Pmad.Geometry
         abstract static TVector Create (TPrimitive x, TPrimitive y);
 
         abstract static TVector Create(double x, double y);
+
+        abstract static TVector Create(long x, long y);
     }
 }

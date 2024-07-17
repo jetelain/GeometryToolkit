@@ -194,45 +194,45 @@ namespace Pmad.Geometry.Test
         }
 
         [Fact]
-        public void VectorsAdd()
+        public void TVectorOpAdd()
         {
-            Assert.Equal(Vector(123, 456), Vectors.Add(Vector(100, 56), Vector(23, 400)));
+            Assert.Equal(Vector(123, 456), Vector(100, 56) + Vector(23, 400));
         }
 
         [Fact]
-        public void VectorsSubstract()
+        public void TVectorOpSubstract()
         {
-            Assert.Equal(Vector(100, 56), Vectors.Substract(Vector(123, 456), Vector(23, 400)));
+            Assert.Equal(Vector(100, 56), Vector(123, 456) - Vector(23, 400));
         }
 
         [Fact]
-        public void VectorsMultiply()
+        public void TVectorOpMultiply()
         {
-            Assert.Equal(Vector(2000, 8000), Vectors.Multiply(Vector(200, 400), Vector(10, 20)));
+            Assert.Equal(Vector(2000, 8000), Vector(200, 400) * Vector(10, 20));
         }
 
         [Fact]
-        public void VectorsMultiplyScalar()
+        public void TVectorOpMultiplyScalar()
         {
-            Assert.Equal(Vector(2000, 4000), Vectors.Multiply(Vector(200, 400), Scalar(10)));
+            Assert.Equal(Vector(2000, 4000), Vector(200, 400) * Scalar(10));
         }
 
         [Fact]
-        public void VectorsMultiplyInteger()
+        public void TVectorOpMultiplyInteger()
         {
-            Assert.Equal(Vector(2000, 4000), Vectors.Multiply(Vector(200, 400), 10));
+            Assert.Equal(Vector(2000, 4000), Vector(200, 400) * 10);
         }
 
         [Fact]
-        public void VectorsDivide()
+        public void TVectorOpDivide()
         {
-            Assert.Equal(Vector(10, 40), Vectors.Divide(Vector(200, 400), Vector(20, 10)));
+            Assert.Equal(Vector(10, 40), Vector(200, 400) / Vector(20, 10));
         }
 
         [Fact]
-        public void VectorsDivideScalar()
+        public void TVectorOpDivideInteger()
         {
-            Assert.Equal(Vector(20, 40), Vectors.Divide(Vector(200, 400), 10));
+            Assert.Equal(Vector(20, 40),Vector(200, 400) / 10);
         }
 
         [Fact]

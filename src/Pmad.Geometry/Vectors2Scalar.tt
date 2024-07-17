@@ -39,6 +39,11 @@ namespace Pmad.Geometry
         public static <#=def.Struct#> Create(double x, double y) => new ((<#=def.Primitive#>)x, (<#=def.Primitive#>)y);
 <#}#>
 
+<#if (def.Primitive != "long") {#>
+        [MethodImpl(MethodImplOptions.AggressiveInlining)]
+        public static <#=def.Struct#> Create(long x, long y) => new ((<#=def.Primitive#>)x, (<#=def.Primitive#>)y);
+<#}#>
+
         [MethodImpl(MethodImplOptions.AggressiveInlining)]
         public <#=def.Struct#>(<#=def.Primitive#> x, <#=def.Primitive#> y)
         {

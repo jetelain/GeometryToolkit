@@ -62,7 +62,7 @@ namespace Pmad.Geometry.Collections
                     cells[x, y] = new List<DataNode>();
                 }
             }
-            maxCellIndex = Vectors.Create<TPrimitive, TVector>(cellCount - 1, cellCount - 1);
+            maxCellIndex = TVector.Create(TPrimitive.CreateChecked(cellCount - 1), TPrimitive.CreateChecked(cellCount - 1));
         }
 
         public IEnumerable<TItem> Values => all.Where(a => !a.isRemoved).Select(a => a.value)!;

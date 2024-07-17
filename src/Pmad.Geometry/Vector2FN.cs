@@ -28,6 +28,9 @@ namespace Pmad.Geometry
         public static Vector2FN Create(double x, double y) => new((float)x, (float)y);
 
         [MethodImpl(MethodImplOptions.AggressiveInlining)]
+        public static Vector2FN Create(long x, long y) => new((float)x, (float)y);
+
+        [MethodImpl(MethodImplOptions.AggressiveInlining)]
         public Vector2FN(Vector2 vector)
         {
             this.vector = vector;
@@ -49,6 +52,9 @@ namespace Pmad.Geometry
         {
             return new(Vector2.Lerp(value1.vector, value2.vector, amount));
         }
+
+        [MethodImpl(MethodImplOptions.AggressiveInlining)]
+        public static Vector2FN Lerp(Vector2FN value1, Vector2FN value2, double amount) => Lerp(value1, value2, (float)amount);
 
         [MethodImpl(MethodImplOptions.AggressiveInlining)]
         public readonly float Length() => vector.Length();

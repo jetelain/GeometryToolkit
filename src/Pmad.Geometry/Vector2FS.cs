@@ -18,6 +18,9 @@ namespace Pmad.Geometry
             return (value1 * (1.0f - amount)) + (value2 * amount);
         }
 
+        [MethodImpl(MethodImplOptions.AggressiveInlining)]
+        public static Vector2FS Lerp(Vector2FS value1, Vector2FS value2, double amount) => Lerp(value1, value2, (float)amount);
+
         public readonly float Length() => MathF.Sqrt(LengthSquared());
 
         [MethodImpl(MethodImplOptions.AggressiveInlining)]

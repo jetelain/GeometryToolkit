@@ -136,7 +136,7 @@ namespace Pmad.Geometry.Shapes
                     {
                         for (var i = 99; i > 0 && candidate == null; i--)
                         {
-                            var p2 = Vectors.Lerp<TPrimitive, TVector>(segment.P1, segment.P2, i / 100d);
+                            var p2 = TVector.Lerp(segment.P1, segment.P2, i / 100d);
                             candidate = Consider(outerSegments, segment.P1, p2, out _, out _);
                         }
                     }
@@ -144,7 +144,7 @@ namespace Pmad.Geometry.Shapes
                     {
                         for (var i = 1; i < 100 && candidate == null; i++)
                         {
-                            var p1 = Vectors.Lerp<TPrimitive, TVector>(segment.P1, segment.P2, i / 100d);
+                            var p1 = TVector.Lerp(segment.P1, segment.P2, i / 100d);
                             candidate = Consider(outerSegments, p1, segment.P2, out _, out _);
                         }
                     }

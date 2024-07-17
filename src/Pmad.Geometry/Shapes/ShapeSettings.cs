@@ -27,7 +27,7 @@ namespace Pmad.Geometry.Shapes
                     ThrowHelper.ThrowNotSupportedException();
                 }
             }
-            scale = Vectors.Create<TPrimitive,TVector>(scaleForClipper, scaleForClipper);
+            scale = TVector.Create(TPrimitive.CreateChecked(scaleForClipper), TPrimitive.CreateChecked(scaleForClipper));
             ScaleForClipper = scaleForClipper;
         }
 
@@ -112,13 +112,13 @@ namespace Pmad.Geometry.Shapes
         {
             if (typeof(TPrimitive) == typeof(long))
             {
-                return Vectors.Create<TPrimitive, TVector>(value.X, value.Y);
+                return TVector.Create(value.X, value.Y);
             }
             if (typeof(TPrimitive) == typeof(int))
             {
-                return Vectors.Create<TPrimitive, TVector>(value.X, value.Y);
+                return TVector.Create(value.X, value.Y);
             }
-            return Vectors.Create<TPrimitive,TVector>(value.X, value.Y) / scale;
+            return TVector.Create(value.X, value.Y) / scale;
         }
 
         public Polygon<TPrimitive, TVector> CreateRectangle(VectorEnvelope<TVector> envelope)

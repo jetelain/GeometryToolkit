@@ -35,7 +35,7 @@ namespace Pmad.Geometry
             //var cos = Math.Cos(radians);
             //var sin = Math.Sin(radians); 
             (var sin, var cos) = MatrixHelper.SinCos(radians);
-            return new Matrix2x2<TPrimitive, TVector>(Vectors.Create<TPrimitive,TVector>(cos, sin), Vectors.Create<TPrimitive, TVector>(-sin, cos));
+            return new Matrix2x2<TPrimitive, TVector>(TVector.Create(cos, sin), TVector.Create(-sin, cos));
         }
 
         [MethodImpl(MethodImplOptions.AggressiveInlining)]

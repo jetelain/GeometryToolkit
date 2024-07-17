@@ -42,10 +42,10 @@ namespace Pmad.Geometry
 
             (var sin, var cos) = MatrixHelper.SinCos(radians);
 
-            var z = new Matrix2x2<TPrimitive, TVector>(Vectors.Create<TPrimitive, TVector>(1 - cos, sin), Vectors.Create<TPrimitive, TVector>(-sin, 1 - cos))
+            var z = new Matrix2x2<TPrimitive, TVector>(TVector.Create(1 - cos, sin), TVector.Create(-sin, 1 - cos))
                 .Transform(centerPoint);
 
-            return new (new (Vectors.Create<TPrimitive, TVector>(cos, sin), Vectors.Create<TPrimitive, TVector>(-sin, cos)), z);
+            return new (new (TVector.Create(cos, sin), TVector.Create(-sin, cos)), z);
         }
 
         [MethodImpl(MethodImplOptions.AggressiveInlining)]

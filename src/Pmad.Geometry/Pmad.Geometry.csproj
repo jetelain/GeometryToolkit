@@ -31,10 +31,6 @@
     <None Update="Definitions.tt">
       <Generator></Generator>
     </None>
-    <None Update="Vectors.Dispatch.tt">
-      <LastGenOutput>Vectors.Dispatch.cs</LastGenOutput>
-      <Generator>TextTemplatingFileGenerator</Generator>
-    </None>
     <None Update="Matrixes.tt">
       <LastGenOutput>Matrixes.cs</LastGenOutput>
       <Generator>TextTemplatingFileGenerator</Generator>
@@ -78,11 +74,6 @@
       <DesignTime>True</DesignTime>
       <AutoGen>True</AutoGen>
       <DependentUpon>SignedArea.tt</DependentUpon>
-    </Compile>
-    <Compile Update="Vectors.Dispatch.cs">
-      <DependentUpon>Vectors.Dispatch.tt</DependentUpon>
-      <DesignTime>True</DesignTime>
-      <AutoGen>True</AutoGen>
     </Compile>
     <Compile Update="Matrixes.cs">
       <DependentUpon>Matrixes.tt</DependentUpon>
