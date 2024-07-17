@@ -18,7 +18,7 @@ namespace Pmad.Geometry
 
         public static VectorEnvelope<TVector> FromPoints(TVector p1, TVector p2)
         {
-            return new(p1.Min(p2), p1.Max(p2));
+            return new(TVector.Min(p1,p2), TVector.Max(p1,p2));
         }
 
         public static VectorEnvelope<TVector> FromList(ReadOnlyArray<TVector> list)
@@ -37,8 +37,8 @@ namespace Pmad.Geometry
             for (var i = 1; i < list.Length; i++)
             {
                 var current = list[i];
-                min = current.Min(min);
-                max = current.Max(max);
+                min = TVector.Min(current, min);
+                max = TVector.Max(current, max);
             }
             return new (min, max);
         }

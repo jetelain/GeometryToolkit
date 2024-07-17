@@ -40,8 +40,6 @@ namespace Pmad.Geometry
 
         double Atan2D();
 
-        TVector Multiply(TPrimitive value);
-
         double AreaD();
 
         abstract static TVector operator *(TVector left, TPrimitive right);
@@ -56,7 +54,6 @@ namespace Pmad.Geometry
 
         abstract static TVector Create (TPrimitive x, TPrimitive y);
 
-        //[MethodImpl(MethodImplOptions.AggressiveInlining)]
-        abstract static TVector Create(double x, double y);// => TVector.Create(TPrimitive.CreateTruncating(x), TPrimitive.CreateTruncating(y));
+        abstract static TVector Create(double x, double y);
     }
 }

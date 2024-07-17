@@ -64,7 +64,7 @@ namespace Pmad.Geometry.Algorithms
             }
             index++;
             point = enumerator.Current;
-            delta = point.Substract(previousPoint);
+            delta = point - previousPoint;
             length = delta.LengthD();
             positionOnSegment = default;
             return true;

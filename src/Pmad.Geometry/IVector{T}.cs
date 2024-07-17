@@ -10,55 +10,6 @@ namespace Pmad.Geometry
         where TVector : struct, IVector<TVector>
     {
         /// <summary>
-        /// Compute the addition of this and an other vector
-        /// </summary>
-        /// <param name="value"></param>
-        /// <returns>this + value</returns>
-        TVector Add(TVector value);
-
-        /// <summary>
-        /// Compute the substraction of this and an other vector
-        /// </summary>
-        /// <param name="value"></param>
-        /// <returns>this - value</returns>
-        TVector Substract(TVector value);
-
-        /// <summary>
-        /// Compute the multiplication of this and an other vector
-        /// </summary>
-        /// <param name="value"></param>
-        /// <returns>this * value</returns>
-        TVector Multiply(TVector value);
-
-        /// <summary>
-        /// Compute the multiplication of this and an other vector
-        /// </summary>
-        /// <param name="value"></param>
-        /// <returns>this * value</returns>
-        TVector Multiply(int value);
-
-        /// <summary>
-        /// Compute the multiplication of this and an other vector
-        /// </summary>
-        /// <param name="value"></param>
-        /// <returns>this * value</returns>
-        TVector Multiply(double value);
-
-        /// <summary>
-        /// Compute the division of this and an other vector
-        /// </summary>
-        /// <param name="value"></param>
-        /// <returns>this / value</returns>
-        TVector Divide(TVector value);
-
-        /// <summary>
-        /// Compute the division of this and an other vector
-        /// </summary>
-        /// <param name="value"></param>
-        /// <returns>this / value</returns>
-        TVector Divide(int value);
-
-        /// <summary>
         /// Length of vector as a <see langword="double"/>.
         /// </summary>
         /// <returns>sqrt(X^2 + Y^2)</returns>
@@ -103,14 +54,7 @@ namespace Pmad.Geometry
         /// <returns><see langword="true"/> if min.X &lt; X &lt;= max.X and  min.Y &lt; Y &lt;= max.Y ...</returns>
         bool IsInRange(TVector min, TVector max);
 
-        TVector Min(TVector other);
-
-        TVector Max(TVector other);
-
         TVector SwapXY();
-
-        TVector Negate();
-
 
         abstract static TVector Min(TVector left, TVector right);
 

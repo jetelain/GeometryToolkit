@@ -180,66 +180,6 @@ namespace Pmad.Geometry
                     (double) (pt2.Y - pt1.Y) * (pt3.X - pt2.X));
         }
 
-        [MethodImpl(MethodImplOptions.AggressiveInlining)]
-        readonly Vector2IS IVector<Vector2IS>.Add(Vector2IS value)
-        {
-            return this + value;
-        }
-
-        [MethodImpl(MethodImplOptions.AggressiveInlining)]
-        readonly Vector2IS IVector<Vector2IS>.Substract(Vector2IS value)
-        {
-            return this - value;
-        }
-        
-        [MethodImpl(MethodImplOptions.AggressiveInlining)]
-        readonly Vector2IS IVector<Vector2IS>.Multiply(Vector2IS value)
-        {
-            return this * value;
-        }
-
-        [MethodImpl(MethodImplOptions.AggressiveInlining)]
-        readonly Vector2IS IVector<Vector2IS>.Multiply(double value)
-        {
-            return new ((int)(X * value), (int)(Y * value));
-        }
-        
-        [MethodImpl(MethodImplOptions.AggressiveInlining)]
-        readonly Vector2IS IVector<Vector2IS>.Multiply(int value)
-        {
-            return this * value;
-        }
-
-        [MethodImpl(MethodImplOptions.AggressiveInlining)]
-        readonly Vector2IS IVector<Vector2IS>.Divide(Vector2IS value)
-        {
-            return this / value;
-        }
-                
-        [MethodImpl(MethodImplOptions.AggressiveInlining)]
-        readonly Vector2IS IVector<Vector2IS>.Divide(int value)
-        {
-            return this / value;
-        }
-
-        [MethodImpl(MethodImplOptions.AggressiveInlining)]
-        readonly Vector2IS IVector<Vector2IS>.Min(Vector2IS other)
-        {
-            return Min(this, other);
-        }
-
-        [MethodImpl(MethodImplOptions.AggressiveInlining)]
-        readonly Vector2IS IVector<Vector2IS>.Max(Vector2IS other)
-        {
-            return Max(this, other);
-        }
-        
-        [MethodImpl(MethodImplOptions.AggressiveInlining)]
-        readonly Vector2IS IVector<Vector2IS>.Negate()
-        {
-            return -this;
-        }
-
         public readonly Vector2FS ToFloatS() => new ((float)X, (float)Y);
 
         public readonly Vector2DS ToDoubleS() => new ((double)X, (double)Y);
@@ -264,12 +204,6 @@ namespace Pmad.Geometry
         public readonly double AreaD()
         {
             return X * Y;
-        }
-
-        [MethodImpl(MethodImplOptions.AggressiveInlining)]
-        readonly Vector2IS IVector2<int,Vector2IS>.Multiply(int value)
-        {
-            return this * value;
         }
 	}
     [DebuggerDisplay("({X};{Y})")]
@@ -454,66 +388,6 @@ namespace Pmad.Geometry
                     (float) (pt2.Y - pt1.Y) * (pt3.X - pt2.X));
         }
 
-        [MethodImpl(MethodImplOptions.AggressiveInlining)]
-        readonly Vector2FS IVector<Vector2FS>.Add(Vector2FS value)
-        {
-            return this + value;
-        }
-
-        [MethodImpl(MethodImplOptions.AggressiveInlining)]
-        readonly Vector2FS IVector<Vector2FS>.Substract(Vector2FS value)
-        {
-            return this - value;
-        }
-        
-        [MethodImpl(MethodImplOptions.AggressiveInlining)]
-        readonly Vector2FS IVector<Vector2FS>.Multiply(Vector2FS value)
-        {
-            return this * value;
-        }
-
-        [MethodImpl(MethodImplOptions.AggressiveInlining)]
-        readonly Vector2FS IVector<Vector2FS>.Multiply(double value)
-        {
-            return this * (float)value;
-        }
-        
-        [MethodImpl(MethodImplOptions.AggressiveInlining)]
-        readonly Vector2FS IVector<Vector2FS>.Multiply(int value)
-        {
-            return this * value;
-        }
-
-        [MethodImpl(MethodImplOptions.AggressiveInlining)]
-        readonly Vector2FS IVector<Vector2FS>.Divide(Vector2FS value)
-        {
-            return this / value;
-        }
-                
-        [MethodImpl(MethodImplOptions.AggressiveInlining)]
-        readonly Vector2FS IVector<Vector2FS>.Divide(int value)
-        {
-            return this / value;
-        }
-
-        [MethodImpl(MethodImplOptions.AggressiveInlining)]
-        readonly Vector2FS IVector<Vector2FS>.Min(Vector2FS other)
-        {
-            return Min(this, other);
-        }
-
-        [MethodImpl(MethodImplOptions.AggressiveInlining)]
-        readonly Vector2FS IVector<Vector2FS>.Max(Vector2FS other)
-        {
-            return Max(this, other);
-        }
-        
-        [MethodImpl(MethodImplOptions.AggressiveInlining)]
-        readonly Vector2FS IVector<Vector2FS>.Negate()
-        {
-            return -this;
-        }
-
         public readonly Vector2FS ToFloatS() => this;
 
         public readonly Vector2DS ToDoubleS() => new ((double)X, (double)Y);
@@ -538,12 +412,6 @@ namespace Pmad.Geometry
         public readonly double AreaD()
         {
             return X * Y;
-        }
-
-        [MethodImpl(MethodImplOptions.AggressiveInlining)]
-        readonly Vector2FS IVector2<float,Vector2FS>.Multiply(float value)
-        {
-            return this * value;
         }
 	}
     [DebuggerDisplay("({X};{Y})")]
@@ -728,66 +596,6 @@ namespace Pmad.Geometry
                     (double) (pt2.Y - pt1.Y) * (pt3.X - pt2.X));
         }
 
-        [MethodImpl(MethodImplOptions.AggressiveInlining)]
-        readonly Vector2LS IVector<Vector2LS>.Add(Vector2LS value)
-        {
-            return this + value;
-        }
-
-        [MethodImpl(MethodImplOptions.AggressiveInlining)]
-        readonly Vector2LS IVector<Vector2LS>.Substract(Vector2LS value)
-        {
-            return this - value;
-        }
-        
-        [MethodImpl(MethodImplOptions.AggressiveInlining)]
-        readonly Vector2LS IVector<Vector2LS>.Multiply(Vector2LS value)
-        {
-            return this * value;
-        }
-
-        [MethodImpl(MethodImplOptions.AggressiveInlining)]
-        readonly Vector2LS IVector<Vector2LS>.Multiply(double value)
-        {
-            return new ((long)(X * value), (long)(Y * value));
-        }
-        
-        [MethodImpl(MethodImplOptions.AggressiveInlining)]
-        readonly Vector2LS IVector<Vector2LS>.Multiply(int value)
-        {
-            return this * value;
-        }
-
-        [MethodImpl(MethodImplOptions.AggressiveInlining)]
-        readonly Vector2LS IVector<Vector2LS>.Divide(Vector2LS value)
-        {
-            return this / value;
-        }
-                
-        [MethodImpl(MethodImplOptions.AggressiveInlining)]
-        readonly Vector2LS IVector<Vector2LS>.Divide(int value)
-        {
-            return this / value;
-        }
-
-        [MethodImpl(MethodImplOptions.AggressiveInlining)]
-        readonly Vector2LS IVector<Vector2LS>.Min(Vector2LS other)
-        {
-            return Min(this, other);
-        }
-
-        [MethodImpl(MethodImplOptions.AggressiveInlining)]
-        readonly Vector2LS IVector<Vector2LS>.Max(Vector2LS other)
-        {
-            return Max(this, other);
-        }
-        
-        [MethodImpl(MethodImplOptions.AggressiveInlining)]
-        readonly Vector2LS IVector<Vector2LS>.Negate()
-        {
-            return -this;
-        }
-
         public readonly Vector2FS ToFloatS() => new ((float)X, (float)Y);
 
         public readonly Vector2DS ToDoubleS() => new ((double)X, (double)Y);
@@ -812,12 +620,6 @@ namespace Pmad.Geometry
         public readonly double AreaD()
         {
             return X * Y;
-        }
-
-        [MethodImpl(MethodImplOptions.AggressiveInlining)]
-        readonly Vector2LS IVector2<long,Vector2LS>.Multiply(long value)
-        {
-            return this * value;
         }
 	}
     [DebuggerDisplay("({X};{Y})")]
@@ -997,66 +799,6 @@ namespace Pmad.Geometry
                     (double) (pt2.Y - pt1.Y) * (pt3.X - pt2.X));
         }
 
-        [MethodImpl(MethodImplOptions.AggressiveInlining)]
-        readonly Vector2DS IVector<Vector2DS>.Add(Vector2DS value)
-        {
-            return this + value;
-        }
-
-        [MethodImpl(MethodImplOptions.AggressiveInlining)]
-        readonly Vector2DS IVector<Vector2DS>.Substract(Vector2DS value)
-        {
-            return this - value;
-        }
-        
-        [MethodImpl(MethodImplOptions.AggressiveInlining)]
-        readonly Vector2DS IVector<Vector2DS>.Multiply(Vector2DS value)
-        {
-            return this * value;
-        }
-
-        [MethodImpl(MethodImplOptions.AggressiveInlining)]
-        readonly Vector2DS IVector<Vector2DS>.Multiply(double value)
-        {
-            return this * (double)value;
-        }
-        
-        [MethodImpl(MethodImplOptions.AggressiveInlining)]
-        readonly Vector2DS IVector<Vector2DS>.Multiply(int value)
-        {
-            return this * value;
-        }
-
-        [MethodImpl(MethodImplOptions.AggressiveInlining)]
-        readonly Vector2DS IVector<Vector2DS>.Divide(Vector2DS value)
-        {
-            return this / value;
-        }
-                
-        [MethodImpl(MethodImplOptions.AggressiveInlining)]
-        readonly Vector2DS IVector<Vector2DS>.Divide(int value)
-        {
-            return this / value;
-        }
-
-        [MethodImpl(MethodImplOptions.AggressiveInlining)]
-        readonly Vector2DS IVector<Vector2DS>.Min(Vector2DS other)
-        {
-            return Min(this, other);
-        }
-
-        [MethodImpl(MethodImplOptions.AggressiveInlining)]
-        readonly Vector2DS IVector<Vector2DS>.Max(Vector2DS other)
-        {
-            return Max(this, other);
-        }
-        
-        [MethodImpl(MethodImplOptions.AggressiveInlining)]
-        readonly Vector2DS IVector<Vector2DS>.Negate()
-        {
-            return -this;
-        }
-
         public readonly Vector2FS ToFloatS() => new ((float)X, (float)Y);
 
         public readonly Vector2DS ToDoubleS() => this;
@@ -1081,12 +823,6 @@ namespace Pmad.Geometry
         public readonly double AreaD()
         {
             return X * Y;
-        }
-
-        [MethodImpl(MethodImplOptions.AggressiveInlining)]
-        readonly Vector2DS IVector2<double,Vector2DS>.Multiply(double value)
-        {
-            return this * value;
         }
 	}
 }

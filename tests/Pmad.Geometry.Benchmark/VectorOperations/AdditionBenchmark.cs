@@ -6,9 +6,9 @@ namespace Pmad.Geometry.Benchmark.VectorOperations
     public class AdditionBenchmark
     {
         [MethodImpl(MethodImplOptions.AggressiveInlining)]
-        private TVector Virtual<TVector>(TVector item1, TVector item2) where TVector : struct, IVector<TVector>
+        private TVector StaticOperator<TVector>(TVector item1, TVector item2) where TVector : struct, IVector<TVector>
         {
-            return item1.Add(item2);
+            return item1 + item2;
         }
 
         [MethodImpl(MethodImplOptions.AggressiveInlining)]
@@ -54,31 +54,31 @@ namespace Pmad.Geometry.Benchmark.VectorOperations
         }
 
         [Benchmark]
-        public void AddVector2D_Direct() => SampleValues.RandomPairList2D.ForEach(p => _ = Direct(p.Item1, p.Item2));
+        public void AddVector2D_Direct() => SampleValuesRO.RandomPairList2D.ForEach(p => _ = Direct(p.Item1, p.Item2));
 
         [Benchmark]
-        public void AddVector2D_Virtual() => SampleValues.RandomPairList2D.ForEach(p => _ = Virtual(p.Item1, p.Item2));
+        public void AddVector2D_StaticOperator() => SampleValuesRO.RandomPairList2D.ForEach(p => _ = StaticOperator(p.Item1, p.Item2));
 
         [Benchmark]
-        public void AddVector2D_Dispatch() => SampleValues.RandomPairList2D.ForEach(p => _ = Dispatcher(p.Item1, p.Item2));
+        public void AddVector2D_Dispatch() => SampleValuesRO.RandomPairList2D.ForEach(p => _ = Dispatcher(p.Item1, p.Item2));
 
         [Benchmark]
-        public void AddVector2L_Direct() => SampleValues.RandomPairList2L.ForEach(p => _ = Direct(p.Item1, p.Item2));
+        public void AddVector2L_Direct() => SampleValuesRO.RandomPairList2L.ForEach(p => _ = Direct(p.Item1, p.Item2));
 
         [Benchmark]
-        public void AddVector2L_Virtual() => SampleValues.RandomPairList2L.ForEach(p => _ = Virtual(p.Item1, p.Item2));
+        public void AddVector2L_StaticOperator() => SampleValuesRO.RandomPairList2L.ForEach(p => _ = StaticOperator(p.Item1, p.Item2));
 
         [Benchmark]
-        public void AddVector2L_Dispatch() => SampleValues.RandomPairList2L.ForEach(p => _ = Dispatcher(p.Item1, p.Item2));
+        public void AddVector2L_Dispatch() => SampleValuesRO.RandomPairList2L.ForEach(p => _ = Dispatcher(p.Item1, p.Item2));
 
         [Benchmark]
-        public void AddVector2DS_Direct() => SampleValues.RandomPairList2DS.ForEach(p => _ = Direct(p.Item1, p.Item2));
+        public void AddVector2DS_Direct() => SampleValuesRO.RandomPairList2DS.ForEach(p => _ = Direct(p.Item1, p.Item2));
         [Benchmark]
-        public void AddVector2LS_Direct() => SampleValues.RandomPairList2LS.ForEach(p => _ = Direct(p.Item1, p.Item2));
+        public void AddVector2LS_Direct() => SampleValuesRO.RandomPairList2LS.ForEach(p => _ = Direct(p.Item1, p.Item2));
         [Benchmark]
-        public void AddVector2FN_Direct() => SampleValues.RandomPairList2FN.ForEach(p => _ = Direct(p.Item1, p.Item2));
+        public void AddVector2FN_Direct() => SampleValuesRO.RandomPairList2FN.ForEach(p => _ = Direct(p.Item1, p.Item2));
         [Benchmark]
-        public void AddVector2F_Direct() => SampleValues.RandomPairList2F.ForEach(p => _ = Direct(p.Item1, p.Item2));
+        public void AddVector2F_Direct() => SampleValuesRO.RandomPairList2F.ForEach(p => _ = Direct(p.Item1, p.Item2));
 
     }
 }

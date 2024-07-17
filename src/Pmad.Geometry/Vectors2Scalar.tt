@@ -204,70 +204,6 @@ namespace Pmad.Geometry
                     (<#=def.ResultType#>) (pt2.Y - pt1.Y) * (pt3.X - pt2.X));
         }
 
-        [MethodImpl(MethodImplOptions.AggressiveInlining)]
-        readonly <#=def.Struct#> IVector<<#=def.Struct#>>.Add(<#=def.Struct#> value)
-        {
-            return this + value;
-        }
-
-        [MethodImpl(MethodImplOptions.AggressiveInlining)]
-        readonly <#=def.Struct#> IVector<<#=def.Struct#>>.Substract(<#=def.Struct#> value)
-        {
-            return this - value;
-        }
-        
-        [MethodImpl(MethodImplOptions.AggressiveInlining)]
-        readonly <#=def.Struct#> IVector<<#=def.Struct#>>.Multiply(<#=def.Struct#> value)
-        {
-            return this * value;
-        }
-
-        [MethodImpl(MethodImplOptions.AggressiveInlining)]
-        readonly <#=def.Struct#> IVector<<#=def.Struct#>>.Multiply(double value)
-        {
-<#      if (def.IsFP) { #>
-            return this * (<#=def.Primitive#>)value;
-<#      } else { #>
-            return new ((<#=def.Primitive#>)(X * value), (<#=def.Primitive#>)(Y * value));
-<#      } #>
-        }
-        
-        [MethodImpl(MethodImplOptions.AggressiveInlining)]
-        readonly <#=def.Struct#> IVector<<#=def.Struct#>>.Multiply(int value)
-        {
-            return this * value;
-        }
-
-        [MethodImpl(MethodImplOptions.AggressiveInlining)]
-        readonly <#=def.Struct#> IVector<<#=def.Struct#>>.Divide(<#=def.Struct#> value)
-        {
-            return this / value;
-        }
-                
-        [MethodImpl(MethodImplOptions.AggressiveInlining)]
-        readonly <#=def.Struct#> IVector<<#=def.Struct#>>.Divide(int value)
-        {
-            return this / value;
-        }
-
-        [MethodImpl(MethodImplOptions.AggressiveInlining)]
-        readonly <#=def.Struct#> IVector<<#=def.Struct#>>.Min(<#=def.Struct#> other)
-        {
-            return Min(this, other);
-        }
-
-        [MethodImpl(MethodImplOptions.AggressiveInlining)]
-        readonly <#=def.Struct#> IVector<<#=def.Struct#>>.Max(<#=def.Struct#> other)
-        {
-            return Max(this, other);
-        }
-        
-        [MethodImpl(MethodImplOptions.AggressiveInlining)]
-        readonly <#=def.Struct#> IVector<<#=def.Struct#>>.Negate()
-        {
-            return -this;
-        }
-
 <#      if (def.Struct != "Vector2FS") { #>
         public readonly Vector2FS ToFloatS() => new ((float)X, (float)Y);
 <#      } else { #>
@@ -300,12 +236,6 @@ namespace Pmad.Geometry
         public readonly double AreaD()
         {
             return X * Y;
-        }
-
-        [MethodImpl(MethodImplOptions.AggressiveInlining)]
-        readonly <#=def.Struct#> IVector2<<#=def.Primitive#>,<#=def.Struct#>>.Multiply(<#=def.Primitive#> value)
-        {
-            return this * value;
         }
 	}
 <#

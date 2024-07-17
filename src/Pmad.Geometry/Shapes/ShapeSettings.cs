@@ -95,7 +95,7 @@ namespace Pmad.Geometry.Shapes
             {
                 return new((int)(object)value.X, (int)(object)value.Y);
             }
-            var scaled = value.Multiply(scale);
+            var scaled = value * scale;
             if (typeof(TPrimitive) == typeof(double))
             {
                 return new((double)(object)scaled.X, (double)(object)scaled.Y);
@@ -118,7 +118,7 @@ namespace Pmad.Geometry.Shapes
             {
                 return Vectors.Create<TPrimitive, TVector>(value.X, value.Y);
             }
-            return Vectors.Create<TPrimitive,TVector>(value.X, value.Y).Divide(scale);
+            return Vectors.Create<TPrimitive,TVector>(value.X, value.Y) / scale;
         }
 
         public Polygon<TPrimitive, TVector> CreateRectangle(VectorEnvelope<TVector> envelope)

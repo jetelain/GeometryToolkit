@@ -193,7 +193,7 @@ namespace Pmad.Geometry.Shapes
                 Area = size.AreaD();
             }
 
-            private double Radians => ab.Negate().Atan2D();
+            private double Radians => (-ab).Atan2D();
 
             public double Area { get; }
 
@@ -212,7 +212,7 @@ namespace Pmad.Geometry.Shapes
                 TVector intersection;
                 if (Vectors.HasLineIntersection(start, end, segment.First, segment.Second, out intersection))
                 {
-                    var intersectionFromStart = start.Substract(intersection).LengthD();
+                    var intersectionFromStart = (start - intersection).LengthD();
                     if (intersectionFromStart != 0 && (result == null || intersectionFromStart < resultFromStart))
                     {
                         result = intersection;

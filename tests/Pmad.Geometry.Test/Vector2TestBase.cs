@@ -109,50 +109,50 @@ namespace Pmad.Geometry.Test
         [Fact]
         public void MultiplyByInteger()
         {
-            Assert.Equal(Vector(50, 150), Vector(5, 15).Multiply(10));
+            Assert.Equal(Vector(50, 150), Vector(5, 15) * 10);
         }
 
         [Fact]
         public void MultiplyByDouble()
         {
-            Assert.Equal(Vector(50, 150), Vector(5, 15).Multiply(10d));
-            Assert.Equal(Vector(5, 10), Vector(10, 20).Multiply(0.5));
+            Assert.Equal(Vector(50, 150), Vector(5, 15) * 10d);
+            Assert.Equal(Vector(5, 10), Vector(10, 20) * 0.5);
         }
 
         [Fact]
         public void DivideByInteger()
         {
-            Assert.Equal(Vector(10, 20), Vector(20, 40).Divide(2));
+            Assert.Equal(Vector(10, 20), Vector(20, 40) / 2);
         }
 
         [Fact]
-        public void IVectorNegate()
+        public void TVectorNegate()
         {
-            Assert.Equal(Vector(-20, -40), Vector(20, 40).Negate());
+            Assert.Equal(Vector(-20, -40), -Vector(20, 40));
         }
 
         [Fact]
-        public void IVectorMin()
+        public void TVectorMin()
         {
-            Assert.Equal(Vector(20, 20), Vector(20, 40).Min(Vector(60, 20)));
-            Assert.Equal(Vector(20, 40), Vector(20, 40).Min(Vector(60, 60)));
-            Assert.Equal(Vector(10, 40), Vector(20, 40).Min(Vector(10, 60)));
-            Assert.Equal(Vector(10, 05), Vector(20, 40).Min(Vector(10, 05)));
+            Assert.Equal(Vector(20, 20), TVector.Min(Vector(20, 40),Vector(60, 20)));
+            Assert.Equal(Vector(20, 40), TVector.Min(Vector(20, 40),Vector(60, 60)));
+            Assert.Equal(Vector(10, 40), TVector.Min(Vector(20, 40),Vector(10, 60)));
+            Assert.Equal(Vector(10, 05), TVector.Min(Vector(20, 40),Vector(10, 05)));
         }
 
         [Fact]
-        public void IVectorMax()
+        public void TVectorMax()
         {
-            Assert.Equal(Vector(60, 40), Vector(20, 40).Max(Vector(60, 20)));
-            Assert.Equal(Vector(60, 60), Vector(20, 40).Max(Vector(60, 60)));
-            Assert.Equal(Vector(20, 60), Vector(20, 40).Max(Vector(10, 60)));
-            Assert.Equal(Vector(20, 40), Vector(20, 40).Max(Vector(5, 10)));
+            Assert.Equal(Vector(60, 40), TVector.Max(Vector(20, 40),Vector(60, 20)));
+            Assert.Equal(Vector(60, 60), TVector.Max(Vector(20, 40),Vector(60, 60)));
+            Assert.Equal(Vector(20, 60), TVector.Max(Vector(20, 40),Vector(10, 60)));
+            Assert.Equal(Vector(20, 40), TVector.Max(Vector(20, 40),Vector(5, 10)));
         }
 
         [Fact]
         public void MultiplyByPrimitive()
         {
-            Assert.Equal(Vector(50, 150), Vector(5, 15).Multiply(Scalar(10)));
+            Assert.Equal(Vector(50, 150), Vector(5, 15) * Scalar(10));
         }
 
         [Fact]

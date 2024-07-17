@@ -224,66 +224,6 @@ namespace Pmad.Geometry
             return X <= other.X && Y <= other.Y;
         }
 
-        [MethodImpl(MethodImplOptions.AggressiveInlining)]
-        readonly Vector2FN IVector<Vector2FN>.Add(Vector2FN value)
-        {
-            return this + value;
-        }
-
-        [MethodImpl(MethodImplOptions.AggressiveInlining)]
-        readonly Vector2FN IVector<Vector2FN>.Substract(Vector2FN value)
-        {
-            return this - value;
-        }
-
-        [MethodImpl(MethodImplOptions.AggressiveInlining)]
-        readonly Vector2FN IVector<Vector2FN>.Multiply(Vector2FN value)
-        {
-            return this * value;
-        }
-
-        [MethodImpl(MethodImplOptions.AggressiveInlining)]
-        readonly Vector2FN IVector<Vector2FN>.Multiply(double value)
-        {
-            return this * (float)value;
-        }
-
-        [MethodImpl(MethodImplOptions.AggressiveInlining)]
-        readonly Vector2FN IVector<Vector2FN>.Multiply(int value)
-        {
-            return this * value;
-        }
-
-        [MethodImpl(MethodImplOptions.AggressiveInlining)]
-        readonly Vector2FN IVector<Vector2FN>.Divide(Vector2FN value)
-        {
-            return this / value;
-        }
-
-        [MethodImpl(MethodImplOptions.AggressiveInlining)]
-        readonly Vector2FN IVector<Vector2FN>.Divide(int value)
-        {
-            return this / value;
-        }
-
-        [MethodImpl(MethodImplOptions.AggressiveInlining)]
-        readonly Vector2FN IVector<Vector2FN>.Min(Vector2FN other)
-        {
-            return Min(this, other);
-        }
-
-        [MethodImpl(MethodImplOptions.AggressiveInlining)]
-        readonly Vector2FN IVector<Vector2FN>.Max(Vector2FN other)
-        {
-            return Max(this, other);
-        }
-
-        [MethodImpl(MethodImplOptions.AggressiveInlining)]
-        readonly Vector2FN IVector<Vector2FN>.Negate()
-        {
-            return -this;
-        }
-
         public readonly Vector2FN Rotate90()
         {
             return SwapXY() * new Vector2FN(-1, 1);
@@ -331,11 +271,6 @@ namespace Pmad.Geometry
         public readonly double Atan2D()
         {
             return Math.Atan2(Y, X);
-        }
-
-        Vector2FN IVector2<float, Vector2FN>.Multiply(float value)
-        {
-            return this * value;
         }
 
         [MethodImpl(MethodImplOptions.AggressiveInlining)]
