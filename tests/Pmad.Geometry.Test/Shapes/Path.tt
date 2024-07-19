@@ -5,6 +5,7 @@
 <#@ import namespace="System.Collections.Generic" #>
 <#@ include file="..\..\..\src\Pmad.Geometry\Definitions.tt" #>
 <#@ output extension=".cs" #>
+using Pmad.Geometry.Collections;
 
 namespace Pmad.Geometry.Test.Shapes
 {
@@ -17,6 +18,14 @@ namespace Pmad.Geometry.Test.Shapes
         protected override int Integer(<#=def.Primitive#> v) => (int)v;
 
         protected override <#=def.Struct#> Vector(int x, int y) => new ((<#=def.Primitive#>)x, (<#=def.Primitive#>)y);
+
+<# if ( def.IsFP) { #>
+		protected override IReadOnlyList<<#=def.Struct#>> Truncate(ReadOnlyArray<<#=def.Struct#>> array)
+        {
+            return array.Select(p => new <#=def.Struct#>((int)p.X, (int)p.Y)).ToList();
+        }
+<# } #>
+
 	}
 <#
 	}

@@ -81,6 +81,13 @@ namespace Pmad.Geometry.Shapes
             return result.Select(r => new Path<TPrimitive, TVector>(Settings, Settings.FromClipper(r)));
         }
 
+        public IEnumerable<Path<TPrimitive, TVector>> ClippedByKeepOrientation(VectorEnvelope<TVector> rect)
+        {
+            var result = PathClipperHelper.RectClipLinesKeepOrientation(Settings.ToClipper(rect), Settings.ToClipper(Points), IsClosed);
+
+            return result.Select(r => new Path<TPrimitive, TVector>(Settings, Settings.FromClipper(r)));
+        }
+
         public double Distance(TVector point)
         {
             return Points.NearestPointPath(point).Distance;
@@ -95,12 +102,18 @@ namespace Pmad.Geometry.Shapes
         {
             return Points.NearestPointPath(point);
         }
+
         public override string ToString()
         {
             var sb = new StringBuilder();
             sb.Append("LINESTRING ");
             ToStringHelper<TPrimitive, TVector>.ToStringAppend(sb, Points.AsSpan());
             return sb.ToString();
+        }
+
+        public Path<TPrimitive, TVector> ToReverse()
+        {
+            return new Path<TPrimitive, TVector>(Settings, Points.ToReverse());
         }
     }
 }
