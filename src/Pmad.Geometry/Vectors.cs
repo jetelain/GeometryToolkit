@@ -1,6 +1,4 @@
-﻿using System.Runtime.CompilerServices;
-
-namespace Pmad.Geometry
+﻿namespace Pmad.Geometry
 {
     public static partial class Vectors
     {
@@ -56,6 +54,30 @@ namespace Pmad.Geometry
             return a1 + (d * t);
         }
 
+        /// <summary>
+        /// Compute value of angle between two vectors (2D)
+        /// </summary>
+        /// <typeparam name="TVector"></typeparam>
+        /// <param name="a"></param>
+        /// <param name="b"></param>
+        /// <returns>Value between -π and π</returns>
+        public static double AngleRadians<TVector>(TVector a, TVector b)
+            where TVector : struct, IVector<TVector>
+        {
+            return Math.Atan2(TVector.CrossProductD(a, b), TVector.DotD(a, b));
+        }
 
+        /// <summary>
+        /// Compute absolute value of angle between two vectors (2D)
+        /// </summary>
+        /// <typeparam name="TVector"></typeparam>
+        /// <param name="a"></param>
+        /// <param name="b"></param>
+        /// <returns>Value between 0 and π</returns>
+        public static double AngleRadiansAbs<TVector>(TVector a, TVector b)
+            where TVector : struct, IVector<TVector>
+        {
+            return Math.Acos(TVector.DotD(a, b) / (a.LengthD() * b.LengthD()));
+        }
     }
 }

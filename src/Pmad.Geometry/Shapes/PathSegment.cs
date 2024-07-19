@@ -48,21 +48,22 @@ namespace Pmad.Geometry.Shapes
         /// <returns></returns>
         public static List<PathSegment<TPrimitive, TVector>> FromPath(ReadOnlyArray<TVector> points, double thresholdInDegrees = 45)
         {
+            var thresholdInRadians = thresholdInDegrees * Math.PI / 180;
             var segments = new List<PathSegment<TPrimitive, TVector>>();
             var currentSegment = new ReadOnlyArrayBuilder<TVector>() { points[0] };
-            var previousDeltaAngle = 0.0;
+            var previousDelta = TVector.Zero;
             var previousPoint = points[0];
             foreach (var point in points.Skip(1))
             {
-                var deltaAngle = (point - previousPoint).Atan2D() * 180 / MathF.PI;
+                var delta = (point - previousPoint);
                 if (currentSegment.Count > 1)
                 {
-                    var angle = NormalizeAngle((deltaAngle - previousDeltaAngle) % 360);
-                    if (Math.Abs(angle) > thresholdInDegrees)
+                    var angle = Vectors.AngleRadians(previousDelta, delta);
+                    if (Math.Abs(angle) > thresholdInRadians)
                     {
                         // Adding this point creates an angle > threshold
                         // Ends current segment, and starts a new one
-                        segments.Add(new PathSegment<TPrimitive, TVector>(points: currentSegment.Build(), angleWithNext: angle));
+                        segments.Add(new PathSegment<TPrimitive, TVector>(points: currentSegment.Build(), angleWithNext: angle * 180 / Math.PI));
                         currentSegment = new ReadOnlyArrayBuilder<TVector>() { previousPoint, point };
                     }
                     else
@@ -75,18 +76,18 @@ namespace Pmad.Geometry.Shapes
                     currentSegment.Add(point);
                 }
                 previousPoint = point;
-                previousDeltaAngle = deltaAngle;
+                previousDelta = delta;
             }
             if (currentSegment.Count > 1)
             {
                 if (segments.Count > 0 && points[0].Equals(points[points.Count - 1]))
                 {
                     // It's a loop, compute angle with first segment
-                    var deltaAngle = (points[1] - points[0]).Atan2D() * 180 / MathF.PI;
-                    var angle = NormalizeAngle((deltaAngle - previousDeltaAngle) % 360);
-                    if (Math.Abs(angle) > thresholdInDegrees)
+                    var delta = (points[1] - points[0]);
+                    var angle = Vectors.AngleRadians(previousDelta, delta);
+                    if (Math.Abs(angle) > thresholdInRadians)
                     {
-                        segments.Add(new PathSegment<TPrimitive, TVector>(points: currentSegment.Build(), angleWithNext: angle));
+                        segments.Add(new PathSegment<TPrimitive, TVector>(points: currentSegment.Build(), angleWithNext: angle * 180 / Math.PI));
                     }
                     else
                     {
@@ -104,20 +105,5 @@ namespace Pmad.Geometry.Shapes
             }
             return segments;
         }
-
-        private static double NormalizeAngle(double degrees)
-        {
-            if (degrees > 180)
-            {
-                return degrees - 360;
-            }
-            if (degrees <= -180)
-            {
-                return degrees + 360;
-            }
-            return degrees;
-        }
-
-
     }
 }

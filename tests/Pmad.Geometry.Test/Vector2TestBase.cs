@@ -304,5 +304,48 @@ namespace Pmad.Geometry.Test
             Assert.Equal(Vector(5, 10), Vectors.NearestPointSegment(Vector(5, 5), Vector(5, 15), Vector(0, 10)));
 
         }
+
+
+        [Fact]
+
+        public void AngleRadians()
+        {
+            Assert.Equal(0, Vectors.AngleRadians(Vector(100, 0), Vector(10, 0)));
+            Assert.Equal(0, Vectors.AngleRadians(Vector(0, 10), Vector(0, 100)));
+            Assert.Equal(0, Vectors.AngleRadians(Vector(-100, 0), Vector(-10, 0)));
+            Assert.Equal(0, Vectors.AngleRadians(Vector(0, -10), Vector(0, -100)));
+
+            Assert.Equal(Math.PI, Math.Abs(Vectors.AngleRadians(Vector(100, 0), Vector(-10, 0))));
+            Assert.Equal(Math.PI, Math.Abs(Vectors.AngleRadians(Vector(0, 10), Vector(0, -100))));
+            Assert.Equal(Math.PI, Math.Abs(Vectors.AngleRadians(Vector(-100, 0), Vector(10, 0))));
+            Assert.Equal(Math.PI, Math.Abs(Vectors.AngleRadians(Vector(0, -10), Vector(0, 100))));
+
+            Assert.Equal(Math.PI / 4, Vectors.AngleRadians(Vector(100, 0), Vector(10, 10)));
+            Assert.Equal(Math.PI / 2, Vectors.AngleRadians(Vector(100, 0), Vector(0, 10)));
+
+            Assert.Equal(-Math.PI / 4, Vectors.AngleRadians(Vector(10, 10), Vector(100, 0)));
+            Assert.Equal(-Math.PI / 2, Vectors.AngleRadians(Vector(0, 10), Vector(100, 0)));
+        }
+
+        [Fact]
+
+        public void AngleRadiansAbs()
+        {
+            Assert.Equal(0, Vectors.AngleRadiansAbs(Vector(100, 0), Vector(10, 0)));
+            Assert.Equal(0, Vectors.AngleRadiansAbs(Vector(0, 10), Vector(0, 100)));
+            Assert.Equal(0, Vectors.AngleRadiansAbs(Vector(-100, 0), Vector(-10, 0)));
+            Assert.Equal(0, Vectors.AngleRadiansAbs(Vector(0, -10), Vector(0, -100)));
+
+            Assert.Equal(Math.PI, Vectors.AngleRadiansAbs(Vector(100, 0), Vector(-10, 0)));
+            Assert.Equal(Math.PI, Vectors.AngleRadiansAbs(Vector(0, 10), Vector(0, -100)));
+            Assert.Equal(Math.PI, Vectors.AngleRadiansAbs(Vector(-100, 0), Vector(10, 0)));
+            Assert.Equal(Math.PI, Vectors.AngleRadiansAbs(Vector(0, -10), Vector(0, 100)));
+
+            Assert.Equal(Math.PI / 4, Vectors.AngleRadiansAbs(Vector(100, 0), Vector(10, 10)), 5);
+            Assert.Equal(Math.PI / 2, Vectors.AngleRadiansAbs(Vector(100, 0), Vector(0, 10)), 5);
+
+            Assert.Equal(Math.PI / 4, Vectors.AngleRadiansAbs(Vector(10, 10), Vector(100, 0)), 5);
+            Assert.Equal(Math.PI / 2, Vectors.AngleRadiansAbs(Vector(0, 10), Vector(100, 0)), 5);
+        }
     }
 }

@@ -118,7 +118,7 @@ namespace Pmad.Geometry.Algorithms
                 }
                 if (KeepRightAngles)
                 {
-                    var angle = Math.Abs(Math.Abs(Math.Acos(TVector.DotD(delta.Normalize(), previousDelta.Normalize()))) - (Math.PI / 2));
+                    var angle = Math.Abs(Vectors.AngleRadiansAbs(delta, previousDelta) - (Math.PI / 2));
                     if (angle < 0.1d && !position.Equals(previousPoint))
                     {
                         index--;
