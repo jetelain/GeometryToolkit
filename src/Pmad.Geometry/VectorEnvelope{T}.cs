@@ -1,7 +1,9 @@
-﻿using Pmad.Geometry.Collections;
+﻿using System.Diagnostics;
+using Pmad.Geometry.Collections;
 
 namespace Pmad.Geometry
 {
+    [DebuggerDisplay("{Min}->{Max}")]
     public struct VectorEnvelope<TVector> 
         where TVector : struct, IVector<TVector>
     {

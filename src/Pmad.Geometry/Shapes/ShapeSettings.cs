@@ -68,7 +68,7 @@ namespace Pmad.Geometry.Shapes
             return 1000;
         }
 
-        internal IEnumerable<Polygon<TPrimitive, TVector>> FromClipper(PolyPath64 polyTree64)
+        internal List<Polygon<TPrimitive, TVector>> FromClipper(PolyPath64 polyTree64)
         {
             var result = new List<Polygon<TPrimitive, TVector>>();
             FromClipper(result, polyTree64);

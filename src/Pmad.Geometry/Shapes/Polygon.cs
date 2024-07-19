@@ -50,7 +50,7 @@ namespace Pmad.Geometry.Shapes
 
         public float AreaF => Math.Abs(SignedArea<TPrimitive,TVector>.GetSignedAreaF(Shell)) - Holes.Sum(hole => Math.Abs(SignedArea<TPrimitive, TVector>.GetSignedAreaF(hole)));
 
-        private Paths64 ToClipper()
+        internal Paths64 ToClipper()
         {
             var paths = new Paths64(1 + Holes.Count);
             paths.Add(Settings.ToClipper(Shell));
@@ -272,6 +272,15 @@ namespace Pmad.Geometry.Shapes
             }
             sb.Append(")");
             return sb.ToString();
+        }
+
+        public bool ShellContains(Polygon<TPrimitive, TVector> other)
+        {
+            if (Bounds.Contains(other.Bounds))
+            {
+                return Shell.SequenceEqual(other.Shell) || other.Shell.All(p => Shell.TestPointInPolygon(p) != PointInPolygonResult.IsOutside );
+            }
+            return false;
         }
     }
 }
