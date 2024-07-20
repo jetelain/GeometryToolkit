@@ -25,8 +25,6 @@ namespace Pmad.Geometry
 
         TPrimitive Atan2();
 
-        TVector Normalize();
-
         TPrimitive Area();
 
         TVector Floor();
@@ -40,8 +38,6 @@ namespace Pmad.Geometry
         static abstract TPrimitive Dot(TVector left, TVector right);
 
         static abstract TVector Lerp(TVector left, TVector right, TPrimitive amount);
-
-        static abstract TVector Lerp(TVector left, TVector right, double amount);
 
         static abstract TVector Normalize(TVector left);
 

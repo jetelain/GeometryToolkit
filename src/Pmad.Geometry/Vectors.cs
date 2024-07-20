@@ -1,4 +1,7 @@
-﻿namespace Pmad.Geometry
+﻿using System.Numerics;
+using System.Runtime.CompilerServices;
+
+namespace Pmad.Geometry
 {
     public static partial class Vectors
     {
@@ -78,6 +81,13 @@
             where TVector : struct, IVector<TVector>
         {
             return Math.Acos(TVector.DotD(a, b) / (a.LengthD() * b.LengthD()));
+        }
+
+        [MethodImpl(MethodImplOptions.AggressiveInlining)]
+        public static TVector Lerp<TVector>(TVector value1, TVector value2, double amount)
+            where TVector : struct, IVector<TVector>
+        {
+            return (value1 * (1.0d - amount)) + (value2 * amount);
         }
     }
 }

@@ -3,8 +3,8 @@
 namespace Pmad.Geometry.Algorithms
 {
     public sealed class PathFollower<TPrimitive,TVector>
-        where TPrimitive : unmanaged, IFloatingPointIeee754<TPrimitive>
-        where TVector : struct, IVector2<TPrimitive, TVector>, IVectorFP<TPrimitive, TVector>
+        where TPrimitive : unmanaged, INumber<TPrimitive>
+        where TVector : struct, IVector2<TPrimitive, TVector>
     {
         private readonly IEnumerator<TVector> enumerator;
         private TVector previousPoint;
@@ -74,7 +74,7 @@ namespace Pmad.Geometry.Algorithms
 
         public TVector Previous => previousPosition;
 
-        public TVector Vector => delta.Normalize();
+        public TVector Delta => delta;
 
         public bool KeepRightAngles { get; }
 

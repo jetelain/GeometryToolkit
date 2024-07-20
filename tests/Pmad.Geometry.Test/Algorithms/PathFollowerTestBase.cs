@@ -4,8 +4,8 @@ using Pmad.Geometry.Algorithms;
 namespace Pmad.Geometry.Test.Algorithms
 {
     public abstract class PathFollowerTestBase<TPrimitive, TVector>
-        where TPrimitive : unmanaged, IFloatingPointIeee754<TPrimitive>
-        where TVector : struct, IVector2<TPrimitive, TVector>, IVectorFP<TPrimitive, TVector>
+        where TPrimitive : unmanaged, INumber<TPrimitive>
+        where TVector : struct, IVector2<TPrimitive, TVector>
     {
         protected abstract TVector Vector(int x, int y);
 

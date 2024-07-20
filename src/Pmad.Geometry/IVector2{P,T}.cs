@@ -57,5 +57,7 @@ namespace Pmad.Geometry
         abstract static TVector Create(double x, double y);
 
         abstract static TVector Create(long x, long y);
+
+        static abstract TVector Lerp(TVector left, TVector right, double amount);
     }
 }

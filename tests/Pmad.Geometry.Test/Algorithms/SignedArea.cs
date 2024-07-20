@@ -1,5 +1,5 @@
 ﻿
-namespace Pmad.Geometry.Test.Algorithms
+namespace Pmad.Geometry.Test.Algorithms.SignedAreas
 {
 	public partial class SignedArea2ITest : SignedAreaTestBase<int,Vector2I>
 	{

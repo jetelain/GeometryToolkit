@@ -26,5 +26,11 @@ namespace Pmad.Geometry
         {
             return Vector2F.Dot(value1.ToFloat(), value2.ToFloat());
         }
+
+        public static Vector2I Lerp(Vector2I value1, Vector2I value2, double amount)
+        {
+            return (value1 * (1.0d - amount)) + (value2 * amount);
+        }
+
     }
 }

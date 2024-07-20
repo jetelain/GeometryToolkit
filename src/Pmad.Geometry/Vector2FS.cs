@@ -58,12 +58,6 @@ namespace Pmad.Geometry
         }
 
         [MethodImpl(MethodImplOptions.AggressiveInlining)]
-        readonly Vector2FS IVectorFP<float, Vector2FS>.Normalize()
-        {
-            return Normalize(this);
-        }
-
-        [MethodImpl(MethodImplOptions.AggressiveInlining)]
         public readonly float Area()
         {
             return X * Y;
