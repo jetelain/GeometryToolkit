@@ -347,15 +347,13 @@ namespace Pmad.Geometry.Test.Shapes
             result = SquareBands100x100WithHole().UnionAll(null, PolygonsMergeMode.LargeConnected);
             polygon = Assert.Single(result);
             Assert.Equal("POLYGON ((100 0, 100 100, 75 100, 25 100, 0 100, 0 75, 0 0, 100 0), (25 25, 25 75, 75 75, 75 25, 25 25))", polygon.ToString());
-            // Simplified solution is also correct:
-            // POLYGON ((100 0, 100 100, 0 100, 0 0, 100 0), (25 25, 25 75, 75 75, 75 25, 25 25))
+            Assert.Equal("POLYGON ((100 0, 100 100, 0 100, 0 0, 100 0), (25 25, 25 75, 75 75, 75 25, 25 25))", polygon.Simplify().ToString());
 
             result = SquareBands100x100WithHole().Concat(new[] { Square10x10() }).ToList().UnionAll(null, PolygonsMergeMode.LargeConnected);
             Assert.Equal(2, result.Count);
             polygon = result[0];
             Assert.Equal("POLYGON ((100 100, 75 100, 25 100, 0 100, 0 75, 0 0, 100 0, 100 100), (25 75, 75 75, 75 25, 25 25, 25 75))", polygon.ToString());
-            // Simplified solution is also correct:
-            // POLYGON ((100 100, 0 100, 0 0, 100 0, 100 100), (25 25, 25 75, 75 75, 75 25, 25 25))
+            Assert.Equal("POLYGON ((100 100, 0 100, 0 0, 100 0, 100 100), (25 75, 75 75, 75 25, 25 25, 25 75))", polygon.Simplify().ToString());
 
             polygon = result[1];
             Assert.Equal("POLYGON ((55 45, 55 55, 45 55, 45 45, 55 45))", polygon.ToString());
@@ -375,15 +373,13 @@ namespace Pmad.Geometry.Test.Shapes
             result = SquareBands100x100WithHole().UnionAll(null, PolygonsMergeMode.SmallIsolated);
             polygon = Assert.Single(result);
             Assert.Equal("POLYGON ((100 0, 100 100, 75 100, 25 100, 0 100, 0 75, 0 0, 100 0), (25 25, 25 75, 75 75, 75 25, 25 25))", polygon.ToString());
-            // Simplified solution is also correct:
-            // POLYGON ((100 0, 100 100, 0 100, 0 0, 100 0), (25 25, 25 75, 75 75, 75 25, 25 25))
+            Assert.Equal("POLYGON ((100 0, 100 100, 0 100, 0 0, 100 0), (25 25, 25 75, 75 75, 75 25, 25 25))", polygon.Simplify().ToString());
 
             result = SquareBands100x100WithHole().Concat(new[] { Square10x10() }).ToList().UnionAll(null, PolygonsMergeMode.SmallIsolated);
             Assert.Equal(2, result.Count);
             polygon = result[0];
             Assert.Equal("POLYGON ((100 100, 75 100, 25 100, 0 100, 0 75, 0 0, 100 0, 100 100), (25 75, 75 75, 75 25, 25 25, 25 75))", polygon.ToString());
-            // Simplified solution is also correct:
-            // POLYGON ((100 100, 0 100, 0 0, 100 0, 100 100), (25 25, 25 75, 75 75, 75 25, 25 25))
+            Assert.Equal("POLYGON ((100 100, 0 100, 0 0, 100 0, 100 100), (25 75, 75 75, 75 25, 25 25, 25 75))", polygon.Simplify().ToString());
 
             polygon = result[1];
             Assert.Equal("POLYGON ((55 45, 55 55, 45 55, 45 45, 55 45))", polygon.ToString());

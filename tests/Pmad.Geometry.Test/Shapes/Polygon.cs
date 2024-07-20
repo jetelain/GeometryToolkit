@@ -1,5 +1,5 @@
 ﻿
-namespace Pmad.Geometry.Test.Shapes
+namespace Pmad.Geometry.Test.Shapes.Polygons
 {
 	public partial class Polygon2ITest : PolygonTestBase<int,Vector2I>
 	{

@@ -99,5 +99,7 @@ namespace Pmad.Geometry
 
         [MethodImpl(MethodImplOptions.AggressiveInlining)]
         virtual static double CrossProduct(TVector pt1, TVector pt2, TVector pt3) => TVector.CrossProductD(pt2 - pt1, pt3 - pt2);
+
+        static abstract TVector Lerp(TVector left, TVector right, double amount);
     }
 }

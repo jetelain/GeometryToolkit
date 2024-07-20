@@ -209,5 +209,31 @@ namespace Pmad.Geometry.Test.Shapes
             Assert.Equal(new [] { Vector(0, 0), Vector(50, 0), Vector(50, 50), Vector(0, 50), Vector(0, 0) }, clipPath.Points);
 
         }
+
+
+        [Fact]
+        public void Simplify()
+        {
+            Assert.Equal(new [] { Vector(0, 0), Vector(0, 10) },
+                new Path<TPrimitive, TVector>(new [] { Vector(0, 0), Vector(0, 5), Vector(0, 10) }).Simplify().Points);
+
+            Assert.Equal(new[] { Vector(0, 0), Vector(1, 5), Vector(0, 10) },
+                new Path<TPrimitive, TVector>(new[] { Vector(0, 0), Vector(1, 5), Vector(0, 10) }).Simplify(0.5).Points);
+
+            Assert.Equal(new [] { Vector(0, 0), Vector(0, 10) },
+                new Path<TPrimitive, TVector>(new [] { Vector(0, 0), Vector(1, 5), Vector(0, 10) }).Simplify(2).Points);
+
+            Assert.Equal(new [] { Vector(0, 0), Vector(0, 10) },
+                new Path<TPrimitive, TVector>(new [] { Vector(0, 0), Vector(0, 2), Vector(0, 4), Vector(0, 6), Vector(0, 8), Vector(0, 10) }).Simplify().Points);
+
+            Assert.Equal(new [] { Vector(0, 0), Vector(0, 10), Vector(10, 10) },
+                new Path<TPrimitive, TVector>(new [] { Vector(0, 0), Vector(0, 10), Vector(10, 10) }).Simplify().Points);
+
+            Assert.Equal(new [] { Vector(0, 0), Vector(0, 10) },
+                new Path<TPrimitive, TVector>(new [] { Vector(0, 0), Vector(0, 10) }).Simplify().Points);
+
+            Assert.Equal(new [] { Vector(0, 0) },
+                new Path<TPrimitive, TVector>(new [] { Vector(0, 0) }).Simplify().Points);
+        }
     }
 }

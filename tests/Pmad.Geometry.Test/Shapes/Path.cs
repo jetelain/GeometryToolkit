@@ -1,6 +1,6 @@
 ﻿using Pmad.Geometry.Collections;
 
-namespace Pmad.Geometry.Test.Shapes
+namespace Pmad.Geometry.Test.Shapes.Paths
 {
 	public partial class Path2ITest : PathTestBase<int,Vector2I>
 	{

@@ -6,7 +6,7 @@
 <#@ include file="..\..\..\src\Pmad.Geometry\Definitions.tt" #>
 <#@ output extension=".cs" #>
 
-namespace Pmad.Geometry.Test.Shapes
+namespace Pmad.Geometry.Test.Shapes.Polygons
 {
 <#
 	foreach(var def in definitions)

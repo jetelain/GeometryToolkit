@@ -282,5 +282,20 @@ namespace Pmad.Geometry.Shapes
             }
             return false;
         }
+
+        public Polygon<TPrimitive, TVector> Simplify()
+        {
+            return SimplifyImpl(Settings.NegligibleDistanceSquared);
+        }
+
+        public Polygon<TPrimitive, TVector> Simplify(double epsilon)
+        {
+            return SimplifyImpl(epsilon * epsilon);
+        }
+
+        private Polygon<TPrimitive, TVector> SimplifyImpl(double epsilonSquared)
+        {
+            return new Polygon<TPrimitive, TVector>(Settings, Shell.Simplify(epsilonSquared), Holes.Select(h => h.Simplify(epsilonSquared)).ToReadOnlyArray());
+        }
     }
 }

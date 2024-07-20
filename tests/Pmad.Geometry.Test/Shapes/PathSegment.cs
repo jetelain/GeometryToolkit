@@ -1,5 +1,5 @@
 ﻿
-namespace Pmad.Geometry.Test.Shapes
+namespace Pmad.Geometry.Test.Shapes.PathSegments
 {
 	public partial class PathSegment2ITest : PathSegmentTestBase<int,Vector2I>
 	{

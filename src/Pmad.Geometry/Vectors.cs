@@ -89,5 +89,26 @@ namespace Pmad.Geometry
         {
             return (value1 * (1.0d - amount)) + (value2 * amount);
         }
+
+        public static double PerpendicularDistanceFromLineSquared<TVector>(TVector thisPoint, TVector previousPoint, TVector nextPoint)
+            where TVector : struct, IVector<TVector>
+        {
+            var ab = thisPoint - previousPoint;
+            var cd = nextPoint - previousPoint;
+            var len = cd.LengthSquaredD();
+            if (len == 0)
+            {
+                return 0;
+            }
+            var det = TVector.CrossProductD(ab, cd);
+            return (det * det) / len;
+        }
+
+        public static double PerpendicularDistanceFromLineSquaredClassic<TVector>(TVector thisPoint, TVector previousPoint, TVector nextPoint)
+            where TVector : struct, IVector<TVector>
+        {
+            var extrapolated = TVector.Lerp(previousPoint, nextPoint, (thisPoint - previousPoint).LengthD() / (nextPoint - previousPoint).LengthD());
+            return (extrapolated - thisPoint).LengthSquaredD();
+        }
     }
 }

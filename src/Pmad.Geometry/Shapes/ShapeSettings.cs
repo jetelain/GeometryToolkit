@@ -52,6 +52,8 @@ namespace Pmad.Geometry.Shapes
         /// </summary>
         public double NegligibleDistance { get; }
 
+        public double NegligibleDistanceSquared => NegligibleArea;
+
         /// <summary>
         /// Polygons with area below this value (in clipper units) are considered negligible, and will be filtered out.
         /// 
@@ -201,7 +203,7 @@ namespace Pmad.Geometry.Shapes
 
         public bool AlmostEquals(TVector a, TVector b)
         {
-            return (a - b).LengthSquaredD() < NegligibleArea;
+            return (a - b).LengthSquaredD() < NegligibleDistanceSquared;
         }
     }
 }

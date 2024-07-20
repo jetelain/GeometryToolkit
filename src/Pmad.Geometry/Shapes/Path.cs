@@ -115,5 +115,15 @@ namespace Pmad.Geometry.Shapes
         {
             return new Path<TPrimitive, TVector>(Settings, Points.ToReverse());
         }
+
+        public Path<TPrimitive, TVector> Simplify()
+        {
+            return new Path<TPrimitive, TVector>(Settings, Points.Simplify(Settings.NegligibleDistanceSquared));
+        }
+
+        public Path<TPrimitive, TVector> Simplify(double epsilon)
+        {
+            return new Path<TPrimitive, TVector>(Settings, Points.Simplify(epsilon * epsilon));
+        }
     }
 }

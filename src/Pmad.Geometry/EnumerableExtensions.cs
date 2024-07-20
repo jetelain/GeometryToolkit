@@ -246,6 +246,71 @@ namespace Pmad.Geometry
             return (result, Math.Sqrt(resultDistanceSquared));
         }
 
+        public static ReadOnlyArray<TVector> SimplifyClassic<TVector>(this ReadOnlyArray<TVector> input, double epsilonSquared = 0.25)
+            where TVector : struct, IVector<TVector>
+        {
+            if (input.Count < 3)
+            {
+                return input;
+            }
+            return SimplifyClassic(input.AsSpan(), epsilonSquared);
+        }
 
+        public static ReadOnlyArray<TVector> SimplifyClassic<TVector>(this ReadOnlySpan<TVector> input, double epsilonSquared = 0.25)
+            where TVector : struct, IVector<TVector>
+        {
+            if (input.Length < 3)
+            {
+                return input.ToReadOnlyArray();
+            }
+            var previousPoint = input[0];
+            var result = new ReadOnlyArrayBuilder<TVector>() { previousPoint };
+            for (int i = 1; i < input.Length - 1; i++)
+            {
+                var thisPoint = input[i];
+                var nextPoint = input[i + 1];
+                if (Vectors.PerpendicularDistanceFromLineSquaredClassic(thisPoint, previousPoint, nextPoint) > epsilonSquared)
+                {
+                    result.Add(thisPoint);
+                    previousPoint = thisPoint;
+                }
+            }
+            result.Add(input[input.Length - 1]);
+            return result.Build();
+        }
+
+
+        public static ReadOnlyArray<TVector> Simplify<TVector>(this ReadOnlyArray<TVector> input, double epsilonSquared = 0.25)
+            where TVector : struct, IVector<TVector>
+        {
+            if (input.Count < 3)
+            {
+                return input;
+            }
+            return Simplify(input.AsSpan(), epsilonSquared);
+        }
+
+        public static ReadOnlyArray<TVector> Simplify<TVector>(this ReadOnlySpan<TVector> input, double epsilonSquared = 0.25)
+            where TVector : struct, IVector<TVector>
+        {
+            if (input.Length < 3)
+            {
+                return input.ToReadOnlyArray();
+            }
+            var previousPoint = input[0];
+            var result = new ReadOnlyArrayBuilder<TVector>() { previousPoint };
+            for (int i = 1; i < input.Length - 1; i++)
+            {
+                var thisPoint = input[i];
+                var nextPoint = input[i + 1];
+                if (Vectors.PerpendicularDistanceFromLineSquared(thisPoint, previousPoint, nextPoint) > epsilonSquared)
+                {
+                    result.Add(thisPoint);
+                    previousPoint = thisPoint;
+                }
+            }
+            result.Add(input[input.Length - 1]);
+            return result.Build();
+        }
     }
 }

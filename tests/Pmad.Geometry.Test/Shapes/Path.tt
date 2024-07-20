@@ -7,7 +7,7 @@
 <#@ output extension=".cs" #>
 using Pmad.Geometry.Collections;
 
-namespace Pmad.Geometry.Test.Shapes
+namespace Pmad.Geometry.Test.Shapes.Paths
 {
 <#
 	foreach(var def in definitions)

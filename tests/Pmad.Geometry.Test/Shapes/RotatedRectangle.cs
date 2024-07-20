@@ -1,5 +1,5 @@
 ﻿
-namespace Pmad.Geometry.Test.Shapes
+namespace Pmad.Geometry.Test.Shapes.RotatedRectangles
 {
 	public partial class RotatedRectangle2FTest : RotatedRectangleTestBase<float,Vector2F>
 	{
