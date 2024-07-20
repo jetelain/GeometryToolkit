@@ -10,7 +10,41 @@ namespace Pmad.Geometry.Shapes
             var clipped = Clipper.RectClipLines(clip, initialPoints);
 
             // Clipper v1 does not keep orientation of lines. Clipper2Lib seems to keep orientation, this code might be useless now.
+            return KeepOrientation(clipped, initialPoints, isClosed);
+        }
 
+        public static Paths64 DifferenceKeepOrientation( Path64 subject, Paths64 clip, bool isClosed)
+        {
+            return KeepOrientation(Difference(subject, clip), subject, isClosed);
+        }
+
+        public static Paths64 IntersectionKeepOrientation(Path64 subject, Paths64 clip, bool isClosed)
+        {
+            return KeepOrientation(Intersection(subject, clip), subject, isClosed);
+        }
+
+        public static Paths64 Difference(Path64 subject, Paths64 clip)
+        {
+            var solution = new Paths64();
+            var c = new Clipper64();
+            c.AddOpenSubject(subject);
+            c.AddClip(clip);
+            c.Execute(ClipType.Difference, FillRule.EvenOdd, new Paths64(), solution);
+            return solution;
+        }
+
+        public static Paths64 Intersection(Path64 subject, Paths64 clip)
+        {
+            var solution = new Paths64();
+            var c = new Clipper64();
+            c.AddOpenSubject(subject);
+            c.AddClip(clip);
+            c.Execute(ClipType.Intersection, FillRule.EvenOdd, new Paths64(), solution);
+            return solution;
+        }
+
+        private static Paths64 KeepOrientation(Paths64 clipped, Path64 initialPoints, bool isClosed)
+        {
             if (isClosed)
             {
                 var noMoreExists = initialPoints.Where(p => !clipped.Any(c => c.Any(np => np == p))).ToList();

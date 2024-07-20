@@ -162,9 +162,9 @@ namespace Pmad.Geometry.Shapes
         {
             return new Polygon<TPrimitive, TVector>(this, new ReadOnlyArray<TVector>(
                 p1,
-                TVector.Create(p1.X, p2.X),
+                TVector.Create(p1.X, p2.Y),
                 p2,
-                TVector.Create(p2.X, p1.X),
+                TVector.Create(p2.X, p1.Y),
                 p1
             ));
         }

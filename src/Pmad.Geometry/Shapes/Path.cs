@@ -125,5 +125,75 @@ namespace Pmad.Geometry.Shapes
         {
             return new Path<TPrimitive, TVector>(Settings, Points.Simplify(epsilon * epsilon));
         }
+
+        public IEnumerable<Path<TPrimitive, TVector>> Substract(Polygon<TPrimitive,TVector> polygon)
+        {
+            if (!Bounds.Intersects(polygon.Bounds))
+            {
+                return [this];
+            }
+            var result = PathClipperHelper.Difference(Settings.ToClipper(Points), polygon.ToClipper());
+            return result.Select(r => new Path<TPrimitive, TVector>(Settings, Settings.FromClipper(r)));
+        }
+
+        public IEnumerable<Path<TPrimitive, TVector>> SubstractKeepOrientation(Polygon<TPrimitive, TVector> polygon)
+        {
+            if (!Bounds.Intersects(polygon.Bounds))
+            {
+                return [this];
+            }
+            var result = PathClipperHelper.DifferenceKeepOrientation(Settings.ToClipper(Points), polygon.ToClipper(), IsClosed);
+            return result.Select(r => new Path<TPrimitive, TVector>(Settings, Settings.FromClipper(r)));
+        }
+
+        public IEnumerable<Path<TPrimitive, TVector>> Intersection(Polygon<TPrimitive, TVector> polygon)
+        {
+            if (!Bounds.Intersects(polygon.Bounds))
+            {
+                return Enumerable.Empty<Path<TPrimitive, TVector>>();
+            }
+            var result = PathClipperHelper.Intersection(Settings.ToClipper(Points), polygon.ToClipper());
+            return result.Select(r => new Path<TPrimitive, TVector>(Settings, Settings.FromClipper(r)));
+        }
+
+        public IEnumerable<Path<TPrimitive, TVector>> IntersectionKeepOrientation(Polygon<TPrimitive, TVector> polygon)
+        {
+            if (!Bounds.Intersects(polygon.Bounds))
+            {
+                return Enumerable.Empty<Path<TPrimitive, TVector>>();
+            }
+            var result = PathClipperHelper.IntersectionKeepOrientation(Settings.ToClipper(Points), polygon.ToClipper(), IsClosed);
+            return result.Select(r => new Path<TPrimitive, TVector>(Settings, Settings.FromClipper(r)));
+        }
+
+        public IEnumerable<Path<TPrimitive, TVector>> SubstractAll(IEnumerable<Polygon<TPrimitive, TVector>> others)
+        {
+            var result = new List<Path<TPrimitive, TVector>>() { this };
+            foreach (var other in others.Where(o => Bounds.Intersects(o.Bounds)))
+            {
+                var previousResult = result;
+                result = new List<Path<TPrimitive, TVector>>();
+                foreach (var subjet in previousResult)
+                {
+                    result.AddRange(subjet.Substract(other));
+                }
+            }
+            return result;
+        }
+
+        public IEnumerable<Path<TPrimitive, TVector>> SubstractAllKeepOrientation(IEnumerable<Polygon<TPrimitive, TVector>> others)
+        {
+            var result = new List<Path<TPrimitive, TVector>>() { this };
+            foreach (var other in others.Where(o => Bounds.Intersects(o.Bounds)))
+            {
+                var previousResult = result;
+                result = new List<Path<TPrimitive, TVector>>();
+                foreach (var subjet in previousResult)
+                {
+                    result.AddRange(subjet.SubstractKeepOrientation(other));
+                }
+            }
+            return result;
+        }
     }
 }

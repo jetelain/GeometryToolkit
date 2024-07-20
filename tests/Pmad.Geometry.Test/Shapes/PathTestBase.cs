@@ -235,5 +235,164 @@ namespace Pmad.Geometry.Test.Shapes
             Assert.Equal(new [] { Vector(0, 0) },
                 new Path<TPrimitive, TVector>(new [] { Vector(0, 0) }).Simplify().Points);
         }
+
+        [Fact]
+        public void Substract()
+        {
+            var path = new Path<TPrimitive, TVector>(Vector(50, 0), Vector(50, 50), Vector(50, 100), Vector(50, 150), Vector(50, 200));
+
+            var result = path.Substract(path.Settings.CreateRectangle(Vector(25, 25), Vector(75, 175))).OrderBy(p => p.First.Y).ToList();
+            Assert.Equal(2, result.Count);
+            Assert.Equal(new [] { Vector(50, 0), Vector(50, 25) }, result[0].Points);
+            Assert.Equal(new [] { Vector(50, 175), Vector(50, 200) }, result[1].Points);
+
+            result = path.Substract(path.Settings.CreateRectangle(Vector(100, -100), Vector(100, 300))).ToList();
+            Assert.Equal(path.Points, Assert.Single(result).Points);
+
+            Assert.Empty(path.Substract(path.Settings.CreateRectangle(Vector(25, 0), Vector(75, 200))));
+        }
+
+
+
+
+
+        [Fact]
+        public void Intersection()
+        {
+            var path = new Path<TPrimitive, TVector>(Vector(50, 00), Vector(50, 50), Vector(50, 100), Vector(50, 150), Vector(50, 200));
+            var clip = path.Intersection(path.Settings.CreateRectangle(new(Vector(25, 25), Vector(75, 175)))).ToList();
+            Assert.Equal(new[] { Vector(50, 25), Vector(50, 50), Vector(50, 100), Vector(50, 150), Vector(50, 175) }, Assert.Single(clip).Points);
+
+            clip = path.Intersection(path.Settings.CreateRectangle(new(Vector(25, 0), Vector(75, 200)))).ToList();
+            Assert.Equal(path.Points, Assert.Single(clip).Points);
+
+            clip = path.Intersection(path.Settings.CreateRectangle(new(Vector(100, -100), Vector(100, 300)))).ToList();
+            Assert.Empty(clip);
+        }
+
+        [Fact]
+        public void Intersection_Reversed()
+        {
+            var path = new Path<TPrimitive, TVector>(Vector(50, 00), Vector(50, 50), Vector(50, 100), Vector(50, 150), Vector(50, 200)).ToReverse();
+            var clip = path.Intersection(path.Settings.CreateRectangle(new(Vector(25, 25), Vector(75, 175)))).ToList();
+            Assert.Equal(new[] { Vector(50, 175), Vector(50, 150), Vector(50, 100), Vector(50, 50), Vector(50, 25) }, Assert.Single(clip).Points);
+
+            clip = path.Intersection(path.Settings.CreateRectangle(new(Vector(25, 0), Vector(75, 200)))).ToList();
+            Assert.Equal(path.Points, Assert.Single(clip).Points);
+
+            clip = path.Intersection(path.Settings.CreateRectangle(new(Vector(100, -100), Vector(100, 300)))).ToList();
+            Assert.Empty(clip);
+        }
+
+        [Fact]
+        public void Intersection_ClosedPath()
+        {
+            var path = new Path<TPrimitive, TVector>(Vector(0, 0), Vector(0, 50), Vector(50, 50), Vector(50, 0), Vector(0, 0));
+
+            var clip = path.Intersection(path.Settings.CreateRectangle(new(Vector(-10, -10), Vector(60, 25)))).ToList();
+            Assert.Equal(2, clip.Count);
+            Assert.Equal(new[] { Vector(0, 0), Vector(0, 25) }, clip[1].Points);
+            Assert.Equal(new[] { Vector(50, 25), Vector(50, 0), Vector(0, 0) }, clip[0].Points);
+            // Note: It would be also acceptable to have a single path with new [] { new(50, 25), new(50, 0), new(0, 0), new(0, 25)}
+
+            clip = path.Intersection(path.Settings.CreateRectangle(new(Vector(-10, 25), Vector(60, 60)))).ToList();
+            var clipPath = Assert.Single(clip);
+            Assert.Equal(new[] { Vector(0, 25), Vector(0, 50), Vector(50, 50), Vector(50, 25) }, clipPath.Points);
+
+            clip = path.Intersection(path.Settings.CreateRectangle(new(Vector(-10, -10), Vector(60, 60)))).ToList();
+            clipPath = Assert.Single(clip);
+            Assert.Equal(new[] { Vector(0, 0), Vector(0, 50), Vector(50, 50), Vector(50, 0), Vector(0, 0) }, clipPath.Points);
+
+            // Same reversed
+
+            path = new Path<TPrimitive, TVector>(Vector(0, 0), Vector(50, 0), Vector(50, 50), Vector(0, 50), Vector(0, 0));
+
+            clip = path.Intersection(path.Settings.CreateRectangle(new(Vector(-10, -10), Vector(60, 25)))).ToList();
+            Assert.Equal(2, clip.Count);
+            Assert.Equal(new[] { Vector(0, 0), Vector(50, 0), Vector(50, 25) }, clip[0].Points);
+            Assert.Equal(new[] { Vector(0, 25), Vector(0, 0) }, clip[1].Points);
+            // Note: It would be also acceptable to have a single path with new [] { new(0, 25), new(0, 0), new(50, 0), new(50, 25)}
+
+            clip = path.Intersection(path.Settings.CreateRectangle(new(Vector(-10, 25), Vector(60, 60)))).ToList();
+            clipPath = Assert.Single(clip);
+            Assert.Equal(new[] { Vector(50, 25), Vector(50, 50), Vector(0, 50), Vector(0, 25) }, clipPath.Points);
+
+            clip = path.Intersection(path.Settings.CreateRectangle(new(Vector(-10, -10), Vector(60, 60)))).ToList();
+            clipPath = Assert.Single(clip);
+            Assert.Equal(new[] { Vector(0, 0), Vector(50, 0), Vector(50, 50), Vector(0, 50), Vector(0, 0) }, clipPath.Points);
+
+        }
+
+
+        [Fact]
+        public void IntersectionKeepOrientation()
+        {
+            var path = new Path<TPrimitive, TVector>(Vector(50, 00), Vector(50, 50), Vector(50, 100), Vector(50, 150), Vector(50, 200));
+            var clip = path.IntersectionKeepOrientation(path.Settings.CreateRectangle(new(Vector(25, 25), Vector(75, 175)))).ToList();
+            Assert.Equal(new[] { Vector(50, 25), Vector(50, 50), Vector(50, 100), Vector(50, 150), Vector(50, 175) }, Assert.Single(clip).Points);
+
+            clip = path.IntersectionKeepOrientation(path.Settings.CreateRectangle(new(Vector(25, 0), Vector(75, 200)))).ToList();
+            Assert.Equal(path.Points, Assert.Single(clip).Points);
+
+            clip = path.IntersectionKeepOrientation(path.Settings.CreateRectangle(new(Vector(100, -100), Vector(100, 300)))).ToList();
+            Assert.Empty(clip);
+        }
+
+        [Fact]
+        public void IntersectionKeepOrientation_Reversed()
+        {
+            var path = new Path<TPrimitive, TVector>(Vector(50, 00), Vector(50, 50), Vector(50, 100), Vector(50, 150), Vector(50, 200)).ToReverse();
+            var clip = path.IntersectionKeepOrientation(path.Settings.CreateRectangle(new(Vector(25, 25), Vector(75, 175)))).ToList();
+            Assert.Equal(new[] { Vector(50, 175), Vector(50, 150), Vector(50, 100), Vector(50, 50), Vector(50, 25) }, Assert.Single(clip).Points);
+
+            clip = path.IntersectionKeepOrientation(path.Settings.CreateRectangle(new(Vector(25, 0), Vector(75, 200)))).ToList();
+            Assert.Equal(path.Points, Assert.Single(clip).Points);
+
+            clip = path.IntersectionKeepOrientation(path.Settings.CreateRectangle(new(Vector(100, -100), Vector(100, 300)))).ToList();
+            Assert.Empty(clip);
+        }
+
+
+        [Fact]
+        public void IntersectionKeepOrientation_ClosedPath()
+        {
+            var path = new Path<TPrimitive, TVector>(Vector(0, 0), Vector(0, 50), Vector(50, 50), Vector(50, 0), Vector(0, 0));
+
+            var clip = path.IntersectionKeepOrientation(path.Settings.CreateRectangle(new(Vector(-10, -10), Vector(60, 25)))).ToList();
+            Assert.Equal(2, clip.Count);
+            Assert.Equal(new[] { Vector(0, 0), Vector(0, 25) }, clip[1].Points);
+            Assert.Equal(new[] { Vector(50, 25), Vector(50, 0), Vector(0, 0) }, clip[0].Points);
+            // Note: It would be also acceptable to have a single path with new [] { new(50, 25), new(50, 0), new(0, 0), new(0, 25)}
+
+            clip = path.IntersectionKeepOrientation(path.Settings.CreateRectangle(new(Vector(-10, 25), Vector(60, 60)))).ToList();
+            var clipPath = Assert.Single(clip);
+            Assert.Equal(new[] { Vector(0, 25), Vector(0, 50), Vector(50, 50), Vector(50, 25) }, clipPath.Points);
+
+            clip = path.IntersectionKeepOrientation(path.Settings.CreateRectangle(new(Vector(-10, -10), Vector(60, 60)))).ToList();
+            clipPath = Assert.Single(clip);
+            Assert.Equal(new[] { Vector(0, 0), Vector(0, 50), Vector(50, 50), Vector(50, 0), Vector(0, 0) }, clipPath.Points);
+
+            // Same reversed
+
+            path = new Path<TPrimitive, TVector>(Vector(0, 0), Vector(50, 0), Vector(50, 50), Vector(0, 50), Vector(0, 0));
+
+            clip = path.IntersectionKeepOrientation(path.Settings.CreateRectangle(new(Vector(-10, -10), Vector(60, 25)))).ToList();
+            Assert.Equal(2, clip.Count);
+            Assert.Equal(new[] { Vector(0, 0), Vector(50, 0), Vector(50, 25) }, clip[0].Points);
+            Assert.Equal(new[] { Vector(0, 25), Vector(0, 0) }, clip[1].Points);
+            // Note: It would be also acceptable to have a single path with new [] { new(0, 25), new(0, 0), new(50, 0), new(50, 25)}
+
+            clip = path.IntersectionKeepOrientation(path.Settings.CreateRectangle(new(Vector(-10, 25), Vector(60, 60)))).ToList();
+            clipPath = Assert.Single(clip);
+            Assert.Equal(new[] { Vector(50, 25), Vector(50, 50), Vector(0, 50), Vector(0, 25) }, clipPath.Points);
+
+            clip = path.IntersectionKeepOrientation(path.Settings.CreateRectangle(new(Vector(-10, -10), Vector(60, 60)))).ToList();
+            clipPath = Assert.Single(clip);
+            Assert.Equal(new[] { Vector(0, 0), Vector(50, 0), Vector(50, 50), Vector(0, 50), Vector(0, 0) }, clipPath.Points);
+
+        }
+
+
+
     }
 }
