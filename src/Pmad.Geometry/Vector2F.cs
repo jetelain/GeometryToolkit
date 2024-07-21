@@ -60,7 +60,7 @@ namespace Pmad.Geometry
         public static Vector2F Lerp(Vector2F value1, Vector2F value2, double amount) => Lerp(value1, value2, (float)amount);
 
         [MethodImpl(MethodImplOptions.AggressiveInlining)]
-        public readonly float Length() => vector.Length();
+        public readonly float Length() => MathF.Sqrt((X * X) + (Y * Y)); // Strange: Much more faster than vector.Length(), JIT is probably better at optimizing it
 
         [MethodImpl(MethodImplOptions.AggressiveInlining)]
         public readonly Vector2 ToVector2() => vector;
@@ -80,7 +80,7 @@ namespace Pmad.Geometry
         public readonly float LengthSquaredF() => LengthSquared();
 
         [MethodImpl(MethodImplOptions.AggressiveInlining)]
-        public readonly float LengthSquared() => vector.LengthSquared();
+        public readonly float LengthSquared() => (X * X) + (Y * Y); // Strange: Much faster than vector.LengthSquared(), JIT is probably better at optimizing it
 
         public static Vector2F Normalize(Vector2F value)
         {

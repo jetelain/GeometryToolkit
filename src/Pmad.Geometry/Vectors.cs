@@ -93,14 +93,13 @@ namespace Pmad.Geometry
         public static double PerpendicularDistanceFromLineSquared<TVector>(TVector thisPoint, TVector previousPoint, TVector nextPoint)
             where TVector : struct, IVector<TVector>
         {
-            var ab = thisPoint - previousPoint;
             var cd = nextPoint - previousPoint;
             var len = cd.LengthSquaredD();
             if (len == 0)
             {
                 return 0;
             }
-            var det = TVector.CrossProductD(ab, cd);
+            var det = TVector.CrossProductD(thisPoint - previousPoint, cd);
             return (det * det) / len;
         }
 
