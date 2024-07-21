@@ -28,8 +28,5 @@ namespace Pmad.Geometry.Benchmark.VectorOperations
 
         [Benchmark]
         public void MultiplicationVector2LS() => SampleValues.RandomPairList2LS.ForEach(p => _ = p.Item1 * p.Item2);
-
-        [Benchmark]
-        public void MultiplicationVector2FN() => SampleValues.RandomPairList2FN.ForEach(p => _ = p.Item1 * p.Item2);
     }
 }

@@ -82,16 +82,4 @@ namespace Pmad.Geometry.Test.Shapes.Paths
         }
 
 	}
-	public partial class Path2FNTest : PathTestBase<float,Vector2FN>
-	{
-        protected override int Integer(float v) => (int)v;
-
-        protected override Vector2FN Vector(int x, int y) => new ((float)x, (float)y);
-
-		protected override IReadOnlyList<Vector2FN> Truncate(ReadOnlyArray<Vector2FN> array)
-        {
-            return array.Select(p => new Vector2FN((int)p.X, (int)p.Y)).ToList();
-        }
-
-	}
 }

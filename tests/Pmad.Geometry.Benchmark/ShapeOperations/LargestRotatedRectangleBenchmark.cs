@@ -12,8 +12,5 @@ namespace Pmad.Geometry.Benchmark.ShapeOperations
         [Benchmark]
         public void Vector2F() => RotatedRectangle<float, Vector2F>.GetLargestBetween(SampleValuesRO.Circle2F);
 
-        [Benchmark]
-        public void Vector2FN() => RotatedRectangle<float, Vector2FN>.GetLargestBetween(SampleValuesRO.Circle2FN);
-
     }
 }

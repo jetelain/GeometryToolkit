@@ -49,10 +49,4 @@ namespace Pmad.Geometry.Test.Shapes.PathSegments
 
         protected override Vector2DS Vector(int x, int y) => new ((double)x, (double)y);
 	}
-	public partial class PathSegment2FNTest : PathSegmentTestBase<float,Vector2FN>
-	{
-        protected override int Integer(float v) => (int)v;
-
-        protected override Vector2FN Vector(int x, int y) => new ((float)x, (float)y);
-	}
 }

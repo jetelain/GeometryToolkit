@@ -186,49 +186,5 @@ namespace Pmad.Geometry.Algorithms
 
             return new (settings, resultCenter, resultSize, resultAngle);
         }
-        public static RotatedRectangle<float,Vector2FN> Compute(ShapeSettings<float,Vector2FN> settings, ReadOnlySpan<Vector2FN> points)
-        {
-            Vector2FN resultSize = default;
-            Vector2FN resultCenter = default;
-            float resultAngle = 0;
-            float resultArea = float.MaxValue;
-
-            var a = points[points.Length - 1];
-
-            for (var i = 0; i < points.Length; i++)
-            {
-                var b = points[i];
-
-                var theta = (a - b).Atan2();
-
-                var rotate = Matrix2x2FN.CreateRotation(-theta);
-
-                var max = rotate.Transform(points[0] - a);
-                var min = max;
-
-                for (int j = 1; j < points.Length; j++)
-                {
-                    var r = rotate.Transform(points[j] - a);
-                    max = Vector2FN.Max(r, max);
-                    min = Vector2FN.Min(r, min);
-                }
-                var size = max - min;
-                var area = size.Area();
-                if (area < resultArea)
-                {
-                    resultArea = area;
-                    resultSize = size;
-                    resultAngle = theta;
-
-                    var reverseRotate = Matrix2x2FN.CreateRotation(theta);
-                    var resultP3 = reverseRotate.Transform(max);
-                    var resultP1 = reverseRotate.Transform(min);
-                    resultCenter = ((resultP3 + resultP1) / 2) + a;
-                }
-                a = b;
-            }
-
-            return new (settings, resultCenter, resultSize, resultAngle);
-        }
 	}
 }

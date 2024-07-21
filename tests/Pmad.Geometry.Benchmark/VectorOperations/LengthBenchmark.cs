@@ -28,8 +28,5 @@ namespace Pmad.Geometry.Benchmark.VectorOperations
 
         [Benchmark]
         public double LengthVector2LS() => SampleValuesRO.RandomList2LS.GetLengthD();
-
-        [Benchmark]
-        public double LengthVector2FN() => SampleValuesRO.RandomList2FN.GetLengthD();
     }
 }

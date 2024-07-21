@@ -1,4 +1,6 @@
-﻿using System.Runtime.CompilerServices;
+﻿using System.Numerics;
+using System.Runtime.CompilerServices;
+using System.Runtime.Intrinsics;
 using Pmad.Geometry.Collections;
 
 namespace Pmad.Geometry
@@ -21,7 +23,7 @@ namespace Pmad.Geometry
             return default;
         }
 
-        public static TVector Sum<TVector>(this ReadOnlySpan<TVector> list)
+        public static TVector SumClassic<TVector>(this ReadOnlySpan<TVector> list)
             where TVector : struct, IVector<TVector>
         {
             if (list.Length == 0)
@@ -36,12 +38,30 @@ namespace Pmad.Geometry
             return result;
         }
 
+        public static Vector128<TPrimitive> Sum<TPrimitive>(this ReadOnlySpan<Vector128<TPrimitive>> list)
+            where TPrimitive : unmanaged, INumber<TPrimitive>
+        {
+            if (list.Length == 0)
+            {
+                return default;
+            }
+            Vector128<TPrimitive> result = list[0];
+            for (var i = 1; i < list.Length; i++)
+            {
+                result = Vector128.Add(result, list[i]);
+            }
+            return result;
+        }
+
         [MethodImpl(MethodImplOptions.AggressiveInlining)]
         public static TVector Sum<TVector>(this ReadOnlyArray<TVector> list)
             where TVector : struct, IVector<TVector>
         {
-            return Sum(list.AsSpan());
+            return TVector.Sum(list.AsSpan());
         }
+
+
+
 
         public static TVector Max<TVector>(this IEnumerable<TVector> list)
             where TVector : struct, IVector<TVector>
@@ -60,7 +80,7 @@ namespace Pmad.Geometry
             return default;
         }
 
-        public static TVector Max<TVector>(this ReadOnlySpan<TVector> list)
+        public static TVector MaxClassic<TVector>(this ReadOnlySpan<TVector> list)
             where TVector : struct, IVector<TVector>
         {
             if (list.Length == 0)
@@ -79,8 +99,27 @@ namespace Pmad.Geometry
         public static TVector Max<TVector>(this ReadOnlyArray<TVector> list)
             where TVector : struct, IVector<TVector>
         {
-            return Max(list.AsSpan());
+            return TVector.Max(list.AsSpan());
         }
+
+        public static Vector128<TPrimitive> Max<TPrimitive>(this ReadOnlySpan<Vector128<TPrimitive>> list)
+            where TPrimitive : unmanaged, INumber<TPrimitive>
+        {
+            if (list.Length == 0)
+            {
+                return default;
+            }
+            Vector128<TPrimitive> result = list[0];
+            for (var i = 1; i < list.Length; i++)
+            {
+                result = Vector128.Max(result, list[i]);
+            }
+            return result;
+        }
+
+
+
+
 
         public static TVector Min<TVector>(this IEnumerable<TVector> list)
             where TVector : struct, IVector<TVector>
@@ -99,7 +138,7 @@ namespace Pmad.Geometry
             return default;
         }
 
-        public static TVector Min<TVector>(this ReadOnlySpan<TVector> list)
+        public static TVector MinClassic<TVector>(this ReadOnlySpan<TVector> list)
             where TVector : struct, IVector<TVector>
         {
             if (list.Length == 0)
@@ -113,13 +152,28 @@ namespace Pmad.Geometry
             }
             return result;
         }
+        public static Vector128<TPrimitive> Min<TPrimitive>(this ReadOnlySpan<Vector128<TPrimitive>> list)
+            where TPrimitive : unmanaged, INumber<TPrimitive>
+        {
+            if (list.Length == 0)
+            {
+                return default;
+            }
+            Vector128<TPrimitive> result = list[0];
+            for (var i = 1; i < list.Length; i++)
+            {
+                result = Vector128.Min(result, list[i]);
+            }
+            return result;
+        }
 
         [MethodImpl(MethodImplOptions.AggressiveInlining)]
         public static TVector Min<TVector>(this ReadOnlyArray<TVector> list)
             where TVector : struct, IVector<TVector>
         {
-            return Min(list.AsSpan());
+            return TVector.Min(list.AsSpan());
         }
+
 
         public static double GetLengthD<TVector>(this IEnumerable<TVector> list)
             where TVector : struct, IVector<TVector>

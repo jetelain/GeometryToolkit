@@ -28,8 +28,5 @@ namespace Pmad.Geometry.Benchmark.VectorOperations
 
         [Benchmark]
         public Vector2LS SumVector2LS() => SampleValuesRO.RandomList2LS.Sum();
-
-        [Benchmark]
-        public Vector2FN SumVector2FN() => SampleValuesRO.RandomList2FN.Sum();
     }
 }

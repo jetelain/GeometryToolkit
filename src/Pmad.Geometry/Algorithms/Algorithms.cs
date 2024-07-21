@@ -44,10 +44,6 @@ namespace Pmad.Geometry.Algorithms
             {
                 return ((ReadOnlyArray<Vector2DS>)(object)points).TestPointInPolygon((Vector2DS)(object)pt);
             }
-            if (typeof(TVector) == typeof(Vector2FN))
-            {
-                return ((ReadOnlyArray<Vector2FN>)(object)points).TestPointInPolygon((Vector2FN)(object)pt);
-            }
             ThrowHelper.ThrowNotSupportedException();
             return default;
         }
@@ -88,10 +84,6 @@ namespace Pmad.Geometry.Algorithms
             {
                 return ((IReadOnlyList<Vector2DS>)(object)points).TestPointInPolygon((Vector2DS)(object)pt);
             }
-            if (typeof(TVector) == typeof(Vector2FN))
-            {
-                return ((IReadOnlyList<Vector2FN>)(object)points).TestPointInPolygon((Vector2FN)(object)pt);
-            }
             ThrowHelper.ThrowNotSupportedException();
             return default;
         }
@@ -131,10 +123,6 @@ namespace Pmad.Geometry.Algorithms
             if (typeof(TVector) == typeof(Vector2DS))
             {
                 return ((List<Vector2DS>)(object)points).TestPointInPolygon((Vector2DS)(object)pt);
-            }
-            if (typeof(TVector) == typeof(Vector2FN))
-            {
-                return ((List<Vector2FN>)(object)points).TestPointInPolygon((Vector2FN)(object)pt);
             }
             ThrowHelper.ThrowNotSupportedException();
             return default;

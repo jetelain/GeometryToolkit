@@ -25,10 +25,4 @@ namespace Pmad.Geometry.Test.Shapes.RotatedRectangles
 
         protected override Vector2DS Vector(double x, double y) => new ((double)x, (double)y);
 	}
-	public partial class RotatedRectangle2FNTest : RotatedRectangleTestBase<float,Vector2FN>
-	{
-        protected override double Double(float v) => (double)v;
-
-        protected override Vector2FN Vector(double x, double y) => new ((float)x, (float)y);
-	}
 }

@@ -1,4 +1,5 @@
-﻿using System.Numerics;
+﻿using System.Linq;
+using System.Numerics;
 using BenchmarkDotNet.Attributes;
 using Pmad.Geometry;
 
@@ -33,7 +34,5 @@ namespace Pmad.Geometry.Benchmark.VectorOperations
         [Benchmark]
         public Vector2LS MaxVector2LS() => SampleValuesRO.RandomList2LS.Max();
 
-        [Benchmark]
-        public Vector2FN MaxVector2FN() => SampleValuesRO.RandomList2FN.Max();
     }
 }

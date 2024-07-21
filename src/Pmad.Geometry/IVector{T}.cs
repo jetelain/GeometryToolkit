@@ -101,5 +101,12 @@ namespace Pmad.Geometry
         virtual static double CrossProduct(TVector pt1, TVector pt2, TVector pt3) => TVector.CrossProductD(pt2 - pt1, pt3 - pt2);
 
         static abstract TVector Lerp(TVector left, TVector right, double amount);
+
+        abstract static TVector Min(ReadOnlySpan<TVector> values);
+
+        abstract static TVector Max(ReadOnlySpan<TVector> values);
+
+        abstract static TVector Sum(ReadOnlySpan<TVector> values);
+
     }
 }

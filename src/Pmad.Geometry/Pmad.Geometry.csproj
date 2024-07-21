@@ -44,10 +44,6 @@
       <LastGenOutput>Vectors2Scalar.cs</LastGenOutput>
       <Generator>TextTemplatingFileGenerator</Generator>
     </None>
-    <None Update="Vectors2.tt">
-      <Generator>TextTemplatingFileGenerator</Generator>
-      <LastGenOutput>Vectors2.cs</LastGenOutput>
-    </None>
   </ItemGroup>
 
   <ItemGroup>
@@ -84,11 +80,6 @@
       <DependentUpon>Vectors2Scalar.tt</DependentUpon>
       <DesignTime>True</DesignTime>
       <AutoGen>True</AutoGen>
-    </Compile>
-    <Compile Update="Vectors2.cs">
-      <DesignTime>True</DesignTime>
-      <AutoGen>True</AutoGen>
-      <DependentUpon>Vectors2.tt</DependentUpon>
     </Compile>
   </ItemGroup>
 

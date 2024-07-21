@@ -1,6 +1,7 @@
 ﻿using System.Diagnostics;
 using System.Diagnostics.CodeAnalysis;
 using System.Runtime.CompilerServices;
+using System.Runtime.InteropServices;
 using System.Runtime.Intrinsics;
 
 namespace Pmad.Geometry
@@ -208,6 +209,26 @@ namespace Pmad.Geometry
         {
             return X * Y;
         }
+
+        public static Vector2IS Min(ReadOnlySpan<Vector2IS> values)
+        {
+            //return Vector128Helper<int, Vector2IS>.Min4Bytes(values);
+            return values.MinClassic();
+        }
+
+        public static Vector2IS Max(ReadOnlySpan<Vector2IS> values)
+        {
+            //return Vector128Helper<int, Vector2IS>.Max4Bytes(values);
+            return values.MaxClassic();
+        }
+
+        public static Vector2IS Sum(ReadOnlySpan<Vector2IS> values)
+        {
+            //return Vector128Helper<int, Vector2IS>.Sum4Bytes(values);
+            return values.SumClassic();
+        }
+
+
 	}
     [DebuggerDisplay("({X};{Y})")]
 	public partial struct Vector2FS : IEquatable<Vector2FS>, IVector2<float,Vector2FS>
@@ -419,6 +440,26 @@ namespace Pmad.Geometry
         {
             return X * Y;
         }
+
+        public static Vector2FS Min(ReadOnlySpan<Vector2FS> values)
+        {
+            //return Vector128Helper<float, Vector2FS>.Min4Bytes(values);
+            return values.MinClassic();
+        }
+
+        public static Vector2FS Max(ReadOnlySpan<Vector2FS> values)
+        {
+            //return Vector128Helper<float, Vector2FS>.Max4Bytes(values);
+            return values.MaxClassic();
+        }
+
+        public static Vector2FS Sum(ReadOnlySpan<Vector2FS> values)
+        {
+            //return Vector128Helper<float, Vector2FS>.Sum4Bytes(values);
+            return values.SumClassic();
+        }
+
+
 	}
     [DebuggerDisplay("({X};{Y})")]
 	public partial struct Vector2LS : IEquatable<Vector2LS>, IVector2<long,Vector2LS>
@@ -628,6 +669,26 @@ namespace Pmad.Geometry
         {
             return X * Y;
         }
+
+        public static Vector2LS Min(ReadOnlySpan<Vector2LS> values)
+        {
+            //return Vector128Helper<long, Vector2LS>.Min8Bytes(values);
+            return values.MinClassic();
+        }
+
+        public static Vector2LS Max(ReadOnlySpan<Vector2LS> values)
+        {
+            //return Vector128Helper<long, Vector2LS>.Max8Bytes(values);
+            return values.MaxClassic();
+        }
+
+        public static Vector2LS Sum(ReadOnlySpan<Vector2LS> values)
+        {
+            //return Vector128Helper<long, Vector2LS>.Sum8Bytes(values);
+            return values.SumClassic();
+        }
+
+
 	}
     [DebuggerDisplay("({X};{Y})")]
 	public partial struct Vector2DS : IEquatable<Vector2DS>, IVector2<double,Vector2DS>
@@ -834,5 +895,25 @@ namespace Pmad.Geometry
         {
             return X * Y;
         }
+
+        public static Vector2DS Min(ReadOnlySpan<Vector2DS> values)
+        {
+            //return Vector128Helper<double, Vector2DS>.Min8Bytes(values);
+            return values.MinClassic();
+        }
+
+        public static Vector2DS Max(ReadOnlySpan<Vector2DS> values)
+        {
+            //return Vector128Helper<double, Vector2DS>.Max8Bytes(values);
+            return values.MaxClassic();
+        }
+
+        public static Vector2DS Sum(ReadOnlySpan<Vector2DS> values)
+        {
+            //return Vector128Helper<double, Vector2DS>.Sum8Bytes(values);
+            return values.SumClassic();
+        }
+
+
 	}
 }

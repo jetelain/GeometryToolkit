@@ -27,8 +27,5 @@ namespace Pmad.Geometry.Benchmark.VectorOperations
 
         [Benchmark]
         public void NearestPointSegment2LS() => SampleValues.RandomTripletList2LS.ForEach(p => Vectors.NearestPointSegment(p.Item1, p.Item2, p.Item3));
-
-        [Benchmark]
-        public void NearestPointSegment2FN() => SampleValues.RandomTripletList2FN.ForEach(p => Vectors.NearestPointSegment(p.Item1, p.Item2, p.Item3));
     }
 }

@@ -35,8 +35,5 @@ namespace Pmad.Geometry.Benchmark.VectorOperations
 
         [Benchmark]
         public void LerpVector2LS() => SampleValues.RandomPairList2LS.ForEach(p => Vector2LS.Lerp(p.Item1, p.Item2, 0.5d));
-
-        [Benchmark]
-        public void LerpVector2FN() => SampleValues.RandomPairList2FN.ForEach(p => Vector2FN.Lerp(p.Item1, p.Item2, 0.5d));
     }
 }

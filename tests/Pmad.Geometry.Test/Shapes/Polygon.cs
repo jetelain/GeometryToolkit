@@ -73,15 +73,4 @@ namespace Pmad.Geometry.Test.Shapes.Polygons
             return new Vector2DS((int)p.X, (int)p.Y);
         }
 	}
-	public partial class Polygon2FNTest : PolygonTestBase<float,Vector2FN>
-	{
-        protected override int Integer(float v) => (int)v;
-
-        protected override Vector2FN Vector(int x, int y) => new ((float)x, (float)y);
-		
-		protected override Vector2FN Truncate(Vector2FN p)
-        {
-            return new Vector2FN((int)p.X, (int)p.Y);
-        }
-	}
 }

@@ -24,6 +24,5 @@ namespace Pmad.Geometry.Benchmark.ShapeOperations
         [Benchmark] public void PointInPolygon_2FS() => SampleValuesRO.PosList2FS.ForEach(p => SampleValuesRO.Circle2FS.TestPointInPolygon(p));
         [Benchmark] public void PointInPolygon_2IS() => SampleValuesRO.PosList2IS.ForEach(p => SampleValuesRO.Circle2IS.TestPointInPolygon(p));
         [Benchmark] public void PointInPolygon_2LS() => SampleValuesRO.PosList2LS.ForEach(p => SampleValuesRO.Circle2LS.TestPointInPolygon(p));
-        [Benchmark] public void PointInPolygon_2FN() => SampleValuesRO.PosList2FN.ForEach(p => SampleValuesRO.Circle2FN.TestPointInPolygon(p));
     }
 }

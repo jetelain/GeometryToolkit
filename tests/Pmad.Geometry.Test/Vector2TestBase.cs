@@ -347,5 +347,41 @@ namespace Pmad.Geometry.Test
             Assert.Equal(Math.PI / 4, Vectors.AngleRadiansAbs(Vector(10, 10), Vector(100, 0)), 5);
             Assert.Equal(Math.PI / 2, Vectors.AngleRadiansAbs(Vector(0, 10), Vector(100, 0)), 5);
         }
+
+        [Fact]
+        public void MinSpan()
+        {
+            Assert.Equal(Vector(0, 0), TVector.Min([]));
+            Assert.Equal(Vector(1, 2), TVector.Min([Vector(1, 2)]));
+            Assert.Equal(Vector(1, 2), TVector.Min([Vector(3, 4), Vector(1, 2)]));
+            Assert.Equal(Vector(1, 2), TVector.Min([Vector(5, 6), Vector(3, 4), Vector(1, 2)]));
+            Assert.Equal(Vector(1, 2), TVector.Min([Vector(7, 8), Vector(5, 6), Vector(3, 4), Vector(1, 2)]));
+            Assert.Equal(Vector(1, 2), TVector.Min([Vector(9, 10), Vector(7, 8), Vector(5, 6), Vector(3, 4), Vector(1, 2)]));
+        }
+
+        [Fact]
+        public void MaxSpan()
+        {
+
+            Assert.Equal(Vector(0, 0), TVector.Max([]));
+            Assert.Equal(Vector(1, 2), TVector.Max([Vector(1, 2)]));
+            Assert.Equal(Vector(3, 4), TVector.Max([Vector(1, 2), Vector(3, 4)]));
+            Assert.Equal(Vector(5, 6), TVector.Max([Vector(1, 2), Vector(3, 4), Vector(5, 6)]));
+            Assert.Equal(Vector(7, 8), TVector.Max([Vector(1, 2), Vector(3, 4), Vector(5, 6), Vector(7, 8)]));
+            Assert.Equal(Vector(9, 10), TVector.Max([Vector(1, 2), Vector(3, 4), Vector(5, 6), Vector(7, 8), Vector(9, 10)]));
+        }
+
+
+        [Fact]
+        public void SumSpan()
+        {
+            Assert.Equal(Vector(0, 0),  TVector.Sum([]));
+            Assert.Equal(Vector(1, 2),  TVector.Sum([Vector(1, 2)]));
+            Assert.Equal(Vector(4, 6),  TVector.Sum([Vector(1, 2), Vector(3, 4)]));
+            Assert.Equal(Vector(9, 12),  TVector.Sum([Vector(1, 2), Vector(3, 4), Vector(5, 6)]));
+            Assert.Equal(Vector(16, 20),  TVector.Sum([Vector(1, 2), Vector(3, 4), Vector(5, 6), Vector(7, 8)]));
+            Assert.Equal(Vector(25, 30), TVector.Sum([Vector(1, 2), Vector(3, 4), Vector(5, 6), Vector(7, 8), Vector(9, 10)]));
+        }
+
     }
 }

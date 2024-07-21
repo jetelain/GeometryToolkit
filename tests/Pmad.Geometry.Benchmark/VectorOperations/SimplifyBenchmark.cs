@@ -30,8 +30,5 @@ namespace Pmad.Geometry.Benchmark.VectorOperations
 
         [Benchmark]
         public object SimplifyVector2LS() => SampleValuesRO.RandomList2LS.Simplify(1);
-
-        [Benchmark]
-        public object SimplifyVector2FN() => SampleValuesRO.RandomList2FN.Simplify(1);
     }
 }

@@ -17,11 +17,5 @@ namespace Pmad.Geometry.Benchmark.ShapeOperations
 
         [Benchmark]
         public void Vector2F_Direct() => SmallestRotatedRectangle.Compute(ShapeSettings<float, Vector2F>.Default, SampleValuesRO.RandomList2F.AsSpan());
-
-        [Benchmark]
-        public void Vector2FN_StaticOperators() => RotatedRectangle<float, Vector2FN>.GetSmallestContaining(SampleValuesRO.RandomList2FN);
-
-        [Benchmark]
-        public void Vector2FN_Direct() => SmallestRotatedRectangle.Compute(ShapeSettings<float, Vector2FN>.Default, SampleValuesRO.RandomList2FN.AsSpan());
     }
 }

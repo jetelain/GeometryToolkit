@@ -8,6 +8,7 @@
 using System.Diagnostics;
 using System.Diagnostics.CodeAnalysis;
 using System.Runtime.CompilerServices;
+using System.Runtime.InteropServices;
 using System.Runtime.Intrinsics;
 
 namespace Pmad.Geometry
@@ -242,6 +243,26 @@ namespace Pmad.Geometry
         {
             return X * Y;
         }
+
+        public static <#=def.Struct#> Min(ReadOnlySpan<<#=def.Struct#>> values)
+        {
+            //return Vector128Helper<<#=def.Primitive#>, <#=def.Struct#>>.Min<#=def.PrimitiveSize#>Bytes(values);
+            return values.MinClassic();
+        }
+
+        public static <#=def.Struct#> Max(ReadOnlySpan<<#=def.Struct#>> values)
+        {
+            //return Vector128Helper<<#=def.Primitive#>, <#=def.Struct#>>.Max<#=def.PrimitiveSize#>Bytes(values);
+            return values.MaxClassic();
+        }
+
+        public static <#=def.Struct#> Sum(ReadOnlySpan<<#=def.Struct#>> values)
+        {
+            //return Vector128Helper<<#=def.Primitive#>, <#=def.Struct#>>.Sum<#=def.PrimitiveSize#>Bytes(values);
+            return values.SumClassic();
+        }
+
+
 	}
 <#
 	}

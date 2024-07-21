@@ -85,25 +85,4 @@ namespace Pmad.Geometry.Test
 
         protected override Vector2DS Vector(double x, double y) => new ((double)x, (double)y);
 	}
-	public sealed partial class Matrix2x2FNTest : Matrix2x2TestBase<float,Vector2FN,Matrix2x2FN>
-	{
-		protected override Matrix2x2FN Rotation(double radians) => Matrix2x2FN.CreateRotation((float)radians);
-
-		protected override Matrix2x2FN Create(double m11, double m12, double m21, double m22) => new (new((float)m11,(float)m12),new((float)m21,(float)m22));
-
-        protected override double Double(float v) => (double)v;
-
-        protected override Vector2FN Vector(double x, double y) => new ((float)x, (float)y);
-	}
-
-	public sealed partial class Matrix2x2FNGenTest : Matrix2x2TestBase<float,Vector2FN,Matrix2x2<float,Vector2FN>>
-	{
-		protected override Matrix2x2<float,Vector2FN> Rotation(double radians) => Matrix2x2<float,Vector2FN>.CreateRotation((float)radians);
-
-		protected override Matrix2x2<float,Vector2FN> Create(double m11, double m12, double m21, double m22) => new (new((float)m11,(float)m12),new((float)m21,(float)m22));
-
-		protected override double Double(float v) => (double)v;
-
-        protected override Vector2FN Vector(double x, double y) => new ((float)x, (float)y);
-	}
 }

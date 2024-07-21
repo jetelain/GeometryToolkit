@@ -84,25 +84,5 @@ namespace Pmad.Geometry.Algorithms
             var sqR = Math.Max((p - a).LengthSquared(), Math.Max((p - b).LengthSquared(), (p - c).LengthSquared()));
             return new (settings,p, Math.Sqrt(sqR));
         }
-        public static Circle<float,Vector2FN> Compute(ShapeSettings<float,Vector2FN> settings, Vector2FN a, Vector2FN b, Vector2FN c)
-        {
-            var o = (Vector2FN.Min(Vector2FN.Min(a, b), c) + Vector2FN.Max(Vector2FN.Max(a, b), c)) / 2;
-            var da = a - o;
-            var db = b - o;
-            var dc = c - o;
-            var d = (da.X * (db.Y - dc.Y) + db.X * (dc.Y - da.Y) + dc.X * (da.Y - db.Y)) * 2;
-            if (d == 0)
-            {
-                // XXX: Fallback to FromTwoPoints ?
-                return new (settings, Vector2FN.Zero, 0);
-            }
-            //var x = ((da.X * da.X + da.Y * da.Y) * (db.Y - dc.Y) + (db.X * db.X + db.Y * db.Y) * (dc.Y - da.Y) + (dc.X * dc.X + dc.Y * dc.Y) * (da.Y - db.Y)) / d;
-            var x =   (da.LengthSquared()          * (db.Y - dc.Y) + db.LengthSquared()          * (dc.Y - da.Y) + dc.LengthSquared()          * (da.Y - db.Y)) / d;
-            //var y = ((da.X * da.X + da.Y * da.Y) * (dc.X - db.X) + (db.X * db.X + db.Y * db.Y) * (da.X - dc.X) + (dc.X * dc.X + dc.Y * dc.Y) * (db.X - da.X)) / d;
-            var y =   (da.LengthSquared()          * (dc.X - db.X) + db.LengthSquared()          * (da.X - dc.X) + dc.LengthSquared()          * (db.X - da.X)) / d;
-            var p = o + new Vector2FN(x, y);
-            var sqR = MathF.Max((p - a).LengthSquared(), MathF.Max((p - b).LengthSquared(), (p - c).LengthSquared()));
-            return new (settings,p, MathF.Sqrt(sqR));
-        }
 	}
 }
