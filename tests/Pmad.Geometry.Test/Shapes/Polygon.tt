@@ -17,6 +17,13 @@ namespace Pmad.Geometry.Test.Shapes.Polygons
         protected override int Integer(<#=def.Primitive#> v) => (int)v;
 
         protected override <#=def.Struct#> Vector(int x, int y) => new ((<#=def.Primitive#>)x, (<#=def.Primitive#>)y);
+		
+<# if ( def.IsFP) { #>
+		protected override <#=def.Struct#> Truncate(<#=def.Struct#> p)
+        {
+            return new <#=def.Struct#>((int)p.X, (int)p.Y);
+        }
+<# } #>
 	}
 <#
 	}

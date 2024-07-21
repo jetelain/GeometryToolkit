@@ -10,6 +10,7 @@ namespace Pmad.Geometry.Test.Shapes
     {
         protected abstract TVector Vector(int x, int y);
         protected abstract int Integer(TPrimitive v);
+        protected virtual TVector Truncate(TVector v) => v;
 
         private Polygon<TPrimitive,TVector> Square100x100()
         {
@@ -79,6 +80,16 @@ namespace Pmad.Geometry.Test.Shapes
             Assert.Equal(10000, Square100x100().AreaD);
             Assert.Equal(100, Square10x10().AreaD);
             Assert.Equal(2500, Square50x50().AreaD);
+            Assert.Equal(5000, TriangleA().AreaD);
+        }
+
+        [Fact]
+        public void Centroid()
+        {
+            Assert.Equal(Vector(50, 50), Square100x100().Centroid);
+            Assert.Equal(Vector(50, 50), Square10x10().Centroid);
+            Assert.Equal(Vector(50, 50), Square50x50().Centroid);
+            Assert.Equal(Vector(33, 33), Truncate(TriangleA().Centroid));
         }
 
         [Fact]

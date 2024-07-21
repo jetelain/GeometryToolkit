@@ -50,6 +50,8 @@ namespace Pmad.Geometry.Shapes
 
         public float AreaF => Math.Abs(SignedArea<TPrimitive,TVector>.GetSignedAreaF(Shell)) - Holes.Sum(hole => Math.Abs(SignedArea<TPrimitive, TVector>.GetSignedAreaF(hole)));
 
+        public TVector Centroid => Centroid<TPrimitive, TVector>.GetCentroid(Shell);
+
         internal Paths64 ToClipper()
         {
             var paths = new Paths64(1 + Holes.Count);
@@ -296,6 +298,16 @@ namespace Pmad.Geometry.Shapes
         private Polygon<TPrimitive, TVector> SimplifyImpl(double epsilonSquared)
         {
             return new Polygon<TPrimitive, TVector>(Settings, Shell.Simplify(epsilonSquared), Holes.Select(h => h.Simplify(epsilonSquared)).ToReadOnlyArray());
+        }
+
+        public bool Intersects(Polygon<TPrimitive, TVector> other)
+        {
+            return IntersectionArea(other) > Settings.NegligibleArea;
+        }
+
+        public double IntersectionArea(Polygon<TPrimitive, TVector> other)
+        {
+            return Intersection(other).Sum(o => o.AreaD);
         }
     }
 }
