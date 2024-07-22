@@ -302,11 +302,11 @@ namespace Pmad.Geometry.Test.Shapes
         [Fact]
         public void SubstractNoOverlap()
         {
-            var result = Square100x100().SubstractAllNoOverlap(new[] { Square50x50() });
+            var result = Square100x100().SubstractAllNoOverlap(new(Square50x50()));
             var polygon = Assert.Single(result);
             Assert.Equal("POLYGON ((100 100, 0 100, 0 0, 100 0, 100 100), (25 75, 75 75, 75 25, 25 25, 25 75))", polygon.ToString());
 
-            result = Square50x50().SubstractAllNoOverlap(new[] { Square100x100() });
+            result = Square50x50().SubstractAllNoOverlap(new(Square100x100()));
             Assert.Empty(result);
         }
 

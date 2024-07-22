@@ -70,22 +70,22 @@ namespace Pmad.Geometry.Shapes
         }
 
         // Offsetting
-        public IEnumerable<Polygon<TPrimitive, TVector>> Offset(double offset)
+        public MultiPolygon<TPrimitive, TVector> Offset(double offset)
         {
             if (offset == 0)
             {
-                return [this];
+                return new(this);
             }
             var scaledOffset = offset * Settings.ScaleForClipper;
             var shell = Offset(Shell, scaledOffset);
             if (Holes.Count == 0)
             {
-                return shell.Select(s => new Polygon<TPrimitive, TVector>(Settings, Settings.FromClipperToRing(s)));
+                return new(shell.Select(s => new Polygon<TPrimitive, TVector>(Settings, Settings.FromClipperToRing(s))).ToList());
             }
             var holes = new Paths64(Holes.SelectMany(h => Offset(h, -scaledOffset)));
             var tree = new PolyTree64();
             Clipper.BooleanOp(ClipType.Difference, shell, holes, tree, FillRule.NonZero);
-            return Settings.FromClipper(tree);
+            return Settings.ToMultiPolygon(tree);
         }
 
         public Paths64 OffsetAsPaths(double offset)
@@ -104,23 +104,23 @@ namespace Pmad.Geometry.Shapes
             return Clipper.BooleanOp(ClipType.Difference, shell, holes, FillRule.NonZero);
         }
 
-        public IEnumerable<Polygon<TPrimitive, TVector>> Crown(double offset) => Crown(offset, offset);
+        public MultiPolygon<TPrimitive, TVector> Crown(double offset) => Crown(offset, offset);
         
-        public IEnumerable<Polygon<TPrimitive, TVector>> OuterCrown(double offset) => Crown(0, offset);
+        public MultiPolygon<TPrimitive, TVector> OuterCrown(double offset) => Crown(0, offset);
 
-        public IEnumerable<Polygon<TPrimitive, TVector>> InnerCrown(double offset) => Crown(offset, 0);
+        public MultiPolygon<TPrimitive, TVector> InnerCrown(double offset) => Crown(offset, 0);
 
-        public IEnumerable<Polygon<TPrimitive, TVector>> Crown(double innnerOffset, double outerOffset)
+        public MultiPolygon<TPrimitive, TVector> Crown(double innnerOffset, double outerOffset)
         {
             if (innnerOffset == 0 && outerOffset == 0)
             {
-                return Enumerable.Empty<Polygon<TPrimitive, TVector>>();
+                return MultiPolygon<TPrimitive, TVector>.Empty;
             }
             var subject = OffsetAsPaths(outerOffset);
             var clip = OffsetAsPaths(-innnerOffset);
             var tree = new PolyTree64();
             Clipper.BooleanOp(ClipType.Difference, subject, clip, tree, FillRule.EvenOdd);
-            return Settings.FromClipper(tree);
+            return Settings.ToMultiPolygon(tree);
         }
 
         // Polygon arithmetic        
@@ -143,48 +143,48 @@ namespace Pmad.Geometry.Shapes
             return result;
         }
 
-        public IEnumerable<Polygon<TPrimitive, TVector>> SubstractAllNoOverlap(IEnumerable<Polygon<TPrimitive, TVector>> others)
+        public MultiPolygon<TPrimitive, TVector> SubstractAllNoOverlap(MultiPolygon<TPrimitive, TVector> others)
         {
             var tree = new PolyTree64();
-            Clipper.BooleanOp(ClipType.Difference, ToClipper(), new Paths64(others.SelectMany(o => o.ToClipper())), tree, FillRule.EvenOdd);
-            return Settings.FromClipper(tree);
+            Clipper.BooleanOp(ClipType.Difference, ToClipper(), others.ToClipper(Settings), tree, FillRule.EvenOdd);
+            return Settings.ToMultiPolygon(tree);
         }
 
-        public IEnumerable<Polygon<TPrimitive, TVector>> Substract(Polygon<TPrimitive, TVector> other)
+        public MultiPolygon<TPrimitive, TVector> Substract(Polygon<TPrimitive, TVector> other)
         {
             if (!Bounds.Intersects(other.Bounds))
             {
-                return [this];
+                return new(this);
             }
             return BooleanOp(other, ClipType.Difference);
         }
 
-        public IEnumerable<Polygon<TPrimitive, TVector>> Union(Polygon<TPrimitive, TVector> other)
+        public MultiPolygon<TPrimitive, TVector> Union(Polygon<TPrimitive, TVector> other)
         {
             if (!Bounds.Intersects(other.Bounds))
             {
-                return [this, other];
+                return new(this, other);
             }
             return BooleanOp(other, ClipType.Union);
         }
 
-        private IEnumerable<Polygon<TPrimitive, TVector>> BooleanOp(Polygon<TPrimitive, TVector> other, ClipType op)
+        private MultiPolygon<TPrimitive, TVector> BooleanOp(Polygon<TPrimitive, TVector> other, ClipType op)
         {
             var tree = new PolyTree64();
             Clipper.BooleanOp(op, ToClipper(), other.ToClipper(), tree, FillRule.EvenOdd);
-            return Settings.FromClipper(tree);
+            return Settings.ToMultiPolygon(tree);
         }
 
-        public IEnumerable<Polygon<TPrimitive, TVector>> Intersection(Polygon<TPrimitive, TVector> other)
+        public MultiPolygon<TPrimitive, TVector> Intersection(Polygon<TPrimitive, TVector> other)
         {
             if (!Bounds.Intersects(other.Bounds))
             {
-                return Enumerable.Empty<Polygon<TPrimitive, TVector>>();
+                return MultiPolygon<TPrimitive, TVector>.Empty;
             }
             return BooleanOp(other, ClipType.Intersection);
         }
 
-        public IEnumerable<Polygon<TPrimitive, TVector>> ClippedBy(VectorEnvelope<TVector> rect)
+        public MultiPolygon<TPrimitive, TVector> ClippedBy(VectorEnvelope<TVector> rect)
         {
             return Intersection(Settings.CreateRectangle(rect));
         }
@@ -266,14 +266,19 @@ namespace Pmad.Geometry.Shapes
         {
             var sb = new StringBuilder();
             sb.Append("POLYGON (");
+            ToStringAppend(sb);
+            sb.Append(")");
+            return sb.ToString();
+        }
+
+        internal void ToStringAppend(StringBuilder sb)
+        {
             ToStringHelper<TPrimitive, TVector>.ToStringAppend(sb, Shell.AsSpan());
             foreach (var hole in Holes)
             {
                 sb.Append(", ");
                 ToStringHelper<TPrimitive, TVector>.ToStringAppend(sb, hole.AsSpan());
             }
-            sb.Append(")");
-            return sb.ToString();
         }
 
         public bool ShellContains(Polygon<TPrimitive, TVector> other)

@@ -96,7 +96,7 @@ namespace Pmad.Geometry.Shapes
                 {
                     var tree = new PolyTree64();
                     Clipper.BooleanOp(ClipType.Union, new Paths64(merged.SelectMany(p => p.ToClipper())), polygon.ToClipper(), tree, FillRule.EvenOdd);
-                    merged = settings.FromClipper(tree);
+                    merged = settings.ToPolygonList(tree);
                 }
                 else
                 {
@@ -119,7 +119,7 @@ namespace Pmad.Geometry.Shapes
                 {
                     var tree = new PolyTree64();
                     Clipper.BooleanOp(ClipType.Union, new Paths64(mergedIntersects.SelectMany(p => p.ToClipper())), polygon.ToClipper(), tree, FillRule.EvenOdd);
-                    merged = settings.FromClipper(tree).Concat(merged.Except(mergedIntersects)).ToList();
+                    merged = settings.ToPolygonList(tree).Concat(merged.Except(mergedIntersects)).ToList();
                 }
                 else
                 {

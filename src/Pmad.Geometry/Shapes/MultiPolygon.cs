@@ -1,0 +1,178 @@
+﻿using System.Collections;
+using System.Numerics;
+using System.Text;
+using Clipper2Lib;
+
+namespace Pmad.Geometry.Shapes
+{
+    public class MultiPolygon<TPrimitive, TVector> : IWithBounds<TVector>, IShape<TPrimitive, TVector>, IReadOnlyList<Polygon<TPrimitive, TVector>>
+        where TPrimitive : unmanaged, INumber<TPrimitive>
+        where TVector : struct, IVector2<TPrimitive, TVector>
+    {
+        private readonly List<Polygon<TPrimitive, TVector>> polygons;
+
+        public static readonly MultiPolygon<TPrimitive, TVector> Empty = new MultiPolygon<TPrimitive, TVector>();
+
+        public MultiPolygon(List<Polygon<TPrimitive, TVector>> polygons)
+        {
+            this.polygons = polygons;
+        }
+
+        public MultiPolygon(params Polygon<TPrimitive, TVector>[] polygons)
+            : this(polygons.ToList())
+        {
+
+        }
+
+        public Polygon<TPrimitive, TVector> this[int index] => polygons[index];
+
+        public VectorEnvelope<TVector> Bounds => PolygonsHelper<TPrimitive, TVector>.GetBounds(polygons);
+
+        public double AreaD => polygons.Sum(p => p.AreaD);
+
+        public int Count => polygons.Count;
+
+        internal Paths64 ToClipper(ShapeSettings<TPrimitive, TVector> settings)
+        {
+            if (polygons.Count == 0)
+            {
+                return new Paths64();
+            }
+            var paths = new Paths64(polygons.Count + polygons.Sum(p => p.Holes.Count));
+            foreach (var p in polygons)
+            {
+                paths.Add(settings.ToClipper(p.Shell));
+                paths.AddRange(p.Holes.Select(settings.ToClipper));
+            }
+            return paths;
+        }
+
+        public bool Contains(TVector point)
+        {
+            return IsInsideOrOnBoundary(point);
+        }
+
+        public double Distance(TVector point)
+        {
+            if (polygons.Count == 0)
+            {
+                return double.NaN;
+            }
+            return polygons.Min(p => p.Distance(point));
+        }
+
+        public IEnumerator<Polygon<TPrimitive, TVector>> GetEnumerator()
+        {
+            return polygons.GetEnumerator();
+        }
+
+        public bool IsInside(TVector point)
+        {
+            return polygons.Any(p => p.IsInside(point));
+        }
+
+        public bool IsInsideOrOnBoundary(TVector point)
+        {
+            return polygons.Any(p => p.IsInsideOrOnBoundary(point));
+        }
+
+        public TVector NearestPointBoundary(TVector point)
+        {
+            return NearestPointDistanceBoundary(point).Point;
+        }
+
+        public (TVector Point, double Distance) NearestPointDistanceBoundary(TVector point)
+        {
+            if (polygons.Count == 0)
+            {
+                return (default, double.NaN);
+            }
+            var (result, resultDistance) = polygons[0].NearestPointDistanceBoundary(point);
+            foreach (var hole in polygons.Skip(1))
+            {
+                var (candidate, candidateDistance) = hole.NearestPointDistanceBoundary(point);
+                if (resultDistance > candidateDistance)
+                {
+                    result = candidate;
+                    resultDistance = candidateDistance;
+                }
+            }
+            return (result, resultDistance);
+        }
+
+        IEnumerator IEnumerable.GetEnumerator()
+        {
+            return polygons.GetEnumerator();
+        }
+
+        private MultiPolygon<TPrimitive, TVector> BooleanOp(MultiPolygon<TPrimitive, TVector> other, ClipType op)
+        {
+            var settings = polygons[0].Settings;
+            var tree = new PolyTree64();
+            Clipper.BooleanOp(op, ToClipper(settings), other.ToClipper(settings), tree, FillRule.EvenOdd);
+            return settings.ToMultiPolygon(tree);
+        }
+
+        public MultiPolygon<TPrimitive, TVector> Substract(MultiPolygon<TPrimitive, TVector> other)
+        {
+            if (polygons.Count == 0)
+            {
+                return Empty;
+            }
+            if (!Bounds.Intersects(other.Bounds))
+            {
+                return this;
+            }
+            return BooleanOp(other, ClipType.Difference);
+        }
+
+        public MultiPolygon<TPrimitive, TVector> Intersection(MultiPolygon<TPrimitive, TVector> other)
+        {
+            if (polygons.Count == 0)
+            {
+                return Empty;
+            }
+            if (!Bounds.Intersects(other.Bounds))
+            {
+                return Empty;
+            }
+            return BooleanOp(other, ClipType.Intersection);
+        }
+
+        public MultiPolygon<TPrimitive, TVector> Union(MultiPolygon<TPrimitive, TVector> other)
+        {
+            if (polygons.Count == 0)
+            {
+                return other;
+            }
+            if (!Bounds.Intersects(other.Bounds))
+            {
+                return new (polygons.Concat(other.polygons).ToList());
+            }
+            return BooleanOp(other, ClipType.Union);
+        }
+
+        public override string ToString()
+        {
+            var sb = new StringBuilder();
+            sb.Append("MULTIPOLYGON (");
+            var first = true;
+            foreach (var polygon in polygons)
+            {
+                if (first)
+                {
+                    sb.Append("(");
+                    first = false;
+                }
+                else
+                {
+                    sb.Append(", (");
+                }
+                polygon.ToStringAppend(sb);
+                sb.Append(")");
+            }
+            sb.Append(")");
+            return sb.ToString();
+        }
+    }
+}

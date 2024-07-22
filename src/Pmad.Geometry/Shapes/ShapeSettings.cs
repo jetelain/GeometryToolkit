@@ -70,7 +70,14 @@ namespace Pmad.Geometry.Shapes
             return 1000;
         }
 
-        internal List<Polygon<TPrimitive, TVector>> FromClipper(PolyPath64 polyTree64)
+        internal MultiPolygon<TPrimitive, TVector> ToMultiPolygon(PolyPath64 polyTree64)
+        {
+            var result = new List<Polygon<TPrimitive, TVector>>();
+            FromClipper(result, polyTree64);
+            return new MultiPolygon<TPrimitive,TVector>(result);
+        }
+
+        internal List<Polygon<TPrimitive, TVector>> ToPolygonList(PolyPath64 polyTree64)
         {
             var result = new List<Polygon<TPrimitive, TVector>>();
             FromClipper(result, polyTree64);

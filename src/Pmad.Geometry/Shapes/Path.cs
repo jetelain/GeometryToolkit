@@ -49,13 +49,13 @@ namespace Pmad.Geometry.Shapes
 
         public bool IsClockWise => IsClosed && SignedArea<TPrimitive, TVector>.GetSignedAreaD(Points) < 0;
 
-        public IEnumerable<Polygon<TPrimitive, TVector>> ToPolygon(double width, EndType endType = EndType.Butt, JoinType joinType = JoinType.Square)
+        public MultiPolygon<TPrimitive, TVector> ToPolygon(double width, EndType endType = EndType.Butt, JoinType joinType = JoinType.Square)
         {
             var offset = new ClipperOffset();
             offset.AddPath(Settings.ToClipper(Points), joinType, endType);
             var solution = new PolyTree64(); ;
             offset.Execute(width * Settings.ScaleForClipper / 2, solution);
-            return Settings.FromClipper(solution);
+            return Settings.ToMultiPolygon(solution);
         }
 
         /// <summary>
