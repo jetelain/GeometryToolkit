@@ -48,7 +48,7 @@ namespace Pmad.Geometry.Shapes
             {
                 if (input.Contains(item))
                 {
-                    var contains = input.Where(f => f != item && item.ShellContains(f)).ToList();
+                    var contains = input.Where(f => f != item && item.ContainsOrSimilar(f)).ToList();
                     if (contains.Count > 0)
                     {
                         foreach (var toremove in contains)

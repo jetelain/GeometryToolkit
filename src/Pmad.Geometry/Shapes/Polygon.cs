@@ -281,11 +281,11 @@ namespace Pmad.Geometry.Shapes
             }
         }
 
-        public bool ShellContains(Polygon<TPrimitive, TVector> other)
+        public bool ContainsOrSimilar(Polygon<TPrimitive, TVector> other)
         {
             if (Bounds.Contains(other.Bounds))
             {
-                return Shell.SequenceEqual(other.Shell) || other.Shell.All(p => Shell.TestPointInPolygon(p) != PointInPolygonResult.IsOutside );
+                return Shell.SequenceEqual(other.Shell) ||  Math.Abs(IntersectionArea(other) - other.AreaD) < Settings.NegligibleArea;
             }
             return false;
         }
@@ -313,6 +313,15 @@ namespace Pmad.Geometry.Shapes
         public double IntersectionArea(Polygon<TPrimitive, TVector> other)
         {
             return Intersection(other).Sum(o => o.AreaD);
+        }
+
+        public Polygon<TPrimitive, TVector> WithSettings(ShapeSettings<TPrimitive, TVector> settings)
+        {
+            if (settings == Settings)
+            {
+                return this; 
+            }
+            return new Polygon<TPrimitive, TVector>(settings, Shell, Holes);
         }
     }
 }

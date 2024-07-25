@@ -1,5 +1,4 @@
 ﻿using System.Numerics;
-using Pmad.Geometry.Algorithms;
 
 namespace Pmad.Geometry.Shapes
 {
@@ -205,6 +204,20 @@ namespace Pmad.Geometry.Shapes
             var delta = (point - Center);
             var deltaLength = delta.LengthD();
             return (Center + delta * (Radius / deltaLength), Math.Abs(deltaLength - Radius));
+        }
+
+        public override string ToString()
+        {
+            return FormattableString.Invariant($"CIRCLE (({Center.X} {Center.Y}), {Radius})");
+        }
+
+        public Circle<TPrimitive, TVector> WithSettings(ShapeSettings<TPrimitive, TVector> settings)
+        {
+            if (settings == Settings)
+            {
+                return this;
+            }
+            return new Circle<TPrimitive, TVector>(settings, Center, Radius);
         }
     }
 }

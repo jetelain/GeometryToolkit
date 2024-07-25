@@ -154,6 +154,10 @@ namespace Pmad.Geometry.Shapes
 
         public override string ToString()
         {
+            if (Count == 0)
+            {
+                return "MULTIPOLYGON EMPTY";
+            }
             var sb = new StringBuilder();
             sb.Append("MULTIPOLYGON (");
             var first = true;
@@ -173,6 +177,11 @@ namespace Pmad.Geometry.Shapes
             }
             sb.Append(")");
             return sb.ToString();
+        }
+
+        public MultiPolygon<TPrimitive, TVector> WithSettings(ShapeSettings<TPrimitive, TVector> settings)
+        {
+            return new MultiPolygon<TPrimitive, TVector>(polygons.Select(p => p.WithSettings(settings)).ToList());
         }
     }
 }

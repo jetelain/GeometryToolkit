@@ -195,5 +195,14 @@ namespace Pmad.Geometry.Shapes
             }
             return result;
         }
+
+        public Path<TPrimitive, TVector> WithSettings(ShapeSettings<TPrimitive, TVector> settings)
+        {
+            if (settings == Settings)
+            {
+                return this;
+            }
+            return new Path<TPrimitive, TVector>(settings, Points);
+        }
     }
 }

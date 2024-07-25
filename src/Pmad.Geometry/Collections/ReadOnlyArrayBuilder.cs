@@ -8,7 +8,7 @@ namespace Pmad.Geometry.Collections
     /// </summary>
     /// <typeparam name="T"></typeparam>
     [DebuggerDisplay("Count = {Count}")]
-    public sealed class ReadOnlyArrayBuilder<T> : IReadOnlyCollection<T>, ICollection<T>
+    public class ReadOnlyArrayBuilder<T> : IReadOnlyCollection<T>, ICollection<T>
     {
         private T[] array;
         private int length;

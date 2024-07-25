@@ -1,5 +1,4 @@
-﻿using System.Drawing;
-using System.Numerics;
+﻿using System.Numerics;
 using Pmad.Geometry.Collections;
 
 namespace Pmad.Geometry.Shapes
@@ -256,5 +255,19 @@ namespace Pmad.Geometry.Shapes
 
         public (TVector Point, double Distance) NearestPointDistanceBoundary(TVector point)
             => polygon.Value.NearestPointDistanceBoundary(point);
+
+        public override string ToString()
+        {
+            return FormattableString.Invariant($"ROTATEDRECT (({Center.X} {Center.Y}), ({Size.X} {Size.Y}), {Degrees} DEG)");
+        }
+
+        public RotatedRectangle<TPrimitive, TVector> WithSettings(ShapeSettings<TPrimitive, TVector> settings)
+        {
+            if (settings == Settings)
+            {
+                return this;
+            }
+            return new RotatedRectangle<TPrimitive, TVector>(settings, Center, Size, Radians);
+        }
     }
 }
