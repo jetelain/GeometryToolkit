@@ -26,7 +26,7 @@ namespace Pmad.Geometry.Shapes
 
         public Polygon<TPrimitive, TVector> this[int index] => polygons[index];
 
-        public VectorEnvelope<TVector> Bounds => PolygonsHelper<TPrimitive, TVector>.GetBounds(polygons);
+        public VectorEnvelope<TVector> Bounds => GetBounds(polygons);
 
         public double AreaD => polygons.Sum(p => p.AreaD);
 
@@ -182,6 +182,23 @@ namespace Pmad.Geometry.Shapes
         public MultiPolygon<TPrimitive, TVector> WithSettings(ShapeSettings<TPrimitive, TVector> settings)
         {
             return new MultiPolygon<TPrimitive, TVector>(polygons.Select(p => p.WithSettings(settings)).ToList());
+        }
+
+        internal static VectorEnvelope<TVector> GetBounds(List<Polygon<TPrimitive, TVector>> list)
+        {
+            if (list.Count == 0)
+            {
+                return VectorEnvelope<TVector>.None;
+            }
+            var min = list[0].Bounds.Min;
+            var max = list[0].Bounds.Max;
+            for (var i = 1; i < list.Count; i++)
+            {
+                var current = list[i];
+                min = TVector.Min(current.Bounds.Min, min);
+                max = TVector.Max(current.Bounds.Max, max);
+            }
+            return new(min, max);
         }
     }
 }

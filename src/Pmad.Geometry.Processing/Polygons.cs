@@ -1,7 +1,8 @@
 ﻿using System.Numerics;
+using Pmad.Geometry.Shapes;
 using Pmad.ProgressTracking;
 
-namespace Pmad.Geometry.Shapes
+namespace Pmad.Geometry.Processing
 {
     public static class Polygons
     {
@@ -63,14 +64,14 @@ namespace Pmad.Geometry.Shapes
             where V : struct, IVector2<P, V>
         {
             using var progress = progressScope.CreateInteger(stepName, items.Count);
-            return new (await PolygonsHelper<P, V>.ParallelUnionAll(PolygonsHelper<P, V>.GetBounds(items), items, idealPartition, mode, progress).ConfigureAwait(false));
+            return new (await PolygonsHelper<P, V>.ParallelUnionAll(MultiPolygon<P, V>.GetBounds(items), items, idealPartition, mode, progress).ConfigureAwait(false));
         }
 
         public static async Task<MultiPolygon<P, V>> ParallelUnionAll<P, V>(this List<Polygon<P, V>> items, int idealPartition = 100, IProgressInteger? progress = null, PolygonsMergeMode mode = PolygonsMergeMode.LargeConnected)
             where P : unmanaged, INumber<P>
             where V : struct, IVector2<P, V>
         {
-            return new (await PolygonsHelper<P, V>.ParallelUnionAll(PolygonsHelper<P, V>.GetBounds(items), items, idealPartition, mode, progress).ConfigureAwait(false));
+            return new (await PolygonsHelper<P, V>.ParallelUnionAll(MultiPolygon<P, V>.GetBounds(items), items, idealPartition, mode, progress).ConfigureAwait(false));
         }
     }
 }

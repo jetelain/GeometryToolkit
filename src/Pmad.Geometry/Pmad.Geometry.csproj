@@ -6,14 +6,11 @@
     <Nullable>enable</Nullable>
 	<IsAotCompatible>true</IsAotCompatible>
   </PropertyGroup>
-
-  <ItemGroup>
-    <PackageReference Include="Pmad.ProgressTracking" Version="0.1.13-g99634b7d95" />
-  </ItemGroup>
 	
   <ItemGroup>
 	<InternalsVisibleTo Include="Pmad.Geometry.Test" />
 	<InternalsVisibleTo Include="Pmad.Geometry.Benchmark" />
+	<InternalsVisibleTo Include="Pmad.Geometry.Processing" />
   </ItemGroup>
 	
   <ItemGroup>

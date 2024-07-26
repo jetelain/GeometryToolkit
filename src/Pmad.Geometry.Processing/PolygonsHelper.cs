@@ -1,9 +1,10 @@
 ﻿using System.Collections.Concurrent;
 using System.Numerics;
 using Clipper2Lib;
+using Pmad.Geometry.Shapes;
 using Pmad.ProgressTracking;
 
-namespace Pmad.Geometry.Shapes
+namespace Pmad.Geometry.Processing
 {
     internal static class PolygonsHelper<P, V> 
         where P : unmanaged, INumber<P>
@@ -102,7 +103,7 @@ namespace Pmad.Geometry.Shapes
                 {
                     merged.Add(polygon);
                 }
-                box = GetBounds(merged);
+                box = MultiPolygon<P,V>.GetBounds(merged);
                 progress?.ReportOneDone();
             }
             return merged;
@@ -128,23 +129,6 @@ namespace Pmad.Geometry.Shapes
                 progress?.ReportOneDone();
             }
             return merged;
-        }
-
-        internal static VectorEnvelope<V> GetBounds(List<Polygon<P, V>> list)
-        {
-            if (list.Count == 0)
-            {
-                return VectorEnvelope<V>.None;
-            }
-            var min = list[0].Bounds.Min;
-            var max = list[0].Bounds.Max;
-            for (var i = 1; i < list.Count; i++)
-            {
-                var current = list[i];
-                min = V.Min(current.Bounds.Min, min);
-                max = V.Max(current.Bounds.Max, max);
-            }
-            return new(min, max);
         }
 
         internal static async Task<List<Polygon<P, V>>> ParallelUnionAll(VectorEnvelope<V> scope, IReadOnlyList<Polygon<P, V>> items, int idealPartition, PolygonsMergeMode mode, IProgressInteger? progress = null)
