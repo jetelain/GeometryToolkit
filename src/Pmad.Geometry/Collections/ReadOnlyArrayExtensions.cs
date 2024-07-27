@@ -50,5 +50,12 @@ namespace Pmad.Geometry.Collections
         {
             return MemoryMarshal.Cast<TFrom, TTo>(array.AsSpan()); // Re-interpreted pointer
         }
+
+        public static ReadOnlySpan<TTo> AsSpan<TFrom, TTo>(this ReadOnlyArrayBuilder<TFrom> array)
+            where TFrom : unmanaged
+            where TTo : unmanaged
+        {
+            return MemoryMarshal.Cast<TFrom, TTo>(array.AsSpan()); // Re-interpreted pointer
+        }
     }
 }

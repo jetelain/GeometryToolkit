@@ -1,5 +1,6 @@
 ﻿using System.Collections;
 using System.Diagnostics;
+using System.Runtime.CompilerServices;
 
 namespace Pmad.Geometry.Collections
 {
@@ -12,6 +13,7 @@ namespace Pmad.Geometry.Collections
     {
         private T[] array;
         private int length;
+        private bool arrayIsUsed;
 
         public ReadOnlyArrayBuilder()
             : this(4)
@@ -50,6 +52,37 @@ namespace Pmad.Geometry.Collections
             EnsureCapacity(newLength);
             array[length] = item;
             length = newLength;
+        }
+
+        /// <summary>
+        /// Add an item at the end of the list
+        /// </summary>
+        /// <param name="item"></param>
+        public void Prepend(T item)
+        {
+            var newLength = length + 1;
+            if (newLength > array.Length)
+            {
+                Prepend(item, new T[GetNewSize(newLength)]);
+            }
+            else if (arrayIsUsed)
+            {
+                Prepend(item, new T[array.Length]);
+            }
+            else
+            {
+                Array.Copy(array, 0, array, 1, length);
+                array[0] = item;
+            }
+            length = newLength;
+        }
+
+        private void Prepend(T item, T[] newArray)
+        {
+            arrayIsUsed = false;
+            Array.Copy(array, 0, newArray, 1, length);
+            newArray[0] = item;
+            array = newArray;
         }
 
         /// <summary>
@@ -95,17 +128,25 @@ namespace Pmad.Geometry.Collections
             length = newLength;
         }
 
+        [MethodImpl(MethodImplOptions.AggressiveInlining)]
+        public ReadOnlySpan<T> AsSpan() => new ReadOnlySpan<T>(array, 0, length);
+
         public void EnsureCapacity(int requested)
         {
             if (requested > array.Length)
             {
-                var newSize = array.Length * 2;
-                while (requested > newSize)
-                {
-                    newSize = newSize * 2;
-                }
-                Array.Resize(ref array, newSize);
+                Array.Resize(ref array, GetNewSize(requested));
             }
+        }
+
+        private int GetNewSize(int requested)
+        {
+            var newSize = array.Length * 2;
+            while (requested > newSize)
+            {
+                newSize = newSize * 2;
+            }
+            return newSize;
         }
 
         /// <summary>
@@ -114,6 +155,7 @@ namespace Pmad.Geometry.Collections
         /// <returns></returns>
         public ReadOnlyArray<T> Build()
         {
+            arrayIsUsed = true;
             return new ReadOnlyArray<T>(array, length);
         }
 
