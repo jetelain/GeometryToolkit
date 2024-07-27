@@ -79,7 +79,7 @@ namespace Pmad.Geometry.Json
         {
             if (coordinates is ReadOnlyArray<ReadOnlyArray<TVector>> data)
             {
-                return new Polygon<TPrimitive, TVector>(settings, data[0], data.Skip(1).ToReadOnlyArray());
+                return new Polygon<TPrimitive, TVector>(settings, data[0], data.Slice(1).ToReadOnlyArray());
             }
             return (coordinates as Polygon<TPrimitive, TVector>)?.WithSettings(settings);
         }
@@ -116,7 +116,7 @@ namespace Pmad.Geometry.Json
         {
             if (coordinates is ReadOnlyArray<ReadOnlyArray<ReadOnlyArray<TVector>>> data)
             {
-                return new MultiPolygon<TPrimitive, TVector>(data.Select(p => new Polygon<TPrimitive, TVector>(settings, p[0], p.Skip(1).ToReadOnlyArray())).ToList());
+                return new MultiPolygon<TPrimitive, TVector>(data.Select(p => new Polygon<TPrimitive, TVector>(settings, p[0], p.Slice(1).ToReadOnlyArray())).ToList());
             }
             return (coordinates as MultiPolygon<TPrimitive, TVector>)?.WithSettings(settings) ?? MultiPolygon<TPrimitive, TVector>.Empty;
         }

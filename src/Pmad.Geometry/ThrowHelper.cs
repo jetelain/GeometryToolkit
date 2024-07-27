@@ -16,5 +16,10 @@ namespace Pmad.Geometry
         [DoesNotReturn]
         internal static void ThrowIndexOutOfRangeException()
             => throw new IndexOutOfRangeException();
+
+        [DoesNotReturn]
+        internal static void ThrowArgumentOutOfRangeException()
+            => throw new ArgumentOutOfRangeException();
+
     }
 }

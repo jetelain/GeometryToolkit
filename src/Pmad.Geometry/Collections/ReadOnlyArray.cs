@@ -59,6 +59,26 @@ namespace Pmad.Geometry.Collections
         public readonly ReadOnlySpan<T> AsSpan() => new ReadOnlySpan<T>(array, 0, length);
 
         public readonly ReadOnlySpan<T>.Enumerator GetEnumerator() => AsSpan().GetEnumerator();
+        
+        [MethodImpl(MethodImplOptions.AggressiveInlining)]
+        public readonly ReadOnlySpan<T> Slice(int offset) 
+        {
+            if (offset > length)
+            {
+                ThrowHelper.ThrowArgumentOutOfRangeException();
+            }
+            return new ReadOnlySpan<T>(array, offset, length - offset);
+        }
+
+        [MethodImpl(MethodImplOptions.AggressiveInlining)]
+        public readonly ReadOnlySpan<T> Slice(int offset, int wantedLength)
+        {
+            if (offset + wantedLength > length)
+            {
+                ThrowHelper.ThrowArgumentOutOfRangeException();
+            }
+            return new ReadOnlySpan<T>(array, offset, wantedLength);
+        }
 
         public void ForEach(Action<T> action)
         {
@@ -67,11 +87,7 @@ namespace Pmad.Geometry.Collections
                 action(array[i]);
             }
         }
-        public void CopyTo(T[] array, int arrayIndex)
-        {
-            Array.Copy(this.array, 0, array, arrayIndex, length);
-        }
-
+        
         public ReadOnlyArray<T> ToReverse()
         {
             var result = new T[length];

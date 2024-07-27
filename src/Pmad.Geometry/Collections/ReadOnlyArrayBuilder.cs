@@ -13,7 +13,7 @@ namespace Pmad.Geometry.Collections
     {
         private T[] array;
         private int length;
-        private bool arrayIsUsed;
+        private bool arrayIsUsed = false;
 
         public ReadOnlyArrayBuilder()
             : this(4)
@@ -122,10 +122,33 @@ namespace Pmad.Geometry.Collections
         /// <param name="list">Items to add</param>
         public void AddRange(ReadOnlyArray<T> list)
         {
-            var newLength = length + list.Count;
+            AddRange(list.AsSpan());
+        }
+
+        public void AddRange(ReadOnlySpan<T> list)
+        {
+            var newLength = length + list.Length;
             EnsureCapacity(newLength);
-            list.CopyTo(array, length);
+            list.CopyTo(new Span<T>(array, length, list.Length));
             length = newLength;
+        }
+
+        public ReadOnlySpan<T> Slice(int offset)
+        {
+            if (offset > length)
+            {
+                ThrowHelper.ThrowArgumentOutOfRangeException();
+            }
+            return new ReadOnlySpan<T>(array, offset, length - offset);
+        }
+
+        public ReadOnlySpan<T> Slice(int offset, int wantedLength)
+        {
+            if (offset + wantedLength > length)
+            {
+                ThrowHelper.ThrowArgumentOutOfRangeException();
+            }
+            return new ReadOnlySpan<T>(array, offset, wantedLength);
         }
 
         [MethodImpl(MethodImplOptions.AggressiveInlining)]
@@ -159,9 +182,9 @@ namespace Pmad.Geometry.Collections
             return new ReadOnlyArray<T>(array, length);
         }
 
-        IEnumerator<T> IEnumerable<T>.GetEnumerator() => ((IEnumerable<T>)Build()).GetEnumerator();
-       
-        IEnumerator IEnumerable.GetEnumerator() => ((IEnumerable)Build()).GetEnumerator();
+        IEnumerator<T> IEnumerable<T>.GetEnumerator() => new Enumerator(this);
+
+        IEnumerator IEnumerable.GetEnumerator() => new Enumerator(this);
 
         void ICollection<T>.Clear()
         {
@@ -182,6 +205,44 @@ namespace Pmad.Geometry.Collections
         bool ICollection<T>.Remove(T item)
         {
             throw new NotSupportedException();
+        }
+
+        private class Enumerator : IEnumerator<T>
+        {
+            private readonly T[] array;
+            private readonly int length;
+            private int index;
+
+            internal Enumerator(ReadOnlyArrayBuilder<T> arraySegment)
+            {
+                array = arraySegment.array;
+                length = arraySegment.length;
+                index = -1;
+            }
+
+            public bool MoveNext()
+            {
+                int index = this.index + 1;
+                if (index < length)
+                {
+                    this.index = index;
+                    return true;
+                }
+                return false;
+            }
+
+            public T Current => array[index];
+
+            object? IEnumerator.Current => Current;
+
+            void IEnumerator.Reset()
+            {
+                index = -1;
+            }
+
+            public void Dispose()
+            {
+            }
         }
     }
 }
