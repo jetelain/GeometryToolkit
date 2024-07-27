@@ -74,14 +74,14 @@ namespace Pmad.Geometry.Shapes
             return new Polygon<TPrimitive, TVector>(Settings, Points);
         }
 
-        public IEnumerable<Path<TPrimitive, TVector>> ClippedBy(VectorEnvelope<TVector> rect)
+        public IEnumerable<Path<TPrimitive, TVector>> Crop(VectorEnvelope<TVector> rect)
         {
             var result = Clipper.RectClipLines(Settings.ToClipper(rect), Settings.ToClipper(Points));
 
             return result.Select(r => new Path<TPrimitive, TVector>(Settings, Settings.FromClipper(r)));
         }
 
-        public IEnumerable<Path<TPrimitive, TVector>> ClippedByKeepOrientation(VectorEnvelope<TVector> rect)
+        public IEnumerable<Path<TPrimitive, TVector>> CropKeepOrientation(VectorEnvelope<TVector> rect)
         {
             var result = PathClipperHelper.RectClipLinesKeepOrientation(Settings.ToClipper(rect), Settings.ToClipper(Points), IsClosed);
 

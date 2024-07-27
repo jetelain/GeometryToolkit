@@ -13,7 +13,8 @@ namespace Pmad.Geometry.Json.Serialization
             {typeof(MultiPolygon<,>),     typeof(JsonMultiPolygonConverter<,>)},
             {typeof(Path<,>),             typeof(JsonPathConverter<,>)},
             {typeof(Circle<,>),           typeof(JsonCircleConverter<,>)},
-            {typeof(RotatedRectangle<,>), typeof(JsonRotatedRectangleConverter<,>)}
+            {typeof(RotatedRectangle<,>), typeof(JsonRotatedRectangleConverter<,>)},
+            {typeof(MultiPath<,>),        typeof(JsonMultiPathConverter<,>)}
         };
 
 

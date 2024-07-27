@@ -34,7 +34,7 @@ namespace Pmad.Geometry.Json.Serialization
                 case IReadOnlyCollection<TVector> points:
                     Utf8JsonWriterHelper<TPrimitive, TVector>.WriteMultiPoint(writer, points);
                     break;
-                case IReadOnlyCollection<Path<TPrimitive, TVector>> paths:
+                case MultiPath<TPrimitive, TVector> paths:
                     Utf8JsonWriterHelper<TPrimitive, TVector>.WriteMultiLineString(writer, paths);
                     break;
 

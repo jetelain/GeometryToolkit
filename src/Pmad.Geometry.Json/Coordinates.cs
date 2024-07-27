@@ -35,7 +35,7 @@ namespace Pmad.Geometry.Json
             this.coordinates = coordinates;
         }
 
-        public Coordinates(IReadOnlyList<Path<TPrimitive, TVector>> coordinates)
+        public Coordinates(MultiPath<TPrimitive, TVector> coordinates)
         {
             this.coordinates = coordinates;
         }
@@ -93,23 +93,18 @@ namespace Pmad.Geometry.Json
             return (coordinates as IReadOnlyList<TVector>) ?? new List<TVector>();
         }
 
-        public IReadOnlyList<Path<TPrimitive, TVector>>? AsMultiLineString()
+        public MultiPath<TPrimitive, TVector>? AsMultiLineString()
         {
             return AsMultiLineString(ShapeSettings<TPrimitive, TVector>.Default);
         }
 
-        public IReadOnlyList<Path<TPrimitive, TVector>> AsMultiLineString(ShapeSettings<TPrimitive, TVector> settings)
+        public MultiPath<TPrimitive, TVector> AsMultiLineString(ShapeSettings<TPrimitive, TVector> settings)
         {
             if (coordinates is ReadOnlyArray<ReadOnlyArray<TVector>> multi)
             {
-                return multi.Select(data => new Path<TPrimitive, TVector>(settings, data)).ToArray();
+                return new MultiPath<TPrimitive, TVector>(multi.Select(data => new Path<TPrimitive, TVector>(settings, data)).ToList());
             }
-            var paths = coordinates as IReadOnlyList<Path<TPrimitive, TVector>>;
-            if (paths != null)
-            {
-                return paths.Select(p => p.WithSettings(settings)).ToList();
-            }
-            return new List<Path<TPrimitive, TVector>>();
+            return (coordinates as MultiPath<TPrimitive, TVector>)?.WithSettings(settings) ?? MultiPath<TPrimitive, TVector>.Empty;
         }
 
         public MultiPolygon<TPrimitive, TVector>? AsMultiPolygon()

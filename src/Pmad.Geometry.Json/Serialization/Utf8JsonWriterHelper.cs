@@ -81,7 +81,7 @@ namespace Pmad.Geometry.Json.Serialization
             writer.WriteEndArray();
         }
 
-        internal static void WriteMultiLineString(Utf8JsonWriter writer, IEnumerable<Path<TPrimitive, TVector>> paths)
+        internal static void WriteMultiLineString(Utf8JsonWriter writer, MultiPath<TPrimitive, TVector> paths)
         {
             writer.WriteStartArray();
             foreach (var path in paths)

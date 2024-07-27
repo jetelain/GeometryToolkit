@@ -31,7 +31,7 @@ namespace Pmad.Geometry.Processing
             {
                 return subject.SubstractAll(others);
             }
-            var quad = SplitQuad(bounds).SelectMany(s => subject.ClippedBy(s));
+            var quad = SplitQuad(bounds).SelectMany(s => subject.Crop(s));
             var result = new ConcurrentQueue<Polygon<P, V>>();
             Parallel.ForEach(quad, polygon =>
             {

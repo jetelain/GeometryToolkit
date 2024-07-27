@@ -184,7 +184,7 @@ namespace Pmad.Geometry.Shapes
             return BooleanOp(other, ClipType.Intersection);
         }
 
-        public MultiPolygon<TPrimitive, TVector> ClippedBy(VectorEnvelope<TVector> rect)
+        public MultiPolygon<TPrimitive, TVector> Crop(VectorEnvelope<TVector> rect)
         {
             return Intersection(Settings.CreateRectangle(rect));
         }

@@ -40,7 +40,7 @@ namespace Pmad.Geometry.Json
             Coordinates = new(coordinates);
         }
 
-        public GeoJsonGeometry(IReadOnlyCollection<Path<TPrimitive, TVector>> coordinates)
+        public GeoJsonGeometry(MultiPath<TPrimitive, TVector> coordinates)
         {
             Type = GeoJsonGeometryType.MultiLineString;
             Coordinates = new(coordinates);

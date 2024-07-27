@@ -105,6 +105,15 @@ namespace Pmad.Geometry.Shapes
             return polygons.GetEnumerator();
         }
 
+        public MultiPolygon<TPrimitive, TVector> Crop(VectorEnvelope<TVector> rect)
+        {
+            if (polygons.Count == 0)
+            {
+                return this;
+            }
+            return Intersection(new(polygons[0].Settings.CreateRectangle(rect)));
+        }
+
         private MultiPolygon<TPrimitive, TVector> BooleanOp(MultiPolygon<TPrimitive, TVector> other, ClipType op)
         {
             var settings = polygons[0].Settings;

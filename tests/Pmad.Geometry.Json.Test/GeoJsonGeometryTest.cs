@@ -15,7 +15,7 @@ namespace Pmad.Geometry.Json.Test
         [Fact]
         public void Serialize_MultiLineString()
         {
-            var result = JsonSerializer.Serialize(new[] { new Path<double, Vector2D>(new(10, 20), new(30, 40), new(60, 40)), new Path<double, Vector2D>(new(210, 220), new(230, 240), new(260, 240)) }.ToGeoJson());
+            var result = JsonSerializer.Serialize(new MultiPath<double, Vector2D>(new Path<double, Vector2D>(new(10, 20), new(30, 40), new(60, 40)), new Path<double, Vector2D>(new(210, 220), new(230, 240), new(260, 240)) ).ToGeoJson());
             Assert.Equal(@"{""type"":""MultiLineString"",""coordinates"":[[[10,20],[30,40],[60,40]],[[210,220],[230,240],[260,240]]]}", result);
         }
 
@@ -68,6 +68,7 @@ namespace Pmad.Geometry.Json.Test
             Assert.NotNull(result);
             var lines = result.Coordinates.AsMultiLineString();
             Assert.NotNull(lines);
+            Assert.Equal("MULTILINESTRING ((10 20, 30 40, 60 40), (210 220, 230 240, 260 240))", lines.ToString());
             Assert.Equal(2, lines.Count);
             Assert.Equal("LINESTRING (10 20, 30 40, 60 40)", lines[0].ToString());
             Assert.Equal("LINESTRING (210 220, 230 240, 260 240)", lines[1].ToString());

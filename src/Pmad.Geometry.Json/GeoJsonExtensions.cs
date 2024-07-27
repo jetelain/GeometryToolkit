@@ -26,7 +26,7 @@ namespace Pmad.Geometry.Json
             return new GeoJsonGeometry<TPrimitive, TVector>(geometry);
         }
 
-        public static GeoJsonGeometry<TPrimitive, TVector> ToGeoJson<TPrimitive, TVector>(this IReadOnlyCollection<Path<TPrimitive, TVector>> geometry)
+        public static GeoJsonGeometry<TPrimitive, TVector> ToGeoJson<TPrimitive, TVector>(this MultiPath<TPrimitive, TVector> geometry)
             where TPrimitive : unmanaged, INumber<TPrimitive>
             where TVector : struct, IVector2<TPrimitive, TVector>
         {
