@@ -18,14 +18,6 @@
       <LastGenOutput>Algorithms.cs</LastGenOutput>
       <Generator>TextTemplatingFileGenerator</Generator>
     </None>
-    <None Update="Algorithms\CircleFromThreePoints.tt">
-      <LastGenOutput>CircleFromThreePoints.cs</LastGenOutput>
-      <Generator>TextTemplatingFileGenerator</Generator>
-    </None>
-    <None Update="Algorithms\SmallestRotatedRectangle.tt">
-      <LastGenOutput>SmallestRotatedRectangle.cs</LastGenOutput>
-      <Generator>TextTemplatingFileGenerator</Generator>
-    </None>
     <None Update="Algorithms\PointInPolygon.tt">
       <LastGenOutput>PointInPolygon.cs</LastGenOutput>
       <Generator>TextTemplatingFileGenerator</Generator>
@@ -52,16 +44,6 @@
       <DesignTime>True</DesignTime>
       <AutoGen>True</AutoGen>
       <DependentUpon>Algorithms.tt</DependentUpon>
-    </Compile>
-    <Compile Update="Algorithms\CircleFromThreePoints.cs">
-      <DependentUpon>CircleFromThreePoints.tt</DependentUpon>
-      <DesignTime>True</DesignTime>
-      <AutoGen>True</AutoGen>
-    </Compile>
-    <Compile Update="Algorithms\SmallestRotatedRectangle.cs">
-      <DependentUpon>SmallestRotatedRectangle.tt</DependentUpon>
-      <DesignTime>True</DesignTime>
-      <AutoGen>True</AutoGen>
     </Compile>
     <Compile Update="Algorithms\PointInPolygon.cs">
       <DesignTime>True</DesignTime>
