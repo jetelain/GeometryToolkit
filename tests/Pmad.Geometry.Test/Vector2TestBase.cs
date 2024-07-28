@@ -236,6 +236,12 @@ namespace Pmad.Geometry.Test
         }
 
         [Fact]
+        public void TVectorOpDivideScalar()
+        {
+            Assert.Equal(Vector(20, 40), Vector(200, 400) / Scalar(10));
+        }
+
+        [Fact]
         public void VectorsHasLineIntersection()
         {
             TVector result;
@@ -381,6 +387,26 @@ namespace Pmad.Geometry.Test
             Assert.Equal(Vector(9, 12),  TVector.Sum([Vector(1, 2), Vector(3, 4), Vector(5, 6)]));
             Assert.Equal(Vector(16, 20),  TVector.Sum([Vector(1, 2), Vector(3, 4), Vector(5, 6), Vector(7, 8)]));
             Assert.Equal(Vector(25, 30), TVector.Sum([Vector(1, 2), Vector(3, 4), Vector(5, 6), Vector(7, 8), Vector(9, 10)]));
+        }
+
+
+        [Fact]
+        public void Constants()
+        {
+            Assert.Equal(Vector(0, 0), TVector.Zero);
+            Assert.Equal(Vector(1, 1), TVector.One);
+            Assert.Equal(Vector(1, 0), TVector.UnitX);
+            Assert.Equal(Vector(0, 1), TVector.UnitY);
+        }
+
+        [Fact]
+        public void AreaD()
+        {
+            Assert.Equal(0, Vector(0, 0).AreaD());
+            Assert.Equal(0, Vector(10, 0).AreaD());
+            Assert.Equal(0, Vector(0, 10).AreaD());
+            Assert.Equal(100, Vector(10, 10).AreaD());
+            Assert.Equal(200, Vector(10, 20).AreaD());
         }
 
     }

@@ -89,7 +89,7 @@ namespace Pmad.Geometry.Test
         }
 
 	}
-	public partial class Vector2FTest : Vector2TestBase<float,Vector2F>
+	public partial class Vector2FTest : Vector2FPTestBase<float,Vector2F>
 	{
         protected override float Scalar(int v) => v;
 
@@ -265,7 +265,7 @@ namespace Pmad.Geometry.Test
         }
 
 	}
-	public partial class Vector2DTest : Vector2TestBase<double,Vector2D>
+	public partial class Vector2DTest : Vector2FPTestBase<double,Vector2D>
 	{
         protected override double Scalar(int v) => v;
 
@@ -441,7 +441,7 @@ namespace Pmad.Geometry.Test
         }
 
 	}
-	public partial class Vector2FSTest : Vector2TestBase<float,Vector2FS>
+	public partial class Vector2FSTest : Vector2FPTestBase<float,Vector2FS>
 	{
         protected override float Scalar(int v) => v;
 
@@ -617,7 +617,7 @@ namespace Pmad.Geometry.Test
         }
 
 	}
-	public partial class Vector2DSTest : Vector2TestBase<double,Vector2DS>
+	public partial class Vector2DSTest : Vector2FPTestBase<double,Vector2DS>
 	{
         protected override double Scalar(int v) => v;
 

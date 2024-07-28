@@ -11,14 +11,13 @@ It includes a fork of [Clipper2](https://github.com/AngusJohnson/Clipper2) from 
 
 ## Experimental implementations
 
-| Vector	| Polygon    | Description               |  
-| --------- | ---------- | ------------------------- |           
-| Vector2I  | Polygon2I  | `Vector128` with `double` |           
-| Vector2F  | Polygon2F  | `Vector128` with `float`  |           
-| Vector2L  | Polygon2L  | `Vector128` with `long`   |           
-| Vector2D  | Polygon2D  | `Vector128` with `double` |           
-| Vector2IS | Polygon2IS | Two scalar `int`		     |           
-| Vector2FS | Polygon2FS | Two scalar `float`		 |           
-| Vector2LS | Polygon2LS | Two scalar `long`		 |           
-| Vector2DS | Polygon2DS | Two scalar `double`		 |
-| Vector2FN | Polygon2FN | `Vector2` wrapper 		 |
+| Vector	| Description               |
+| --------- | ------------------------- |
+| Vector2I  | Two scalar `int` (some operations are optimised with `Vector128`) |
+| Vector2F  | `Vector2` wrapper         |
+| Vector2L  | `Vector128` with `long`   |
+| Vector2D  | `Vector128` with `double` |
+| Vector2IS | Two scalar `int`		    |
+| Vector2FS | Two scalar `float`		|
+| Vector2LS | Two scalar `long`		    |
+| Vector2DS | Two scalar `double`	    |

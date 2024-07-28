@@ -48,9 +48,9 @@ namespace Pmad.Geometry
 
         abstract static TVector operator /(TVector left, TPrimitive right);
 
-        static TVector UnitX { get; }
+        abstract static TVector UnitX { get; }
 
-        static TVector UnitY { get; }
+        abstract static TVector UnitY { get; }
 
         abstract static TVector Create (TPrimitive x, TPrimitive y);
 

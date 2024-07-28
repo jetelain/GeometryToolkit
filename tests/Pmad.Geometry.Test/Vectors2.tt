@@ -12,7 +12,7 @@ namespace Pmad.Geometry.Test
 	foreach(var def in definitions)
 	{
 #>
-	public partial class <#=def.Struct#>Test : Vector2TestBase<<#=def.Primitive#>,<#=def.Struct#>>
+	public partial class <#=def.Struct#>Test : <#=(def.IsFP?"Vector2FPTestBase":"Vector2TestBase")#><<#=def.Primitive#>,<#=def.Struct#>>
 	{
         protected override <#=def.Primitive#> Scalar(int v) => v;
 

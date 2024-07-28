@@ -1,0 +1,36 @@
+name: .NET Linux
+
+on:
+  push:
+    branches: [ "main" ]
+  pull_request:
+    branches: [ "main" ]
+  release:
+    types: [published]
+    
+jobs:
+  build:
+    runs-on: ubuntu-latest
+    steps:
+    - name: Checkout
+      uses: actions/checkout@v4
+      with:
+        fetch-depth: 0
+
+    - name: Use Nerdbank.GitVersioning to set version variables
+      uses: dotnet/nbgv@master
+      id: nbgv
+
+    - name: Restore dependencies
+      run: dotnet restore Pmad.Geometry.sln
+
+    - name: Build
+      run: dotnet build --no-restore --configuration Release Pmad.Geometry.sln
+      
+    - name: Test
+      run: dotnet test --no-build --verbosity normal --configuration Release Pmad.Geometry.sln
+      
+#    - name: Publish Nuget to GitHub registry
+#      run: dotnet nuget push **/*.nupkg -k ${NUGET_PUSH_API_KEY} -s https://api.nuget.org/v3/index.json --skip-duplicate --no-symbols 
+#      env:
+#        NUGET_PUSH_API_KEY: ${{ secrets.NUGET_PUSH_API_KEY }}
