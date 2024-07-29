@@ -21,3 +21,10 @@ It includes a fork of [Clipper2](https://github.com/AngusJohnson/Clipper2) from 
 | Vector2FS | Two scalar `float`		|
 | Vector2LS | Two scalar `long`		    |
 | Vector2DS | Two scalar `double`	    |
+
+## License
+
+Licensed under [Boost Software License - Version 1.0](https://www.boost.org/LICENSE_1_0.txt) terms.
+
+Copyright Julien Etelain 2024.
+Copyright Angus Johnson 2010-2024.
