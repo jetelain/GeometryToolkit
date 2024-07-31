@@ -13,7 +13,7 @@ namespace Pmad.Geometry.Shapes
         private readonly TVector scale;
 
         public ShapeSettings()
-            : this(GetDefaultScale(), 4)
+            : this(GetDefaultScale(), 3)
         {
 
         }

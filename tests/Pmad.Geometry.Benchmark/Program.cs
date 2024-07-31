@@ -4,6 +4,7 @@ using BenchmarkDotNet.Configs;
 using BenchmarkDotNet.Jobs;
 using BenchmarkDotNet.Running;
 using Pmad.Geometry.Algorithms;
+using Pmad.Geometry.Benchmark.ShapeOperations;
 using Pmad.Geometry.Benchmark.VectorOperations;
 
 namespace Pmad.Geometry.Benchmark
@@ -27,11 +28,11 @@ namespace Pmad.Geometry.Benchmark
                     //typeof(CrossProduct3Benchmark),
                     //typeof(SumBenchmark),
                     //typeof(LengthBenchmark),
-                    //typeof(PointInPolygonBenchmark),
+                    typeof(PointInPolygonBenchmark),
                     //typeof(SwapXYBenchmark),
                     //typeof(AdditionBenchmark),
                     //typeof(SmallestRotatedRectangleBenchmark),
-                    typeof(MaxBenchmark),
+                    //typeof(MaxBenchmark),
                     //typeof(LargestRotatedRectangleBenchmark),
                     //typeof(ReadOnlyArrayBenchmark),
                     //typeof(GetSignedAreaBenchmark),
@@ -43,6 +44,7 @@ namespace Pmad.Geometry.Benchmark
                     //typeof(SimplifyBenchmark)
                     //typeof(ComparativeBenchmark)
                     //typeof(DotDBenchmark)
+                    //typeof(CentroidBenchmark)
                 ]);
         }
     }

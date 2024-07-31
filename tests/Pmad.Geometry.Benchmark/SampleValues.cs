@@ -1,4 +1,6 @@
 ﻿using Clipper2Lib;
+using GameRealisticMap.Geometries;
+using NetTopologySuite.Geometries;
 
 namespace Pmad.Geometry.Benchmark
 {
@@ -40,6 +42,9 @@ namespace Pmad.Geometry.Benchmark
         public static List<Vector2DS> PosList2DS = PosList2I.Select(p => new Vector2DS(p.X, p.Y)).ToList();
         public static List<Vector2LS> PosList2LS = PosList2I.Select(p => new Vector2LS(p.X, p.Y)).ToList();
         public static Path64          PosListP64 = new Path64(PosList2I.Select(p => new Point64(p.X, p.Y)));
+        public static List<TerrainPoint> PosListGRM = PosList2I.Select(p => new TerrainPoint(p.X, p.Y)).ToList();
+        public static List<Point> PosListNTS = PosList2I.Select(p => new Point(p.X, p.Y)).ToList();
+
 
         public static List<Vector2I>  Circle2I  = Enumerable.Range(0, 41).Select(a => new Vector2I((int)(Math.Cos(a * Math.PI / 20) * 100), (int)(Math.Sin(a * Math.PI / 20) * 100))).ToList();
         public static List<Vector2F>  Circle2F  = Circle2I.Select(p => new Vector2F(p.X, p.Y)).ToList();
@@ -50,6 +55,8 @@ namespace Pmad.Geometry.Benchmark
         public static List<Vector2DS> Circle2DS = Circle2I.Select(p => new Vector2DS(p.X, p.Y)).ToList();
         public static List<Vector2LS> Circle2LS = Circle2I.Select(p => new Vector2LS(p.X, p.Y)).ToList();
         public static Path64          CircleP64 = new Path64(Circle2I.Select(p => new Point64(p.X, p.Y)));
+        public static List<TerrainPoint> CircleGRM = Circle2I.Select(p => new TerrainPoint(p.X, p.Y)).ToList();
+        public static Polygon CircleNTS =  new Polygon(new LinearRing(Circle2I.Select(p => new Coordinate(p.X, p.Y)).ToArray()));
 
 
     }

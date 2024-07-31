@@ -9,6 +9,8 @@
 
   <ItemGroup>
     <PackageReference Include="BenchmarkDotNet" Version="0.13.12" />
+    <PackageReference Include="NetTopologySuite" Version="2.5.0" />
+	<PackageReference Include="GeoJSON.Text" Version="1.0.0" />
   </ItemGroup>
 
   <ItemGroup>
