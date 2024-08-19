@@ -16,7 +16,7 @@
   </ItemGroup>
 
 	<ItemGroup>
-		<PackageReference Include="Pmad.ProgressTracking" Version="0.1.13-g99634b7d95" />
+		<PackageReference Include="Pmad.ProgressTracking" Version="0.1.22" />
 	</ItemGroup>
 
 	<ItemGroup>
