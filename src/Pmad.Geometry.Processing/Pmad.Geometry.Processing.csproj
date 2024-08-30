@@ -8,19 +8,25 @@
     <PackageLicenseExpression>BSL-1.0</PackageLicenseExpression>
     <PackageProjectUrl>https://github.com/jetelain/GeometryToolkit</PackageProjectUrl>
     <PackageReadmeFile>README.md</PackageReadmeFile>
+	<Description>Mass-processing of geometry shapes</Description>
     <IsAotCompatible>true</IsAotCompatible>
+    <PublishRepositoryUrl>true</PublishRepositoryUrl>
+    <IncludeSymbols>true</IncludeSymbols>
+    <SymbolPackageFormat>snupkg</SymbolPackageFormat>
+    <Authors>Julien Etelain</Authors>
   </PropertyGroup>
 
   <ItemGroup>
     <None Include="..\..\README.md" Pack="true" PackagePath="\"/>
   </ItemGroup>
 
-	<ItemGroup>
-		<PackageReference Include="Pmad.ProgressTracking" Version="0.1.22" />
-	</ItemGroup>
+  <ItemGroup>
+    <PackageReference Include="Microsoft.SourceLink.GitHub" Version="1.0.0" PrivateAssets="All" />
+    <PackageReference Include="Pmad.ProgressTracking" Version="0.1.22" />
+  </ItemGroup>
 
-	<ItemGroup>
-	  <ProjectReference Include="..\Pmad.Geometry\Pmad.Geometry.csproj" />
-	</ItemGroup>
+  <ItemGroup>
+    <ProjectReference Include="..\Pmad.Geometry\Pmad.Geometry.csproj" />
+  </ItemGroup>
 
 </Project>

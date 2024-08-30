@@ -8,11 +8,20 @@
     <PackageLicenseExpression>BSL-1.0</PackageLicenseExpression>
     <PackageProjectUrl>https://github.com/jetelain/GeometryToolkit</PackageProjectUrl>
     <PackageReadmeFile>README.md</PackageReadmeFile>
+	<Description>Geometry shapes and primitives toolkit</Description>
     <IsAotCompatible>true</IsAotCompatible>
+	<PublishRepositoryUrl>true</PublishRepositoryUrl>
+	<IncludeSymbols>true</IncludeSymbols>
+	<SymbolPackageFormat>snupkg</SymbolPackageFormat>
+	<Authors>Julien Etelain</Authors>
   </PropertyGroup>
 
   <ItemGroup>
     <None Include="..\..\README.md" Pack="true" PackagePath="\"/>
+  </ItemGroup>
+
+  <ItemGroup>
+    <PackageReference Include="Microsoft.SourceLink.GitHub" Version="1.0.0" PrivateAssets="All" />
   </ItemGroup>
 	
   <ItemGroup>
