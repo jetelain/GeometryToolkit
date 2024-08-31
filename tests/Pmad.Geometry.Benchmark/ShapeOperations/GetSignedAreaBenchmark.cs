@@ -13,10 +13,9 @@ namespace Pmad.Geometry.Benchmark.ShapeOperations
         [Benchmark] public object GetSignedArea_MapKit() => SampleValues.PosListGRM.GetSignedArea();
 
         [Benchmark] public object GetSignedArea_2D_Shoelace() => SignedArea<double, Vector2D>.GetSignedAreaD(SampleValuesRO.Circle2D);
-        [Benchmark] public object GetSignedArea_2D_Classic() => SignedArea<double,Vector2D>.GetSignedAreaClassicD(SampleValuesRO.Circle2D);
-
         [Benchmark] public object GetSignedArea_2L_Shoelace() => SignedArea<long, Vector2L>.GetSignedAreaD(SampleValuesRO.Circle2L);
-        [Benchmark] public object GetSignedArea_2L_Classic() => SignedArea<long, Vector2L>.GetSignedAreaClassicD(SampleValuesRO.Circle2L);
+        [Benchmark] public object GetSignedArea_2F_Shoelace() => SignedArea<float, Vector2F>.GetSignedAreaD(SampleValuesRO.Circle2F);
+        [Benchmark] public object GetSignedArea_2I_Shoelace() => SignedArea<int, Vector2I>.GetSignedAreaD(SampleValuesRO.Circle2I);
 
     }
 }

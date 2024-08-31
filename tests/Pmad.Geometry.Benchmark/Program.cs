@@ -28,7 +28,7 @@ namespace Pmad.Geometry.Benchmark
                     //typeof(CrossProduct3Benchmark),
                     //typeof(SumBenchmark),
                     //typeof(LengthBenchmark),
-                    typeof(PointInPolygonBenchmark),
+                    //typeof(PointInPolygonBenchmark),
                     //typeof(SwapXYBenchmark),
                     //typeof(AdditionBenchmark),
                     //typeof(SmallestRotatedRectangleBenchmark),
@@ -39,12 +39,17 @@ namespace Pmad.Geometry.Benchmark
                     //typeof(CircleFromTwoPointsBenchmark),
                     //typeof(CircleFromThreePointsBenchmark),
                     //typeof(NearestPointPathBenchmark),
-                    //typeof(AngleBenchmark)
-                    //typeof(LerpBenchmark)
-                    //typeof(SimplifyBenchmark)
-                    //typeof(ComparativeBenchmark)
-                    //typeof(DotDBenchmark)
-                    //typeof(CentroidBenchmark)
+                    //typeof(AngleBenchmark),
+                    //typeof(LerpBenchmark),
+                    //typeof(SimplifyBenchmark),
+                    //typeof(ComparativeBenchmark),
+                    //typeof(DotDBenchmark),
+                    //typeof(CentroidBenchmark),
+                    //typeof(IntersectsBenchmark),
+                    //typeof(IntersectionAreaBenchmark),
+                    //typeof(IntersectionBenchmark),
+                    //typeof(UnionBenchmark),
+                    typeof(ShapeSettingsBenchmark)
                 ]);
         }
     }

@@ -1,4 +1,6 @@
 ﻿using System.Numerics;
+using System.Runtime.CompilerServices;
+using System.Runtime.InteropServices;
 using Clipper2Lib;
 using Pmad.Geometry.Collections;
 
@@ -108,22 +110,33 @@ namespace Pmad.Geometry.Shapes
 
         internal ReadOnlyArray<TVector> FromClipperToRing(List<Point64> points)
         {
-            var ring = new TVector[points.Count + 1];
-            for (int i = 0; i < points.Count; i++)
+            var count = points.Count;
+            var result = new TVector[count + 1];
+            var source = CollectionsMarshal.AsSpan(points);
+            var target = new Span<TVector>(result);
+            for (int i = 0; i < count; i++)
             {
-                ring[i] = FromClipper(points[i]);
+                target[i] = FromClipper(source[i]);
             }
-            ring[points.Count] = FromClipper(points[0]);
-            return new ReadOnlyArray<TVector>(ring);
+            target[count] = target[0];
+            return new ReadOnlyArray<TVector>(result);
         }
 
         internal Path64 ToClipper(ReadOnlyArray<TVector> shell)
         {
-            var path = new Path64(shell.Count);
-            path.AddRange(shell.Select(ToClipper));
-            return path;
+            var count = shell.Count;
+            var result = new Path64(count);
+            CollectionsMarshal.SetCount(result, count);
+            var target = CollectionsMarshal.AsSpan(result);
+            var source = shell.AsSpan();
+            for (int i = 0; i < count; i++)
+            {
+                target[i] = ToClipper(source[i]);
+            }
+            return result;
         }
 
+        [MethodImpl(MethodImplOptions.AggressiveInlining)]
         public Point64 ToClipper(TVector value)
         {
             if (typeof(TPrimitive) == typeof(long))
@@ -147,6 +160,7 @@ namespace Pmad.Geometry.Shapes
             return default;
         }
 
+        [MethodImpl(MethodImplOptions.AggressiveInlining)]
         public TVector FromClipper(Point64 value)
         {
             if (typeof(TPrimitive) == typeof(long))
@@ -200,12 +214,15 @@ namespace Pmad.Geometry.Shapes
 
         internal ReadOnlyArray<TVector> FromClipper(Path64 points)
         {
-            var path = new TVector[points.Count];
-            for (int i = 0; i < points.Count; i++)
+            var count = points.Count;
+            var result = new TVector[count];
+            var source = CollectionsMarshal.AsSpan(points);
+            var target = new Span<TVector>(result);
+            for (int i = 0; i < count; i++)
             {
-                path[i] = FromClipper(points[i]);
+                target[i] = FromClipper(source[i]);
             }
-            return new ReadOnlyArray<TVector>(path);
+            return new ReadOnlyArray<TVector>(result);
         }
 
         public bool AlmostEquals(TVector a, TVector b)

@@ -40,6 +40,11 @@
 	    <DesignTime>True</DesignTime>
 	    <AutoGen>True</AutoGen>
 	  </Compile>
+	  <Compile Update="Shapes\ShapeSettingsTest.cs">
+	    <DependentUpon>ShapeSettingsTest.tt</DependentUpon>
+	    <DesignTime>True</DesignTime>
+	    <AutoGen>True</AutoGen>
+	  </Compile>
 	  <Compile Update="Shapes\RotatedRectangle.cs">
 	    <DesignTime>True</DesignTime>
 	    <AutoGen>True</AutoGen>
@@ -90,6 +95,10 @@
     </None>
     <None Update="Shapes\Path.tt">
       <LastGenOutput>Path.cs</LastGenOutput>
+      <Generator>TextTemplatingFileGenerator</Generator>
+    </None>
+    <None Update="Shapes\ShapeSettingsTest.tt">
+      <LastGenOutput>ShapeSettingsTest.cs</LastGenOutput>
       <Generator>TextTemplatingFileGenerator</Generator>
     </None>
     <None Update="Shapes\RotatedRectangle.tt">
