@@ -14,7 +14,7 @@ namespace Pmad.Geometry
 	foreach(var def in definitions.Where(d => d.IsFP))
 	{
 #>
-    public struct Matrix2x<#=def.Suffix#> : IMatrix2x2<<#=def.Primitive#>, <#=def.Struct#>, Matrix2x<#=def.Suffix#>>
+    <#=def.Visibility#> struct Matrix2x<#=def.Suffix#> : IMatrix2x2<<#=def.Primitive#>, <#=def.Struct#>, Matrix2x<#=def.Suffix#>>
     {
         public readonly <#=def.Struct#> X;
         public readonly <#=def.Struct#> Y;
@@ -67,7 +67,7 @@ namespace Pmad.Geometry
         }
     }
 
-    public struct Matrix3x<#=def.Suffix#> : IMatrix3x2<<#=def.Primitive#>, <#=def.Struct#>, Matrix3x<#=def.Suffix#>>
+    <#=def.Visibility#> struct Matrix3x<#=def.Suffix#> : IMatrix3x2<<#=def.Primitive#>, <#=def.Struct#>, Matrix3x<#=def.Suffix#>>
     {
         public readonly Matrix2x<#=def.Suffix#> XY;
 

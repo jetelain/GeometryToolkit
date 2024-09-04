@@ -188,10 +188,6 @@ namespace Pmad.Geometry
                     (double)(pt2.Y - pt1.Y) * (pt3.X - pt2.X));
         }
 
-        public readonly Vector2FS ToFloatS() => new((float)X, (float)Y);
-
-        public readonly Vector2DS ToDoubleS() => new((double)X, (double)Y);
-
         public readonly Vector2I Rotate90()
         {
             return new(-Y, X);

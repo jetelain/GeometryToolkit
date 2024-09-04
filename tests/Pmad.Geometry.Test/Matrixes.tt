@@ -9,7 +9,7 @@
 namespace Pmad.Geometry.Test
 {
 <#
-	foreach(var def in definitions.Where(d => d.IsFP))
+	foreach(var def in definitions.Where(d => d.IsFP && d.Visibility == "public"))
 	{
 #>
 	public sealed partial class Matrix2x<#=def.Suffix#>Test : Matrix2x2TestBase<<#=def.Primitive#>,<#=def.Struct#>,Matrix2x<#=def.Suffix#>>

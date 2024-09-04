@@ -3,7 +3,7 @@ using System.Runtime.CompilerServices;
 
 namespace Pmad.Geometry
 {
-    public partial struct Vector2FS : IEquatable<Vector2FS>, IVectorFP<float, Vector2FS>
+    internal partial struct Vector2FS : IEquatable<Vector2FS>, IVectorFP<float, Vector2FS>
     {
 
         [MethodImpl(MethodImplOptions.AggressiveInlining)]

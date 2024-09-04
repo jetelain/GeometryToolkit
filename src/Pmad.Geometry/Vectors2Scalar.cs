@@ -7,7 +7,7 @@ using System.Runtime.Intrinsics;
 namespace Pmad.Geometry
 {
     [DebuggerDisplay("({X};{Y})")]
-	public partial struct Vector2IS : IEquatable<Vector2IS>, IVector2<int,Vector2IS>
+	internal partial struct Vector2IS : IEquatable<Vector2IS>, IVector2<int,Vector2IS>
 	{
         public static Vector2IS Zero => default;
         
@@ -231,7 +231,7 @@ namespace Pmad.Geometry
 
 	}
     [DebuggerDisplay("({X};{Y})")]
-	public partial struct Vector2FS : IEquatable<Vector2FS>, IVector2<float,Vector2FS>
+	internal partial struct Vector2FS : IEquatable<Vector2FS>, IVector2<float,Vector2FS>
 	{
         public static Vector2FS Zero => default;
         
@@ -462,7 +462,7 @@ namespace Pmad.Geometry
 
 	}
     [DebuggerDisplay("({X};{Y})")]
-	public partial struct Vector2LS : IEquatable<Vector2LS>, IVector2<long,Vector2LS>
+	internal partial struct Vector2LS : IEquatable<Vector2LS>, IVector2<long,Vector2LS>
 	{
         public static Vector2LS Zero => default;
         
@@ -691,7 +691,7 @@ namespace Pmad.Geometry
 
 	}
     [DebuggerDisplay("({X};{Y})")]
-	public partial struct Vector2DS : IEquatable<Vector2DS>, IVector2<double,Vector2DS>
+	internal partial struct Vector2DS : IEquatable<Vector2DS>, IVector2<double,Vector2DS>
 	{
         public static Vector2DS Zero => default;
         

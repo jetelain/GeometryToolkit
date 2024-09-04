@@ -4,7 +4,7 @@ using System.Runtime.Intrinsics;
 
 namespace Pmad.Geometry
 {
-    public partial struct Vector2DS : IEquatable<Vector2DS>, IVectorFP<double, Vector2DS>
+    internal partial struct Vector2DS : IEquatable<Vector2DS>, IVectorFP<double, Vector2DS>
     {
         public static Vector2DS Lerp(Vector2DS value1, Vector2DS value2, double amount)
         {

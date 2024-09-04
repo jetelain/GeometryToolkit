@@ -9,7 +9,7 @@
 namespace Pmad.Geometry.Processing.Test
 {
 <#
-	foreach(var def in definitions)
+	foreach(var def in definitions.Where(d => d.Visibility == "public"))
 	{
 #>
 	public partial class Polygons<#=def.Suffix#>Test : PolygonsTestBase<<#=def.Primitive#>,<#=def.Struct#>>

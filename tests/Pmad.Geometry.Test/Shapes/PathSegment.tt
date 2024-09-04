@@ -9,7 +9,7 @@
 namespace Pmad.Geometry.Test.Shapes.PathSegments
 {
 <#
-	foreach(var def in definitions)
+	foreach(var def in definitions.Where(d => d.Visibility == "public"))
 	{
 #>
 	public partial class PathSegment<#=def.Suffix#>Test : PathSegmentTestBase<<#=def.Primitive#>,<#=def.Struct#>>

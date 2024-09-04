@@ -1,6 +1,6 @@
 ﻿namespace Pmad.Geometry
 {
-    public partial struct Vector2IS : IEquatable<Vector2IS>
+    internal partial struct Vector2IS : IEquatable<Vector2IS>
     {
         public readonly double LengthD() => ToDoubleS().Length();
 
