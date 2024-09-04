@@ -10,7 +10,7 @@ using Pmad.Geometry.Collections;
 namespace Pmad.Geometry.Test.Shapes.Paths
 {
 <#
-	foreach(var def in definitions)
+	foreach(var def in definitions.Where(d => d.Visibility == "public"))
 	{
 #>
 	public partial class Path<#=def.Suffix#>Test : PathTestBase<<#=def.Primitive#>,<#=def.Struct#>>

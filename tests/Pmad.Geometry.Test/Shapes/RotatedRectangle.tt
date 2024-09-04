@@ -9,7 +9,7 @@
 namespace Pmad.Geometry.Test.Shapes.RotatedRectangles
 {
 <#
-	foreach(var def in definitions.Where(d => d.IsFP))
+	foreach(var def in definitions.Where(d => d.IsFP && d.Visibility == "public"))
 	{
 #>
 	public partial class RotatedRectangle<#=def.Suffix#>Test : RotatedRectangleTestBase<<#=def.Primitive#>,<#=def.Struct#>>

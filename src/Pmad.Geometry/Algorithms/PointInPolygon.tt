@@ -24,7 +24,7 @@ namespace Pmad.Geometry.Algorithms
 	foreach(var def in definitions)
 	{
 #>
-        public static PointInPolygonResult TestPointInPolygon(this List<<#=def.Struct#>> polygon, <#=def.Struct#> pt)
+        <#=def.Visibility#> static PointInPolygonResult TestPointInPolygon(this List<<#=def.Struct#>> polygon, <#=def.Struct#> pt)
         {           
             // We achieve 20% faster processing using a Span compared to List<<#=def.Struct#>>
             // and 25% faster than sticking to IReadOnlyList<<#=def.Struct#>>
@@ -32,12 +32,12 @@ namespace Pmad.Geometry.Algorithms
         }
 
         [MethodImpl(MethodImplOptions.AggressiveInlining)]
-        public static PointInPolygonResult TestPointInPolygon(this ReadOnlyArray<<#=def.Struct#>> polygon, <#=def.Struct#> pt)
+        <#=def.Visibility#> static PointInPolygonResult TestPointInPolygon(this ReadOnlyArray<<#=def.Struct#>> polygon, <#=def.Struct#> pt)
         {
             return TestPointInPolygon(polygon.AsSpan(), pt);
         }
 
-        public static PointInPolygonResult TestPointInPolygon(this IReadOnlyList<<#=def.Struct#>> polygon, <#=def.Struct#> pt)
+        <#=def.Visibility#> static PointInPolygonResult TestPointInPolygon(this IReadOnlyList<<#=def.Struct#>> polygon, <#=def.Struct#> pt)
         {
             if (polygon is List<<#=def.Struct#>> list)
             {
@@ -126,7 +126,7 @@ namespace Pmad.Geometry.Algorithms
             
         }
 
-        public static PointInPolygonResult TestPointInPolygon(this ReadOnlySpan<<#=def.Struct#>> polygon, <#=def.Struct#> pt)
+        <#=def.Visibility#> static PointInPolygonResult TestPointInPolygon(this ReadOnlySpan<<#=def.Struct#>> polygon, <#=def.Struct#> pt)
         {
             int len = polygon.Length, start = 0;
             if (len < 3) return PointInPolygonResult.IsOutside;

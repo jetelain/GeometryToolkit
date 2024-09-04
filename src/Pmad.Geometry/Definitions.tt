@@ -5,13 +5,13 @@
 <#
     var definitions = new []
     {
-        (Struct: "Vector2I",  Suffix: "2I",  BaseVector: "Custom",    Primitive: "int",    ResultType: "double", HasFiller: true,  IsFP: false, PrimitiveSize:4, Math:"Math"),
-        (Struct: "Vector2F",  Suffix: "2F",  BaseVector: "Vector2",   Primitive: "float" , ResultType: "float" , HasFiller: true,  IsFP: true , PrimitiveSize:4, Math:"MathF"),
-        (Struct: "Vector2L",  Suffix: "2L",  BaseVector: "Vector128", Primitive: "long",   ResultType: "double", HasFiller: false, IsFP: false, PrimitiveSize:8, Math:"Math"),
-        (Struct: "Vector2D",  Suffix: "2D",  BaseVector: "Vector128", Primitive: "double", ResultType: "double", HasFiller: false, IsFP: true , PrimitiveSize:8, Math:"Math"),
-        (Struct: "Vector2IS", Suffix: "2IS", BaseVector: null,        Primitive: "int",    ResultType: "double", HasFiller: false, IsFP: false, PrimitiveSize:4, Math:"Math"),
-        (Struct: "Vector2FS", Suffix: "2FS", BaseVector: null,        Primitive: "float",  ResultType: "float",  HasFiller: false, IsFP: true , PrimitiveSize:4, Math:"MathF"),
-        (Struct: "Vector2LS", Suffix: "2LS", BaseVector: null,        Primitive: "long",   ResultType: "double", HasFiller: false, IsFP: false, PrimitiveSize:8, Math:"Math"),
-        (Struct: "Vector2DS", Suffix: "2DS", BaseVector: null,        Primitive: "double", ResultType: "double", HasFiller: false, IsFP: true , PrimitiveSize:8, Math:"Math")
+        (Struct: "Vector2I",  Suffix: "2I",  BaseVector: "Custom",    Primitive: "int",    ResultType: "double", Visibility: "public", IsFP: false, PrimitiveSize:4, Math:"Math"),
+        (Struct: "Vector2F",  Suffix: "2F",  BaseVector: "Vector2",   Primitive: "float" , ResultType: "float" , Visibility: "public", IsFP: true , PrimitiveSize:4, Math:"MathF"),
+        (Struct: "Vector2L",  Suffix: "2L",  BaseVector: "Vector128", Primitive: "long",   ResultType: "double", Visibility: "public", IsFP: false, PrimitiveSize:8, Math:"Math"),
+        (Struct: "Vector2D",  Suffix: "2D",  BaseVector: "Vector128", Primitive: "double", ResultType: "double", Visibility: "public", IsFP: true , PrimitiveSize:8, Math:"Math"),
+        (Struct: "Vector2IS", Suffix: "2IS", BaseVector: null,        Primitive: "int",    ResultType: "double", Visibility: "internal", IsFP: false, PrimitiveSize:4, Math:"Math"),
+        (Struct: "Vector2FS", Suffix: "2FS", BaseVector: null,        Primitive: "float",  ResultType: "float",  Visibility: "internal", IsFP: true , PrimitiveSize:4, Math:"MathF"),
+        (Struct: "Vector2LS", Suffix: "2LS", BaseVector: null,        Primitive: "long",   ResultType: "double", Visibility: "internal", IsFP: false, PrimitiveSize:8, Math:"Math"),
+        (Struct: "Vector2DS", Suffix: "2DS", BaseVector: null,        Primitive: "double", ResultType: "double", Visibility: "internal", IsFP: true , PrimitiveSize:8, Math:"Math")
     };
 #>

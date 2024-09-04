@@ -28,6 +28,7 @@
 	<InternalsVisibleTo Include="Pmad.Geometry.Test" />
 	<InternalsVisibleTo Include="Pmad.Geometry.Benchmark" />
 	<InternalsVisibleTo Include="Pmad.Geometry.Processing" />
+	<InternalsVisibleTo Include="Pmad.Geometry.Processing.Test" />
   </ItemGroup>
 	
   <ItemGroup>

@@ -42,44 +42,4 @@ namespace Pmad.Geometry.Test.Shapes.Paths
         }
 
 	}
-	public partial class Path2ISTest : PathTestBase<int,Vector2IS>
-	{
-        protected override int Integer(int v) => (int)v;
-
-        protected override Vector2IS Vector(int x, int y) => new ((int)x, (int)y);
-
-
-	}
-	public partial class Path2FSTest : PathTestBase<float,Vector2FS>
-	{
-        protected override int Integer(float v) => (int)v;
-
-        protected override Vector2FS Vector(int x, int y) => new ((float)x, (float)y);
-
-		protected override IReadOnlyList<Vector2FS> Truncate(ReadOnlyArray<Vector2FS> array)
-        {
-            return array.Select(p => new Vector2FS((int)p.X, (int)p.Y)).ToList();
-        }
-
-	}
-	public partial class Path2LSTest : PathTestBase<long,Vector2LS>
-	{
-        protected override int Integer(long v) => (int)v;
-
-        protected override Vector2LS Vector(int x, int y) => new ((long)x, (long)y);
-
-
-	}
-	public partial class Path2DSTest : PathTestBase<double,Vector2DS>
-	{
-        protected override int Integer(double v) => (int)v;
-
-        protected override Vector2DS Vector(int x, int y) => new ((double)x, (double)y);
-
-		protected override IReadOnlyList<Vector2DS> Truncate(ReadOnlyArray<Vector2DS> array)
-        {
-            return array.Select(p => new Vector2DS((int)p.X, (int)p.Y)).ToList();
-        }
-
-	}
 }

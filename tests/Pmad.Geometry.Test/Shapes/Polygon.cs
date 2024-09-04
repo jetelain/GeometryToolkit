@@ -37,40 +37,4 @@ namespace Pmad.Geometry.Test.Shapes.Polygons
             return new Vector2D((int)p.X, (int)p.Y);
         }
 	}
-	public partial class Polygon2ISTest : PolygonTestBase<int,Vector2IS>
-	{
-        protected override int Integer(int v) => (int)v;
-
-        protected override Vector2IS Vector(int x, int y) => new ((int)x, (int)y);
-		
-	}
-	public partial class Polygon2FSTest : PolygonTestBase<float,Vector2FS>
-	{
-        protected override int Integer(float v) => (int)v;
-
-        protected override Vector2FS Vector(int x, int y) => new ((float)x, (float)y);
-		
-		protected override Vector2FS Truncate(Vector2FS p)
-        {
-            return new Vector2FS((int)p.X, (int)p.Y);
-        }
-	}
-	public partial class Polygon2LSTest : PolygonTestBase<long,Vector2LS>
-	{
-        protected override int Integer(long v) => (int)v;
-
-        protected override Vector2LS Vector(int x, int y) => new ((long)x, (long)y);
-		
-	}
-	public partial class Polygon2DSTest : PolygonTestBase<double,Vector2DS>
-	{
-        protected override int Integer(double v) => (int)v;
-
-        protected override Vector2DS Vector(int x, int y) => new ((double)x, (double)y);
-		
-		protected override Vector2DS Truncate(Vector2DS p)
-        {
-            return new Vector2DS((int)p.X, (int)p.Y);
-        }
-	}
 }

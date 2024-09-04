@@ -235,7 +235,7 @@ namespace Pmad.Geometry
     }
 
 
-    public struct Matrix2x2FS : IMatrix2x2<float, Vector2FS, Matrix2x2FS>
+    internal struct Matrix2x2FS : IMatrix2x2<float, Vector2FS, Matrix2x2FS>
     {
         public readonly Vector2FS X;
         public readonly Vector2FS Y;
@@ -288,7 +288,7 @@ namespace Pmad.Geometry
         }
     }
 
-    public struct Matrix3x2FS : IMatrix3x2<float, Vector2FS, Matrix3x2FS>
+    internal struct Matrix3x2FS : IMatrix3x2<float, Vector2FS, Matrix3x2FS>
     {
         public readonly Matrix2x2FS XY;
 
@@ -351,7 +351,7 @@ namespace Pmad.Geometry
     }
 
 
-    public struct Matrix2x2DS : IMatrix2x2<double, Vector2DS, Matrix2x2DS>
+    internal struct Matrix2x2DS : IMatrix2x2<double, Vector2DS, Matrix2x2DS>
     {
         public readonly Vector2DS X;
         public readonly Vector2DS Y;
@@ -404,7 +404,7 @@ namespace Pmad.Geometry
         }
     }
 
-    public struct Matrix3x2DS : IMatrix3x2<double, Vector2DS, Matrix3x2DS>
+    internal struct Matrix3x2DS : IMatrix3x2<double, Vector2DS, Matrix3x2DS>
     {
         public readonly Matrix2x2DS XY;
 

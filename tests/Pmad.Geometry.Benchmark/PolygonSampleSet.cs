@@ -5,7 +5,7 @@ using Pmad.Geometry.Collections;
 
 namespace Pmad.Geometry.Benchmark
 {
-    public class PolygonSampleSet
+    internal class PolygonSampleSet
     {
         public static PolygonSampleSet CreateCircle(int radius)
             => CreateCircle(0, 0, radius);
@@ -24,6 +24,7 @@ namespace Pmad.Geometry.Benchmark
             Points2DS = Points2I.Select(p => new Vector2DS(p.X, p.Y)).ToReadOnlyArray();
             Points2LS = Points2I.Select(p => new Vector2LS(p.X, p.Y)).ToReadOnlyArray();
             PointsP64 = new Path64(Points2I.Select(p => new Point64(p.X, p.Y)));
+            PointsPtD = new PathD(Points2I.Select(p => new PointD(p.X, p.Y)));
             PointsGRM = Points2I.Select(p => new TerrainPoint(p.X, p.Y)).ToList();
             PointsNTS = Points2I.Select(p => new Coordinate(p.X, p.Y)).ToArray();
 
@@ -48,6 +49,7 @@ namespace Pmad.Geometry.Benchmark
         public readonly ReadOnlyArray<Vector2DS> Points2DS;
         public readonly ReadOnlyArray<Vector2LS> Points2LS;
         public readonly Path64 PointsP64;
+        public readonly PathD PointsPtD;
         public readonly List<TerrainPoint> PointsGRM;
         public readonly Coordinate[] PointsNTS;
 

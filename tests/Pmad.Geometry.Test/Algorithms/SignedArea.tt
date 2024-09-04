@@ -9,7 +9,7 @@
 namespace Pmad.Geometry.Test.Algorithms.SignedAreas
 {
 <#
-	foreach(var def in definitions)
+	foreach(var def in definitions.Where(d => d.Visibility == "public"))
 	{
 #>
 	public partial class SignedArea<#=def.Suffix#>Test : SignedAreaTestBase<<#=def.Primitive#>,<#=def.Struct#>>

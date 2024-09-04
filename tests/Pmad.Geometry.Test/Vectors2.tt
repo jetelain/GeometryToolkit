@@ -9,7 +9,7 @@
 namespace Pmad.Geometry.Test
 {
 <#
-	foreach(var def in definitions)
+	foreach(var def in definitions.Where(d => d.Visibility == "public"))
 	{
 #>
 	public partial class <#=def.Struct#>Test : <#=(def.IsFP?"Vector2FPTestBase":"Vector2TestBase")#><<#=def.Primitive#>,<#=def.Struct#>>

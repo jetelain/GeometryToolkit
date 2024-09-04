@@ -18,7 +18,7 @@ namespace Pmad.Geometry
 	{
 #>
     [DebuggerDisplay("({X};{Y})")]
-	public partial struct <#=def.Struct#> : IEquatable<<#=def.Struct#>>, IVector2<<#=def.Primitive#>,<#=def.Struct#>>
+	<#=def.Visibility#> partial struct <#=def.Struct#> : IEquatable<<#=def.Struct#>>, IVector2<<#=def.Primitive#>,<#=def.Struct#>>
 	{
         public static <#=def.Struct#> Zero => default;
         

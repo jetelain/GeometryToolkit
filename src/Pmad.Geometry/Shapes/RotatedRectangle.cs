@@ -81,7 +81,7 @@ namespace Pmad.Geometry.Shapes
 
                 var theta = (a - b).Atan2D();
 
-                var rotate = Matrix2x2<TPrimitive, TVector>.CreateRotation(-theta);
+                var rotate = Matrix2x2<TPrimitive, TVector>.CreateRotationD(-theta);
 
                 var max = rotate.Transform(points[0] - a);
                 var min = max;
@@ -100,7 +100,7 @@ namespace Pmad.Geometry.Shapes
                     resultSize = size;
                     resultAngle = theta;
 
-                    var reverseRotate = Matrix2x2<TPrimitive, TVector>.CreateRotation(theta);
+                    var reverseRotate = Matrix2x2<TPrimitive, TVector>.CreateRotationD(theta);
                     var resultP3 = reverseRotate.Transform(max);
                     var resultP1 = reverseRotate.Transform(min);
                     resultCenter = ((resultP3 + resultP1) / 2) + a;

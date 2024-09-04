@@ -741,7 +741,7 @@ namespace Pmad.Geometry.Algorithms
         }
 
 
-        public static PointInPolygonResult TestPointInPolygon(this List<Vector2IS> polygon, Vector2IS pt)
+        internal static PointInPolygonResult TestPointInPolygon(this List<Vector2IS> polygon, Vector2IS pt)
         {           
             // We achieve 20% faster processing using a Span compared to List<Vector2IS>
             // and 25% faster than sticking to IReadOnlyList<Vector2IS>
@@ -749,12 +749,12 @@ namespace Pmad.Geometry.Algorithms
         }
 
         [MethodImpl(MethodImplOptions.AggressiveInlining)]
-        public static PointInPolygonResult TestPointInPolygon(this ReadOnlyArray<Vector2IS> polygon, Vector2IS pt)
+        internal static PointInPolygonResult TestPointInPolygon(this ReadOnlyArray<Vector2IS> polygon, Vector2IS pt)
         {
             return TestPointInPolygon(polygon.AsSpan(), pt);
         }
 
-        public static PointInPolygonResult TestPointInPolygon(this IReadOnlyList<Vector2IS> polygon, Vector2IS pt)
+        internal static PointInPolygonResult TestPointInPolygon(this IReadOnlyList<Vector2IS> polygon, Vector2IS pt)
         {
             if (polygon is List<Vector2IS> list)
             {
@@ -843,7 +843,7 @@ namespace Pmad.Geometry.Algorithms
             
         }
 
-        public static PointInPolygonResult TestPointInPolygon(this ReadOnlySpan<Vector2IS> polygon, Vector2IS pt)
+        internal static PointInPolygonResult TestPointInPolygon(this ReadOnlySpan<Vector2IS> polygon, Vector2IS pt)
         {
             int len = polygon.Length, start = 0;
             if (len < 3) return PointInPolygonResult.IsOutside;
@@ -923,7 +923,7 @@ namespace Pmad.Geometry.Algorithms
         }
 
 
-        public static PointInPolygonResult TestPointInPolygon(this List<Vector2FS> polygon, Vector2FS pt)
+        internal static PointInPolygonResult TestPointInPolygon(this List<Vector2FS> polygon, Vector2FS pt)
         {           
             // We achieve 20% faster processing using a Span compared to List<Vector2FS>
             // and 25% faster than sticking to IReadOnlyList<Vector2FS>
@@ -931,12 +931,12 @@ namespace Pmad.Geometry.Algorithms
         }
 
         [MethodImpl(MethodImplOptions.AggressiveInlining)]
-        public static PointInPolygonResult TestPointInPolygon(this ReadOnlyArray<Vector2FS> polygon, Vector2FS pt)
+        internal static PointInPolygonResult TestPointInPolygon(this ReadOnlyArray<Vector2FS> polygon, Vector2FS pt)
         {
             return TestPointInPolygon(polygon.AsSpan(), pt);
         }
 
-        public static PointInPolygonResult TestPointInPolygon(this IReadOnlyList<Vector2FS> polygon, Vector2FS pt)
+        internal static PointInPolygonResult TestPointInPolygon(this IReadOnlyList<Vector2FS> polygon, Vector2FS pt)
         {
             if (polygon is List<Vector2FS> list)
             {
@@ -1025,7 +1025,7 @@ namespace Pmad.Geometry.Algorithms
             
         }
 
-        public static PointInPolygonResult TestPointInPolygon(this ReadOnlySpan<Vector2FS> polygon, Vector2FS pt)
+        internal static PointInPolygonResult TestPointInPolygon(this ReadOnlySpan<Vector2FS> polygon, Vector2FS pt)
         {
             int len = polygon.Length, start = 0;
             if (len < 3) return PointInPolygonResult.IsOutside;
@@ -1105,7 +1105,7 @@ namespace Pmad.Geometry.Algorithms
         }
 
 
-        public static PointInPolygonResult TestPointInPolygon(this List<Vector2LS> polygon, Vector2LS pt)
+        internal static PointInPolygonResult TestPointInPolygon(this List<Vector2LS> polygon, Vector2LS pt)
         {           
             // We achieve 20% faster processing using a Span compared to List<Vector2LS>
             // and 25% faster than sticking to IReadOnlyList<Vector2LS>
@@ -1113,12 +1113,12 @@ namespace Pmad.Geometry.Algorithms
         }
 
         [MethodImpl(MethodImplOptions.AggressiveInlining)]
-        public static PointInPolygonResult TestPointInPolygon(this ReadOnlyArray<Vector2LS> polygon, Vector2LS pt)
+        internal static PointInPolygonResult TestPointInPolygon(this ReadOnlyArray<Vector2LS> polygon, Vector2LS pt)
         {
             return TestPointInPolygon(polygon.AsSpan(), pt);
         }
 
-        public static PointInPolygonResult TestPointInPolygon(this IReadOnlyList<Vector2LS> polygon, Vector2LS pt)
+        internal static PointInPolygonResult TestPointInPolygon(this IReadOnlyList<Vector2LS> polygon, Vector2LS pt)
         {
             if (polygon is List<Vector2LS> list)
             {
@@ -1207,7 +1207,7 @@ namespace Pmad.Geometry.Algorithms
             
         }
 
-        public static PointInPolygonResult TestPointInPolygon(this ReadOnlySpan<Vector2LS> polygon, Vector2LS pt)
+        internal static PointInPolygonResult TestPointInPolygon(this ReadOnlySpan<Vector2LS> polygon, Vector2LS pt)
         {
             int len = polygon.Length, start = 0;
             if (len < 3) return PointInPolygonResult.IsOutside;
@@ -1287,7 +1287,7 @@ namespace Pmad.Geometry.Algorithms
         }
 
 
-        public static PointInPolygonResult TestPointInPolygon(this List<Vector2DS> polygon, Vector2DS pt)
+        internal static PointInPolygonResult TestPointInPolygon(this List<Vector2DS> polygon, Vector2DS pt)
         {           
             // We achieve 20% faster processing using a Span compared to List<Vector2DS>
             // and 25% faster than sticking to IReadOnlyList<Vector2DS>
@@ -1295,12 +1295,12 @@ namespace Pmad.Geometry.Algorithms
         }
 
         [MethodImpl(MethodImplOptions.AggressiveInlining)]
-        public static PointInPolygonResult TestPointInPolygon(this ReadOnlyArray<Vector2DS> polygon, Vector2DS pt)
+        internal static PointInPolygonResult TestPointInPolygon(this ReadOnlyArray<Vector2DS> polygon, Vector2DS pt)
         {
             return TestPointInPolygon(polygon.AsSpan(), pt);
         }
 
-        public static PointInPolygonResult TestPointInPolygon(this IReadOnlyList<Vector2DS> polygon, Vector2DS pt)
+        internal static PointInPolygonResult TestPointInPolygon(this IReadOnlyList<Vector2DS> polygon, Vector2DS pt)
         {
             if (polygon is List<Vector2DS> list)
             {
@@ -1389,7 +1389,7 @@ namespace Pmad.Geometry.Algorithms
             
         }
 
-        public static PointInPolygonResult TestPointInPolygon(this ReadOnlySpan<Vector2DS> polygon, Vector2DS pt)
+        internal static PointInPolygonResult TestPointInPolygon(this ReadOnlySpan<Vector2DS> polygon, Vector2DS pt)
         {
             int len = polygon.Length, start = 0;
             if (len < 3) return PointInPolygonResult.IsOutside;

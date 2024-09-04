@@ -9,7 +9,7 @@
 namespace Pmad.Geometry.Test.Algorithms.PathFollowers
 {
 <#
-	foreach(var def in definitions)
+	foreach(var def in definitions.Where(d => d.Visibility == "public"))
 	{
 #>
 	public partial class PathFollower<#=def.Suffix#>Test : PathFollowerTestBase<<#=def.Primitive#>,<#=def.Struct#>>

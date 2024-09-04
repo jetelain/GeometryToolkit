@@ -13,6 +13,9 @@ namespace Pmad.Geometry.Benchmark
     {
         static void Main(string[] args)
         {
+
+
+
             Console.OutputEncoding = Encoding.UTF8;
 
             Console.WriteLine("Vector128.IsHardwareAccelerated: {0}", Vector128.IsHardwareAccelerated);
@@ -49,7 +52,8 @@ namespace Pmad.Geometry.Benchmark
                     //typeof(IntersectionAreaBenchmark),
                     //typeof(IntersectionBenchmark),
                     //typeof(UnionBenchmark),
-                    typeof(ShapeSettingsBenchmark)
+                    //typeof(ShapeSettingsBenchmark)
+                    typeof(MatrixRotationBenchmark)
                 ]);
         }
     }
