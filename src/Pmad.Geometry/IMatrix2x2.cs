@@ -14,5 +14,11 @@ namespace Pmad.Geometry
         TPrimitive M21 { get; }
 
         TPrimitive M22 { get; }
+
+        abstract static TMatrix CreateRotation(TPrimitive radians);
+
+        abstract static TMatrix CreateRotationD(double radians);
+
+        abstract static TMatrix Identity { get; }
     }
 }

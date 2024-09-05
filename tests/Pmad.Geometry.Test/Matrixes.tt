@@ -12,18 +12,7 @@ namespace Pmad.Geometry.Test
 	foreach(var def in definitions.Where(d => d.IsFP && d.Visibility == "public"))
 	{
 #>
-	public sealed partial class Matrix2x<#=def.Suffix#>Test : Matrix2x2TestBase<<#=def.Primitive#>,<#=def.Struct#>,Matrix2x<#=def.Suffix#>>
-	{
-		protected override Matrix2x<#=def.Suffix#> Rotation(double radians) => Matrix2x<#=def.Suffix#>.CreateRotation((<#=def.Primitive#>)radians);
-
-		protected override Matrix2x<#=def.Suffix#> Create(double m11, double m12, double m21, double m22) => new (new((<#=def.Primitive#>)m11,(<#=def.Primitive#>)m12),new((<#=def.Primitive#>)m21,(<#=def.Primitive#>)m22));
-
-        protected override double Double(<#=def.Primitive#> v) => (double)v;
-
-        protected override <#=def.Struct#> Vector(double x, double y) => new ((<#=def.Primitive#>)x, (<#=def.Primitive#>)y);
-	}
-
-	public sealed partial class Matrix2x<#=def.Suffix#>GenTest : Matrix2x2TestBase<<#=def.Primitive#>,<#=def.Struct#>,Matrix2x2<<#=def.Primitive#>,<#=def.Struct#>>>
+	public sealed partial class Matrix2x<#=def.Suffix#>Test : Matrix2x2TestBase<<#=def.Primitive#>,<#=def.Struct#>,Matrix2x2<<#=def.Primitive#>,<#=def.Struct#>>>
 	{
 		protected override Matrix2x2<<#=def.Primitive#>,<#=def.Struct#>> Rotation(double radians) => Matrix2x2<<#=def.Primitive#>,<#=def.Struct#>>.CreateRotation((<#=def.Primitive#>)radians);
 
@@ -33,6 +22,16 @@ namespace Pmad.Geometry.Test
 
         protected override <#=def.Struct#> Vector(double x, double y) => new ((<#=def.Primitive#>)x, (<#=def.Primitive#>)y);
 	}
+
+	public sealed partial class Matrix3x<#=def.Suffix#>Test : Matrix3x2TestBase<<#=def.Primitive#>,<#=def.Struct#>,Matrix3x2<<#=def.Primitive#>,<#=def.Struct#>>>
+	{
+		protected override Matrix3x2<<#=def.Primitive#>,<#=def.Struct#>> Create(double m11, double m12, double m21, double m22, double m31, double m32) => new (new(new((<#=def.Primitive#>)m11,(<#=def.Primitive#>)m12),new((<#=def.Primitive#>)m21,(<#=def.Primitive#>)m22)),new((<#=def.Primitive#>)m31,(<#=def.Primitive#>)m32));
+
+		protected override double Double(<#=def.Primitive#> v) => (double)v;
+
+        protected override <#=def.Struct#> Vector(double x, double y) => new ((<#=def.Primitive#>)x, (<#=def.Primitive#>)y);
+	}
+
 <#
 	}
 #>

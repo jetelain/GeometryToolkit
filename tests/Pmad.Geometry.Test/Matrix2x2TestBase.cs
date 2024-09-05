@@ -30,11 +30,25 @@ namespace Pmad.Geometry.Test
         }
 
         [Fact]
+        public void Identity()
+        {
+            Equal(Create(1, 0, 0, 1), TMatrix.Identity);
+        }
+
+        [Fact]
         public void CreateRotation()
         {
             Equal(Create(1, 0, 0, 1), Rotation(0));
             Equal(Create(-1, 0, 0, -1), Rotation(Math.PI));
             Equal(Create(0, 1, -1, 0), Rotation(Math.PI / 2));
+        }
+
+        [Fact]
+        public void CreateRotationD()
+        {
+            Equal(Create(1, 0, 0, 1), TMatrix.CreateRotationD(0));
+            Equal(Create(-1, 0, 0, -1), TMatrix.CreateRotationD(Math.PI));
+            Equal(Create(0, 1, -1, 0), TMatrix.CreateRotationD(Math.PI / 2));
         }
 
         [Fact]

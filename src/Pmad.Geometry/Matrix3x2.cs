@@ -30,21 +30,24 @@ namespace Pmad.Geometry
             Z = z;
         }
 
-        public static Matrix3x2<TPrimitive, TVector> CreateRotation(TPrimitive radians, TVector centerPoint)
+        public static Matrix3x2<TPrimitive, TVector> Create(TPrimitive m11, TPrimitive m12, TPrimitive m21, TPrimitive m22, TPrimitive m31, TPrimitive m32)
         {
-            return CreateRotation(double.CreateChecked(radians), centerPoint);
+            return new Matrix3x2<TPrimitive, TVector>(new (TVector.Create(m11, m12), TVector.Create(m21, m22)), TVector.Create(m31, m32));
         }
 
-        public static Matrix3x2<TPrimitive, TVector> CreateRotation(double radians, TVector centerPoint)
+        public static Matrix3x2<TPrimitive, TVector> CreateRotation(TPrimitive radians, TVector centerPoint)
         {
-            //var cos = Math.Cos(radians);
-            //var sin = Math.Sin(radians);
-
-            (var sin, var cos) = MatrixHelper.SinCos(radians);
-
-            var z = new Matrix2x2<TPrimitive, TVector>(TVector.Create(1 - cos, sin), TVector.Create(-sin, 1 - cos))
+            (var sin, var cos) = MatrixHelper.SinCos<TPrimitive>(radians);
+            var z = new Matrix2x2<TPrimitive, TVector>(TVector.Create(TPrimitive.One - cos, -sin), TVector.Create(sin, TPrimitive.One - cos))
                 .Transform(centerPoint);
+            return new(new(TVector.Create(cos, sin), TVector.Create(-sin, cos)), z);
+        }
 
+        public static Matrix3x2<TPrimitive, TVector> CreateRotationD(double radians, TVector centerPoint)
+        {
+            (var sin, var cos) = MatrixHelper.SinCos(radians);
+            var z = new Matrix2x2<TPrimitive, TVector>(TVector.Create(1 - cos, -sin), TVector.Create(sin, 1 - cos))
+                .Transform(centerPoint);
             return new (new (TVector.Create(cos, sin), TVector.Create(-sin, cos)), z);
         }
 
@@ -71,6 +74,16 @@ namespace Pmad.Geometry
         public override int GetHashCode()
         {
             return HashCode.Combine(XY.GetHashCode(), Z.GetHashCode());
+        }
+
+        public static Matrix3x2<TPrimitive, TVector> CreateTranslation(TPrimitive x, TPrimitive y)
+        {
+            return CreateTranslation(TVector.Create(x, y));
+        }
+
+        public static Matrix3x2<TPrimitive, TVector> CreateTranslation(TVector translation)
+        {
+            return new Matrix3x2<TPrimitive, TVector>(Matrix2x2<TPrimitive, TVector>.Identity, translation);
         }
     }
 }

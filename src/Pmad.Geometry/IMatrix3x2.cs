@@ -18,5 +18,13 @@ namespace Pmad.Geometry
         TPrimitive M31 { get; }
 
         TPrimitive M32 { get; }
+
+        abstract static TMatrix CreateRotation(TPrimitive radians, TVector centerPoint);
+
+        abstract static TMatrix CreateRotationD(double radians, TVector centerPoint);
+
+        abstract static TMatrix CreateTranslation(TPrimitive x, TPrimitive y);
+
+        abstract static TMatrix CreateTranslation(TVector translation);
     }
 }

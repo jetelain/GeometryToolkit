@@ -8,6 +8,8 @@ namespace Pmad.Geometry
         where TPrimitive : unmanaged, IFloatingPointIeee754<TPrimitive>
         where TVector : struct, IVector2<TPrimitive, TVector>, IVectorFP<TPrimitive, TVector>
     {
+        private static readonly Matrix2x2<TPrimitive, TVector> _identity = Create(TPrimitive.One, TPrimitive.Zero, TPrimitive.Zero, TPrimitive.One);
+
         public readonly TVector X;
         public readonly TVector Y;
 
@@ -25,17 +27,27 @@ namespace Pmad.Geometry
             Y = y;
         }
 
-        public static Matrix2x2<TPrimitive, TVector> CreateRotation(TPrimitive radians)
+        public static Matrix2x2<TPrimitive, TVector> Identity => _identity;
+
+        public static Matrix2x2<TPrimitive, TVector> Create(TPrimitive m11, TPrimitive m12, TPrimitive m21, TPrimitive m22)
         {
-            return CreateRotation(double.CreateChecked(radians));
+            return new Matrix2x2<TPrimitive, TVector>(TVector.Create(m11, m12), TVector.Create(m21, m22));
         }
 
-        public static Matrix2x2<TPrimitive, TVector> CreateRotation(double radians)
+        public static Matrix2x2<TPrimitive, TVector> CreateRotation(TPrimitive radians)
         {
-            //var cos = Math.Cos(radians);
-            //var sin = Math.Sin(radians); 
+            (var sin, var cos) = MatrixHelper.SinCos<TPrimitive>(radians);
+            return new Matrix2x2<TPrimitive, TVector>(
+                TVector.Create(cos, sin), 
+                TVector.Create(-sin, cos));
+        }
+
+        public static Matrix2x2<TPrimitive, TVector> CreateRotationD(double radians)
+        {
             (var sin, var cos) = MatrixHelper.SinCos(radians);
-            return new Matrix2x2<TPrimitive, TVector>(TVector.Create(cos, sin), TVector.Create(-sin, cos));
+            return new Matrix2x2<TPrimitive, TVector>(
+                TVector.Create(cos, sin), 
+                TVector.Create(-sin, cos));
         }
 
         [MethodImpl(MethodImplOptions.AggressiveInlining)]
