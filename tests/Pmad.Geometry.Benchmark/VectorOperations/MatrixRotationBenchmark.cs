@@ -5,15 +5,20 @@ namespace Pmad.Geometry.Benchmark.VectorOperations
 {
     public class MatrixRotationBenchmark
     {
-        [Benchmark] public void Matrix2x2_Generic_2D() => SampleValuesRO.RandomList2D.ForEach(p => Matrix2x2<double, Vector2D>.CreateRotation(1).Transform(p));
-        [Benchmark] public void Matrix2x2_GenericD_2D() => SampleValuesRO.RandomList2D.ForEach(p => Matrix2x2<double, Vector2D>.CreateRotation(1).Transform(p));
-        [Benchmark] public void Matrix2x2_Specific_2D() => SampleValuesRO.RandomList2D.ForEach(p => Matrix2x2D.CreateRotation(1).Transform(p));
-        //[Benchmark] public void Matrix2x2_Generic_2DS() => SampleValuesRO.RandomList2DS.ForEach(p => Matrix2x2<double, Vector2DS>.CreateRotation(1).Transform(p));
-        //[Benchmark] public void Matrix2x2_Specific_2DS() => SampleValuesRO.RandomList2DS.ForEach(p => Matrix2x2DS.CreateRotation(1).Transform(p));
 
-        [Benchmark] public void Matrix2x2_Generic_2F() => SampleValuesRO.RandomList2F.ForEach(p => Matrix2x2<float, Vector2F>.CreateRotation(1).Transform(p));
-        [Benchmark] public void Matrix2x2_Specific_2F() => SampleValuesRO.RandomList2F.ForEach(p => Matrix2x2F.CreateRotation(1).Transform(p));
-        //[Benchmark] public void Matrix2x2_Generic_2FS() => SampleValuesRO.RandomList2FS.ForEach(p => Matrix2x2<float, Vector2FS>.CreateRotation(1).Transform(p));
-        //[Benchmark] public void Matrix2x2_Specific_2FS() => SampleValuesRO.RandomList2FS.ForEach(p => Matrix2x2FS.CreateRotation(1).Transform(p));
+        const float AngleF = 1;
+        const double AngleD = 1;
+
+        [Benchmark] public void Matrix2x2() => SampleValuesRO.RandomList2F.ForEach(p => Vector2.Transform(p.ToVector2(), System.Numerics.Matrix3x2.CreateRotation(AngleF)));
+        [Benchmark] public void Matrix2x2_Generic_2D() => SampleValuesRO.RandomList2D.ForEach(p => Matrix2x2<double, Vector2D>.CreateRotation(AngleD).Transform(p));
+        [Benchmark] public void Matrix2x2_GenericD_2D() => SampleValuesRO.RandomList2D.ForEach(p => Matrix2x2<double, Vector2D>.CreateRotationD(AngleD).Transform(p));
+        [Benchmark] public void Matrix2x2_Generic_2F() => SampleValuesRO.RandomList2F.ForEach(p => Matrix2x2<float, Vector2F>.CreateRotation(AngleF).Transform(p));
+        [Benchmark] public void Matrix2x2_GenericD_2F() => SampleValuesRO.RandomList2F.ForEach(p => Matrix2x2<float, Vector2F>.CreateRotationD(AngleD).Transform(p));
+
+        [Benchmark] public void Matrix3x2() => SampleValuesRO.RandomList2F.ForEach(p => Vector2.Transform(p.ToVector2(), System.Numerics.Matrix3x2.CreateRotation(AngleF, default)));
+        [Benchmark] public void Matrix3x2_Generic_2D() => SampleValuesRO.RandomList2D.ForEach(p => Matrix3x2<double, Vector2D>.CreateRotation(AngleD, default).Transform(p));
+        [Benchmark] public void Matrix3x2_GenericD_2D() => SampleValuesRO.RandomList2D.ForEach(p => Matrix3x2<double, Vector2D>.CreateRotationD(AngleD, default).Transform(p));
+        [Benchmark] public void Matrix3x2_Generic_2F() => SampleValuesRO.RandomList2F.ForEach(p => Matrix3x2<float, Vector2F>.CreateRotation(AngleF, default).Transform(p));
+        [Benchmark] public void Matrix3x2_GenericD_2F() => SampleValuesRO.RandomList2F.ForEach(p => Matrix3x2<float, Vector2F>.CreateRotationD(AngleD, default).Transform(p));
     }
 }

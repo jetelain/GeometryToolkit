@@ -17,7 +17,7 @@
   </PropertyGroup>
 
   <ItemGroup>
-    <None Include="..\..\README.md" Pack="true" PackagePath="\"/>
+    <None Include="..\..\README.md" Pack="true" PackagePath="\" />
   </ItemGroup>
 
   <ItemGroup>
@@ -43,10 +43,6 @@
     <None Update="Definitions.tt">
       <Generator></Generator>
     </None>
-    <None Update="Matrixes.tt">
-      <LastGenOutput>Matrixes.cs</LastGenOutput>
-      <Generator>TextTemplatingFileGenerator</Generator>
-    </None>
     <None Update="Vectors2Scalar.tt">
       <LastGenOutput>Vectors2Scalar.cs</LastGenOutput>
       <Generator>TextTemplatingFileGenerator</Generator>
@@ -67,11 +63,6 @@
       <DesignTime>True</DesignTime>
       <AutoGen>True</AutoGen>
       <DependentUpon>PointInPolygon.tt</DependentUpon>
-    </Compile>
-    <Compile Update="Matrixes.cs">
-      <DependentUpon>Matrixes.tt</DependentUpon>
-      <DesignTime>True</DesignTime>
-      <AutoGen>True</AutoGen>
     </Compile>
     <Compile Update="Vectors2Scalar.cs">
       <DependentUpon>Vectors2Scalar.tt</DependentUpon>
