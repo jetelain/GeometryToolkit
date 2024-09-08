@@ -72,7 +72,7 @@ namespace Pmad.Geometry
 
         public override int GetHashCode()
         {
-            return HashCode.Combine(X.GetHashCode(), Y.GetHashCode());
+            return HashCode.Combine(X, Y);
         }
     }
 }

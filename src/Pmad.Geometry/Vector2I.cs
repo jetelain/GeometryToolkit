@@ -107,7 +107,7 @@ namespace Pmad.Geometry
 
         public readonly override int GetHashCode()
         {
-            return HashCode.Combine(X.GetHashCode(), Y.GetHashCode());
+            return HashCode.Combine(X, Y);
         }
 
         public readonly override bool Equals([NotNullWhen(true)] object? obj)

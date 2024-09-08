@@ -1,10 +1,4 @@
-﻿using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
-
-namespace Pmad.Geometry.Test
+﻿namespace Pmad.Geometry.Test
 {
     public class MatrixHelperTest
     {
@@ -37,6 +31,10 @@ namespace Pmad.Geometry.Test
             Assert.Equal((0, -1), MatrixHelper.SinCos(-Math.PI));
             Assert.Equal((0, -1), MatrixHelper.SinCos(-Math.PI + RotationHalfEpsilonD));
             Assert.Equal((0, -1), MatrixHelper.SinCos(-Math.PI - RotationHalfEpsilonD));
+
+            (var sin, var cos) = MatrixHelper.SinCos(1d);
+            Assert.Equal(0.8414, sin, 0.0001);
+            Assert.Equal(0.5403, cos, 0.0001);
         }
 
         [Fact]
@@ -65,6 +63,10 @@ namespace Pmad.Geometry.Test
             Assert.Equal((0, -1), MatrixHelper.SinCos(-MathF.PI));
             Assert.Equal((0, -1), MatrixHelper.SinCos(-MathF.PI + RotationHalfEpsilonF));
             Assert.Equal((0, -1), MatrixHelper.SinCos(-MathF.PI - RotationHalfEpsilonF));
+
+            (var sin, var cos) = MatrixHelper.SinCos(1f);
+            Assert.Equal(0.8414, sin, 0.0001);
+            Assert.Equal(0.5403, cos, 0.0001);
         }
     }
 }
