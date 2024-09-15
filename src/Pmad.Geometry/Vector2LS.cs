@@ -1,5 +1,8 @@
-﻿namespace Pmad.Geometry
+﻿using System.Diagnostics.CodeAnalysis;
+
+namespace Pmad.Geometry
 {
+    [ExcludeFromCodeCoverage]
     internal partial struct Vector2LS : IEquatable<Vector2LS>
     {
         public readonly double LengthD() => ToDoubleS().Length();

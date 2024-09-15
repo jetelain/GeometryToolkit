@@ -1,8 +1,10 @@
-﻿using System.Numerics;
+﻿using System.Diagnostics.CodeAnalysis;
+using System.Numerics;
 using System.Runtime.CompilerServices;
 
 namespace Pmad.Geometry
 {
+    [ExcludeFromCodeCoverage]
     internal partial struct Vector2FS : IEquatable<Vector2FS>, IVectorFP<float, Vector2FS>
     {
 

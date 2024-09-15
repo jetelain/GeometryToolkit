@@ -1,9 +1,11 @@
-﻿using System.Numerics;
+﻿using System.Diagnostics.CodeAnalysis;
+using System.Numerics;
 using System.Runtime.CompilerServices;
 using System.Runtime.Intrinsics;
 
 namespace Pmad.Geometry
 {
+    [ExcludeFromCodeCoverage]
     internal partial struct Vector2DS : IEquatable<Vector2DS>, IVectorFP<double, Vector2DS>
     {
         public static Vector2DS Lerp(Vector2DS value1, Vector2DS value2, double amount)

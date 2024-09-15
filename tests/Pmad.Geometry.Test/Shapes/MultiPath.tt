@@ -1,0 +1,29 @@
+﻿<#@ template debug="false" hostspecific="false" language="C#" #>
+<#@ assembly name="System.Core" #>
+<#@ import namespace="System.Linq" #>
+<#@ import namespace="System.Text" #>
+<#@ import namespace="System.Collections.Generic" #>
+<#@ include file="..\..\..\src\Pmad.Geometry\Definitions.tt" #>
+<#@ output extension=".cs" #>
+using Pmad.Geometry.Collections;
+
+
+namespace Pmad.Geometry.Test.Shapes.MultiPaths
+{
+<#
+	foreach(var def in definitions.Where(d => d.Visibility == "public"))
+	{
+#>
+	public partial class MultiPath<#=def.Suffix#>Test : MultiPathTestBase<<#=def.Primitive#>,<#=def.Struct#>>
+	{
+<# if ( def.IsFP) { #>
+		protected override IReadOnlyList<<#=def.Struct#>> Truncate(ReadOnlyArray<<#=def.Struct#>> array)
+        {
+            return array.Select(p => new <#=def.Struct#>((int)p.X, (int)p.Y)).ToList();
+        }
+<# } #>
+	}
+<#
+	}
+#>
+}
