@@ -9,6 +9,26 @@ namespace Pmad.Geometry.Test.Shapes
     {
 
         [Fact]
+        public void AreaD()
+        {
+            var circle = new Circle<TPrimitive, TVector>(TVector.Create(0, 0), 100);
+
+            Assert.Equal(100, circle.Radius);
+
+            Assert.Equal(31415.92, circle.AreaD, 0.01);
+        }
+
+        [Fact]
+        public void Bounds()
+        {
+            var circle = new Circle<TPrimitive, TVector>(TVector.Create(0, 0), 100);
+
+            Assert.Equal(100, circle.Radius);
+
+            Assert.Equal(new VectorEnvelope<TVector>(TVector.Create(-100, -100), TVector.Create(100, 100)), circle.Bounds);
+        }
+
+        [Fact]
         public void FromTwoPoints()
         {
             var pointA = TVector.Create(0, 0);
