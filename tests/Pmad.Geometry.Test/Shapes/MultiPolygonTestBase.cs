@@ -84,7 +84,19 @@ namespace Pmad.Geometry.Test.Shapes
             Assert.Equal("MULTIPOLYGON EMPTY", MultiPolygon<TPrimitive, TVector>.Empty.ToString());
             Assert.Equal("MULTIPOLYGON (((100 100, 0 100, 0 0, 100 0, 100 100)), ((1100 1100, 1000 1100, 1000 1000, 1100 1000, 1100 1100)))", new MultiPolygon<TPrimitive, TVector>(Square100x100(), Square100x100Far()).ToString());
         }
-        // 
+
+        [Fact]
+        public void Indexer()
+        {
+            var poly0 = Square100x100();
+            var poly1 = Square100x100Far();
+            var multi = new MultiPolygon<TPrimitive, TVector>(poly0, poly1);
+            
+            Assert.Equal(poly0, multi[0]);
+            Assert.Equal(poly1, multi[1]);
+
+            Assert.Equal([poly0, poly1], multi);
+        }
 
     }
 }
