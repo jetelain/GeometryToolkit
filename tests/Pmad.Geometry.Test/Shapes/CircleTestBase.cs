@@ -43,8 +43,8 @@ namespace Pmad.Geometry.Test.Shapes
 
             var circle = Circle<TPrimitive, TVector>.FromThreePoints(ShapeSettings<TPrimitive, TVector>.Default, pointA, pointB, pointC);
 
-            Assert.Equal(0, circle.Radius);
-            Assert.Equal(TVector.Zero, circle.Center);
+            Assert.Equal(141.42, circle.Radius, 0.01);
+            Assert.Equal(TVector.Create(100, 100), circle.Center);
         }
 
         [Fact]
