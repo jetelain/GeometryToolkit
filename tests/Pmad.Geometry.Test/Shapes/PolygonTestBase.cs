@@ -12,61 +12,61 @@ namespace Pmad.Geometry.Test.Shapes
         protected abstract int Integer(TPrimitive v);
         protected virtual TVector Truncate(TVector v) => v;
 
-        private Polygon<TPrimitive,TVector> Square100x100()
+        private Polygon<TPrimitive, TVector> Square100x100()
         {
-            return new Polygon<TPrimitive,TVector>(new ReadOnlyArray<TVector>(Vector(100, 100), Vector(0, 100), Vector(0, 0), Vector(100, 0), Vector(100, 100) ));
+            return new Polygon<TPrimitive, TVector>(new ReadOnlyArray<TVector>(Vector(100, 100), Vector(0, 100), Vector(0, 0), Vector(100, 0), Vector(100, 100)));
         }
 
-        private Polygon<TPrimitive,TVector> TriangleA()
+        private Polygon<TPrimitive, TVector> TriangleA()
         {
-            return new Polygon<TPrimitive,TVector>(new ReadOnlyArray<TVector>(Vector(0, 0), Vector(0, 100), Vector(100, 0), Vector(0, 0)));
+            return new Polygon<TPrimitive, TVector>(new ReadOnlyArray<TVector>(Vector(0, 0), Vector(0, 100), Vector(100, 0), Vector(0, 0)));
         }
-        private Polygon<TPrimitive,TVector> TriangleB()
+        private Polygon<TPrimitive, TVector> TriangleB()
         {
-            return new Polygon<TPrimitive,TVector>(new ReadOnlyArray<TVector>(Vector(101, 101), Vector(0, 101), Vector(101, 0), Vector(101, 101)));
-        }
-
-        private Polygon<TPrimitive,TVector> Square100x100Far()
-        {
-            return new Polygon<TPrimitive,TVector>(new ReadOnlyArray<TVector>(Vector(1100, 1100), Vector(1000, 1100), Vector(1000, 1000), Vector(1100, 1000), Vector(1100, 1100)));
+            return new Polygon<TPrimitive, TVector>(new ReadOnlyArray<TVector>(Vector(101, 101), Vector(0, 101), Vector(101, 0), Vector(101, 101)));
         }
 
-        private Polygon<TPrimitive,TVector> Square100x100WithHole()
+        private Polygon<TPrimitive, TVector> Square100x100Far()
         {
-            return new Polygon<TPrimitive,TVector>(new ReadOnlyArray<TVector>(
-                Vector(100,100),
-                Vector(0,100),
-                Vector(0,0),
-                Vector(100,0),
-                Vector(100,100)
+            return new Polygon<TPrimitive, TVector>(new ReadOnlyArray<TVector>(Vector(1100, 1100), Vector(1000, 1100), Vector(1000, 1000), Vector(1100, 1000), Vector(1100, 1100)));
+        }
+
+        private Polygon<TPrimitive, TVector> Square100x100WithHole()
+        {
+            return new Polygon<TPrimitive, TVector>(new ReadOnlyArray<TVector>(
+                Vector(100, 100),
+                Vector(0, 100),
+                Vector(0, 0),
+                Vector(100, 0),
+                Vector(100, 100)
             ), new ReadOnlyArray<ReadOnlyArray<TVector>>(new ReadOnlyArray<TVector>(
-                Vector(75,75),
-                Vector(75,25),
-                Vector(25,25),
-                Vector(25,75),
-                Vector(75,75)
+                Vector(75, 75),
+                Vector(75, 25),
+                Vector(25, 25),
+                Vector(25, 75),
+                Vector(75, 75)
             )));
         }
 
-        private Polygon<TPrimitive,TVector> Square50x50()
+        private Polygon<TPrimitive, TVector> Square50x50()
         {
-            return new Polygon<TPrimitive,TVector>(new ReadOnlyArray<TVector>(Vector(75, 75), Vector(75, 25), Vector(25, 25), Vector(25, 75), Vector(75, 75) ));
+            return new Polygon<TPrimitive, TVector>(new ReadOnlyArray<TVector>(Vector(75, 75), Vector(75, 25), Vector(25, 25), Vector(25, 75), Vector(75, 75)));
         }
 
-        private Polygon<TPrimitive,TVector> Square10x10()
+        private Polygon<TPrimitive, TVector> Square10x10()
         {
-            return new Polygon<TPrimitive,TVector>(new ReadOnlyArray<TVector>(Vector(55, 55), Vector(55, 45), Vector(45, 45), Vector(45, 55), Vector(55, 55) ));
+            return new Polygon<TPrimitive, TVector>(new ReadOnlyArray<TVector>(Vector(55, 55), Vector(55, 45), Vector(45, 45), Vector(45, 55), Vector(55, 55)));
         }
 
-        private Polygon<TPrimitive,TVector> Square50x50WithHole()
+        private Polygon<TPrimitive, TVector> Square50x50WithHole()
         {
-            return new Polygon<TPrimitive,TVector>(new ReadOnlyArray<TVector>(Vector(75, 75), Vector(75, 25), Vector(25, 25), Vector(25, 75), Vector(75, 75) ),
-                new ReadOnlyArray<ReadOnlyArray<TVector>>(new ReadOnlyArray<TVector>(Vector(55, 55), Vector(55, 45), Vector(45, 45), Vector(45, 55), Vector(55, 55) )));
+            return new Polygon<TPrimitive, TVector>(new ReadOnlyArray<TVector>(Vector(75, 75), Vector(75, 25), Vector(25, 25), Vector(25, 75), Vector(75, 75)),
+                new ReadOnlyArray<ReadOnlyArray<TVector>>(new ReadOnlyArray<TVector>(Vector(55, 55), Vector(55, 45), Vector(45, 45), Vector(45, 55), Vector(55, 55))));
         }
 
-        private List<Polygon<TPrimitive,TVector>> SquareBands100x100WithHole()
+        private List<Polygon<TPrimitive, TVector>> SquareBands100x100WithHole()
         {
-            return new List<Polygon<TPrimitive,TVector>> {
+            return new List<Polygon<TPrimitive, TVector>> {
                 new (new( Vector(0, 0), Vector(100, 0), Vector(100, 25), Vector(0, 25), Vector(0, 0) )),
                 new (new( Vector(0, 75), Vector(100, 75), Vector(100, 100), Vector(0, 100), Vector(0, 75) )),
                 new (new( Vector(0, 0), Vector(0, 100), Vector(25,100), Vector(25, 0), Vector(0, 0) )),
@@ -342,6 +342,33 @@ namespace Pmad.Geometry.Test.Shapes
             var result = Square100x100().Union(Square50x50());
             var polygon = Assert.Single(result);
             Assert.Equal("POLYGON ((100 100, 0 100, 0 0, 100 0, 100 100))", polygon.ToString());
+        }
+
+
+        [Fact]
+        public void ContainsVector()
+        {
+            var square = Square100x100();
+
+            Assert.False(square.Contains(Vector(50, 150)));
+            Assert.True(square.Contains(Vector(50, 100)));
+            Assert.True(square.Contains(Vector(50, 50)));
+            Assert.True(square.Contains(Vector(50, 0)));
+            Assert.False(square.Contains(Vector(50, -50)));
+
+            Assert.False(square.Contains(Vector(150, 50)));
+            Assert.True(square.Contains(Vector(100, 50)));
+            Assert.True(square.Contains(Vector(50, 50)));
+            Assert.True(square.Contains(Vector(0, 50)));
+            Assert.False(square.Contains(Vector(-50, 50)));
+
+            var triangle = TriangleA();
+            Assert.False(triangle.Contains(Vector(-25, -25)));
+            Assert.True(triangle.Contains(Vector(0, 0)));
+            Assert.True(triangle.Contains(Vector(25, 25)));
+            Assert.True(triangle.Contains(Vector(50, 50)));
+            Assert.False(triangle.Contains(Vector(75, 75)));
+            Assert.False(triangle.Contains(Vector(100, 100)));
         }
     }
 }

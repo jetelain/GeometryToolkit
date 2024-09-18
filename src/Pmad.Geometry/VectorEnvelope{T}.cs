@@ -1,10 +1,11 @@
 ﻿using System.Diagnostics;
+using System.Diagnostics.CodeAnalysis;
 using Pmad.Geometry.Collections;
 
 namespace Pmad.Geometry
 {
     [DebuggerDisplay("{Min}->{Max}")]
-    public struct VectorEnvelope<TVector> 
+    public struct VectorEnvelope<TVector> : IEquatable<VectorEnvelope<TVector>>
         where TVector : struct, IVector<TVector>
     {
         private readonly TVector min;
@@ -65,6 +66,25 @@ namespace Pmad.Geometry
         public bool Contains(TVector point)
         {
             return point.IsInRange(min, max);
+        }
+
+        public bool Equals(VectorEnvelope<TVector> other)
+        {
+            return min == other.Min && max == other.Max;
+        }
+
+        public override bool Equals([NotNullWhen(true)] object? obj)
+        {
+            if (obj is VectorEnvelope<TVector> other)
+            {
+                return Equals(other);
+            }
+            return false;
+        }
+
+        public override int GetHashCode()
+        {
+            return HashCode.Combine(min, max);
         }
     }
 }

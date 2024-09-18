@@ -43,12 +43,12 @@ namespace Pmad.Geometry.Shapes
 
         public bool Contains(TVector point) => IsInsideOrOnBoundary(point);
 
-        public static Circle<TPrimitive, TVector> FromTwoPoints(ShapeSettings<TPrimitive, TVector> settings, TVector a, TVector b)
+        internal static Circle<TPrimitive, TVector> FromTwoPoints(ShapeSettings<TPrimitive, TVector> settings, TVector a, TVector b)
         {
             return new(settings, (b + a) / 2, (b - a).LengthD() / 2);
         }
 
-        public static Circle<TPrimitive, TVector> FromThreePoints(ShapeSettings<TPrimitive, TVector> settings, TVector a, TVector b, TVector c)
+        internal static Circle<TPrimitive, TVector> FromThreePoints(ShapeSettings<TPrimitive, TVector> settings, TVector a, TVector b, TVector c)
         {
             var o = (TVector.Min(TVector.Min(a, b), c) + TVector.Max(TVector.Max(a, b), c)) / 2;
             var da = a - o;
@@ -57,8 +57,9 @@ namespace Pmad.Geometry.Shapes
             var d = (da.X * (db.Y - dc.Y) + db.X * (dc.Y - da.Y) + dc.X * (da.Y - db.Y)) * TPrimitive.CreateTruncating(2);
             if (d == TPrimitive.Zero)
             {
-                // XXX: Fallback to FromTwoPoints ?
-                return new(settings, TVector.Zero, 0);
+                // The points are aligned, no circle can pass through all the points.
+                // Approximate solution of a circle containing all the points.
+                return new(settings, o, Math.Max(da.LengthD(), Math.Max(db.LengthD(), dc.LengthD())));
             }
             //var x = ((da.X * da.X + da.Y * da.Y) * (db.Y - dc.Y) + (db.X * db.X + db.Y * db.Y) * (dc.Y - da.Y) + (dc.X * dc.X + dc.Y * dc.Y) * (da.Y - db.Y)) / d;
             var x = (da.LengthSquared() * (db.Y - dc.Y) + db.LengthSquared() * (dc.Y - da.Y) + dc.LengthSquared() * (da.Y - db.Y)) / d;

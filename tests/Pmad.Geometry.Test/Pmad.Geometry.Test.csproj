@@ -25,8 +25,18 @@
 	    <DesignTime>True</DesignTime>
 	    <AutoGen>True</AutoGen>
 	  </Compile>
+	  <Compile Update="Shapes\MultiPolygon.cs">
+	    <DependentUpon>MultiPolygon.tt</DependentUpon>
+	    <DesignTime>True</DesignTime>
+	    <AutoGen>True</AutoGen>
+	  </Compile>
 	  <Compile Update="Shapes\PathSegment.cs">
 	    <DependentUpon>PathSegment.tt</DependentUpon>
+	    <DesignTime>True</DesignTime>
+	    <AutoGen>True</AutoGen>
+	  </Compile>
+	  <Compile Update="Shapes\MultiPath.cs">
+	    <DependentUpon>MultiPath.tt</DependentUpon>
 	    <DesignTime>True</DesignTime>
 	    <AutoGen>True</AutoGen>
 	  </Compile>
@@ -40,6 +50,11 @@
 	    <DesignTime>True</DesignTime>
 	    <AutoGen>True</AutoGen>
 	  </Compile>
+	  <Compile Update="Shapes\Circle.cs">
+	    <DependentUpon>Circle.tt</DependentUpon>
+	    <DesignTime>True</DesignTime>
+	    <AutoGen>True</AutoGen>
+	  </Compile>
 	  <Compile Update="Shapes\ShapeSettingsTest.cs">
 	    <DependentUpon>ShapeSettingsTest.tt</DependentUpon>
 	    <DesignTime>True</DesignTime>
@@ -49,6 +64,11 @@
 	    <DesignTime>True</DesignTime>
 	    <AutoGen>True</AutoGen>
 	    <DependentUpon>RotatedRectangle.tt</DependentUpon>
+	  </Compile>
+	  <Compile Update="VectorsEnvelope.cs">
+	    <DependentUpon>VectorsEnvelope.tt</DependentUpon>
+	    <DesignTime>True</DesignTime>
+	    <AutoGen>True</AutoGen>
 	  </Compile>
 	  <Compile Update="Vectors2.cs">
       <DependentUpon>Vectors2.tt</DependentUpon>
@@ -85,8 +105,16 @@
       <LastGenOutput>Matrixes.cs</LastGenOutput>
       <Generator>TextTemplatingFileGenerator</Generator>
     </None>
+    <None Update="Shapes\MultiPolygon.tt">
+      <LastGenOutput>MultiPolygon.cs</LastGenOutput>
+      <Generator>TextTemplatingFileGenerator</Generator>
+    </None>
     <None Update="Shapes\PathSegment.tt">
       <LastGenOutput>PathSegment.cs</LastGenOutput>
+      <Generator>TextTemplatingFileGenerator</Generator>
+    </None>
+    <None Update="Shapes\MultiPath.tt">
+      <LastGenOutput>MultiPath.cs</LastGenOutput>
       <Generator>TextTemplatingFileGenerator</Generator>
     </None>
     <None Update="Shapes\Polygon.tt">
@@ -97,12 +125,20 @@
       <LastGenOutput>Path.cs</LastGenOutput>
       <Generator>TextTemplatingFileGenerator</Generator>
     </None>
+    <None Update="Shapes\Circle.tt">
+      <LastGenOutput>Circle.cs</LastGenOutput>
+      <Generator>TextTemplatingFileGenerator</Generator>
+    </None>
     <None Update="Shapes\ShapeSettingsTest.tt">
       <LastGenOutput>ShapeSettingsTest.cs</LastGenOutput>
       <Generator>TextTemplatingFileGenerator</Generator>
     </None>
     <None Update="Shapes\RotatedRectangle.tt">
       <LastGenOutput>RotatedRectangle.cs</LastGenOutput>
+      <Generator>TextTemplatingFileGenerator</Generator>
+    </None>
+    <None Update="VectorsEnvelope.tt">
+      <LastGenOutput>VectorsEnvelope.cs</LastGenOutput>
       <Generator>TextTemplatingFileGenerator</Generator>
     </None>
     <None Update="Vectors2.tt">

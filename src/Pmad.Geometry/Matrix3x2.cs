@@ -73,7 +73,7 @@ namespace Pmad.Geometry
 
         public override int GetHashCode()
         {
-            return HashCode.Combine(XY.GetHashCode(), Z.GetHashCode());
+            return HashCode.Combine(XY, Z);
         }
 
         public static Matrix3x2<TPrimitive, TVector> CreateTranslation(TPrimitive x, TPrimitive y)
