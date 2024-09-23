@@ -6,7 +6,7 @@ using Pmad.Geometry.Collections;
 
 namespace Pmad.Geometry.Shapes
 {
-    public sealed class Polygon<TPrimitive, TVector> : IWithBounds<TVector>, IShape<TPrimitive, TVector>
+    public sealed class Polygon<TPrimitive, TVector> : IWithBounds<TVector>, IShape<TPrimitive, TVector>, IEquatable<Polygon<TPrimitive, TVector>>
         where TPrimitive : unmanaged, INumber<TPrimitive>
         where TVector : struct, IVector2<TPrimitive, TVector>
     {
@@ -323,5 +323,97 @@ namespace Pmad.Geometry.Shapes
             }
             return new Polygon<TPrimitive, TVector>(settings, Shell, Holes);
         }
+
+        public bool SameAs(Polygon<TPrimitive, TVector> other)
+        {
+            if (other == this)
+            {
+                return true;
+            }
+            if (Holes.Count == other.Holes.Count &&
+                LoopEqual(Shell,other.Shell))
+            {
+                var otherHoles = other.Holes.ToList();
+                foreach (var hole in Holes)
+                {
+                    var matching = otherHoles.FindIndex(otherHole => LoopEqual(otherHole, hole));
+                    if (matching == -1)
+                    {
+                        return false;
+                    }
+                    otherHoles.RemoveAt(matching);
+                }
+                return true;
+            }
+            return false;
+        }
+
+        internal static bool LoopEqual(ReadOnlyArray<TVector> span1, ReadOnlyArray<TVector> span2)
+        {
+            return span1.Count == span2.Count && LoopEqual(span1.Slice(1), span2.Slice(1));
+        }
+
+        private static bool LoopEqual(ReadOnlySpan<TVector> span1, ReadOnlySpan<TVector> span2)
+        {
+            var index = span2.IndexOf(span1[0]);
+            if (index == -1)
+            {
+                return false;
+            }
+            var slice2 = span2.Slice(index);
+            var slice1 = span1.Slice(0, slice2.Length);
+            if (!slice2.SequenceEqual(slice1))
+            {
+                return false;
+            }
+            if (span1.Slice(slice2.Length).SequenceEqual(span2.Slice(0, index)))
+            {
+                return true;
+            }
+            return false;
+        }
+
+        public bool Equals(Polygon<TPrimitive, TVector>? other)
+        {
+            if (other == null)
+            {
+                return false; 
+            }
+            if (other == this)
+            {
+                return true;
+            }
+            if (Holes.Count == other.Holes.Count && Shell.SequenceEqual(other.Shell))
+            {
+                for (int i = 0; i < Holes.Count; ++i)
+                {
+                    if (!Holes[i].SequenceEqual(other.Holes[i]))
+                    {
+                        return false;
+                    }
+                }
+                return true;
+            }
+            return false;
+        }
+
+        public override int GetHashCode()
+        {
+            if (Shell.Count == 0)
+            {
+                return 0; 
+            }
+            return HashCode.Combine(Holes.Count, Shell.Count, Shell[0]);
+        }
+
+        public override bool Equals(object? obj)
+        {
+            if (obj is Polygon<TPrimitive, TVector> other)
+            {
+                return Equals(other); 
+            }
+            return false;
+        }
+
     }
 }
