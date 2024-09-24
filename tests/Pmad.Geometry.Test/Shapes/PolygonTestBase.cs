@@ -47,6 +47,52 @@ namespace Pmad.Geometry.Test.Shapes
                 Vector(75, 75)
             )));
         }
+        private Polygon<TPrimitive, TVector> Square100x100AltWithHole()
+        {
+            return new Polygon<TPrimitive, TVector>(new ReadOnlyArray<TVector>(
+                Vector(0, 100),
+                Vector(0, 0),
+                Vector(100, 0),
+                Vector(100, 100),
+                Vector(0, 100)
+            ), new ReadOnlyArray<ReadOnlyArray<TVector>>(new ReadOnlyArray<TVector>(
+                Vector(75, 75),
+                Vector(75, 25),
+                Vector(25, 25),
+                Vector(25, 75),
+                Vector(75, 75)
+            )));
+        }
+
+        private Polygon<TPrimitive, TVector> Square100x100WithHoleAlt()
+        {
+            return new Polygon<TPrimitive, TVector>(new ReadOnlyArray<TVector>(
+                Vector(100, 100),
+                Vector(0, 100),
+                Vector(0, 0),
+                Vector(100, 0),
+                Vector(100, 100)
+            ), new ReadOnlyArray<ReadOnlyArray<TVector>>(new ReadOnlyArray<TVector>(
+                Vector(75, 25),
+                Vector(25, 25),
+                Vector(25, 75),
+                Vector(75, 75),
+                Vector(75, 25)
+            )));
+        }
+
+        private Polygon<TPrimitive, TVector> Square100x100WithSmallHole()
+        {
+            return new Polygon<TPrimitive, TVector>(new ReadOnlyArray<TVector>(
+                Vector(100, 100),
+                Vector(0, 100),
+                Vector(0, 0),
+                Vector(100, 0),
+                Vector(100, 100)
+            ), new ReadOnlyArray<ReadOnlyArray<TVector>>(new ReadOnlyArray<TVector>(
+                Vector(55, 55), Vector(55, 45), Vector(45, 45), Vector(45, 55), Vector(55, 55)
+            )));
+        }
 
         private Polygon<TPrimitive, TVector> Square50x50()
         {
@@ -369,6 +415,101 @@ namespace Pmad.Geometry.Test.Shapes
             Assert.True(triangle.Contains(Vector(50, 50)));
             Assert.False(triangle.Contains(Vector(75, 75)));
             Assert.False(triangle.Contains(Vector(100, 100)));
+        }
+
+        [Fact]
+        public void LoopEqual()
+        {
+            Assert.True(Polygon<TPrimitive, TVector>.LoopEqual(
+                new(Vector(1, 1), Vector(2, 2), Vector(3, 3), Vector(4, 4), Vector(1, 1)),
+                new(Vector(1, 1), Vector(2, 2), Vector(3, 3), Vector(4, 4), Vector(1, 1))));
+
+            Assert.True(Polygon<TPrimitive, TVector>.LoopEqual(
+                new(Vector(2, 2), Vector(3, 3), Vector(4, 4), Vector(1, 1), Vector(2, 2)),
+                new(Vector(1, 1), Vector(2, 2), Vector(3, 3), Vector(4, 4), Vector(1, 1))));
+
+            Assert.True(Polygon<TPrimitive, TVector>.LoopEqual(
+                new(Vector(4, 4), Vector(1, 1), Vector(2, 2), Vector(3, 3), Vector(4, 4)),
+                new(Vector(1, 1), Vector(2, 2), Vector(3, 3), Vector(4, 4), Vector(1, 1))));
+
+            Assert.False(Polygon<TPrimitive, TVector>.LoopEqual(
+                new(Vector(1, 1), Vector(2, 2), Vector(3, 3), Vector(4, 4), Vector(1, 1)),
+                new(Vector(1, 1), Vector(2, 2), Vector(4, 4), Vector(3, 3), Vector(1, 1))));
+
+            Assert.False(Polygon<TPrimitive, TVector>.LoopEqual(
+                new(Vector(2, 2), Vector(3, 3), Vector(4, 4), Vector(1, 1), Vector(2, 2)),
+                new(Vector(1, 1), Vector(2, 2), Vector(4, 4), Vector(3, 3), Vector(1, 1))));
+
+            Assert.False(Polygon<TPrimitive, TVector>.LoopEqual(
+                new(Vector(4, 4), Vector(1, 1), Vector(2, 2), Vector(3, 3), Vector(4, 4)),
+                new(Vector(1, 1), Vector(2, 2), Vector(4, 4), Vector(3, 3), Vector(1, 1))));
+
+            Assert.False(Polygon<TPrimitive, TVector>.LoopEqual(
+                new(Vector(2, 2), Vector(3, 3), Vector(4, 4), Vector(1, 1), Vector(2, 2)),
+                new(Vector(5, 5), Vector(6, 6), Vector(7, 7), Vector(8, 8), Vector(5, 5))));
+
+            Assert.False(Polygon<TPrimitive, TVector>.LoopEqual(
+                new(Vector(1, 1), Vector(2, 2), Vector(3, 3), Vector(4, 4), Vector(1, 1)),
+                new(Vector(1, 1), Vector(2, 2), Vector(4, 4), Vector(1, 1))));
+        }
+
+        [Fact]
+        public void EqualsPolygon()
+        {
+            Assert.Equal(Square100x100(), Square100x100());
+            Assert.Equal(Square100x100WithHole(), Square100x100WithHole());
+
+            Assert.NotEqual(Square100x100(), Square100x100WithHole());
+            Assert.NotEqual(Square100x100WithHole(), Square100x100());
+            Assert.NotEqual(Square100x100WithHole(), Square100x100WithHoleAlt());
+            Assert.NotEqual(Square100x100WithHole(), Square100x100AltWithHole());
+
+            Assert.NotEqual(Square100x100(), Square100x100Far());
+            Assert.NotEqual(Square100x100Far(), Square100x100());
+        }
+
+        [Fact]
+        public void EqualsPolygon_Ref()
+        {
+            var a = Square100x100();
+            Assert.Equal(a, a);
+            Assert.False(a.Equals(null));
+        }
+
+        [Fact]
+        public void SameAs()
+        {
+            Assert.True(Square100x100().SameAs(Square100x100()));
+            Assert.True(Square100x100WithHole().SameAs(Square100x100WithHole()));
+            Assert.True(Square100x100WithHole().SameAs(Square100x100WithHoleAlt()));
+            Assert.True(Square100x100WithHole().SameAs(Square100x100AltWithHole()));
+
+            Assert.False(Square100x100().SameAs(Square100x100WithHole()));
+            Assert.False(Square100x100WithHole().SameAs(Square100x100()));
+            Assert.False(Square100x100WithHole().SameAs(Square100x100WithSmallHole()));
+            Assert.False(Square100x100().SameAs(Square100x100Far()));
+            Assert.False(Square100x100Far().SameAs(Square100x100()));
+        }
+
+        [Fact]
+        public void SameAs_Ref()
+        {
+            var a = Square100x100();
+            Assert.True(a.SameAs(a));
+        }
+
+        [Fact]
+        public void GetHashcode()
+        {
+            Assert.Equal(Square100x100().GetHashCode(), Square100x100().GetHashCode());
+            Assert.Equal(0, new Polygon<TPrimitive, TVector>(new ReadOnlyArray<TVector>()).GetHashCode());
+        }
+
+        [Fact]
+        public void EqualsObject()
+        {
+            Assert.True(Square100x100().Equals((object)Square100x100()));
+            Assert.False(Square100x100().Equals((object)1234));
         }
     }
 }
