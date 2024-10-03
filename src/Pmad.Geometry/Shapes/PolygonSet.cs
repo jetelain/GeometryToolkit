@@ -6,6 +6,7 @@ namespace Pmad.Geometry.Shapes
 {
     /// <summary>
     /// "High performance" representation of one or more polygons, suited for arithmetic operations. 
+    /// 
     /// It's a thin layer above Clipper2 primitives for fool-proof usage.
     /// </summary>
     /// <typeparam name="TPrimitive"></typeparam>
@@ -31,6 +32,16 @@ namespace Pmad.Geometry.Shapes
             this.hasBounds = true;
         }
 
+        public static PolygonSet<TPrimitive, TVector> Create(ShapeSettings<TPrimitive, TVector> settings, IEnumerable<ReadOnlyArray<TVector>> vectors)
+        {
+            return new PolygonSet<TPrimitive, TVector>(new Paths64(vectors.Select(settings.ToClipper)), settings);
+        }
+
+        public static PolygonSet<TPrimitive, TVector> Create(IEnumerable<ReadOnlyArray<TVector>> vectors)
+        {
+            return Create(ShapeSettings<TPrimitive, TVector>.Default, vectors);
+        }
+
         public VectorEnvelope<TVector> Bounds 
         { 
             get
@@ -49,11 +60,15 @@ namespace Pmad.Geometry.Shapes
             }
         }
 
-        public ShapeSettings<TPrimitive, TVector> Settings { get; }
+        public double AreaD => Clipper.Area(paths) / Settings.ScaleForClipper / Settings.ScaleForClipper;
+
+        internal ShapeSettings<TPrimitive, TVector> Settings { get; }
 
         internal Paths64 ToClipper() => paths;
 
         public int Count => paths.Count;
+
+        internal IEnumerable<Path64> Paths => paths;
 
         public PolygonSet<TPrimitive, TVector> Substract(PolygonSet<TPrimitive, TVector> other)
         {
@@ -99,46 +114,46 @@ namespace Pmad.Geometry.Shapes
             return new PolygonSet<TPrimitive, TVector>(Clipper.RectClip(Settings.ToClipper(rect), ToClipper()), Settings);
         }
 
-        public PolygonSet<TPrimitive, TVector> SubstractToMultiPolygon(PolygonSet<TPrimitive, TVector> other)
+        public MultiPolygon<TPrimitive, TVector> SubstractToMultiPolygon(PolygonSet<TPrimitive, TVector> other)
         {
-            return BooleanOpToSet(other.ToClipper(), ClipType.Difference);
+            return BooleanOpToMultiPolygon(other.ToClipper(), ClipType.Difference);
         }
-        public PolygonSet<TPrimitive, TVector> SubstractToMultiPolygon(Polygon<TPrimitive, TVector> other)
+        public MultiPolygon<TPrimitive, TVector> SubstractToMultiPolygon(Polygon<TPrimitive, TVector> other)
         {
-            return BooleanOpToSet(other.ToClipper(), ClipType.Difference);
+            return BooleanOpToMultiPolygon(other.ToClipper(), ClipType.Difference);
         }
-        public PolygonSet<TPrimitive, TVector> SubstractToMultiPolygon(MultiPolygon<TPrimitive, TVector> other)
+        public MultiPolygon<TPrimitive, TVector> SubstractToMultiPolygon(MultiPolygon<TPrimitive, TVector> other)
         {
-            return BooleanOpToSet(other.ToClipper(Settings), ClipType.Difference);
-        }
-
-        public PolygonSet<TPrimitive, TVector> UnionToMultiPolygon(PolygonSet<TPrimitive, TVector> other)
-        {
-            return BooleanOpToSet(other.ToClipper(), ClipType.Union);
-        }
-        public PolygonSet<TPrimitive, TVector> UnionToMultiPolygon(Polygon<TPrimitive, TVector> other)
-        {
-            return BooleanOpToSet(other.ToClipper(), ClipType.Union);
-        }
-        public PolygonSet<TPrimitive, TVector> UnionToMultiPolygon(MultiPolygon<TPrimitive, TVector> other)
-        {
-            return BooleanOpToSet(other.ToClipper(Settings), ClipType.Union);
+            return BooleanOpToMultiPolygon(other.ToClipper(Settings), ClipType.Difference);
         }
 
-        public PolygonSet<TPrimitive, TVector> IntersectionToMultiPolygon(PolygonSet<TPrimitive, TVector> other)
+        public MultiPolygon<TPrimitive, TVector> UnionToMultiPolygon(PolygonSet<TPrimitive, TVector> other)
         {
-            return BooleanOpToSet(other.ToClipper(), ClipType.Intersection);
+            return BooleanOpToMultiPolygon(other.ToClipper(), ClipType.Union);
         }
-        public PolygonSet<TPrimitive, TVector> IntersectionToMultiPolygon(Polygon<TPrimitive, TVector> other)
+        public MultiPolygon<TPrimitive, TVector> UnionToMultiPolygon(Polygon<TPrimitive, TVector> other)
         {
-            return BooleanOpToSet(other.ToClipper(), ClipType.Intersection);
+            return BooleanOpToMultiPolygon(other.ToClipper(), ClipType.Union);
         }
-        public PolygonSet<TPrimitive, TVector> IntersectionToMultiPolygon(MultiPolygon<TPrimitive, TVector> other)
+        public MultiPolygon<TPrimitive, TVector> UnionToMultiPolygon(MultiPolygon<TPrimitive, TVector> other)
         {
-            return BooleanOpToSet(other.ToClipper(Settings), ClipType.Intersection);
+            return BooleanOpToMultiPolygon(other.ToClipper(Settings), ClipType.Union);
         }
 
-        private MultiPolygon<TPrimitive, TVector> SubstractToMultiPolygon(Paths64 other, ClipType op)
+        public MultiPolygon<TPrimitive, TVector> IntersectionToMultiPolygon(PolygonSet<TPrimitive, TVector> other)
+        {
+            return BooleanOpToMultiPolygon(other.ToClipper(), ClipType.Intersection);
+        }
+        public MultiPolygon<TPrimitive, TVector> IntersectionToMultiPolygon(Polygon<TPrimitive, TVector> other)
+        {
+            return BooleanOpToMultiPolygon(other.ToClipper(), ClipType.Intersection);
+        }
+        public MultiPolygon<TPrimitive, TVector> IntersectionToMultiPolygon(MultiPolygon<TPrimitive, TVector> other)
+        {
+            return BooleanOpToMultiPolygon(other.ToClipper(Settings), ClipType.Intersection);
+        }
+
+        private MultiPolygon<TPrimitive, TVector> BooleanOpToMultiPolygon(Paths64 other, ClipType op)
         {
             var tree = new PolyTree64();
             Clipper.BooleanOp(op, ToClipper(), other, tree, FillRule.EvenOdd);
@@ -166,9 +181,18 @@ namespace Pmad.Geometry.Shapes
             {
                 return MultiPolygon<TPrimitive, TVector>.Empty;
             }
+            return new MultiPolygon<TPrimitive, TVector>(ToPolygonList());
+        }
+
+        public List<Polygon<TPrimitive, TVector>> ToPolygonList()
+        {
+            if (paths.Count == 0)
+            {
+                return new List<Polygon<TPrimitive, TVector>>();
+            }
             var tree = new PolyTree64();
-            Clipper.BooleanOp(ClipType.Union, paths, null, tree, FillRule.EvenOdd); // TODO: Try ClipType.None 
-            return Settings.ToMultiPolygon(tree);
+            Clipper.BooleanOp(ClipType.Union, paths, null, tree, FillRule.EvenOdd);
+            return Settings.ToPolygonList(tree);
         }
 
         public PolygonSet<TPrimitive, TVector> WithSettings(ShapeSettings<TPrimitive, TVector> settings)

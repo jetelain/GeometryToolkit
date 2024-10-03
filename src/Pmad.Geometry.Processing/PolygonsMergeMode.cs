@@ -10,6 +10,11 @@
         /// <summary>
         /// Polygons will not tends to form large areas. Like buildings on a map.
         /// </summary>
-        SmallIsolated
+        SmallIsolated,
+
+        /// <summary>
+        /// Experimental
+        /// </summary>
+        PolygonSet
     }
 }

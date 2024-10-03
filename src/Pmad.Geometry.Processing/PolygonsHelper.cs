@@ -6,7 +6,7 @@ using Pmad.ProgressTracking;
 
 namespace Pmad.Geometry.Processing
 {
-    internal static class PolygonsHelper<P, V> 
+    internal static class PolygonsHelper<P, V>
         where P : unmanaged, INumber<P>
         where V : struct, IVector2<P, V>
     {
@@ -27,7 +27,7 @@ namespace Pmad.Geometry.Processing
         internal static IEnumerable<Polygon<P, V>> SubstractAllSplitted(Polygon<P, V> subject, IEnumerable<Polygon<P, V>> others, double targetArea = 1_000_000)
         {
             var bounds = subject.Bounds;
-            if ((bounds.Max- bounds.Min).AreaD() < targetArea)
+            if ((bounds.Max - bounds.Min).AreaD() < targetArea)
             {
                 return subject.SubstractAll(others);
             }
@@ -82,6 +82,9 @@ namespace Pmad.Geometry.Processing
 
                 case PolygonsMergeMode.LargeConnected:
                     return UnionAllLargeConnected(source, settings, progress);
+
+                case PolygonsMergeMode.PolygonSet:
+                    return UnionAllToSet(source, settings, progress).ToPolygonList();
             }
             ThrowHelper.ThrowNotSupportedException();
             return default;
@@ -103,7 +106,7 @@ namespace Pmad.Geometry.Processing
                 {
                     merged.Add(polygon);
                 }
-                box = MultiPolygon<P,V>.GetBounds(merged);
+                box = MultiPolygon<P, V>.GetBounds(merged);
                 progress?.ReportOneDone();
             }
             return merged;
@@ -126,6 +129,21 @@ namespace Pmad.Geometry.Processing
                 {
                     merged.Add(polygon);
                 }
+                progress?.ReportOneDone();
+            }
+            return merged;
+        }
+
+        internal static PolygonSet<P, V> UnionAllToSet(List<Polygon<P, V>> source, ShapeSettings<P, V> settings, IProgressInteger? progress = null)
+        {
+            if (source.Count == 0)
+            {
+                return new PolygonSet<P, V>(new Paths64(), settings);
+            }
+            var merged = source[0].ToPolygonSet();
+            foreach (var polygon in source.Skip(1))
+            {
+                merged = merged.Union(polygon);
                 progress?.ReportOneDone();
             }
             return merged;
@@ -167,7 +185,7 @@ namespace Pmad.Geometry.Processing
                 Task.Run(() => ParallelUnionAll(quadrans[0], partitions[0], idealPartition, mode)),
                 Task.Run(() => ParallelUnionAll(quadrans[1], partitions[1], idealPartition, mode)),
                 Task.Run(() => ParallelUnionAll(quadrans[2], partitions[2], idealPartition, mode)),
-                Task.Run(() => ParallelUnionAll(quadrans[3], partitions[3], idealPartition, mode)) 
+                Task.Run(() => ParallelUnionAll(quadrans[3], partitions[3], idealPartition, mode))
             };
 
             await Task.WhenAll(tasks).ConfigureAwait(false);
@@ -193,7 +211,7 @@ namespace Pmad.Geometry.Processing
         private static VectorEnvelope<V>[] SplitQuad(VectorEnvelope<V> scope)
         {
             var mid = (scope.Max + scope.Min) / 2;
-            return [ 
+            return [
                     new VectorEnvelope<V>(scope.Min, mid),
                     new VectorEnvelope<V>(V.Create(scope.Min.X, mid.Y), V.Create(mid.X, scope.Max.Y)),
                     new VectorEnvelope<V>(V.Create(mid.X, scope.Min.Y), V.Create(scope.Max.X, mid.Y)),
@@ -201,5 +219,28 @@ namespace Pmad.Geometry.Processing
                 ];
         }
 
+        internal static async Task<PolygonSet<P, V>> ParallelUnionAllToSet(PartitionQuadTree<Polygon<P, V>, P, V> tree, ShapeSettings<P, V> settings, IProgressInteger? progress = null)
+        {
+            var main = UnionAllToSet(tree.Main, settings, progress);
+            if (tree.ListA == null)
+            {
+                return main;
+            }
+
+            var a = Task.Run(() => ParallelUnionAllToSet(tree.ListA!, settings, progress));
+            var b = Task.Run(() => ParallelUnionAllToSet(tree.ListB!, settings, progress));
+            var c = Task.Run(() => ParallelUnionAllToSet(tree.ListC!, settings, progress));
+            var d = Task.Run(() => ParallelUnionAllToSet(tree.ListD!, settings, progress));
+
+            var result = main.Union(new PolygonSet<P, V>(
+                new Paths64((await a).Paths
+                .Concat((await b).Paths)
+                .Concat((await c).Paths)
+                .Concat((await d).Paths)), settings));
+
+            progress?.ReportOneDone();
+
+            return result;
+        }
     }
 }

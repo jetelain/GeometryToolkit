@@ -422,7 +422,7 @@ namespace Pmad.Geometry.Shapes
 
         public PolygonSet<TPrimitive, TVector> ToPolygonSet()
         {
-            return new PolygonSet<TPrimitive, TVector>(Clipper.BooleanOp(ClipType.Union, ToClipper(), new Paths64(), FillRule.EvenOdd), Settings, Bounds); // TODO: Test ClipType.None
+            return new PolygonSet<TPrimitive, TVector>(Clipper.BooleanOp(ClipType.Union, ToClipper(), new Paths64(), FillRule.EvenOdd), Settings, Bounds);
         }
     }
 }

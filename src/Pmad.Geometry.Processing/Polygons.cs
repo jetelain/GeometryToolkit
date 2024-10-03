@@ -73,5 +73,24 @@ namespace Pmad.Geometry.Processing
         {
             return new (await PolygonsHelper<P, V>.ParallelUnionAll(MultiPolygon<P, V>.GetBounds(items), items, idealPartition, mode, progress).ConfigureAwait(false));
         }
+
+        public static async Task<PolygonSet<P, V>> ParallelUnionAllToSet<P, V>(List<Polygon<P, V>> items, IProgressScope progressScope, string stepName = "ParallelUnionAll", int idealPartition = 100)
+            where P : unmanaged, INumber<P>
+            where V : struct, IVector2<P, V>
+        {
+            var tree = new PartitionQuadTree<Polygon<P, V>, P, V>(MultiPolygon<P, V>.GetBounds(items), idealPartition);
+            tree.AddRange(items);
+            using var progress = progressScope.CreateInteger(stepName, tree.Count + tree.NodeCount);
+            return await PolygonsHelper<P, V>.ParallelUnionAllToSet(tree, items[0].Settings, progress);
+        }
+
+        public static async Task<PolygonSet<P, V>> ParallelUnionAllToSet<P, V>(List<Polygon<P, V>> items, int idealPartition = 100)
+            where P : unmanaged, INumber<P>
+            where V : struct, IVector2<P, V>
+        {
+            var tree = new PartitionQuadTree<Polygon<P, V>, P, V>(MultiPolygon<P, V>.GetBounds(items), idealPartition);
+            tree.AddRange(items);
+            return await PolygonsHelper<P, V>.ParallelUnionAllToSet(tree, items[0].Settings);
+        }
     }
 }
