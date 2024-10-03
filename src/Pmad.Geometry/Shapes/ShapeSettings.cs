@@ -124,11 +124,15 @@ namespace Pmad.Geometry.Shapes
 
         internal Path64 ToClipper(ReadOnlyArray<TVector> shell)
         {
-            var count = shell.Count;
+            return ToClipper(shell.AsSpan());
+        }
+
+        internal Path64 ToClipper(ReadOnlySpan<TVector> source)
+        {
+            var count = source.Length;
             var result = new Path64(count);
             CollectionsMarshal.SetCount(result, count);
             var target = CollectionsMarshal.AsSpan(result);
-            var source = shell.AsSpan();
             for (int i = 0; i < count; i++)
             {
                 target[i] = ToClipper(source[i]);
