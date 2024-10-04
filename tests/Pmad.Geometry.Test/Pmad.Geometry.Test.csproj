@@ -40,6 +40,11 @@
 	    <DesignTime>True</DesignTime>
 	    <AutoGen>True</AutoGen>
 	  </Compile>
+	  <Compile Update="Shapes\PolygonSet.cs">
+	    <DependentUpon>PolygonSet.tt</DependentUpon>
+	    <DesignTime>True</DesignTime>
+	    <AutoGen>True</AutoGen>
+	  </Compile>
 	  <Compile Update="Shapes\Polygon.cs">
 	    <DependentUpon>Polygon.tt</DependentUpon>
 	    <DesignTime>True</DesignTime>
@@ -115,6 +120,10 @@
     </None>
     <None Update="Shapes\MultiPath.tt">
       <LastGenOutput>MultiPath.cs</LastGenOutput>
+      <Generator>TextTemplatingFileGenerator</Generator>
+    </None>
+    <None Update="Shapes\PolygonSet.tt">
+      <LastGenOutput>PolygonSet.cs</LastGenOutput>
       <Generator>TextTemplatingFileGenerator</Generator>
     </None>
     <None Update="Shapes\Polygon.tt">

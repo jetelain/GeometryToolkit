@@ -5,9 +5,11 @@ using Pmad.Geometry.Collections;
 namespace Pmad.Geometry.Shapes
 {
     /// <summary>
-    /// "High performance" representation of one or more polygons, suited for arithmetic operations. 
+    /// "High performance" representation of one or more polygons, suited to chain arithmetic operations. 
     /// 
     /// It's a thin layer above Clipper2 primitives for fool-proof usage.
+    /// 
+    /// A "Polygon Set" is defined only by paths, the role of each path is unknown (shell or hole). 
     /// </summary>
     /// <typeparam name="TPrimitive"></typeparam>
     /// <typeparam name="TVector"></typeparam>
@@ -32,14 +34,14 @@ namespace Pmad.Geometry.Shapes
             this.hasBounds = true;
         }
 
-        public static PolygonSet<TPrimitive, TVector> Create(ShapeSettings<TPrimitive, TVector> settings, IEnumerable<ReadOnlyArray<TVector>> vectors)
+        public static PolygonSet<TPrimitive, TVector> Create(ShapeSettings<TPrimitive, TVector> settings, IEnumerable<ReadOnlyArray<TVector>> paths)
         {
-            return new PolygonSet<TPrimitive, TVector>(new Paths64(vectors.Select(settings.ToClipper)), settings);
+            return new PolygonSet<TPrimitive, TVector>(new Paths64(paths.Select(settings.ToClipper)), settings);
         }
 
-        public static PolygonSet<TPrimitive, TVector> Create(IEnumerable<ReadOnlyArray<TVector>> vectors)
+        public static PolygonSet<TPrimitive, TVector> Create(IEnumerable<ReadOnlyArray<TVector>> paths)
         {
-            return Create(ShapeSettings<TPrimitive, TVector>.Default, vectors);
+            return Create(ShapeSettings<TPrimitive, TVector>.Default, paths);
         }
 
         public VectorEnvelope<TVector> Bounds 
