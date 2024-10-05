@@ -32,7 +32,7 @@ namespace Pmad.Geometry.Processing
             Count += itemList.Count;
             if (ListA == null)
             {
-                if (itemList.Count + Main.Count >= partitionSize)
+                if (itemList.Count + Main.Count > partitionSize)
                 {
                     TransformToQuadNode();
                 }
