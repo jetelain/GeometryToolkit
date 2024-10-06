@@ -175,6 +175,11 @@ namespace Pmad.Geometry.Shapes
             return Settings.ToMultiPolygon(tree);
         }
 
+        private PolygonSet<TPrimitive, TVector> BooleanOpToSet(Polygon<TPrimitive, TVector> other, ClipType op)
+        {
+            return new PolygonSet<TPrimitive, TVector>(Clipper.BooleanOp(op, ToClipper(), other.ToClipper(), FillRule.EvenOdd), Settings);
+        }
+
         public MultiPolygon<TPrimitive, TVector> Intersection(Polygon<TPrimitive, TVector> other)
         {
             if (!Bounds.Intersects(other.Bounds))
@@ -415,5 +420,9 @@ namespace Pmad.Geometry.Shapes
             return false;
         }
 
+        public PolygonSet<TPrimitive, TVector> ToPolygonSet()
+        {
+            return new PolygonSet<TPrimitive, TVector>(Clipper.BooleanOp(ClipType.Union, ToClipper(), new Paths64(), FillRule.EvenOdd), Settings, Bounds);
+        }
     }
 }
