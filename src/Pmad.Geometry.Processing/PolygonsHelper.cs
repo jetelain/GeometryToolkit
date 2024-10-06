@@ -146,6 +146,7 @@ namespace Pmad.Geometry.Processing
                 merged = merged.Union(polygon);
                 progress?.ReportOneDone();
             }
+            progress?.ReportOneDone();
             return merged;
         }
 

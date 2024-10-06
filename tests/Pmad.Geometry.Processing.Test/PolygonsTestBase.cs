@@ -169,5 +169,61 @@ namespace Pmad.Geometry.Processing.Test
             Assert.Equal(sq100, result[0]);
             Assert.Equal(far, result[1]);
         }
+
+        [Fact]
+        public async Task ParallelUnionAllToSet()
+        {
+            var polygons = Create(25);
+
+            var result = await polygons.ParallelUnionAllToSet(2);
+            Assert.Equal(1, result.Count);
+            var polygon = Assert.Single(result.ToPolygonList());
+            Assert.Equal(new(TVector.Create(0, 0), TVector.Create(100, 100)), polygon.Bounds);
+            Assert.Equal(10000, polygon.AreaD);
+        }
+
+
+        [Fact]
+        public async Task ParallelUnionAllToSet_Progess()
+        {
+            var progress = new ProgessScopeMock();
+            var polygons = Create(25);
+
+            var result = await polygons.ParallelUnionAllToSet(progress, "Name", 2); 
+            Assert.Equal(1, result.Count);
+            var polygon = Assert.Single(result.ToPolygonList());
+            Assert.Equal(new(TVector.Create(0, 0), TVector.Create(100, 100)), polygon.Bounds);
+            Assert.Equal(10000, polygon.AreaD);
+            Assert.Equal(21, progress.Total);
+            Assert.Equal(21, progress.Done);
+        }
+
+        // 
+
+        [Fact]
+        public async Task ParallelUnionAllToSet_Deep()
+        {
+            var polygons = Create(5);
+
+            var result = await polygons.ParallelUnionAllToSet(2);
+            Assert.Equal(1, result.Count);
+            var polygon = Assert.Single(result.ToPolygonList());
+            Assert.Equal(new(TVector.Create(0, 0), TVector.Create(100, 100)), polygon.Bounds);
+            Assert.Equal(10000, polygon.AreaD);
+        }
+
+        private static List<Polygon<TPrimitive, TVector>> Create(int w = 25)
+        {
+            var polygons = new List<Polygon<TPrimitive, TVector>>();
+            var settings = ShapeSettings<TPrimitive, TVector>.Default;
+            for (int x = 0; x < 100; x += w)
+            {
+                for (int y = 0; y < 100; y += w)
+                {
+                    polygons.Add(settings.CreateRectangle(TVector.Create(x, y), TVector.Create(x + w, y + w)));
+                }
+            }
+            return polygons;
+        }
     }
 }
