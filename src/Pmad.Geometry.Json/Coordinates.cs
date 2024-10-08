@@ -1,4 +1,5 @@
 ﻿using System.Numerics;
+using Clipper2Lib;
 using Pmad.Geometry.Collections;
 using Pmad.Geometry.Shapes;
 
@@ -41,6 +42,11 @@ namespace Pmad.Geometry.Json
         }
 
         public Coordinates(IReadOnlyList<TVector> coordinates)
+        {
+            this.coordinates = coordinates;
+        }
+
+        internal Coordinates(PolygonSet<TPrimitive, TVector> coordinates)
         {
             this.coordinates = coordinates;
         }
@@ -121,5 +127,13 @@ namespace Pmad.Geometry.Json
             return (coordinates as MultiPolygon<TPrimitive, TVector>)?.WithSettings(settings) ?? MultiPolygon<TPrimitive, TVector>.Empty;
         }
 
+        internal PolygonSet<TPrimitive, TVector> AsPolygonSet(ShapeSettings<TPrimitive, TVector> settings)
+        {
+            if (coordinates is ReadOnlyArray<ReadOnlyArray<TVector>> data)
+            {
+                return new PolygonSet<TPrimitive, TVector>(new Paths64(data.Select(settings.ToClipper)), settings);
+            }
+            return (coordinates as PolygonSet<TPrimitive, TVector>)?.WithSettings(settings) ?? new PolygonSet<TPrimitive, TVector>(new Paths64(), settings);
+        }
     }
 }
