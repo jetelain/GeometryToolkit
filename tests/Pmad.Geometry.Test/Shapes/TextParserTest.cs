@@ -87,5 +87,40 @@ namespace Pmad.Geometry.Test.Shapes
             Assert.Equal(0, test.Length);
             Assert.Equal([], result);
         }
+
+        [Theory]
+        [InlineData("POLYGON ((100 100, 0 100, 0 0, 100 0, 100 100), (25 75, 75 75, 75 25, 25 25, 25 75))")]
+        public void ParsePolygon(string wkt)
+        {
+            Assert.Equal(wkt, TextParser<int, Vector2I>.ParsePolygon(ShapeSettings<int,Vector2I>.Default, wkt).ToString());
+        }
+
+        [Theory]
+        [InlineData("POLYGONSET ((100 100, 0 100, 0 0, 100 0, 100 100), (25 75, 75 75, 75 25, 25 25, 25 75))")]
+        public void ParsePolygonSet(string wkt)
+        {
+            Assert.Equal(wkt, TextParser<int, Vector2I>.ParsePolygonSet(ShapeSettings<int, Vector2I>.Default, wkt).ToString());
+        }
+
+        [Theory]
+        [InlineData("MULTIPOLYGON (((100 100, 0 100, 0 0, 100 0, 100 100), (25 75, 75 75, 75 25, 25 25, 25 75)))")]
+        public void ParseMultiPolygon(string wkt)
+        {
+            Assert.Equal(wkt, TextParser<int, Vector2I>.ParseMultiPolygon(ShapeSettings<int, Vector2I>.Default, wkt).ToString());
+        }
+
+        [Theory]
+        [InlineData("MULTILINESTRING ((100 100, 0 100, 0 0, 100 0, 100 100), (25 75, 75 75, 75 25, 25 25, 25 75))")]
+        public void ParseMultiPath(string wkt)
+        {
+            Assert.Equal(wkt, TextParser<int, Vector2I>.ParseMultiPath(ShapeSettings<int, Vector2I>.Default, wkt).ToString());
+        }
+
+        [Theory]
+        [InlineData("LINESTRING (100 100, 0 100, 0 0, 100 0, 100 100)")]
+        public void ParsePath(string wkt)
+        {
+            Assert.Equal(wkt, TextParser<int, Vector2I>.ParsePath(ShapeSettings<int, Vector2I>.Default, wkt).ToString());
+        }
     }
 }

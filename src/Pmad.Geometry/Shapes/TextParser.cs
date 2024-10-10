@@ -1,6 +1,7 @@
 ﻿using System.Buffers;
 using System.Globalization;
 using System.Numerics;
+using Clipper2Lib;
 using Pmad.Geometry.Collections;
 
 namespace Pmad.Geometry.Shapes
@@ -116,6 +117,66 @@ namespace Pmad.Geometry.Shapes
             {
                 buffer = buffer.Slice(1);
             }
+        }
+
+        private static Polygon<TPrimitive, TVector> ToPolygon(ShapeSettings<TPrimitive, TVector> settings, ReadOnlyArray<ReadOnlyArray<TVector>> data)
+        {
+            return new Polygon<TPrimitive, TVector>(settings, data[0], data.Slice(1).ToReadOnlyArray());
+        }
+
+        private static Path<TPrimitive, TVector> ToPath(ShapeSettings<TPrimitive, TVector> settings, ReadOnlyArray<TVector> data)
+        {
+            return new Path<TPrimitive, TVector>(settings, data);
+        }
+
+        internal static Path<TPrimitive, TVector> ParsePath(ShapeSettings<TPrimitive, TVector> settings, ReadOnlySpan<char> text)
+        {
+            if (!text.StartsWith("LINESTRING"))
+            {
+                throw new FormatException();
+            }
+            text = text.Slice(10);
+            return ToPath(settings, ReadVectorList(ref text));
+        }
+
+        internal static MultiPath<TPrimitive, TVector> ParseMultiPath(ShapeSettings<TPrimitive, TVector> settings, ReadOnlySpan<char> text)
+        {
+            if (!text.StartsWith("MULTILINESTRING"))
+            {
+                throw new FormatException();
+            }
+            text = text.Slice(15);
+            return new MultiPath<TPrimitive, TVector>(TextParser<TPrimitive, TVector>.ReadVectorListList(ref text).Select(a => ToPath(settings, a)).ToList());
+        }
+
+        internal static Polygon<TPrimitive, TVector> ParsePolygon(ShapeSettings<TPrimitive,TVector> settings, ReadOnlySpan<char> text)
+        {
+            if (!text.StartsWith("POLYGON"))
+            {
+                throw new FormatException();
+            }
+            text = text.Slice(7);
+            return ToPolygon(settings, ReadVectorListList(ref text));
+        }
+
+        internal static MultiPolygon<TPrimitive, TVector> ParseMultiPolygon(ShapeSettings<TPrimitive, TVector> settings, ReadOnlySpan<char> text)
+        {
+            if (!text.StartsWith("MULTIPOLYGON"))
+            {
+                throw new FormatException();
+            }
+            text = text.Slice(12);
+            return new MultiPolygon<TPrimitive, TVector>(ReadVectorListListList(ref text).Select(p => ToPolygon(settings, p)).ToList());
+        }
+
+        internal static PolygonSet<TPrimitive, TVector> ParsePolygonSet(ShapeSettings<TPrimitive, TVector> settings, ReadOnlySpan<char> text)
+        {
+            if (!text.StartsWith("POLYGONSET"))
+            {
+                throw new FormatException();
+            }
+            text = text.Slice(10);
+            return new PolygonSet<TPrimitive, TVector>(new Paths64(ReadVectorListList(ref text).Select(settings.ToClipper)), settings);
         }
     }
 }
