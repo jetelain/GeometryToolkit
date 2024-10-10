@@ -38,6 +38,9 @@ namespace Pmad.Geometry.Json.Serialization
                     Utf8JsonWriterHelper<TPrimitive, TVector>.WriteMultiLineString(writer, paths);
                     break;
 
+                case PolygonSet<TPrimitive, TVector> pset:
+                    Utf8JsonWriterHelper<TPrimitive, TVector>.WritePolygonSet(writer, pset);
+                    break;
             }
         }
     }

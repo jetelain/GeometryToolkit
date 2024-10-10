@@ -14,9 +14,9 @@ namespace Pmad.Geometry.Json.Serialization
             {typeof(Path<,>),             typeof(JsonPathConverter<,>)},
             {typeof(Circle<,>),           typeof(JsonCircleConverter<,>)},
             {typeof(RotatedRectangle<,>), typeof(JsonRotatedRectangleConverter<,>)},
-            {typeof(MultiPath<,>),        typeof(JsonMultiPathConverter<,>)}
+            {typeof(MultiPath<,>),        typeof(JsonMultiPathConverter<,>)},
+            {typeof(PolygonSet<,>),       typeof(JsonPolygonSetConverter<,>)}
         };
-
 
         public override bool CanConvert(Type typeToConvert)
         {
