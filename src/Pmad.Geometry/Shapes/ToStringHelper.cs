@@ -1,4 +1,5 @@
-﻿using System.Numerics;
+﻿using System.Globalization;
+using System.Numerics;
 using System.Text;
 
 namespace Pmad.Geometry.Shapes
@@ -14,11 +15,11 @@ namespace Pmad.Geometry.Shapes
             if (shell.Length > 0)
             {
                 var p = shell[0];
-                sb.AppendFormat(FormattableString.Invariant($"{p.X} {p.Y}"));
+                sb.Append(CultureInfo.InvariantCulture, $"{p.X} {p.Y}");
                 for (var i = 1; i < shell.Length; i++)
                 {
                     p = shell[i];
-                    sb.AppendFormat(FormattableString.Invariant($", {p.X} {p.Y}"));
+                    sb.Append(CultureInfo.InvariantCulture, $", {p.X} {p.Y}");
                 }
             }
             sb.Append(")");

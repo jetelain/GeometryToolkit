@@ -53,8 +53,10 @@ namespace Pmad.Geometry.Benchmark
                     //typeof(IntersectionBenchmark),
                     //typeof(UnionBenchmark),
                     //typeof(ShapeSettingsBenchmark)
-                    typeof(MatrixRotationBenchmark)
+                    //typeof(MatrixRotationBenchmark)
                     //typeof(SinCosBenchmark)
+                    //typeof(ToStringBenchmark)
+                    typeof(TextBenchmark)
                 ]);
         }
     }
