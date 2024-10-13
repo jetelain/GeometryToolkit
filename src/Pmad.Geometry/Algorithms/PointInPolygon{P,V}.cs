@@ -6,7 +6,7 @@
 ***********************************************************************************/
 using System.Numerics;
 using System.Runtime.CompilerServices;
-using Clipper2Lib;
+using Pmad.Geometry.Clipper2Lib;
 
 namespace Pmad.Geometry.Algorithms
 {

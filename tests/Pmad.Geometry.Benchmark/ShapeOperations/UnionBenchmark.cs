@@ -1,5 +1,5 @@
 ﻿using BenchmarkDotNet.Attributes;
-using Clipper2Lib;
+using Pmad.Geometry.Clipper2Lib;
 
 namespace Pmad.Geometry.Benchmark.ShapeOperations
 {

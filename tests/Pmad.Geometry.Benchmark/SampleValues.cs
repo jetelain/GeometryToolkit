@@ -1,4 +1,4 @@
-﻿using Clipper2Lib;
+﻿using Pmad.Geometry.Clipper2Lib;
 using GameRealisticMap.Geometries;
 using NetTopologySuite.Geometries;
 

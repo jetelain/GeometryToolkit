@@ -1,5 +1,5 @@
 ﻿using BenchmarkDotNet.Attributes;
-using Clipper2Lib;
+using Pmad.Geometry.Clipper2Lib;
 using GameRealisticMap.Geometries;
 using MapToolkit;
 using Pmad.Geometry.Algorithms;

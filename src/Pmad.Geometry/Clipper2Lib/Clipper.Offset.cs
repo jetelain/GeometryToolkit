@@ -11,7 +11,7 @@ using System;
 using System.Collections.Generic;
 using System.Runtime.CompilerServices;
 
-namespace Clipper2Lib
+namespace Pmad.Geometry.Clipper2Lib
 {
   public enum JoinType
   {

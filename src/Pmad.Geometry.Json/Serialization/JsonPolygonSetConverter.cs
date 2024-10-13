@@ -1,7 +1,7 @@
 ﻿using System.Numerics;
 using System.Text.Json;
 using System.Text.Json.Serialization;
-using Clipper2Lib;
+using Pmad.Geometry.Clipper2Lib;
 using Pmad.Geometry.Shapes;
 
 namespace Pmad.Geometry.Json.Serialization
