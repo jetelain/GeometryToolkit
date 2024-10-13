@@ -1,4 +1,5 @@
 ﻿using System.Numerics;
+using System.Text;
 using Clipper2Lib;
 using Pmad.Geometry.Collections;
 
@@ -200,6 +201,26 @@ namespace Pmad.Geometry.Shapes
         public PolygonSet<TPrimitive, TVector> WithSettings(ShapeSettings<TPrimitive, TVector> settings)
         {
             return new PolygonSet<TPrimitive, TVector>(paths, settings);
+        }
+
+        public override string ToString()
+        {
+            if (paths.Count == 0)
+            {
+                return "POLYGONSET EMPTY";
+            }
+            var sb = new StringBuilder();
+            sb.Append("POLYGONSET (");
+            var p = paths[0];
+            ToStringHelper<TPrimitive, TVector>.ToStringAppend(sb, Settings.FromClipper(p).AsSpan());
+            for (var i = 1; i < paths.Count; i++)
+            {
+                sb.Append(", ");
+                p = paths[i];
+                ToStringHelper<TPrimitive, TVector>.ToStringAppend(sb, Settings.FromClipper(p).AsSpan());
+            }
+            sb.Append(")");
+            return sb.ToString();
         }
     }
 }

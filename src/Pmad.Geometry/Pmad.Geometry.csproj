@@ -44,6 +44,10 @@
     <None Update="Definitions.tt">
       <Generator></Generator>
     </None>
+    <None Update="Shapes\DefaultShapes.tt">
+      <LastGenOutput>DefaultShapes.cs</LastGenOutput>
+      <Generator>TextTemplatingFileGenerator</Generator>
+    </None>
     <None Update="Vectors2Scalar.tt">
       <LastGenOutput>Vectors2Scalar.cs</LastGenOutput>
       <Generator>TextTemplatingFileGenerator</Generator>
@@ -64,6 +68,11 @@
       <DesignTime>True</DesignTime>
       <AutoGen>True</AutoGen>
       <DependentUpon>PointInPolygon.tt</DependentUpon>
+    </Compile>
+    <Compile Update="Shapes\DefaultShapes.cs">
+      <DesignTime>True</DesignTime>
+      <AutoGen>True</AutoGen>
+      <DependentUpon>DefaultShapes.tt</DependentUpon>
     </Compile>
     <Compile Update="Vectors2Scalar.cs">
       <DependentUpon>Vectors2Scalar.tt</DependentUpon>

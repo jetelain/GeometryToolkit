@@ -41,7 +41,7 @@ namespace Pmad.Geometry
 
         static abstract TVector Normalize(TVector left);
 
-        static abstract TPrimitive CrossProduct(TVector pt1, TVector pt2, TVector pt3);
+        static abstract new TPrimitive CrossProduct(TVector pt1, TVector pt2, TVector pt3);
 
         static abstract TPrimitive CrossProduct(TVector pt1, TVector pt2);
     }

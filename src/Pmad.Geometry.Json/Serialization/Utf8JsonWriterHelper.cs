@@ -90,5 +90,21 @@ namespace Pmad.Geometry.Json.Serialization
             }
             writer.WriteEndArray();
         }
+
+        internal static void WritePolygonSet(Utf8JsonWriter writer, PolygonSet<TPrimitive, TVector> paths)
+        {
+            var settings = paths.Settings;
+            writer.WriteStartArray();
+            foreach (var path in paths.Paths)
+            {
+                writer.WriteStartArray();
+                foreach (var value in path)
+                {
+                    WritePoint(writer, settings.FromClipper(value));
+                }
+                writer.WriteEndArray();
+            }
+            writer.WriteEndArray();
+        }
     }
 }
