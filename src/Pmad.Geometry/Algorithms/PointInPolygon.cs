@@ -6,12 +6,12 @@
 ***********************************************************************************/
 using System.Runtime.CompilerServices;
 using System.Runtime.InteropServices;
-using Clipper2Lib;
+using Pmad.Geometry.Clipper2Lib;
 using Pmad.Geometry.Collections;
 
 namespace Pmad.Geometry.Algorithms
 {
-	public static class PointInPolygon
+    public static class PointInPolygon
 	{
         public static PointInPolygonResult TestPointInPolygon(this List<Vector2I> polygon, Vector2I pt)
         {           

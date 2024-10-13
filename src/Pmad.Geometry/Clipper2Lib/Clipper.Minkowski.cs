@@ -10,7 +10,7 @@
 #nullable enable
 using System;
 
-namespace Clipper2Lib
+namespace Pmad.Geometry.Clipper2Lib
 {
   public class Minkowski
   {

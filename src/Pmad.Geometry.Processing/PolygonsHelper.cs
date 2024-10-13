@@ -1,6 +1,6 @@
 ﻿using System.Collections.Concurrent;
 using System.Numerics;
-using Clipper2Lib;
+using Pmad.Geometry.Clipper2Lib;
 using Pmad.Geometry.Shapes;
 using Pmad.ProgressTracking;
 

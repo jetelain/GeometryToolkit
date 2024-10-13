@@ -1,6 +1,6 @@
 ﻿using System.Numerics;
 using System.Text;
-using Clipper2Lib;
+using Pmad.Geometry.Clipper2Lib;
 using Pmad.Geometry.Collections;
 
 namespace Pmad.Geometry.Shapes

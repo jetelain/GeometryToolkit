@@ -1,7 +1,7 @@
 ﻿using System.Buffers;
 using System.Globalization;
 using System.Numerics;
-using Clipper2Lib;
+using Pmad.Geometry.Clipper2Lib;
 using Pmad.Geometry.Collections;
 
 namespace Pmad.Geometry.Shapes

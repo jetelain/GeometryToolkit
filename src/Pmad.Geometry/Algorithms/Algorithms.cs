@@ -1,8 +1,6 @@
-﻿using System.Numerics;
-using System.Runtime.CompilerServices;
-using Clipper2Lib;
+﻿using System.Runtime.CompilerServices;
+using Pmad.Geometry.Clipper2Lib;
 using Pmad.Geometry.Collections;
-using Pmad.Geometry.Shapes;
 
 namespace Pmad.Geometry.Algorithms
 {

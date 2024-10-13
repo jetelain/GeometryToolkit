@@ -1,5 +1,5 @@
 ﻿using System.Numerics;
-using Clipper2Lib;
+using Pmad.Geometry.Clipper2Lib;
 using Pmad.Geometry.Collections;
 using Pmad.Geometry.Shapes;
 

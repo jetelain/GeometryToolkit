@@ -15,7 +15,7 @@ using System.Collections;
 using System.Collections.Generic;
 using System.Runtime.CompilerServices;
 
-namespace Clipper2Lib
+namespace Pmad.Geometry.Clipper2Lib
 {
 
   // Vertex: a pre-clipping data structure. It is used to separate polygons
