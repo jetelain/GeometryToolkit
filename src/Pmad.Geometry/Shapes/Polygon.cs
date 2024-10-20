@@ -191,7 +191,7 @@ namespace Pmad.Geometry.Shapes
 
         public MultiPolygon<TPrimitive, TVector> Crop(VectorEnvelope<TVector> rect)
         {
-            return Intersection(Settings.CreateRectangle(rect));
+            return Intersection(Settings.CreateRectanglePolygon(rect));
         }
 
         public PointInPolygonResult TestPointInPolygon(TVector vector)

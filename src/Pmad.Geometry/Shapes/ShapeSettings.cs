@@ -178,37 +178,6 @@ namespace Pmad.Geometry.Shapes
             return TVector.Create(value.X, value.Y) / scale;
         }
 
-        public Polygon<TPrimitive, TVector> CreateRectangle(VectorEnvelope<TVector> envelope)
-        {
-            return CreateRectangle(envelope.Min, envelope.Max);
-        }
-
-        public Polygon<TPrimitive, TVector> CreateRectangle(TVector p1, TVector p2)
-        {
-            return new Polygon<TPrimitive, TVector>(this, new ReadOnlyArray<TVector>(
-                p1,
-                TVector.Create(p1.X, p2.Y),
-                p2,
-                TVector.Create(p2.X, p1.Y),
-                p1
-            ));
-        }
-
-        public Polygon<TPrimitive, TVector> CreatePolygon(ReadOnlyArray<TVector> shell, ReadOnlyArray<ReadOnlyArray<TVector>> holes)
-        {
-            return new Polygon<TPrimitive, TVector>(this, shell, holes);
-        }
-
-        public Polygon<TPrimitive, TVector> CreatePolygon(ReadOnlyArray<TVector> shell)
-        {
-            return new Polygon<TPrimitive, TVector>(this, shell);
-        }
-
-        public Path<TPrimitive, TVector> CreatePath(ReadOnlyArray<TVector> points)
-        {
-            return new Path<TPrimitive, TVector>(this, points);
-        }
-
         internal Rect64 ToClipper(VectorEnvelope<TVector> rect)
         {
             var min = ToClipper(rect.Min);

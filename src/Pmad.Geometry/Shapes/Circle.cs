@@ -220,5 +220,10 @@ namespace Pmad.Geometry.Shapes
             }
             return new Circle<TPrimitive, TVector>(settings, Center, Radius);
         }
+
+        public Polygon<TPrimitive, TVector> ToPolygon(int count = 12)
+        {
+            return Settings.CreateCirclePolygon(Center, Radius, count);
+        }
     }
 }
