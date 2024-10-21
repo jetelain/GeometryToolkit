@@ -25,7 +25,7 @@ namespace Pmad.Geometry
         public static Vector2I Create(int x, int y) => new(x, y);
 
         [MethodImpl(MethodImplOptions.AggressiveInlining)]
-        public static Vector2I Create(double x, double y) => new((int)x, (int)y);
+        public static Vector2I Create(double x, double y) => new((int)Math.Round(x), (int)Math.Round(y));
 
         [MethodImpl(MethodImplOptions.AggressiveInlining)]
         public static Vector2I Create(long x, long y) => new((int)x, (int)y);

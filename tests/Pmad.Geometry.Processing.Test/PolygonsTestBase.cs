@@ -220,7 +220,7 @@ namespace Pmad.Geometry.Processing.Test
             {
                 for (int y = 0; y < 100; y += w)
                 {
-                    polygons.Add(settings.CreateRectangle(TVector.Create(x, y), TVector.Create(x + w, y + w)));
+                    polygons.Add(settings.CreateRectanglePolygon(TVector.Create(x, y), TVector.Create(x + w, y + w)));
                 }
             }
             return polygons;

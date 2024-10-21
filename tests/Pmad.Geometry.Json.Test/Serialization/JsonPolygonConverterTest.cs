@@ -11,7 +11,7 @@ namespace Pmad.Geometry.Json.Test.Serialization
         [Fact]
         public void Serialize()
         {
-            var result = JsonSerializer.Serialize(ShapeSettings<double, Vector2D>.Default.CreateRectangle(new(10, 10), new(20, 20)), options);
+            var result = JsonSerializer.Serialize(ShapeSettings<double, Vector2D>.Default.CreateRectanglePolygon(new(10, 10), new(20, 20)), options);
             Assert.Equal(@"[[[10,10],[10,20],[20,20],[20,10],[10,10]]]", result);
         }
 

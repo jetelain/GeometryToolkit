@@ -111,7 +111,7 @@ namespace Pmad.Geometry.Shapes
             {
                 return this;
             }
-            return Intersection(new(polygons[0].Settings.CreateRectangle(rect)));
+            return Intersection(new(polygons[0].Settings.CreateRectanglePolygon(rect)));
         }
 
         private MultiPolygon<TPrimitive, TVector> BooleanOp(MultiPolygon<TPrimitive, TVector> other, ClipType op)

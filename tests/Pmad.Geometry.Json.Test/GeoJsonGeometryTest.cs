@@ -22,7 +22,7 @@ namespace Pmad.Geometry.Json.Test
         [Fact]
         public void Serialize_Polygon()
         {
-            var result = JsonSerializer.Serialize(ShapeSettings<double, Vector2D>.Default.CreateRectangle(new(10, 10), new(20, 20)).ToGeoJson());
+            var result = JsonSerializer.Serialize(ShapeSettings<double, Vector2D>.Default.CreateRectanglePolygon(new(10, 10), new(20, 20)).ToGeoJson());
             Assert.Equal(@"{""type"":""Polygon"",""coordinates"":[[[10,10],[10,20],[20,20],[20,10],[10,10]]]}", result);
         }
 
@@ -31,8 +31,8 @@ namespace Pmad.Geometry.Json.Test
         {
             var result = JsonSerializer.Serialize(
                 new MultiPolygon<double, Vector2D>(
-                    ShapeSettings<double, Vector2D>.Default.CreateRectangle(new(10, 10), new(20, 20)),
-                    ShapeSettings<double, Vector2D>.Default.CreateRectangle(new(30, 30), new(40, 40))).ToGeoJson());
+                    ShapeSettings<double, Vector2D>.Default.CreateRectanglePolygon(new(10, 10), new(20, 20)),
+                    ShapeSettings<double, Vector2D>.Default.CreateRectanglePolygon(new(30, 30), new(40, 40))).ToGeoJson());
 
             Assert.Equal(@"{""type"":""MultiPolygon"",""coordinates"":[[[[10,10],[10,20],[20,20],[20,10],[10,10]]],[[[30,30],[30,40],[40,40],[40,30],[30,30]]]]}", result);
         }
