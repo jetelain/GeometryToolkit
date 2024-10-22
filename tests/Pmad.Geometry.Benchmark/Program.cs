@@ -6,6 +6,7 @@ using BenchmarkDotNet.Running;
 using Pmad.Geometry.Algorithms;
 using Pmad.Geometry.Benchmark.ShapeOperations;
 using Pmad.Geometry.Benchmark.VectorOperations;
+using Pmad.Geometry.Svg;
 
 namespace Pmad.Geometry.Benchmark
 {
@@ -13,8 +14,9 @@ namespace Pmad.Geometry.Benchmark
     {
         static void Main(string[] args)
         {
-
-
+            var x = PolygonSampleSet.CreateCircle(0, 0, 100);
+            var path1 = x.Polygon2D.ToSvgPath();
+            var path2 = x.Polygon2L.ToSvgPath();
 
             Console.OutputEncoding = Encoding.UTF8;
 
@@ -56,7 +58,8 @@ namespace Pmad.Geometry.Benchmark
                     //typeof(MatrixRotationBenchmark)
                     //typeof(SinCosBenchmark)
                     //typeof(ToStringBenchmark)
-                    typeof(TextBenchmark)
+                    //typeof(TextBenchmark)
+                    typeof(SvgBenchmark)
                 ]);
         }
     }
