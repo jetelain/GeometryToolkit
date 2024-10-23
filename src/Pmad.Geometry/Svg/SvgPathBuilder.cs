@@ -15,8 +15,14 @@ namespace Pmad.Geometry.Svg
         private readonly char[] bufferArray;
         private readonly Span<char> buffer;
 
-        public SvgPathBuilder(ShapeSettings<TPrimitive,TVector> settings) 
+        public SvgPathBuilder(ShapeSettings<TPrimitive, TVector> settings)
             : this(new StringBuilder(), GetNumberFormat(settings))
+        {
+
+        }
+
+        public SvgPathBuilder(StringBuilder builder, ShapeSettings<TPrimitive, TVector> settings)
+            : this(builder, GetNumberFormat(settings))
         {
 
         }
@@ -52,17 +58,32 @@ namespace Pmad.Geometry.Svg
             return sb.ToString();
         }
 
-        public void AppendSvgClosedPath(ReadOnlySpan<TVector> points)
+        public void AppendPolygon(Polygon<TPrimitive, TVector> polygon)
+        {
+            AppendClosedPath(polygon.Shell.AsSpan());
+            foreach (var hole in polygon.Holes)
+            {
+                builder.Append(' ');
+                AppendClosedPath(hole.AsSpan());
+            }
+        }
+
+        public void AppendClosedPath(ReadOnlySpan<TVector> points)
         {
             if (points.Length == 0)
             {
                 return;
             }
-            AppendSvgPath(points);
+            AppendPath(points);
             builder.Append(" z");
         }
 
-        public void AppendSvgPath(ReadOnlySpan<TVector> points)
+        public void AppendPath(Path<TPrimitive, TVector> points)
+        {
+            AppendPath(points.Points.AsSpan());
+        }
+
+        public void AppendPath(ReadOnlySpan<TVector> points)
         {
             if (points.Length == 0)
             {
