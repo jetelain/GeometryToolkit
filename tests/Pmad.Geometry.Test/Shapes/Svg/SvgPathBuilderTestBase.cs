@@ -1,8 +1,8 @@
 ﻿using System.Numerics;
 using Pmad.Geometry.Shapes;
-using Pmad.Geometry.Svg;
+using Pmad.Geometry.Shapes.Svg;
 
-namespace Pmad.Geometry.Test.Svg
+namespace Pmad.Geometry.Test.Shapes.Svg
 {
     public abstract class SvgPathBuilderTestBase<TPrimitive, TVector>
         where TPrimitive : unmanaged, INumber<TPrimitive>
@@ -36,7 +36,7 @@ namespace Pmad.Geometry.Test.Svg
         [Fact]
         public void AppendScalar_IntegerPrecision()
         {
-            using var builder = new SvgPathBuilder<TPrimitive, TVector>(new ShapeSettings<TPrimitive, TVector>(1,3));
+            using var builder = new SvgPathBuilder<TPrimitive, TVector>(new ShapeSettings<TPrimitive, TVector>(1, 3));
 
             builder.AppendScalar(TPrimitive.Zero);
             Assert.Equal("0", builder.ToString());

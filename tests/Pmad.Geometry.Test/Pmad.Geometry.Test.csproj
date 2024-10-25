@@ -70,7 +70,7 @@
 	    <AutoGen>True</AutoGen>
 	    <DependentUpon>RotatedRectangle.tt</DependentUpon>
 	  </Compile>
-	  <Compile Update="Svg\SvgPathBuilder.cs">
+	  <Compile Update="Shapes\Svg\SvgPathBuilder.cs">
 	    <DesignTime>True</DesignTime>
 	    <AutoGen>True</AutoGen>
 	    <DependentUpon>SvgPathBuilder.tt</DependentUpon>
@@ -151,7 +151,7 @@
       <LastGenOutput>RotatedRectangle.cs</LastGenOutput>
       <Generator>TextTemplatingFileGenerator</Generator>
     </None>
-    <None Update="Svg\SvgPathBuilder.tt">
+    <None Update="Shapes\Svg\SvgPathBuilder.tt">
       <LastGenOutput>SvgPathBuilder.cs</LastGenOutput>
       <Generator>TextTemplatingFileGenerator</Generator>
     </None>

@@ -1,5 +1,5 @@
 ﻿
-namespace Pmad.Geometry.Test.Svg.SvgPathBuilders
+namespace Pmad.Geometry.Test.Shapes.Svg.SvgPathBuilders
 {
 	public partial class SvgPathBuilder2ITest : SvgPathBuilderTestBase<int,Vector2I>
 	{

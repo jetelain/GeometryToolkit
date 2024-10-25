@@ -1,4 +1,5 @@
-﻿using System.Runtime.Intrinsics;
+﻿using System.Numerics;
+using System.Runtime.Intrinsics;
 using System.Text;
 using BenchmarkDotNet.Configs;
 using BenchmarkDotNet.Jobs;
@@ -6,7 +7,7 @@ using BenchmarkDotNet.Running;
 using Pmad.Geometry.Algorithms;
 using Pmad.Geometry.Benchmark.ShapeOperations;
 using Pmad.Geometry.Benchmark.VectorOperations;
-using Pmad.Geometry.Svg;
+using Pmad.Geometry.Shapes.Svg;
 
 namespace Pmad.Geometry.Benchmark
 {
@@ -19,7 +20,10 @@ namespace Pmad.Geometry.Benchmark
             var path2 = x.Polygon2L.ToSvgPath();
 
             Console.OutputEncoding = Encoding.UTF8;
-
+            Console.WriteLine("Vector<double>.Count: {0}", Vector<double>.Count);
+            Console.WriteLine("Vector<float>.Count: {0}", Vector<float>.Count);
+            Console.WriteLine("Vector512.IsHardwareAccelerated: {0}", Vector512.IsHardwareAccelerated);
+            Console.WriteLine("Vector256.IsHardwareAccelerated: {0}", Vector256.IsHardwareAccelerated);
             Console.WriteLine("Vector128.IsHardwareAccelerated: {0}", Vector128.IsHardwareAccelerated);
             Console.WriteLine("Vector64.IsHardwareAccelerated: {0}", Vector64.IsHardwareAccelerated);
 

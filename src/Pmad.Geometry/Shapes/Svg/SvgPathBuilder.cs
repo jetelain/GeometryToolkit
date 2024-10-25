@@ -2,21 +2,19 @@
 using System.Globalization;
 using System.Numerics;
 using System.Text;
-using Pmad.Geometry.Shapes;
 
-namespace Pmad.Geometry.Svg
+namespace Pmad.Geometry.Shapes.Svg
 {
-    ref struct SvgPathBuilder<TPrimitive, TVector>
+    public sealed class SvgPathBuilder<TPrimitive, TVector> : IDisposable
         where TPrimitive : unmanaged, INumber<TPrimitive>
         where TVector : struct, IVector2<TPrimitive, TVector>
     {
         private readonly StringBuilder builder;
         private readonly string? numberFormat;
         private readonly char[] bufferArray;
-        private readonly Span<char> buffer;
 
         public SvgPathBuilder(ShapeSettings<TPrimitive, TVector> settings)
-            : this(new StringBuilder(), GetNumberFormat(settings))
+            : this(new StringBuilder(1024), GetNumberFormat(settings))
         {
 
         }
@@ -32,7 +30,6 @@ namespace Pmad.Geometry.Svg
             this.builder = builder;
             this.numberFormat = numberFormat;
             bufferArray = ArrayPool<char>.Shared.Rent(64);
-            buffer = new Span<char>(bufferArray);
         }
 
         public StringBuilder Builder => builder;
@@ -114,7 +111,7 @@ namespace Pmad.Geometry.Svg
                 }
                 previous = px;
             }
-            
+
         }
 
         public void AppendPoint(TVector px)
@@ -131,6 +128,7 @@ namespace Pmad.Geometry.Svg
                 builder.Append(CultureInfo.InvariantCulture, $"{d}");
                 return;
             }
+            var buffer = new Span<char>(bufferArray);
             if (d.TryFormat(buffer, out var written, numberFormat, CultureInfo.InvariantCulture))
             {
                 // Fast Path
@@ -157,6 +155,28 @@ namespace Pmad.Geometry.Svg
             }
         }
 
+        private string FormatDouble(double d)
+        {
+            if (numberFormat == null)
+            {
+                return d.ToString(CultureInfo.InvariantCulture);
+            }
+            if (numberFormat.Length > 1) // "0.0...", trim excess 0 after decimal separator
+            {
+                return d.ToString(numberFormat, CultureInfo.InvariantCulture).TrimEnd('0').TrimEnd('.');
+            }
+            return d.ToString(numberFormat, CultureInfo.InvariantCulture);
+        }
+
+        public void AppendCircle(TVector center, double radius)
+        {
+            builder.Append('M');
+            AppendPoint(center);
+            var radiusStr = FormatDouble(radius);
+            var radius2Str = FormatDouble(radius * 2);
+            builder.Append(CultureInfo.InvariantCulture, $" m {radiusStr},0 a {radiusStr},{radiusStr} 0 1,1 -{radius2Str},0 a {radiusStr},{radiusStr} 0 1,1 {radius2Str},0");
+        }
+
         public void Dispose()
         {
             ArrayPool<char>.Shared.Return(bufferArray);
@@ -164,7 +184,7 @@ namespace Pmad.Geometry.Svg
 
         public override string ToString()
         {
-            return builder.ToString(); 
+            return builder.ToString();
         }
 
         public void Append(char value)

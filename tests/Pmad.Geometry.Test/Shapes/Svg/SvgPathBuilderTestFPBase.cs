@@ -1,8 +1,8 @@
 ﻿using System.Numerics;
 using Pmad.Geometry.Shapes;
-using Pmad.Geometry.Svg;
+using Pmad.Geometry.Shapes.Svg;
 
-namespace Pmad.Geometry.Test.Svg
+namespace Pmad.Geometry.Test.Shapes.Svg
 {
     public abstract class SvgPathBuilderTestFPBase<TPrimitive, TVector> : SvgPathBuilderTestBase<TPrimitive, TVector>
         where TPrimitive : unmanaged, INumber<TPrimitive>

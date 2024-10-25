@@ -1,7 +1,7 @@
 ﻿using Pmad.Geometry.Shapes;
-using Pmad.Geometry.Svg;
+using Pmad.Geometry.Shapes.Svg;
 
-namespace Pmad.Geometry.Test.Svg.SvgPathBuilders
+namespace Pmad.Geometry.Test.Shapes.Svg
 {
     public partial class SvgPathBuilder2DTest
     {

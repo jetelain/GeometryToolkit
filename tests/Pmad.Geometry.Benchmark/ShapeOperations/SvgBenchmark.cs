@@ -1,5 +1,5 @@
 ﻿using BenchmarkDotNet.Attributes;
-using Pmad.Geometry.Svg;
+using Pmad.Geometry.Shapes.Svg;
 
 namespace Pmad.Geometry.Benchmark.ShapeOperations
 {
