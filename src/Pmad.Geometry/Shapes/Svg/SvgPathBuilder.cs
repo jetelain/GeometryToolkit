@@ -174,7 +174,7 @@ namespace Pmad.Geometry.Shapes.Svg
             AppendPoint(center);
             var radiusStr = FormatDouble(radius);
             var radius2Str = FormatDouble(radius * 2);
-            builder.Append(CultureInfo.InvariantCulture, $" m {radiusStr},0 a {radiusStr},{radiusStr} 0 1,1 -{radius2Str},0 a {radiusStr},{radiusStr} 0 1,1 {radius2Str},0");
+            builder.Append(CultureInfo.InvariantCulture, $" m {radiusStr},0 a {radiusStr},{radiusStr} 0 1,1 -{radius2Str},0 a {radiusStr},{radiusStr} 0 1,1 {radius2Str},0 z");
         }
 
         public void Dispose()
