@@ -424,5 +424,23 @@ namespace Pmad.Geometry.Shapes
         {
             return new PolygonSet<TPrimitive, TVector>(Clipper.BooleanOp(ClipType.Union, ToClipper(), new Paths64(), FillRule.EvenOdd), Settings, Bounds);
         }
+
+        public Polygon<TPrimitive, TVector> Scale(TPrimitive scale)
+        {
+            return Transform(new ScaleTransform<TPrimitive, TVector>(scale));
+        }
+
+        internal Polygon<TPrimitive, TVector> Transform<TTransform>(TTransform transform) 
+            where TTransform : ITransform<TPrimitive, TVector>
+        {
+            var shell = transform.Transform(Shell);
+            var holes = new List<ReadOnlyArray<TVector>>(Holes.Count);
+            for (int i = 0; i < holes.Count; i++)
+            {
+                holes[i] = transform.Transform(Holes[i]);
+            }
+            return new Polygon<TPrimitive, TVector>(Settings, shell, Holes);
+        }
+
     }
 }

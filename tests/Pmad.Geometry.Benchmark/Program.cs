@@ -15,10 +15,6 @@ namespace Pmad.Geometry.Benchmark
     {
         static void Main(string[] args)
         {
-            var x = PolygonSampleSet.CreateCircle(0, 0, 100);
-            var path1 = x.Polygon2D.ToSvgPath();
-            var path2 = x.Polygon2L.ToSvgPath();
-
             Console.OutputEncoding = Encoding.UTF8;
             Console.WriteLine("Vector<double>.Count: {0}", Vector<double>.Count);
             Console.WriteLine("Vector<float>.Count: {0}", Vector<float>.Count);
@@ -63,7 +59,8 @@ namespace Pmad.Geometry.Benchmark
                     //typeof(SinCosBenchmark)
                     //typeof(ToStringBenchmark)
                     //typeof(TextBenchmark)
-                    typeof(SvgBenchmark)
+                    //typeof(SvgBenchmark)
+                    typeof(TransformBenchmark)
                 ]);
         }
     }
