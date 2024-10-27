@@ -3,6 +3,7 @@ using System.Text;
 using Pmad.Geometry.Clipper2Lib;
 using Pmad.Geometry.Algorithms;
 using Pmad.Geometry.Collections;
+using Pmad.Geometry.Transforms;
 
 namespace Pmad.Geometry.Shapes
 {
@@ -430,8 +431,8 @@ namespace Pmad.Geometry.Shapes
             return Transform(new ScaleTransform<TPrimitive, TVector>(scale));
         }
 
-        internal Polygon<TPrimitive, TVector> Transform<TTransform>(TTransform transform) 
-            where TTransform : ITransform<TPrimitive, TVector>
+        internal Polygon<TPrimitive, TVector> Transform<TTransform>(TTransform transform)
+            where TTransform : ITransform<TVector>
         {
             var shell = transform.Transform(Shell);
             var holes = new List<ReadOnlyArray<TVector>>(Holes.Count);

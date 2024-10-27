@@ -1,13 +1,13 @@
 ﻿using System.Numerics;
 using System.Runtime.CompilerServices;
 
-namespace Pmad.Geometry
+namespace Pmad.Geometry.Transforms
 {
-    internal struct ScaleTransform<TPrimitive, TVector> : ITransform<TPrimitive, TVector>
+    internal struct ScaleTransform<TPrimitive, TVector> : ITransform<TVector>, ITransformVect<TPrimitive, TVector>
         where TPrimitive : unmanaged, INumber<TPrimitive>
         where TVector : struct, IVector2<TPrimitive, TVector>
     {
-        private readonly TPrimitive _primitive;
+        internal readonly TPrimitive _primitive;
 
         public ScaleTransform(TPrimitive primitive)
         {
@@ -29,7 +29,16 @@ namespace Pmad.Geometry
         [MethodImpl(MethodImplOptions.AggressiveInlining)]
         public void Transform(ReadOnlySpan<TVector> source, Span<TVector> destination)
         {
-            TransformHelper<TPrimitive, TVector, ScaleTransform<TPrimitive,TVector>>.Transform(this, source, destination);
+            TransformVectHelper<TPrimitive, TVector, ScaleTransform<TPrimitive, TVector>>.Transform(this, source, destination);
+        }
+
+        [MethodImpl(MethodImplOptions.AggressiveInlining)]
+        public void TransformClassic(ReadOnlySpan<TVector> source, Span<TVector> destination)
+        {
+            for (int i = 0; i < source.Length; ++i)
+            {
+                destination[i] = Transform(source[i]);
+            }
         }
     }
 }

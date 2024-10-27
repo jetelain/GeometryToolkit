@@ -1,29 +1,14 @@
 ﻿using System.Numerics;
 using System.Runtime.CompilerServices;
 using System.Runtime.InteropServices;
-using Pmad.Geometry.Collections;
 
-namespace Pmad.Geometry
+namespace Pmad.Geometry.Transforms
 {
-    internal static class TransformHelper<TPrimitive, TVector, TTransform>
-        where TPrimitive : unmanaged, INumber<TPrimitive>
-        where TVector : struct, IVector2<TPrimitive, TVector>
-        where TTransform : struct, ITransform<TPrimitive, TVector>
+    internal static class TransformVectHelper<TPrimitive, TVector, TTransform>
+        where TPrimitive : unmanaged//, INumber<TPrimitive>
+        where TVector : struct//, IVector2<TPrimitive, TVector>
+        where TTransform : struct, ITransformVect<TPrimitive, TVector>
     {
-        public static ReadOnlyArray<TVector> Transform(TTransform transform, ReadOnlyArray<TVector> source)
-        {
-            var target = new TVector[source.Count];
-            transform.Transform(source.AsSpan(), target);
-            return new ReadOnlyArray<TVector>(target);
-        }
-
-        public static ReadOnlyArray<TVector> TransformClassic(TTransform transform, ReadOnlyArray<TVector> source)
-        {
-            var target = new TVector[source.Count];
-            TransformClassic(transform, source.AsSpan(), target);
-            return new ReadOnlyArray<TVector>(target);
-        }
-
         [MethodImpl(MethodImplOptions.AggressiveInlining)]
         public static void Transform(TTransform transform, ReadOnlySpan<TVector> source, Span<TVector> destination)
         {
