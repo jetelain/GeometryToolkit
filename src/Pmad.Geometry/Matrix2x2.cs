@@ -1,6 +1,7 @@
 ﻿using System.Diagnostics.CodeAnalysis;
 using System.Numerics;
 using System.Runtime.CompilerServices;
+using Pmad.Geometry.Transforms;
 
 namespace Pmad.Geometry
 {
@@ -73,6 +74,19 @@ namespace Pmad.Geometry
         public override int GetHashCode()
         {
             return HashCode.Combine(X, Y);
+        }
+
+        public void Transform(ReadOnlySpan<TVector> source, Span<TVector> destination)
+        {
+            for (int i = 0; i < source.Length; ++i)
+            {
+                destination[i] = Transform(source[i]);
+            }
+        }
+
+         void ITransform<TVector>.TransformClassic(ReadOnlySpan<TVector> source, Span<TVector> destination)
+        {
+            Transform(source, destination);
         }
     }
 }

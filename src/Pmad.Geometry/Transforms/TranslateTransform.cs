@@ -30,7 +30,7 @@ namespace Pmad.Geometry.Transforms
         }
 
         [MethodImpl(MethodImplOptions.AggressiveInlining)]
-        public void TransformClassic(ReadOnlySpan<TVector> source, Span<TVector> destination)
+        void ITransform<TVector>.TransformClassic(ReadOnlySpan<TVector> source, Span<TVector> destination)
         {
             Transform(source, destination);
         }

@@ -2,6 +2,7 @@
 using System.Numerics;
 using System.Text;
 using Pmad.Geometry.Clipper2Lib;
+using Pmad.Geometry.Transforms;
 
 namespace Pmad.Geometry.Shapes
 {
@@ -208,6 +209,17 @@ namespace Pmad.Geometry.Shapes
                 max = TVector.Max(current.Bounds.Max, max);
             }
             return new(min, max);
+        }
+
+        public MultiPolygon<TPrimitive, TVector> Transform<TTransform>(TTransform transform)
+            where TTransform : ITransform<TVector>
+        {
+            var list = new List<Polygon<TPrimitive, TVector>>(polygons.Count);
+            foreach (var p in polygons)
+            {
+                list.Add(p.Transform(transform));
+            }
+            return new MultiPolygon<TPrimitive, TVector>(list);
         }
     }
 }

@@ -1,7 +1,10 @@
-﻿namespace Pmad.Geometry
+﻿using Pmad.Geometry.Transforms;
+
+namespace Pmad.Geometry
 {
-    public interface IMatrix<TVector> where TVector : struct, IVector<TVector>
+    public interface IMatrix<TVector> : ITransform<TVector>
+        where TVector : struct, IVector<TVector>
     {
-        TVector Transform(TVector vector);
+
     }
 }

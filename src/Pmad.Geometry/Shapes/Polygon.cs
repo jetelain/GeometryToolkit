@@ -431,7 +431,7 @@ namespace Pmad.Geometry.Shapes
             return Transform(new ScaleTransform<TPrimitive, TVector>(scale));
         }
 
-        internal Polygon<TPrimitive, TVector> Transform<TTransform>(TTransform transform)
+        public Polygon<TPrimitive, TVector> Transform<TTransform>(TTransform transform)
             where TTransform : ITransform<TVector>
         {
             var shell = transform.Transform(Shell);

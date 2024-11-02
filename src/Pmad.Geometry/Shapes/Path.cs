@@ -3,6 +3,7 @@ using System.Text;
 using Pmad.Geometry.Clipper2Lib;
 using Pmad.Geometry.Algorithms;
 using Pmad.Geometry.Collections;
+using Pmad.Geometry.Transforms;
 
 namespace Pmad.Geometry.Shapes
 {
@@ -203,6 +204,12 @@ namespace Pmad.Geometry.Shapes
                 return this;
             }
             return new Path<TPrimitive, TVector>(settings, Points);
+        }
+
+        public Path<TPrimitive, TVector> Transform<TTransform>(TTransform transform)
+            where TTransform : ITransform<TVector>
+        {
+            return new Path<TPrimitive, TVector>(Settings, transform.Transform(Points));
         }
     }
 }

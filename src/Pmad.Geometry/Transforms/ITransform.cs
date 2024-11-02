@@ -1,6 +1,6 @@
 ﻿namespace Pmad.Geometry.Transforms
 {
-    internal interface ITransform<TVector>
+    public interface ITransform<TVector>
         where TVector : struct
     {
         TVector Transform(TVector vector);

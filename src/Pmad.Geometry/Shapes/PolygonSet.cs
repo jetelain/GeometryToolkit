@@ -2,6 +2,7 @@
 using System.Text;
 using Pmad.Geometry.Clipper2Lib;
 using Pmad.Geometry.Collections;
+using Pmad.Geometry.Transforms;
 
 namespace Pmad.Geometry.Shapes
 {
@@ -221,6 +222,29 @@ namespace Pmad.Geometry.Shapes
             }
             sb.Append(")");
             return sb.ToString();
+        }
+
+        public PolygonSet<TPrimitive, TVector> Transform<TTransform>(TTransform transform)
+            where TTransform : ITransform<TVector>
+        {
+            var list = new Paths64(paths.Count);
+            foreach (var p in paths)
+            {
+                list.Add(Settings.ToClipper(transform.Transform(Settings.FromClipper(p))));
+            }
+            return new PolygonSet<TPrimitive, TVector>(list, Settings);
+        }
+
+
+        public PolygonSet<TPrimitive, TVector> TransformClipper<TTransform>(TTransform transform)
+            where TTransform : ITransform<Vector2L>
+        {
+            var list = new Paths64(paths.Count);
+            foreach (var p in paths)
+            {
+                list.Add(transform.TransformClipper(p));
+            }
+            return new PolygonSet<TPrimitive, TVector>(list, Settings);
         }
     }
 }

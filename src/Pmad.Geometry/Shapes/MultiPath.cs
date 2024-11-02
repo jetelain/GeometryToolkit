@@ -1,6 +1,7 @@
 ﻿using System.Collections;
 using System.Numerics;
 using System.Text;
+using Pmad.Geometry.Transforms;
 
 namespace Pmad.Geometry.Shapes
 {
@@ -103,5 +104,17 @@ namespace Pmad.Geometry.Shapes
             }
             return new(min, max);
         }
+
+        public MultiPath<TPrimitive, TVector> Transform<TTransform>(TTransform transform)
+            where TTransform : ITransform<TVector>
+        {
+            var list = new List<Path<TPrimitive, TVector>>(paths.Count);
+            foreach (var p in paths)
+            {
+                list.Add(p.Transform(transform));
+            }
+            return new MultiPath<TPrimitive, TVector>(list);
+        }
+
     }
 }
