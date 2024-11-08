@@ -392,7 +392,11 @@ namespace Pmad.Geometry.Test.Shapes
 
         }
 
-
-
+        [Fact]
+        public void Transforms()
+        {
+            var path = new Path<TPrimitive, TVector>(Vector(50, 00), Vector(50, 50), Vector(50, 100), Vector(50, 150), Vector(50, 200));
+            Assert.Equal("LINESTRING (500 0, 500 500, 500 1000, 500 1500, 500 2000)", path.Transforms().Scale(10).ToString());
+        }
     }
 }

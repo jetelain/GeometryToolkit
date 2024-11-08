@@ -216,5 +216,11 @@ namespace Pmad.Geometry.Test.Shapes
             Assert.Equal("POLYGONSET EMPTY", new PolygonSet<TPrimitive,TVector>(new Clipper2Lib.Paths64(), ShapeSettings<TPrimitive,TVector>.Default).ToString());
         }
 
+        [Fact]
+        public void Transform()
+        {
+            Assert.Equal("POLYGONSET ((550 450, 550 550, 450 550, 450 450))", Square10x10().ToPolygonSet().Transforms().Scale(10).ToString());
+            Assert.Equal("POLYGONSET ((1000 1000, 0 1000, 0 0, 1000 0), (250 750, 750 750, 750 250, 250 250))", Square100x100WithHole().ToPolygonSet().Transforms().Scale(10).ToString());
+        }
     }
 }

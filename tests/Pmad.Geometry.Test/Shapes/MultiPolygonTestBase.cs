@@ -98,5 +98,10 @@ namespace Pmad.Geometry.Test.Shapes
             Assert.Equal([poly0, poly1], multi);
         }
 
+        [Fact]
+        public void Transforms()
+        {
+            Assert.Equal("MULTIPOLYGON (((1000 1000, 0 1000, 0 0, 1000 0, 1000 1000)), ((11000 11000, 10000 11000, 10000 10000, 11000 10000, 11000 11000)))", new MultiPolygon<TPrimitive, TVector>(Square100x100(), Square100x100Far()).Transforms().Scale(10).ToString());
+        }
     }
 }

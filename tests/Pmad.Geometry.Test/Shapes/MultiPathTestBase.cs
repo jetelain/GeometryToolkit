@@ -59,5 +59,11 @@ namespace Pmad.Geometry.Test.Shapes
             Assert.Equal("MULTILINESTRING EMPTY", MultiPath<TPrimitive, TVector>.Empty.ToString());
             Assert.Equal("MULTILINESTRING ((0 0, 0 10, 10 10), (1000 1000, 1000 1010, 1010 1010))", new MultiPath<TPrimitive, TVector>(GetPath0(), GetPath1()).ToString());
         }
+
+        [Fact]
+        public void Transforms()
+        {
+            Assert.Equal("MULTILINESTRING ((0 0, 0 100, 100 100), (10000 10000, 10000 10100, 10100 10100))", new MultiPath<TPrimitive, TVector>(GetPath0(), GetPath1()).Transforms().Scale(10).ToString());
+        }
     }
 }

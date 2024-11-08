@@ -12,6 +12,8 @@ namespace Pmad.Geometry.Shapes
     /// It's a thin layer above Clipper2 primitives for fool-proof usage.
     /// 
     /// A "Polygon Set" is defined only by paths, the role of each path is unknown (shell or hole). 
+    /// 
+    /// Due to internal representation, precision is strictly limited to <see cref="ShapeSettings{TPrimitive,TVector}.ScaleForClipper"/>.
     /// </summary>
     /// <typeparam name="TPrimitive"></typeparam>
     /// <typeparam name="TVector"></typeparam>
