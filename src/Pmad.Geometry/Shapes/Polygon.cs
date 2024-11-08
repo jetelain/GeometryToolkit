@@ -7,7 +7,10 @@ using Pmad.Geometry.Transforms;
 
 namespace Pmad.Geometry.Shapes
 {
-    public sealed class Polygon<TPrimitive, TVector> : IWithBounds<TVector>, IShape<TPrimitive, TVector>, IEquatable<Polygon<TPrimitive, TVector>>
+    public sealed class Polygon<TPrimitive, TVector> : 
+            IWithBounds<TVector>, IShape<TPrimitive, TVector>, 
+            IEquatable<Polygon<TPrimitive, TVector>>,
+            IShapeWithTransform<TPrimitive, TVector, Polygon<TPrimitive, TVector>>
         where TPrimitive : unmanaged, INumber<TPrimitive>
         where TVector : struct, IVector2<TPrimitive, TVector>
     {
@@ -426,21 +429,21 @@ namespace Pmad.Geometry.Shapes
             return new PolygonSet<TPrimitive, TVector>(Clipper.BooleanOp(ClipType.Union, ToClipper(), new Paths64(), FillRule.EvenOdd), Settings, Bounds);
         }
 
-        public Polygon<TPrimitive, TVector> Scale(TPrimitive scale)
+        public ShapeTransforms<TPrimitive, TVector, Polygon<TPrimitive, TVector>> Transforms()
         {
-            return Transform(new ScaleTransform<TPrimitive, TVector>(scale));
+            return new ShapeTransforms<TPrimitive, TVector, Polygon<TPrimitive, TVector>>(this);
         }
 
         public Polygon<TPrimitive, TVector> Transform<TTransform>(TTransform transform)
             where TTransform : ITransform<TVector>
         {
             var shell = transform.Transform(Shell);
-            var holes = new List<ReadOnlyArray<TVector>>(Holes.Count);
-            for (int i = 0; i < holes.Count; i++)
+            var holes = new ReadOnlyArray<TVector>[Holes.Count];
+            for (int i = 0; i < holes.Length; i++)
             {
                 holes[i] = transform.Transform(Holes[i]);
             }
-            return new Polygon<TPrimitive, TVector>(Settings, shell, Holes);
+            return new Polygon<TPrimitive, TVector>(Settings, shell, new ReadOnlyArray<ReadOnlyArray<TVector>>(holes));
         }
 
     }

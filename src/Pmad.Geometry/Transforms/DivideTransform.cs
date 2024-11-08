@@ -3,30 +3,33 @@ using System.Runtime.CompilerServices;
 
 namespace Pmad.Geometry.Transforms
 {
-    internal struct ScaleAndTranslateTransform<TPrimitive, TVector> : ITransform<TVector>
+    internal struct DivideTransform<TPrimitive, TVector> : ITransform<TVector>, ITransformVect<TPrimitive, TVector>
         where TPrimitive : unmanaged, INumber<TPrimitive>
         where TVector : struct, IVector2<TPrimitive, TVector>
     {
-        private readonly MultiplyTransform<TPrimitive, TVector> _primitive;
-        private readonly TranslateTransform<TPrimitive, TVector> _vector;
+        internal readonly TPrimitive _primitive;
 
-        public ScaleAndTranslateTransform(TPrimitive primitive, TVector vector)
+        public DivideTransform(TPrimitive primitive)
         {
-            _primitive = new(primitive);
-            _vector = new(vector);
+            _primitive = primitive;
         }
 
         [MethodImpl(MethodImplOptions.AggressiveInlining)]
         public TVector Transform(TVector vector)
         {
-            return vector * _primitive._primitive + _vector._vector;
+            return vector / _primitive;
+        }
+
+        [MethodImpl(MethodImplOptions.AggressiveInlining)]
+        public Vector<TPrimitive> Transform(Vector<TPrimitive> vector)
+        {
+            return vector / _primitive;
         }
 
         [MethodImpl(MethodImplOptions.AggressiveInlining)]
         public void Transform(ReadOnlySpan<TVector> source, Span<TVector> destination)
         {
-            _primitive.Transform(source, destination);
-            _vector.Transform(destination, destination);
+            TransformVectHelper<TPrimitive, TVector, DivideTransform<TPrimitive, TVector>>.Transform(this, source, destination);
         }
 
         [MethodImpl(MethodImplOptions.AggressiveInlining)]

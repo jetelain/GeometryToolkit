@@ -6,7 +6,11 @@ using Pmad.Geometry.Transforms;
 
 namespace Pmad.Geometry.Shapes
 {
-    public class MultiPolygon<TPrimitive, TVector> : IWithBounds<TVector>, IShape<TPrimitive, TVector>, IReadOnlyList<Polygon<TPrimitive, TVector>>
+    public class MultiPolygon<TPrimitive, TVector> : 
+            IWithBounds<TVector>, 
+            IShape<TPrimitive, TVector>, 
+            IReadOnlyList<Polygon<TPrimitive, TVector>>, 
+            IShapeWithTransform<TPrimitive, TVector, MultiPolygon<TPrimitive, TVector>>
         where TPrimitive : unmanaged, INumber<TPrimitive>
         where TVector : struct, IVector2<TPrimitive, TVector>
     {
@@ -209,6 +213,11 @@ namespace Pmad.Geometry.Shapes
                 max = TVector.Max(current.Bounds.Max, max);
             }
             return new(min, max);
+        }
+
+        public ShapeTransforms<TPrimitive, TVector, MultiPolygon<TPrimitive, TVector>> Transforms()
+        {
+            return new ShapeTransforms<TPrimitive, TVector, MultiPolygon<TPrimitive, TVector>>(this);
         }
 
         public MultiPolygon<TPrimitive, TVector> Transform<TTransform>(TTransform transform)

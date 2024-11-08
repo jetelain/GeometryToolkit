@@ -7,7 +7,9 @@ using Pmad.Geometry.Transforms;
 
 namespace Pmad.Geometry.Shapes
 {
-    public sealed class Path<TPrimitive, TVector> : IWithBounds<TVector>
+    public sealed class Path<TPrimitive, TVector> :
+            IWithBounds<TVector>,
+            IShapeWithTransform<TPrimitive, TVector, Path<TPrimitive, TVector>>
         where TPrimitive : unmanaged, INumber<TPrimitive>
         where TVector : struct, IVector2<TPrimitive, TVector>
     {
@@ -204,6 +206,11 @@ namespace Pmad.Geometry.Shapes
                 return this;
             }
             return new Path<TPrimitive, TVector>(settings, Points);
+        }
+
+        public ShapeTransforms<TPrimitive, TVector, Path<TPrimitive, TVector>> Transforms()
+        {
+            return new ShapeTransforms<TPrimitive, TVector, Path<TPrimitive, TVector>>(this);
         }
 
         public Path<TPrimitive, TVector> Transform<TTransform>(TTransform transform)

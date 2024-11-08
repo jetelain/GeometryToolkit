@@ -15,7 +15,9 @@ namespace Pmad.Geometry.Shapes
     /// </summary>
     /// <typeparam name="TPrimitive"></typeparam>
     /// <typeparam name="TVector"></typeparam>
-    public class PolygonSet<TPrimitive, TVector> : IWithBounds<TVector>
+    public class PolygonSet<TPrimitive, TVector> : 
+            IWithBounds<TVector>,
+            IShapeWithTransform<TPrimitive, TVector, PolygonSet<TPrimitive, TVector>>
         where TPrimitive : unmanaged, INumber<TPrimitive>
         where TVector : struct, IVector2<TPrimitive, TVector>
     {
@@ -224,6 +226,11 @@ namespace Pmad.Geometry.Shapes
             return sb.ToString();
         }
 
+        public ShapeTransforms<TPrimitive, TVector, PolygonSet<TPrimitive, TVector>> Transforms()
+        {
+            return new ShapeTransforms<TPrimitive, TVector, PolygonSet<TPrimitive, TVector>>(this);
+        }
+
         public PolygonSet<TPrimitive, TVector> Transform<TTransform>(TTransform transform)
             where TTransform : ITransform<TVector>
         {
@@ -234,7 +241,6 @@ namespace Pmad.Geometry.Shapes
             }
             return new PolygonSet<TPrimitive, TVector>(list, Settings);
         }
-
 
         public PolygonSet<TPrimitive, TVector> TransformClipper<TTransform>(TTransform transform)
             where TTransform : ITransform<Vector2L>

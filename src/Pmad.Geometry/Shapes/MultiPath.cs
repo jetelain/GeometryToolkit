@@ -5,7 +5,10 @@ using Pmad.Geometry.Transforms;
 
 namespace Pmad.Geometry.Shapes
 {
-    public sealed class MultiPath<TPrimitive, TVector> : IWithBounds<TVector>, IReadOnlyList<Path<TPrimitive, TVector>>
+    public sealed class MultiPath<TPrimitive, TVector> :
+            IWithBounds<TVector>, 
+            IReadOnlyList<Path<TPrimitive, TVector>>,
+            IShapeWithTransform<TPrimitive, TVector, MultiPath<TPrimitive, TVector>>
         where TPrimitive : unmanaged, INumber<TPrimitive>
         where TVector : struct, IVector2<TPrimitive, TVector>
     {
@@ -103,6 +106,11 @@ namespace Pmad.Geometry.Shapes
                 max = TVector.Max(current.Bounds.Max, max);
             }
             return new(min, max);
+        }
+
+        public ShapeTransforms<TPrimitive, TVector, MultiPath<TPrimitive, TVector>> Transforms()
+        {
+            return new ShapeTransforms<TPrimitive, TVector, MultiPath<TPrimitive, TVector>>(this);
         }
 
         public MultiPath<TPrimitive, TVector> Transform<TTransform>(TTransform transform)

@@ -511,5 +511,13 @@ namespace Pmad.Geometry.Test.Shapes
             Assert.True(Square100x100().Equals((object)Square100x100()));
             Assert.False(Square100x100().Equals((object)1234));
         }
+
+
+        [Fact]
+        public void Transform()
+        {
+            Assert.Equal("POLYGON ((550 550, 550 450, 450 450, 450 550, 550 550))", Square10x10().Transforms().Scale(10).ToString());
+            Assert.Equal("POLYGON ((1000 1000, 0 1000, 0 0, 1000 0, 1000 1000), (750 750, 750 250, 250 250, 250 750, 750 750))", Square100x100WithHole().Transforms().Scale(10).ToString());
+        }
     }
 }
