@@ -12,7 +12,10 @@ namespace Pmad.Geometry.Transforms
         [MethodImpl(MethodImplOptions.AggressiveInlining)]
         public static void Transform(TTransform transform, ReadOnlySpan<TVector> source, Span<TVector> destination)
         {
-            if (Vector.IsHardwareAccelerated && Vector<TPrimitive>.Count > 2)
+            if (Vector.IsHardwareAccelerated 
+                && Vector<TPrimitive>.Count > 2 
+                && !RuntimeHelpers.IsReferenceOrContainsReferences<TVector>() 
+                && Unsafe.SizeOf<TVector>() == Unsafe.SizeOf<TPrimitive>() * 2)
             {
                 TransformVector(transform, source, destination);
                 return;
