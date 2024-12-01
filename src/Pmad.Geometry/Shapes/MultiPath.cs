@@ -4,6 +4,11 @@ using System.Text;
 
 namespace Pmad.Geometry.Shapes
 {
+    /// <summary>
+    /// List of paths/linestrings.
+    /// </summary>
+    /// <typeparam name="TPrimitive"></typeparam>
+    /// <typeparam name="TVector"></typeparam>
     public sealed class MultiPath<TPrimitive, TVector> : IWithBounds<TVector>, IReadOnlyList<Path<TPrimitive, TVector>>
         where TPrimitive : unmanaged, INumber<TPrimitive>
         where TVector : struct, IVector2<TPrimitive, TVector>

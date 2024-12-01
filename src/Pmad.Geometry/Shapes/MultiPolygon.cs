@@ -5,7 +5,12 @@ using Pmad.Geometry.Clipper2Lib;
 
 namespace Pmad.Geometry.Shapes
 {
-    public class MultiPolygon<TPrimitive, TVector> : IWithBounds<TVector>, IShape<TPrimitive, TVector>, IReadOnlyList<Polygon<TPrimitive, TVector>>
+    /// <summary>
+    /// List of non-overlapping polygons.
+    /// </summary>
+    /// <typeparam name="TPrimitive"></typeparam>
+    /// <typeparam name="TVector"></typeparam>
+    public sealed class MultiPolygon<TPrimitive, TVector> : IWithBounds<TVector>, IShape<TPrimitive, TVector>, IReadOnlyList<Polygon<TPrimitive, TVector>>
         where TPrimitive : unmanaged, INumber<TPrimitive>
         where TVector : struct, IVector2<TPrimitive, TVector>
     {

@@ -6,10 +6,18 @@ using Pmad.Geometry.Collections;
 
 namespace Pmad.Geometry.Shapes
 {
+    /// <summary>
+    /// Coordinate space settings.
+    /// </summary>
+    /// <typeparam name="TPrimitive"></typeparam>
+    /// <typeparam name="TVector"></typeparam>
     public sealed class ShapeSettings<TPrimitive, TVector>
         where TPrimitive : unmanaged, INumber<TPrimitive>
         where TVector : struct, IVector2<TPrimitive, TVector>
     {
+        /// <summary>
+        /// Default settings. Suited for metric coordinates with milimeter precision.
+        /// </summary>
         public static readonly ShapeSettings<TPrimitive, TVector> Default = new ShapeSettings<TPrimitive, TVector>();
 
         private readonly TVector scale;

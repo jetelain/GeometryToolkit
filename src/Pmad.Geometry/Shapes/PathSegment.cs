@@ -3,6 +3,11 @@ using Pmad.Geometry.Collections;
 
 namespace Pmad.Geometry.Shapes
 {
+    /// <summary>
+    /// Segment of a <see cref="Path"/>.
+    /// </summary>
+    /// <typeparam name="TPrimitive"></typeparam>
+    /// <typeparam name="TVector"></typeparam>
     public class PathSegment<TPrimitive, TVector>
         where TPrimitive : unmanaged, INumber<TPrimitive>
         where TVector : struct, IVector2<TPrimitive, TVector>

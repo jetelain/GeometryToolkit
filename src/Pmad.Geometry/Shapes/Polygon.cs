@@ -6,6 +6,11 @@ using Pmad.Geometry.Collections;
 
 namespace Pmad.Geometry.Shapes
 {
+    /// <summary>
+    /// Polygon
+    /// </summary>
+    /// <typeparam name="TPrimitive"></typeparam>
+    /// <typeparam name="TVector"></typeparam>
     public sealed class Polygon<TPrimitive, TVector> : IWithBounds<TVector>, IShape<TPrimitive, TVector>, IEquatable<Polygon<TPrimitive, TVector>>
         where TPrimitive : unmanaged, INumber<TPrimitive>
         where TVector : struct, IVector2<TPrimitive, TVector>
