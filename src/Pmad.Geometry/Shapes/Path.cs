@@ -6,6 +6,11 @@ using Pmad.Geometry.Collections;
 
 namespace Pmad.Geometry.Shapes
 {
+    /// <summary>
+    /// Path, ordered list of points.
+    /// </summary>
+    /// <typeparam name="TPrimitive"></typeparam>
+    /// <typeparam name="TVector"></typeparam>
     public sealed class Path<TPrimitive, TVector> : IWithBounds<TVector>
         where TPrimitive : unmanaged, INumber<TPrimitive>
         where TVector : struct, IVector2<TPrimitive, TVector>

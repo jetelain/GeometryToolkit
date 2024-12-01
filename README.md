@@ -1,11 +1,16 @@
 ﻿# Pmad.Geometry
-Geometry shapes and primitives toolkit
 
-This project aim to provide highly optimized versions of 2D geometry arithmetic primitives used by [GameRealisticMap](https://github.com/jetelain/ArmaRealMap) and [MapToolkit](https://github.com/jetelain/mapkit).
+[![NuGet](https://img.shields.io/nuget/v/Pmad.Geometry?logo=nuget)](https://www.nuget.org/packages/Pmad.Geometry/)
+
+Geometry shapes and primitives toolkit (2D).
+
+This project aim to provide optimized versions of 2D geometry arithmetic primitives used by [GameRealisticMap](https://github.com/jetelain/ArmaRealMap) and [MapToolkit](https://github.com/jetelain/mapkit).
 
 Those primitives are performance critical for the two related projects (data processing requires usually many hours, even little improvements can save a lot of time).
 
 Current toolkit is an experimentation around Vector128, Vector2 and plain scalar implementations. It makes heavy use of generics and text templating to test multiple implementations of 2D vectors and shapes. It's intend to measure their relative performances on modern hardware.
+
+API might change in future releases.
 
 It includes a fork of [Clipper2](https://github.com/AngusJohnson/Clipper2) from Angus Johnson.
 
@@ -39,12 +44,53 @@ Intel Core i7-14700KF, 1 CPU, with .NET 8.0.8 (8.0.824.36612), X64 RyuJIT AVX2
 
 ## Features
 
-2 dimensions vectors arithmetic with long, int, float and double support.
+### 2D Vectors
 
-Matrix transforms on 2 dimensions vectors.
+2D vectors arithmetic with long, int, float and double support.
 
-2 dimensions polygon arithmetic.
+Matrix transforms on 2D vectors.
 
+### 2D Polygons
+
+Arithmetic operations with two or more polygons : union, difference, intersection
+
+Offsetting of polygon.
+
+Relations with points:
+- test if point is in polygon
+- distance from point to polygon
+- distance from point to boundary
+
+Properties : Centroid, Area, Bounds
+
+### 2D Paths
+
+Offsetting path to polygon.
+
+Path following with abitrary step length.
+
+Properties : Length, Clockwise
+
+### Other shapes
+
+Rotated rectangle:
+- Compute the smallest rectangle containing a list of points
+- Compute the largest rectangle between a list of points
+
+Circle:
+- Compute the smallest circle containing a list of points
+
+### JSON
+
+Serialization/Deserialization to/from GeoJSON
+
+### WKT
+
+Serialization/Deserialization to/from Well-known text (OGC, Open Geospatial Consortium)
+
+### SVG
+
+Serialization to SVG path definition.
 
 ## License
 

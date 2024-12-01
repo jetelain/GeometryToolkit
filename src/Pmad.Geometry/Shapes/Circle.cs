@@ -2,7 +2,12 @@
 
 namespace Pmad.Geometry.Shapes
 {
-    public class Circle<TPrimitive, TVector> : IWithBounds<TVector>, IShape<TPrimitive, TVector>
+    /// <summary>
+    /// Circle
+    /// </summary>
+    /// <typeparam name="TPrimitive"></typeparam>
+    /// <typeparam name="TVector"></typeparam>
+    public sealed class Circle<TPrimitive, TVector> : IWithBounds<TVector>, IShape<TPrimitive, TVector>
         where TPrimitive : unmanaged, IFloatingPointIeee754<TPrimitive>
         where TVector : struct, IVector2<TPrimitive, TVector>, IVectorFP<TPrimitive, TVector>
     {

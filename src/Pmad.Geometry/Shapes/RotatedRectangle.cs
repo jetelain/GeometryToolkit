@@ -3,6 +3,11 @@ using Pmad.Geometry.Collections;
 
 namespace Pmad.Geometry.Shapes
 {
+    /// <summary>
+    /// Rotated rectangle
+    /// </summary>
+    /// <typeparam name="TPrimitive"></typeparam>
+    /// <typeparam name="TVector"></typeparam>
     public sealed class RotatedRectangle<TPrimitive, TVector> : IWithBounds<TVector>, IShape<TPrimitive, TVector>
         where TPrimitive : unmanaged, IFloatingPointIeee754<TPrimitive>
         where TVector : struct, IVector2<TPrimitive, TVector>, IVectorFP<TPrimitive, TVector>
