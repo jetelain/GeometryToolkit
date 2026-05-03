@@ -112,6 +112,8 @@ double dist = rect.Distance(new Vector2D(20, 5));
 ### Polygon with holes
 
 ```csharp
+using Pmad.Geometry.Collections;
+
 var shell = new ReadOnlyArray<Vector2D>(
     new Vector2D(0,0), new Vector2D(0,10),
     new Vector2D(10,10), new Vector2D(10,0), new Vector2D(0,0));
@@ -134,6 +136,8 @@ var    fromWkt = settings.ParsePolygon(wkt);
 ### SVG path
 
 ```csharp
+using Pmad.Geometry.Shapes.Svg;
+
 string svgPath = rect.ToSvgPath();
 ```
 
@@ -180,6 +184,8 @@ Polygon<double, Vector2D> polyShell = path.ToPolygonAsShell();
 ## RotatedRectangle
 
 ```csharp
+using Pmad.Geometry.Collections;
+
 var rr = new RotatedRectangle<double, Vector2D>(
     center:  new Vector2D(5, 5),
     size:    new Vector2D(8, 4),
@@ -190,7 +196,7 @@ double degrees = rr.Degrees;
 Polygon<double, Vector2D> poly = rr.ToPolygon();
 
 // Smallest rotated rectangle containing a set of points
-var points = new List<Vector2D> { new(0,0), new(3,1), new(2,4) };
+var points = new ReadOnlyArray<Vector2D>(new Vector2D(0,0), new Vector2D(3,1), new Vector2D(2,4));
 RotatedRectangle<double, Vector2D> smallest = RotatedRectangle<double, Vector2D>.GetSmallestContaining(points);
 ```
 

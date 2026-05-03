@@ -1,7 +1,7 @@
 ﻿
 Microsoft Visual Studio Solution File, Format Version 12.00
-# Visual Studio Version 17
-VisualStudioVersion = 17.10.34916.146
+# Visual Studio Version 18
+VisualStudioVersion = 18.5.11723.231 stable
 MinimumVisualStudioVersion = 10.0.40219.1
 Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "Pmad.Geometry", "src\Pmad.Geometry\Pmad.Geometry.csproj", "{17F0CA33-F73C-4E8F-856B-80DFD08315E4}"
 EndProject
@@ -26,6 +26,8 @@ EndProject
 Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "Pmad.Geometry.Processing", "src\Pmad.Geometry.Processing\Pmad.Geometry.Processing.csproj", "{69976905-D7D7-4DCE-9FA1-E7577A060597}"
 EndProject
 Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "Pmad.Geometry.Processing.Test", "tests\Pmad.Geometry.Processing.Test\Pmad.Geometry.Processing.Test.csproj", "{74A8E3BD-9D9F-49A5-A040-8BC6F60C0677}"
+EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "DemoConsole", "tests\DemoConsole\DemoConsole.csproj", "{A419D83F-2CF7-4C06-AB17-C4E0941CC410}"
 EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
@@ -61,6 +63,10 @@ Global
 		{74A8E3BD-9D9F-49A5-A040-8BC6F60C0677}.Debug|Any CPU.Build.0 = Debug|Any CPU
 		{74A8E3BD-9D9F-49A5-A040-8BC6F60C0677}.Release|Any CPU.ActiveCfg = Release|Any CPU
 		{74A8E3BD-9D9F-49A5-A040-8BC6F60C0677}.Release|Any CPU.Build.0 = Release|Any CPU
+		{A419D83F-2CF7-4C06-AB17-C4E0941CC410}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{A419D83F-2CF7-4C06-AB17-C4E0941CC410}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{A419D83F-2CF7-4C06-AB17-C4E0941CC410}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{A419D83F-2CF7-4C06-AB17-C4E0941CC410}.Release|Any CPU.Build.0 = Release|Any CPU
 	EndGlobalSection
 	GlobalSection(SolutionProperties) = preSolution
 		HideSolutionNode = FALSE
@@ -69,6 +75,7 @@ Global
 		{A37D332F-50E4-4F89-912C-105629EBC4A1} = {6616892A-83A4-4148-A201-BC5E489DD3FA}
 		{E4B0F70D-653F-424C-898E-AC1CCB6A310F} = {6616892A-83A4-4148-A201-BC5E489DD3FA}
 		{74A8E3BD-9D9F-49A5-A040-8BC6F60C0677} = {6616892A-83A4-4148-A201-BC5E489DD3FA}
+		{A419D83F-2CF7-4C06-AB17-C4E0941CC410} = {6616892A-83A4-4148-A201-BC5E489DD3FA}
 	EndGlobalSection
 	GlobalSection(ExtensibilityGlobals) = postSolution
 		SolutionGuid = {537DBFEB-046E-4261-9942-D9C2E1C69398}

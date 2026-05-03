@@ -40,45 +40,32 @@ string json = """{"type":"Polygon","coordinates":[[[0,0],[0,10],[10,10],[10,0],[
 
 var geoJson = JsonSerializer.Deserialize<GeoJsonGeometry<double, Vector2D>>(json)!;
 
-Polygon<double, Vector2D>?      polygon = geoJson.Polygon;
-MultiPolygon<double, Vector2D>? multi   = geoJson.MultiPolygon;
-Path<double, Vector2D>?         path    = geoJson.Path;
+Polygon<double, Vector2D>?      polygon = geoJson.Coordinates.AsPolygon();
+MultiPolygon<double, Vector2D>? multi   = geoJson.Coordinates.AsMultiPolygon();
+Path<double, Vector2D>?         path    = geoJson.Coordinates.AsLineString();
 ```
 
 ### GeoJSON Feature and FeatureCollection
 
 ```csharp
-var feature = new GeoJsonFeature<double, Vector2D>
-{
-    Geometry   = polygon.ToGeoJson(),
-    Properties = JsonSerializer.SerializeToElement(new { name = "area51" })
-};
+var feature = new GeoJsonFeature<double, Vector2D>(
+    geometry:   polygon.ToGeoJson(),
+    properties: null);
 
-var collection = new GeoJsonFeatureCollection<double, Vector2D>
-{
-    Features = { feature }
-};
+var collection = new GeoJsonFeatureCollection<double, Vector2D>(feature);
 
 string collectionJson = JsonSerializer.Serialize(collection);
 ```
 
-### Deserializing unknown geometry types
-
-Use `GeoJsonGeometry` (non-generic) when the geometry type is not known at compile-time:
-
-```csharp
-var unknown = JsonSerializer.Deserialize<GeoJsonUnknown>(json);
-Console.WriteLine(unknown?.Type); // "Polygon"
-```
-
 ## Coordinates helper
 
-`Coordinates` maps Pmad.Geometry vectors to GeoJSON `[longitude, latitude]` arrays and back:
+`Coordinates` wraps a Pmad.Geometry vector for JSON serialization. Use `AsPoint()` to retrieve the underlying vector:
 
 ```csharp
 var coord = new Coordinates<double, Vector2D>(new Vector2D(2.35, 48.85)); // Paris
-double lon = coord.Longitude; // 2.35
-double lat = coord.Latitude;  // 48.85
+var point = coord.AsPoint();
+double lon = point.X; // 2.35
+double lat = point.Y; // 48.85
 ```
 
 ## License

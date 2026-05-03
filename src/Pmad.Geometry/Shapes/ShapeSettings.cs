@@ -40,7 +40,10 @@ namespace Pmad.Geometry.Shapes
         /// Must be 1 for integer primitive types.
         /// </param>
         /// <param name="negligibleClipperDistance">
-        /// Polygons whose edge lengths (in Clipper2 units) are below this threshold are filtered out as rounding artefacts.
+        /// Distance threshold (in Clipper2 units) used to derive <see cref="NegligibleDistance"/> (distance threshold
+        /// in vector units) and <see cref="NegligibleArea"/>/<see cref="NegligibleClipperArea"/> (area thresholds equal
+        /// to the square of the distance). Polygons whose area falls below <see cref="NegligibleClipperArea"/> are
+        /// filtered out as rounding artefacts.
         /// </param>
         public ShapeSettings(int scaleForClipper, int negligibleClipperDistance)
         {
