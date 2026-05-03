@@ -4,7 +4,7 @@ using Pmad.Geometry.Collections;
 namespace Pmad.Geometry.Shapes
 {
     /// <summary>
-    /// Axis-aligned rectangle that has been rotated by an arbitrary angle around its centre.
+    /// Rectangle that has been rotated by an arbitrary angle around its centre.
     /// </summary>
     /// <typeparam name="TPrimitive">Floating-point primitive type of the vector components.</typeparam>
     /// <typeparam name="TVector">Vector type. Must also implement <see cref="IVectorFP{TPrimitive,TVector}"/>.</typeparam>
