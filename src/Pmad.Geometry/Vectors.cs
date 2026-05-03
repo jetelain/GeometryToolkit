@@ -3,8 +3,13 @@ using System.Runtime.CompilerServices;
 
 namespace Pmad.Geometry
 {
+    /// <summary>Static helpers for 2D vector geometry operations.</summary>
     public static partial class Vectors
     {
+        /// <summary>
+        /// Tests whether infinite lines AB and CD intersect, and returns the intersection point.
+        /// </summary>
+        /// <returns><see langword="true"/> if the lines are not parallel and an intersection exists.</returns>
         public static bool HasLineIntersection<TVector>(TVector A1, TVector A2, TVector B1, TVector B2, out TVector intersection)
             where TVector : struct, IVector<TVector>
         {
@@ -19,6 +24,11 @@ namespace Pmad.Geometry
             return true;
         }
 
+        /// <summary>
+        /// Tests whether segments A1A2 and B1B2 intersect, and returns the intersection point.
+        /// Both segments must be of finite length.
+        /// </summary>
+        /// <returns><see langword="true"/> if the segments cross within their respective extents.</returns>
         public static bool HasSegmentIntersection<TVector>(TVector A1, TVector A2, TVector B1, TVector B2, out TVector intersection)
             where TVector : struct, IVector<TVector>
         {
@@ -44,6 +54,7 @@ namespace Pmad.Geometry
             return true;
         }
 
+        /// <summary>Returns the nearest point on segment [<paramref name="a1"/>, <paramref name="a2"/>] to <paramref name="p"/>.</summary>
         public static TVector NearestPointSegment<TVector>(TVector a1, TVector a2, TVector p)
             where TVector : struct, IVector<TVector>
         {
@@ -83,6 +94,7 @@ namespace Pmad.Geometry
             return Math.Acos(TVector.DotD(a, b) / (a.LengthD() * b.LengthD()));
         }
 
+        /// <summary>Linearly interpolates between <paramref name="value1"/> and <paramref name="value2"/> by <paramref name="amount"/> (0 = value1, 1 = value2).</summary>
         [MethodImpl(MethodImplOptions.AggressiveInlining)]
         public static TVector Lerp<TVector>(TVector value1, TVector value2, double amount)
             where TVector : struct, IVector<TVector>
@@ -90,6 +102,10 @@ namespace Pmad.Geometry
             return (value1 * (1.0d - amount)) + (value2 * amount);
         }
 
+        /// <summary>
+        /// Returns the squared perpendicular distance from <paramref name="thisPoint"/> to the infinite line passing through
+        /// <paramref name="previousPoint"/> and <paramref name="nextPoint"/>.
+        /// </summary>
         public static double PerpendicularDistanceFromLineSquared<TVector>(TVector thisPoint, TVector previousPoint, TVector nextPoint)
             where TVector : struct, IVector<TVector>
         {

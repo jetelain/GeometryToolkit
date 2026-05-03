@@ -6,14 +6,12 @@ using Pmad.Geometry.Collections;
 namespace Pmad.Geometry.Shapes
 {
     /// <summary>
-    /// "High performance" representation of one or more polygons, suited to chain arithmetic operations. 
-    /// 
-    /// It's a thin layer above Clipper2 primitives for fool-proof usage.
-    /// 
-    /// A "Polygon Set" is defined only by paths, the role of each path is unknown (shell or hole). 
+    /// High-performance representation of one or more polygons, suited to chaining arithmetic operations.
+    /// A thin layer over Clipper2 primitives for fool-proof usage.
+    /// The role of each path (shell or hole) is determined by Clipper2's fill rule.
     /// </summary>
-    /// <typeparam name="TPrimitive"></typeparam>
-    /// <typeparam name="TVector"></typeparam>
+    /// <typeparam name="TPrimitive">Numeric primitive type of the vector components.</typeparam>
+    /// <typeparam name="TVector">Vector type.</typeparam>
     public class PolygonSet<TPrimitive, TVector> : IWithBounds<TVector>
         where TPrimitive : unmanaged, INumber<TPrimitive>
         where TVector : struct, IVector2<TPrimitive, TVector>
@@ -63,20 +61,24 @@ namespace Pmad.Geometry.Shapes
             }
         }
 
+        /// <summary>Net signed area of all paths in double precision (shell area minus hole areas).</summary>
         public double AreaD => Clipper.Area(paths) / Settings.ScaleForClipper / Settings.ScaleForClipper;
 
         internal ShapeSettings<TPrimitive, TVector> Settings { get; }
 
         internal Paths64 ToClipper() => paths;
 
+        /// <summary>Number of paths (rings) in the set.</summary>
         public int Count => paths.Count;
 
         internal IEnumerable<Path64> Paths => paths;
 
+        /// <summary>Returns the difference of this set minus <paramref name="other"/>.</summary>
         public PolygonSet<TPrimitive, TVector> Substract(PolygonSet<TPrimitive, TVector> other)
         {
             return BooleanOpToSet(other.ToClipper(), ClipType.Difference);
         }
+        /// <summary>Returns the difference of this set minus <paramref name="other"/>.</summary>
         public PolygonSet<TPrimitive, TVector> Substract(Polygon<TPrimitive, TVector> other)
         {
             return BooleanOpToSet(other.ToClipper(), ClipType.Difference);
@@ -86,10 +88,12 @@ namespace Pmad.Geometry.Shapes
             return BooleanOpToSet(other.ToClipper(Settings), ClipType.Difference);
         }
 
+        /// <summary>Returns the union of this set and <paramref name="other"/>.</summary>
         public PolygonSet<TPrimitive, TVector> Union(PolygonSet<TPrimitive, TVector> other)
         {
             return BooleanOpToSet(other.ToClipper(), ClipType.Union);
         }
+        /// <summary>Returns the union of this set and <paramref name="other"/>.</summary>
         public PolygonSet<TPrimitive, TVector> Union(Polygon<TPrimitive, TVector> other)
         {
             return BooleanOpToSet(other.ToClipper(), ClipType.Union);
@@ -99,10 +103,12 @@ namespace Pmad.Geometry.Shapes
             return BooleanOpToSet(other.ToClipper(Settings), ClipType.Union);
         }
 
+        /// <summary>Returns the intersection of this set and <paramref name="other"/>.</summary>
         public PolygonSet<TPrimitive, TVector> Intersection(PolygonSet<TPrimitive, TVector> other)
         {
             return BooleanOpToSet(other.ToClipper(), ClipType.Intersection);
         }
+        /// <summary>Returns the intersection of this set and <paramref name="other"/>.</summary>
         public PolygonSet<TPrimitive, TVector> Intersection(Polygon<TPrimitive, TVector> other)
         {
             return BooleanOpToSet(other.ToClipper(), ClipType.Intersection);
@@ -112,6 +118,7 @@ namespace Pmad.Geometry.Shapes
             return BooleanOpToSet(other.ToClipper(Settings), ClipType.Intersection);
         }
 
+        /// <summary>Returns a new set clipped to the given <paramref name="rect"/>.</summary>
         public PolygonSet<TPrimitive, TVector> Crop(VectorEnvelope<TVector> rect)
         {
             return new PolygonSet<TPrimitive, TVector>(Clipper.RectClip(Settings.ToClipper(rect), ToClipper()), Settings);

@@ -54,12 +54,16 @@ namespace Pmad.Geometry
         /// <returns><see langword="true"/> if min.X &lt; X &lt;= max.X and  min.Y &lt; Y &lt;= max.Y ...</returns>
         bool IsInRange(TVector min, TVector max);
 
+        /// <summary>Returns a new vector with the X and Y components swapped.</summary>
         TVector SwapXY();
 
+        /// <summary>Returns a vector whose components are the per-component minimum of <paramref name="left"/> and <paramref name="right"/>.</summary>
         abstract static TVector Min(TVector left, TVector right);
 
+        /// <summary>Returns a vector whose components are the per-component maximum of <paramref name="left"/> and <paramref name="right"/>.</summary>
         abstract static TVector Max(TVector left, TVector right);
 
+        /// <summary>Clamps each component of <paramref name="value"/> between the corresponding components of <paramref name="min"/> and <paramref name="max"/>.</summary>
         abstract static TVector Clamp(TVector value, TVector min, TVector max);
 
         abstract static TVector operator+(TVector left, TVector right);
@@ -78,34 +82,46 @@ namespace Pmad.Geometry
 
         abstract static TVector operator*(TVector left, int right);
 
+        /// <summary>A vector with all components set to the maximum value of <typeparamref name="TVector"/>.</summary>
         abstract static TVector MaxValue { get; }
 
+        /// <summary>A vector with all components set to the minimum value of <typeparamref name="TVector"/>.</summary>
         abstract static TVector MinValue { get; }
 
+        /// <summary>A vector with all components set to zero.</summary>
         abstract static TVector Zero { get; }
 
+        /// <summary>A vector with all components set to one.</summary>
         abstract static TVector One { get; }
 
         abstract static bool operator ==(TVector left, TVector right);
 
         abstract static bool operator !=(TVector left, TVector right);
 
+        /// <summary>Returns the 2D cross product (scalar) of <paramref name="left"/> and <paramref name="right"/> as a <see langword="double"/>: left.X * right.Y - left.Y * right.X.</summary>
         abstract static double CrossProductD(TVector left, TVector right);
 
+        /// <summary>Returns the dot product of <paramref name="left"/> and <paramref name="right"/> as a <see langword="double"/>: left.X * right.X + left.Y * right.Y.</summary>
         abstract static double DotD(TVector left, TVector right);
 
+        /// <summary>Returns the 2D cross product as a <see langword="float"/>.</summary>
         [MethodImpl(MethodImplOptions.AggressiveInlining)]
         virtual static float CrossProductF(TVector left, TVector right) => (float)TVector.CrossProductD(left, right);
 
+        /// <summary>Returns the cross product of the two edges meeting at <paramref name="pt2"/>: (pt2-pt1) × (pt3-pt2).</summary>
         [MethodImpl(MethodImplOptions.AggressiveInlining)]
         virtual static double CrossProduct(TVector pt1, TVector pt2, TVector pt3) => TVector.CrossProductD(pt2 - pt1, pt3 - pt2);
 
+        /// <summary>Linearly interpolates between <paramref name="left"/> and <paramref name="right"/> by <paramref name="amount"/> (0 = left, 1 = right).</summary>
         static abstract TVector Lerp(TVector left, TVector right, double amount);
 
+        /// <summary>Returns the per-component minimum across all vectors in <paramref name="values"/>.</summary>
         abstract static TVector Min(ReadOnlySpan<TVector> values);
 
+        /// <summary>Returns the per-component maximum across all vectors in <paramref name="values"/>.</summary>
         abstract static TVector Max(ReadOnlySpan<TVector> values);
 
+        /// <summary>Returns the component-wise sum of all vectors in <paramref name="values"/>.</summary>
         abstract static TVector Sum(ReadOnlySpan<TVector> values);
 
     }

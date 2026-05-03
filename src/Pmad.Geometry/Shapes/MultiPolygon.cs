@@ -8,8 +8,8 @@ namespace Pmad.Geometry.Shapes
     /// <summary>
     /// List of non-overlapping polygons.
     /// </summary>
-    /// <typeparam name="TPrimitive"></typeparam>
-    /// <typeparam name="TVector"></typeparam>
+    /// <typeparam name="TPrimitive">Numeric primitive type of the vector components.</typeparam>
+    /// <typeparam name="TVector">Vector type.</typeparam>
     public sealed class MultiPolygon<TPrimitive, TVector> : IWithBounds<TVector>, IShape<TPrimitive, TVector>, IReadOnlyList<Polygon<TPrimitive, TVector>>
         where TPrimitive : unmanaged, INumber<TPrimitive>
         where TVector : struct, IVector2<TPrimitive, TVector>
@@ -31,8 +31,10 @@ namespace Pmad.Geometry.Shapes
 
         public Polygon<TPrimitive, TVector> this[int index] => polygons[index];
 
+        /// <summary>Axis-aligned bounding box that encompasses all polygons.</summary>
         public VectorEnvelope<TVector> Bounds => GetBounds(polygons);
 
+        /// <summary>Total area of all polygons in double precision.</summary>
         public double AreaD => polygons.Sum(p => p.AreaD);
 
         public int Count => polygons.Count;
@@ -52,11 +54,17 @@ namespace Pmad.Geometry.Shapes
             return paths;
         }
 
+        /// <summary>Returns <see langword="true"/> if <paramref name="point"/> is inside or on the boundary of any polygon in this collection.</summary>
         public bool Contains(TVector point)
         {
             return IsInsideOrOnBoundary(point);
         }
 
+        /// <summary>
+        /// Returns the minimum distance from <paramref name="point"/> to the nearest polygon boundary.
+        /// Returns 0 if the point is inside or on the boundary of any polygon.
+        /// Returns <see cref="double.NaN"/> if the collection is empty.
+        /// </summary>
         public double Distance(TVector point)
         {
             if (polygons.Count == 0)
@@ -71,6 +79,7 @@ namespace Pmad.Geometry.Shapes
             return polygons.GetEnumerator();
         }
 
+        /// <summary>Returns <see langword="true"/> if <paramref name="point"/> is strictly inside any polygon in this collection.</summary>
         public bool IsInside(TVector point)
         {
             return polygons.Any(p => p.IsInside(point));

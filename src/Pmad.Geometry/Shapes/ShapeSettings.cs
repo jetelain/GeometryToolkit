@@ -7,28 +7,42 @@ using Pmad.Geometry.Collections;
 namespace Pmad.Geometry.Shapes
 {
     /// <summary>
-    /// Coordinate space settings.
+    /// Coordinate space settings that control scale and negligible-distance thresholds for Clipper2 operations.
     /// </summary>
-    /// <typeparam name="TPrimitive"></typeparam>
-    /// <typeparam name="TVector"></typeparam>
+    /// <typeparam name="TPrimitive">Numeric primitive type of the vector components.</typeparam>
+    /// <typeparam name="TVector">Vector type.</typeparam>
     public sealed class ShapeSettings<TPrimitive, TVector>
         where TPrimitive : unmanaged, INumber<TPrimitive>
         where TVector : struct, IVector2<TPrimitive, TVector>
     {
         /// <summary>
-        /// Default settings. Suited for metric coordinates with milimeter precision.
+        /// Default settings. Suited for metric coordinates with millimetre precision.
         /// </summary>
         public static readonly ShapeSettings<TPrimitive, TVector> Default = new ShapeSettings<TPrimitive, TVector>();
 
         private readonly TVector scale;
 
+        /// <summary>
+        /// Creates default settings. Suited for metric coordinates with millimetre precision
+        /// (scale = 1000 for floating-point types, 1 for integer types; negligible distance = 3 clipper units).
+        /// </summary>
         public ShapeSettings()
             : this(GetDefaultScale(), 3)
         {
 
         }
 
-        public ShapeSettings(int scaleForClipper, int negligibleClipperDistance) 
+        /// <summary>
+        /// Creates settings with explicit scale and negligible distance.
+        /// </summary>
+        /// <param name="scaleForClipper">
+        /// Multiplier applied to coordinates before passing them to Clipper2.
+        /// Must be 1 for integer primitive types.
+        /// </param>
+        /// <param name="negligibleClipperDistance">
+        /// Polygons whose edge lengths (in Clipper2 units) are below this threshold are filtered out as rounding artefacts.
+        /// </param>
+        public ShapeSettings(int scaleForClipper, int negligibleClipperDistance)
         {
             if (typeof(TPrimitive) == typeof(long) || typeof(TPrimitive) == typeof(int))
             {
@@ -62,6 +76,7 @@ namespace Pmad.Geometry.Shapes
         /// </summary>
         public double NegligibleDistance { get; }
 
+        /// <summary>Square of <see cref="NegligibleDistance"/>.</summary>
         public double NegligibleDistanceSquared => NegligibleArea;
 
         /// <summary>

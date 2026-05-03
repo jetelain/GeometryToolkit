@@ -5,6 +5,11 @@ using Pmad.Geometry.Shapes;
 
 namespace Pmad.Geometry.Json
 {
+    /// <summary>
+    /// Represents a GeoJSON geometry object. Wraps a Pmad.Geometry shape for JSON serialization/deserialization.
+    /// </summary>
+    /// <typeparam name="TPrimitive">Numeric primitive type of the vector components.</typeparam>
+    /// <typeparam name="TVector">Vector type.</typeparam>
     public class GeoJsonGeometry<TPrimitive, TVector>
         where TPrimitive : unmanaged, INumber<TPrimitive>
         where TVector : struct, IVector2<TPrimitive, TVector>
@@ -52,10 +57,12 @@ namespace Pmad.Geometry.Json
             Coordinates = new(coordinates);
         }
 
+        /// <summary>GeoJSON geometry type (e.g. Point, Polygon, MultiPolygon).</summary>
         [JsonPropertyName("type")]
         [JsonConverter(typeof(JsonStringEnumConverter<GeoJsonGeometryType>))]
         public GeoJsonGeometryType Type { get; }
 
+        /// <summary>Coordinates payload, typed according to <see cref="Type"/>.</summary>
         [JsonPropertyName("coordinates")]
         [JsonGeometryConverter]
         public Coordinates<TPrimitive, TVector> Coordinates { get; }

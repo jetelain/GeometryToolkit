@@ -4,10 +4,10 @@ using Pmad.Geometry.Collections;
 namespace Pmad.Geometry.Shapes
 {
     /// <summary>
-    /// Segment of a <see cref="Path"/>.
+    /// A contiguous segment of a <see cref="Path{TPrimitive,TVector}"/>, split at angle thresholds.
     /// </summary>
-    /// <typeparam name="TPrimitive"></typeparam>
-    /// <typeparam name="TVector"></typeparam>
+    /// <typeparam name="TPrimitive">Numeric primitive type of the vector components.</typeparam>
+    /// <typeparam name="TVector">Vector type.</typeparam>
     public class PathSegment<TPrimitive, TVector>
         where TPrimitive : unmanaged, INumber<TPrimitive>
         where TVector : struct, IVector2<TPrimitive, TVector>
@@ -18,20 +18,28 @@ namespace Pmad.Geometry.Shapes
             DegreesWithNext = Math.Round(angleWithNext, 4);
         }
 
+        /// <summary>Ordered points forming this segment.</summary>
         public ReadOnlyArray<TVector> Points { get; }
 
+        /// <summary>Returns <see langword="true"/> if this segment is followed by another segment.</summary>
         public bool HasNext => !double.IsNaN(DegreesWithNext);
 
+        /// <summary>Angle (in degrees) between this segment and the next, or <see cref="double.NaN"/> if this is the last segment.</summary>
         public double DegreesWithNext { get; }
 
+        /// <summary>Total length of the segment in double precision.</summary>
         public double LengthD => Points.GetLengthD();
 
+        /// <summary>Total length of the segment in single precision.</summary>
         public float LengthF => Points.GetLengthF();
 
+        /// <summary>First point of the segment.</summary>
         public TVector First => Points[0];
 
+        /// <summary>Last point of the segment.</summary>
         public TVector Last => Points[Points.Count - 1];
 
+        /// <summary>Returns <see langword="true"/> if the first and last points are equal.</summary>
         public bool IsClosed => First.Equals(Last);
 
         /// <summary>
