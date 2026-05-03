@@ -57,17 +57,6 @@ var collection = new GeoJsonFeatureCollection<double, Vector2D>(feature);
 string collectionJson = JsonSerializer.Serialize(collection);
 ```
 
-## Coordinates helper
-
-`Coordinates` wraps a Pmad.Geometry vector for JSON serialization. Use `AsPoint()` to retrieve the underlying vector:
-
-```csharp
-var coord = new Coordinates<double, Vector2D>(new Vector2D(2.35, 48.85)); // Paris
-var point = coord.AsPoint();
-double lon = point.X; // 2.35
-double lat = point.Y; // 48.85
-```
-
 ## License
 
 Licensed under [Boost Software License - Version 1.0](https://www.boost.org/LICENSE_1_0.txt) terms.
