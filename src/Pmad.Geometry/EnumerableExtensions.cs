@@ -5,9 +5,11 @@ using Pmad.Geometry.Collections;
 
 namespace Pmad.Geometry
 {
+    /// <summary>Extension methods for computing aggregate vector operations over sequences.</summary>
     public static class EnumerableExtensions
     {
-        public static TVector Sum<TVector>(this IEnumerable<TVector> list) 
+        /// <summary>Returns the component-wise sum of all vectors in <paramref name="list"/>. Returns the zero vector for an empty sequence.</summary>
+        public static TVector Sum<TVector>(this IEnumerable<TVector> list)
             where TVector : struct, IVector<TVector>
         {
             var enumerator = list.GetEnumerator();
@@ -63,6 +65,7 @@ namespace Pmad.Geometry
 
 
 
+        /// <summary>Returns the per-component maximum of all vectors in <paramref name="list"/>. Throws if the sequence is empty.</summary>
         public static TVector Max<TVector>(this IEnumerable<TVector> list)
             where TVector : struct, IVector<TVector>
         {

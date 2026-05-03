@@ -4,30 +4,41 @@ using Pmad.Geometry.Collections;
 namespace Pmad.Geometry.Shapes
 {
     /// <summary>
-    /// Rotated rectangle
+    /// Rectangle that has been rotated by an arbitrary angle around its centre.
     /// </summary>
-    /// <typeparam name="TPrimitive"></typeparam>
-    /// <typeparam name="TVector"></typeparam>
+    /// <typeparam name="TPrimitive">Floating-point primitive type of the vector components.</typeparam>
+    /// <typeparam name="TVector">Vector type. Must also implement <see cref="IVectorFP{TPrimitive,TVector}"/>.</typeparam>
     public sealed class RotatedRectangle<TPrimitive, TVector> : IWithBounds<TVector>, IShape<TPrimitive, TVector>
         where TPrimitive : unmanaged, IFloatingPointIeee754<TPrimitive>
         where TVector : struct, IVector2<TPrimitive, TVector>, IVectorFP<TPrimitive, TVector>
     {
         private Lazy<Polygon<TPrimitive,TVector>> polygon;
 
+        /// <summary>Coordinate space settings.</summary>
         public ShapeSettings<TPrimitive, TVector> Settings { get; }
 
+        /// <summary>Centre of the rectangle.</summary>
         public TVector Center { get; }
 
+        /// <summary>Dimensions of the rectangle (width, height) before rotation.</summary>
         public TVector Size { get; }
 
+        /// <summary>Area of the rectangle: width × height.</summary>
         public double AreaD => Size.AreaD();
 
+        /// <summary>Rotation angle in radians (counter-clockwise).</summary>
         public double Radians { get; }
 
+        /// <summary>Rotation angle in degrees (counter-clockwise).</summary>
         public double Degrees => Radians * 180 / Math.PI;
 
+        /// <summary>Axis-aligned bounding box of the rotated rectangle.</summary>
         public VectorEnvelope<TVector> Bounds => polygon.Value.Bounds;
 
+        /// <summary>Creates a rotated rectangle with default settings.</summary>
+        /// <param name="center">Centre of the rectangle.</param>
+        /// <param name="size">Dimensions (width, height).</param>
+        /// <param name="radians">Rotation angle in radians (counter-clockwise).</param>
         public RotatedRectangle(TVector center, TVector size, double radians) 
             : this(ShapeSettings<TPrimitive, TVector>.Default, center, size, radians)
         {
@@ -59,8 +70,13 @@ namespace Pmad.Geometry.Shapes
             ));
         }
 
+        /// <summary>Returns this rotated rectangle as a closed <see cref="Polygon{TPrimitive,TVector}"/>.</summary>
         public Polygon<TPrimitive, TVector> ToPolygon() => polygon.Value;
 
+        /// <summary>
+        /// Returns the smallest rotated rectangle that contains all of the given <paramref name="points"/>.
+        /// Uses a rotating-calipers approach over all edge angles.
+        /// </summary>
         public static RotatedRectangle<TPrimitive, TVector> GetSmallestContaining(ReadOnlyArray<TVector> points)
         {
             return GetSmallestContaining(ShapeSettings<TPrimitive, TVector>.Default, points.AsSpan());
@@ -117,6 +133,10 @@ namespace Pmad.Geometry.Shapes
         }
 
 
+        /// <summary>
+        /// Returns the largest rotated rectangle that fits between the given <paramref name="points"/> (treated as a convex hull boundary),
+        /// or <see langword="null"/> if none can be found.
+        /// </summary>
         public static RotatedRectangle<TPrimitive, TVector>? GetLargestBetween(ReadOnlyArray<TVector> points)
         {
             return GetLargestBetween(ShapeSettings<TPrimitive, TVector>.Default, points);

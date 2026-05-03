@@ -2,8 +2,10 @@
 
 namespace Pmad.Geometry.Shapes.Svg
 {
+    /// <summary>Extension methods for serializing shapes to SVG path data strings.</summary>
     public static class SvgExtensions
     {
+        /// <summary>Creates an <see cref="SvgPathBuilder{TPrimitive,TVector}"/> using the given settings.</summary>
         public static SvgPathBuilder<TPrimitive, TVector> CreateSvgPathBuilder<TPrimitive, TVector>(this ShapeSettings<TPrimitive, TVector> settings)
             where TPrimitive : unmanaged, INumber<TPrimitive>
             where TVector : struct, IVector2<TPrimitive, TVector>
@@ -11,6 +13,7 @@ namespace Pmad.Geometry.Shapes.Svg
             return new SvgPathBuilder<TPrimitive, TVector>(settings);
         }
 
+        /// <summary>Serializes a <see cref="Polygon{TPrimitive,TVector}"/> to an SVG path data string (<c>d</c> attribute).</summary>
         public static string ToSvgPath<TPrimitive, TVector>(this Polygon<TPrimitive, TVector> polygon)
             where TPrimitive : unmanaged, INumber<TPrimitive>
             where TVector : struct, IVector2<TPrimitive, TVector>
@@ -20,6 +23,7 @@ namespace Pmad.Geometry.Shapes.Svg
             return svg.ToString();
         }
 
+        /// <summary>Serializes a <see cref="MultiPolygon{TPrimitive,TVector}"/> to an SVG path data string (<c>d</c> attribute).</summary>
         public static string ToSvgPath<TPrimitive, TVector>(this MultiPolygon<TPrimitive, TVector> multiPolygon)
             where TPrimitive : unmanaged, INumber<TPrimitive>
             where TVector : struct, IVector2<TPrimitive, TVector>
@@ -39,6 +43,7 @@ namespace Pmad.Geometry.Shapes.Svg
             return svg.ToString();
         }
 
+        /// <summary>Serializes a <see cref="PolygonSet{TPrimitive,TVector}"/> to an SVG path data string (<c>d</c> attribute).</summary>
         public static string ToSvgPath<TPrimitive, TVector>(this PolygonSet<TPrimitive, TVector> polygonSet)
             where TPrimitive : unmanaged, INumber<TPrimitive>
             where TVector : struct, IVector2<TPrimitive, TVector>
@@ -58,6 +63,7 @@ namespace Pmad.Geometry.Shapes.Svg
             return svg.ToString();
         }
 
+        /// <summary>Serializes a <see cref="Path{TPrimitive,TVector}"/> to an SVG path data string (<c>d</c> attribute).</summary>
         public static string ToSvgPath<TPrimitive, TVector>(this Path<TPrimitive, TVector> path)
             where TPrimitive : unmanaged, INumber<TPrimitive>
             where TVector : struct, IVector2<TPrimitive, TVector>

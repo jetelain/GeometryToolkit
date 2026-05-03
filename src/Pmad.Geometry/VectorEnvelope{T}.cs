@@ -4,6 +4,10 @@ using Pmad.Geometry.Collections;
 
 namespace Pmad.Geometry
 {
+    /// <summary>
+    /// Axis-aligned bounding box defined by a minimum and a maximum vector.
+    /// </summary>
+    /// <typeparam name="TVector">Vector type.</typeparam>
     [DebuggerDisplay("{Min}->{Max}")]
     public struct VectorEnvelope<TVector> : IEquatable<VectorEnvelope<TVector>>
         where TVector : struct, IVector<TVector>
@@ -46,16 +50,20 @@ namespace Pmad.Geometry
             return new (min, max);
         }
 
+        /// <summary>Lower-left corner of the envelope.</summary>
         public TVector Min => min;
 
+        /// <summary>Upper-right corner of the envelope.</summary>
         public TVector Max => max;
 
+        /// <summary>Returns <see langword="true"/> if this envelope overlaps <paramref name="other"/>.</summary>
         public bool Intersects(VectorEnvelope<TVector> other)
         {
             return other.min.IsLessThanOrEqualAll(max) &&
                    other.max.IsGreaterThanOrEqualAll(min);
         }
 
+        /// <summary>Returns <see langword="true"/> if this envelope fully contains <paramref name="other"/>.</summary>
         public bool Contains(VectorEnvelope<TVector> other)
         {
             return
@@ -63,6 +71,7 @@ namespace Pmad.Geometry
                 other.max.IsLessThanOrEqualAll(max);
         }
 
+        /// <summary>Returns <see langword="true"/> if <paramref name="point"/> is within the envelope (inclusive).</summary>
         public bool Contains(TVector point)
         {
             return point.IsInRange(min, max);

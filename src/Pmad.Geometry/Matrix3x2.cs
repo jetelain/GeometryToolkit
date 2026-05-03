@@ -4,12 +4,19 @@ using System.Runtime.CompilerServices;
 
 namespace Pmad.Geometry
 {
+    /// <summary>
+    /// 3×2 affine matrix for 2D transformations (rotation, scale, translation).
+    /// </summary>
+    /// <typeparam name="TPrimitive">Floating-point scalar type.</typeparam>
+    /// <typeparam name="TVector">Vector type.</typeparam>
     public struct Matrix3x2<TPrimitive, TVector> : IMatrix3x2<TPrimitive, TVector, Matrix3x2<TPrimitive, TVector>>
         where TPrimitive : unmanaged, IFloatingPointIeee754<TPrimitive>
         where TVector : struct, IVector2<TPrimitive, TVector>, IVectorFP<TPrimitive, TVector>
     {
+        /// <summary>The 2×2 linear part of the transform.</summary>
         public readonly Matrix2x2<TPrimitive, TVector> XY;
 
+        /// <summary>The translation vector (M31, M32).</summary>
         public readonly TVector Z;
 
         public TPrimitive M11 => XY.M11;
@@ -30,11 +37,13 @@ namespace Pmad.Geometry
             Z = z;
         }
 
+        /// <summary>Creates a matrix from the six scalar elements.</summary>
         public static Matrix3x2<TPrimitive, TVector> Create(TPrimitive m11, TPrimitive m12, TPrimitive m21, TPrimitive m22, TPrimitive m31, TPrimitive m32)
         {
             return new Matrix3x2<TPrimitive, TVector>(new (TVector.Create(m11, m12), TVector.Create(m21, m22)), TVector.Create(m31, m32));
         }
 
+        /// <summary>Creates a rotation matrix around <paramref name="centerPoint"/> for the given angle in radians (primitive type).</summary>
         public static Matrix3x2<TPrimitive, TVector> CreateRotation(TPrimitive radians, TVector centerPoint)
         {
             (var sin, var cos) = MatrixHelper.SinCos<TPrimitive>(radians);
@@ -43,6 +52,7 @@ namespace Pmad.Geometry
             return new(new(TVector.Create(cos, sin), TVector.Create(-sin, cos)), z);
         }
 
+        /// <summary>Creates a rotation matrix around <paramref name="centerPoint"/> for the given angle in radians (<see langword="double"/>).</summary>
         public static Matrix3x2<TPrimitive, TVector> CreateRotationD(double radians, TVector centerPoint)
         {
             (var sin, var cos) = MatrixHelper.SinCos(radians);
@@ -51,6 +61,7 @@ namespace Pmad.Geometry
             return new (new (TVector.Create(cos, sin), TVector.Create(-sin, cos)), z);
         }
 
+        /// <summary>Applies this affine transformation to <paramref name="value"/> and returns the result.</summary>
         [MethodImpl(MethodImplOptions.AggressiveInlining)]
         public TVector Transform(TVector value)
         {
@@ -76,11 +87,13 @@ namespace Pmad.Geometry
             return HashCode.Combine(XY, Z);
         }
 
+        /// <summary>Creates a translation matrix for the given components.</summary>
         public static Matrix3x2<TPrimitive, TVector> CreateTranslation(TPrimitive x, TPrimitive y)
         {
             return CreateTranslation(TVector.Create(x, y));
         }
 
+        /// <summary>Creates a translation matrix for the given vector.</summary>
         public static Matrix3x2<TPrimitive, TVector> CreateTranslation(TVector translation)
         {
             return new Matrix3x2<TPrimitive, TVector>(Matrix2x2<TPrimitive, TVector>.Identity, translation);

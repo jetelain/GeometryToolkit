@@ -55,7 +55,7 @@ namespace Pmad.Geometry.Collections
         }
 
         /// <summary>
-        /// Add an item at the end of the list
+        /// Add an item at the start of the list
         /// </summary>
         /// <param name="item"></param>
         public void Prepend(T item)

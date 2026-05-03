@@ -3,24 +3,30 @@
 namespace Pmad.Geometry.Shapes
 {
     /// <summary>
-    /// Circle
+    /// Circle defined by a centre point and a radius.
     /// </summary>
-    /// <typeparam name="TPrimitive"></typeparam>
-    /// <typeparam name="TVector"></typeparam>
+    /// <typeparam name="TPrimitive">Floating-point primitive type of the vector components.</typeparam>
+    /// <typeparam name="TVector">Vector type. Must also implement <see cref="IVectorFP{TPrimitive,TVector}"/>.</typeparam>
     public sealed class Circle<TPrimitive, TVector> : IWithBounds<TVector>, IShape<TPrimitive, TVector>
         where TPrimitive : unmanaged, IFloatingPointIeee754<TPrimitive>
         where TVector : struct, IVector2<TPrimitive, TVector>, IVectorFP<TPrimitive, TVector>
     {
+        /// <summary>The axis-aligned bounding box of the circle.</summary>
         public VectorEnvelope<TVector> Bounds { get; }
 
+        /// <summary>Centre of the circle.</summary>
         public TVector Center { get; }
 
+        /// <summary>Radius of the circle in vector units.</summary>
         public double Radius { get; }
 
+        /// <summary>Area of the circle: π × r².</summary>
         public double AreaD => Math.PI * Radius * Radius;
 
+        /// <summary>Coordinate space settings.</summary>
         public ShapeSettings<TPrimitive, TVector> Settings { get; }
 
+        /// <summary>Creates a circle with default settings.</summary>
         public Circle(TVector center, double radius)
             : this(ShapeSettings<TPrimitive, TVector>.Default, center, radius)
         {
@@ -36,16 +42,19 @@ namespace Pmad.Geometry.Shapes
             Bounds = new (center - radiusVector, center + radiusVector);
         }
 
+        /// <summary>Returns <see langword="true"/> if <paramref name="point"/> is strictly inside the circle (distance to centre &lt; radius).</summary>
         public bool IsInside(TVector point)
         {
             return (Center - point).LengthD() < Radius;
         }
 
+        /// <summary>Returns <see langword="true"/> if <paramref name="point"/> is inside or on the boundary of the circle (distance to centre ≤ radius).</summary>
         public bool IsInsideOrOnBoundary(TVector point)
         {
             return (Center - point).LengthD() <= Radius;
         }
 
+        /// <summary>Returns <see langword="true"/> if <paramref name="point"/> is inside or on the boundary of the circle. Equivalent to <see cref="IsInsideOrOnBoundary"/>.</summary>
         public bool Contains(TVector point) => IsInsideOrOnBoundary(point);
 
         internal static Circle<TPrimitive, TVector> FromTwoPoints(ShapeSettings<TPrimitive, TVector> settings, TVector a, TVector b)
@@ -97,12 +106,20 @@ namespace Pmad.Geometry.Shapes
             }
         }
 
+        /// <summary>
+        /// Returns the smallest enclosing circle for <paramref name="points"/> using the randomised Welzl algorithm.
+        /// The points are shuffled before processing to improve expected performance.
+        /// </summary>
         public static Circle<TPrimitive, TVector> CreateFromWelzl(ShapeSettings<TPrimitive, TVector> settings, IReadOnlyList<TVector> points)
         {
             var shuffle = points.OrderBy(_ => Random.Shared.NextDouble()).ToList();
             return CreateFromWelzl(settings, shuffle, new List<TVector>());
         }
 
+        /// <summary>
+        /// Returns the smallest enclosing circle for <paramref name="points"/> using the deterministic (stable) Welzl algorithm.
+        /// The order of <paramref name="points"/> affects the result path but not the correctness.
+        /// </summary>
         public static Circle<TPrimitive, TVector> CreateFromWelzlStable(ShapeSettings<TPrimitive, TVector> settings, IReadOnlyList<TVector> points)
         {
             return CreateFromWelzl(settings, points.ToList(), new List<TVector>());

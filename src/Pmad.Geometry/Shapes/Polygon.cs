@@ -17,18 +17,26 @@ namespace Pmad.Geometry.Shapes
     {
         private static readonly ReadOnlyArray<ReadOnlyArray<TVector>> NoHoles = new ReadOnlyArray<ReadOnlyArray<TVector>>([]);
         
+        /// <summary>Creates a polygon with the given shell and no holes, using default settings.</summary>
+        /// <param name="shell">Outer ring. The first and last point should be equal to close the ring.</param>
         public Polygon(ReadOnlyArray<TVector> shell)
             : this(ShapeSettings<TPrimitive, TVector>.Default, shell, NoHoles)
         {
 
         }
         
+        /// <summary>Creates a polygon with the given shell and holes, using default settings.</summary>
+        /// <param name="shell">Outer ring.</param>
+        /// <param name="holes">Inner rings representing holes in the polygon.</param>
         public Polygon(ReadOnlyArray<TVector> shell, ReadOnlyArray<ReadOnlyArray<TVector>> holes)
             : this(ShapeSettings<TPrimitive,TVector>.Default, shell, holes)
         {
 
         }
         
+        /// <summary>Creates a polygon with the given settings, shell, and no holes.</summary>
+        /// <param name="settings">Coordinate space settings.</param>
+        /// <param name="shell">Outer ring.</param>
         public Polygon(ShapeSettings<TPrimitive, TVector> settings, ReadOnlyArray<TVector> shell)
              : this(settings, shell, NoHoles)
         {
@@ -43,18 +51,25 @@ namespace Pmad.Geometry.Shapes
             Bounds = VectorEnvelope<TVector>.FromList(shell);
         }
 
+        /// <summary>Coordinate space settings used for Clipper2 operations.</summary>
         public ShapeSettings<TPrimitive, TVector> Settings { get; }
 
+        /// <summary>Outer ring of the polygon.</summary>
         public ReadOnlyArray<TVector> Shell { get; }
 
+        /// <summary>Inner rings representing holes in the polygon.</summary>
         public ReadOnlyArray<ReadOnlyArray<TVector>> Holes { get; }
 
+        /// <summary>Axis-aligned bounding box of the polygon.</summary>
         public VectorEnvelope<TVector> Bounds { get; }
 
+        /// <summary>Area of the polygon (shell minus holes) in double precision.</summary>
         public double AreaD => Math.Abs(SignedArea<TPrimitive,TVector>.GetSignedAreaD(Shell)) - Holes.Sum(hole => Math.Abs(SignedArea<TPrimitive, TVector>.GetSignedAreaD(hole)));
 
+        /// <summary>Area of the polygon (shell minus holes) in single precision.</summary>
         public float AreaF => Math.Abs(SignedArea<TPrimitive,TVector>.GetSignedAreaF(Shell)) - Holes.Sum(hole => Math.Abs(SignedArea<TPrimitive, TVector>.GetSignedAreaF(hole)));
 
+        /// <summary>Centroid (geometric centre) of the polygon shell.</summary>
         public TVector Centroid => Centroid<TPrimitive, TVector>.GetCentroid(Shell);
 
         internal Paths64 ToClipper()
@@ -74,7 +89,12 @@ namespace Pmad.Geometry.Shapes
             return solution;
         }
 
-        // Offsetting
+        /// <summary>
+        /// Expands or shrinks the polygon by a given distance.
+        /// A positive value expands (dilates), a negative value shrinks (erodes).
+        /// </summary>
+        /// <param name="offset">Distance in vector units.</param>
+        /// <returns>Resulting polygon(s) after offsetting.</returns>
         public MultiPolygon<TPrimitive, TVector> Offset(double offset)
         {
             if (offset == 0)
@@ -115,6 +135,13 @@ namespace Pmad.Geometry.Shapes
 
         public MultiPolygon<TPrimitive, TVector> InnerCrown(double offset) => Crown(offset, 0);
 
+        /// <summary>
+        /// Computes the ring-shaped area (crown) between the polygon offset by <paramref name="outerOffset"/> and the polygon offset by <c>-<paramref name="innnerOffset"/></c>.
+        /// Positive <paramref name="innnerOffset"/> values shrink the polygon inward, while negative values expand it outward.
+        /// Positive <paramref name="outerOffset"/> values expand the polygon outward, while negative values shrink it inward.
+        /// </summary>
+        /// <param name="innnerOffset">Signed inner offset distance; positive values shrink inward and negative values expand outward.</param>
+        /// <param name="outerOffset">Signed outer offset distance; positive values expand outward and negative values shrink inward.</param>
         public MultiPolygon<TPrimitive, TVector> Crown(double innnerOffset, double outerOffset)
         {
             if (innnerOffset == 0 && outerOffset == 0)
@@ -128,7 +155,8 @@ namespace Pmad.Geometry.Shapes
             return Settings.ToMultiPolygon(tree);
         }
 
-        // Polygon arithmetic        
+        // Polygon arithmetic
+        /// <summary>Subtracts each polygon in <paramref name="others"/> from this polygon in sequence.</summary>
         public IEnumerable<Polygon<TPrimitive, TVector>> SubstractAll(IEnumerable<Polygon<TPrimitive, TVector>> others)
         {
             var result = new List<Polygon<TPrimitive, TVector>>() { this };
@@ -155,6 +183,7 @@ namespace Pmad.Geometry.Shapes
             return Settings.ToMultiPolygon(tree);
         }
 
+        /// <summary>Returns the difference of this polygon minus <paramref name="other"/>.</summary>
         public MultiPolygon<TPrimitive, TVector> Substract(Polygon<TPrimitive, TVector> other)
         {
             if (!Bounds.Intersects(other.Bounds))
@@ -164,6 +193,7 @@ namespace Pmad.Geometry.Shapes
             return BooleanOp(other, ClipType.Difference);
         }
 
+        /// <summary>Returns the union of this polygon and <paramref name="other"/>.</summary>
         public MultiPolygon<TPrimitive, TVector> Union(Polygon<TPrimitive, TVector> other)
         {
             if (!Bounds.Intersects(other.Bounds))
@@ -185,6 +215,7 @@ namespace Pmad.Geometry.Shapes
             return new PolygonSet<TPrimitive, TVector>(Clipper.BooleanOp(op, ToClipper(), other.ToClipper(), FillRule.EvenOdd), Settings);
         }
 
+        /// <summary>Returns the intersection of this polygon and <paramref name="other"/>.</summary>
         public MultiPolygon<TPrimitive, TVector> Intersection(Polygon<TPrimitive, TVector> other)
         {
             if (!Bounds.Intersects(other.Bounds))
@@ -199,6 +230,7 @@ namespace Pmad.Geometry.Shapes
             return Intersection(Settings.CreateRectanglePolygon(rect));
         }
 
+        /// <summary>Tests whether <paramref name="vector"/> is inside, on the boundary of, or outside the polygon.</summary>
         public PointInPolygonResult TestPointInPolygon(TVector vector)
         {
             if (!Bounds.Contains(vector))
@@ -225,11 +257,13 @@ namespace Pmad.Geometry.Shapes
             return PointInPolygonResult.IsInside;
         }
         
+        /// <summary>Returns <see langword="true"/> if <paramref name="vector"/> is strictly inside the polygon (not on the boundary).</summary>
         public bool IsInside(TVector vector)
         {
             return TestPointInPolygon(vector) == PointInPolygonResult.IsInside;
         }
 
+        /// <summary>Returns <see langword="true"/> if <paramref name="vector"/> is inside or exactly on the boundary of the polygon.</summary>
         public bool IsInsideOrOnBoundary(TVector vector)
         {
             return TestPointInPolygon(vector) != PointInPolygonResult.IsOutside;
@@ -237,6 +271,10 @@ namespace Pmad.Geometry.Shapes
 
         public bool Contains(TVector point) => IsInsideOrOnBoundary(point);
 
+        /// <summary>
+        /// Returns the distance from <paramref name="point"/> to the nearest boundary of the polygon.
+        /// Returns 0 if the point is inside or on the boundary.
+        /// </summary>
         public double Distance(TVector point)
         {
             var test = TestPointInPolygon(point);

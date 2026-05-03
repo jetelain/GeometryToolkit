@@ -9,8 +9,8 @@ namespace Pmad.Geometry.Shapes
     /// <summary>
     /// Path, ordered list of points.
     /// </summary>
-    /// <typeparam name="TPrimitive"></typeparam>
-    /// <typeparam name="TVector"></typeparam>
+    /// <typeparam name="TPrimitive">Numeric primitive type of the vector components.</typeparam>
+    /// <typeparam name="TVector">Vector type.</typeparam>
     public sealed class Path<TPrimitive, TVector> : IWithBounds<TVector>
         where TPrimitive : unmanaged, INumber<TPrimitive>
         where TVector : struct, IVector2<TPrimitive, TVector>
@@ -34,26 +34,43 @@ namespace Pmad.Geometry.Shapes
             Bounds = VectorEnvelope<TVector>.FromList(points);
         }
 
+        /// <summary>Coordinate space settings.</summary>
         public ShapeSettings<TPrimitive, TVector> Settings { get; }
-        
+
+        /// <summary>Ordered list of points forming the path.</summary>
         public ReadOnlyArray<TVector> Points { get; }
 
+        /// <summary>Axis-aligned bounding box of the path.</summary>
         public VectorEnvelope<TVector> Bounds { get; }
 
+        /// <summary>Total length of the path in double precision.</summary>
         public double LengthD => Points.GetLengthD();
 
+        /// <summary>Total length of the path in single precision.</summary>
         public float LengthF => Points.GetLengthF();
 
+        /// <summary>First point of the path.</summary>
         public TVector First => Points[0];
 
+        /// <summary>Last point of the path.</summary>
         public TVector Last => Points[Points.Count - 1];
 
+        /// <summary>Returns <see langword="true"/> if the first and last points are equal.</summary>
         public bool IsClosed => First.Equals(Last);
 
+        /// <summary>Returns <see langword="true"/> if the path is closed and its signed area is positive (counter-clockwise winding).</summary>
         public bool IsCounterClockWise => IsClosed && SignedArea<TPrimitive, TVector>.GetSignedAreaD(Points) > 0;
 
+        /// <summary>Returns <see langword="true"/> if the path is closed and its signed area is negative (clockwise winding).</summary>
         public bool IsClockWise => IsClosed && SignedArea<TPrimitive, TVector>.GetSignedAreaD(Points) < 0;
 
+        /// <summary>
+        /// Buffers the path by <paramref name="width"/> to produce a polygon.
+        /// <paramref name="width"/> is the full buffer width (i.e. half-width on each side).
+        /// </summary>
+        /// <param name="width">Total buffer width in vector units.</param>
+        /// <param name="endType">How to cap the ends of the path.</param>
+        /// <param name="joinType">How to join consecutive segments.</param>
         public MultiPolygon<TPrimitive, TVector> ToPolygon(double width, EndType endType = EndType.Butt, JoinType joinType = JoinType.Square)
         {
             var offset = new ClipperOffset();
@@ -79,6 +96,7 @@ namespace Pmad.Geometry.Shapes
             return new Polygon<TPrimitive, TVector>(Settings, Points);
         }
 
+        /// <summary>Clips the path to the given bounding box. May return multiple sub-paths.</summary>
         public IEnumerable<Path<TPrimitive, TVector>> Crop(VectorEnvelope<TVector> rect)
         {
             var result = Clipper.RectClipLines(Settings.ToClipper(rect), Settings.ToClipper(Points));
@@ -86,6 +104,7 @@ namespace Pmad.Geometry.Shapes
             return result.Select(r => new Path<TPrimitive, TVector>(Settings, Settings.FromClipper(r)));
         }
 
+        /// <summary>Clips the path to the given bounding box while preserving the original orientation of each sub-path.</summary>
         public IEnumerable<Path<TPrimitive, TVector>> CropKeepOrientation(VectorEnvelope<TVector> rect)
         {
             var result = PathClipperHelper.RectClipLinesKeepOrientation(Settings.ToClipper(rect), Settings.ToClipper(Points), IsClosed);
@@ -93,6 +112,7 @@ namespace Pmad.Geometry.Shapes
             return result.Select(r => new Path<TPrimitive, TVector>(Settings, Settings.FromClipper(r)));
         }
 
+        /// <summary>Returns the minimum distance from <paramref name="point"/> to the nearest point on the path.</summary>
         public double Distance(TVector point)
         {
             return Points.NearestPointPath(point).Distance;

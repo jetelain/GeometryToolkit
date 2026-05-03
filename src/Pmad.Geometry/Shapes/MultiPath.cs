@@ -5,10 +5,10 @@ using System.Text;
 namespace Pmad.Geometry.Shapes
 {
     /// <summary>
-    /// List of paths/linestrings.
+    /// Ordered list of <see cref="Path{TPrimitive,TVector}"/> instances (equivalent to a GeoJSON MultiLineString).
     /// </summary>
-    /// <typeparam name="TPrimitive"></typeparam>
-    /// <typeparam name="TVector"></typeparam>
+    /// <typeparam name="TPrimitive">Numeric primitive type of the vector components.</typeparam>
+    /// <typeparam name="TVector">Vector type.</typeparam>
     public sealed class MultiPath<TPrimitive, TVector> : IWithBounds<TVector>, IReadOnlyList<Path<TPrimitive, TVector>>
         where TPrimitive : unmanaged, INumber<TPrimitive>
         where TVector : struct, IVector2<TPrimitive, TVector>
@@ -30,8 +30,10 @@ namespace Pmad.Geometry.Shapes
 
         public Path<TPrimitive, TVector> this[int index] => paths[index];
 
+        /// <summary>Axis-aligned bounding box that encompasses all paths.</summary>
         public VectorEnvelope<TVector> Bounds => GetBounds(paths);
 
+        /// <summary>Number of paths in the collection.</summary>
         public int Count => paths.Count;
 
         public IEnumerator<Path<TPrimitive, TVector>> GetEnumerator()
@@ -44,6 +46,7 @@ namespace Pmad.Geometry.Shapes
             return paths.GetEnumerator();
         }
 
+        /// <summary>Returns a new <see cref="MultiPath{TPrimitive,TVector}"/> containing only the portions of paths inside <paramref name="rect"/>.</summary>
         public MultiPath<TPrimitive, TVector> Crop(VectorEnvelope<TVector> rect)
         {
             if (paths.Count == 0)
@@ -53,6 +56,7 @@ namespace Pmad.Geometry.Shapes
             return new MultiPath<TPrimitive, TVector>(paths.SelectMany(p => p.Crop(rect)).ToList());
         }
 
+        /// <summary>Returns a new <see cref="MultiPath{TPrimitive,TVector}"/> cropped to <paramref name="rect"/>, preserving the original orientation of each sub-path.</summary>
         public MultiPath<TPrimitive, TVector> CropKeepOrientation(VectorEnvelope<TVector> rect)
         {
             if (paths.Count == 0)
