@@ -9,7 +9,7 @@ namespace Pmad.Geometry
         /// <summary>
         /// Tests whether infinite lines A1-A2 and B1-B2 intersect, and returns the intersection point.
         /// </summary>
-        /// <returns><see langword="true"/> if the lines are not parallel and an intersection exists.</returns>
+        /// <returns><see langword="true"/> if the lines are not parallel, not collinear, and an intersection exists.</returns>
         public static bool HasLineIntersection<TVector>(TVector A1, TVector A2, TVector B1, TVector B2, out TVector intersection)
             where TVector : struct, IVector<TVector>
         {
@@ -27,7 +27,7 @@ namespace Pmad.Geometry
         /// <summary>
         /// Tests whether segments A1-A2 and B1-B2 intersect (including endpoints), and returns the intersection point.
         /// </summary>
-        /// <returns><see langword="true"/> if the segments cross within their respective extents (including endpoints).</returns>
+        /// <returns><see langword="true"/> if the segments are not parallel, not collinear, and cross within their respective extents (including endpoints).</returns>
         public static bool HasSegmentIntersection<TVector>(TVector A1, TVector A2, TVector B1, TVector B2, out TVector intersection)
             where TVector : struct, IVector<TVector>
         {
