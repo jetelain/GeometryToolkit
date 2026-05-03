@@ -136,10 +136,12 @@ namespace Pmad.Geometry.Shapes
         public MultiPolygon<TPrimitive, TVector> InnerCrown(double offset) => Crown(offset, 0);
 
         /// <summary>
-        /// Computes the ring-shaped area (crown) between the polygon shrunk by <paramref name="innnerOffset"/> and expanded by <paramref name="outerOffset"/>.
+        /// Computes the ring-shaped area (crown) between the polygon offset by <paramref name="outerOffset"/> and the polygon offset by <c>-<paramref name="innnerOffset"/></c>.
+        /// Positive <paramref name="innnerOffset"/> values shrink the polygon inward, while negative values expand it outward.
+        /// Positive <paramref name="outerOffset"/> values expand the polygon outward, while negative values shrink it inward.
         /// </summary>
-        /// <param name="innnerOffset">Inward shrink distance (≥ 0).</param>
-        /// <param name="outerOffset">Outward expansion distance (≥ 0).</param>
+        /// <param name="innnerOffset">Signed inner offset distance; positive values shrink inward and negative values expand outward.</param>
+        /// <param name="outerOffset">Signed outer offset distance; positive values expand outward and negative values shrink inward.</param>
         public MultiPolygon<TPrimitive, TVector> Crown(double innnerOffset, double outerOffset)
         {
             if (innnerOffset == 0 && outerOffset == 0)
