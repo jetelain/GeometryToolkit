@@ -312,15 +312,6 @@ Section("GeoJSON – Feature and FeatureCollection");
     Console.WriteLine($"collection json={collectionJson}");
 }
 
-Section("Coordinates helper");
-{
-    var coord = new Coordinates<double, Vector2D>(new Vector2D(2.35, 48.85)); // Paris
-    var point = coord.AsPoint();
-    double lon = point.X; // 2.35
-    double lat = point.Y;  // 48.85
-    Console.WriteLine($"lon={lon}, lat={lat}");
-}
-
 Console.WriteLine();
 Console.WriteLine("All examples completed successfully.");
 
