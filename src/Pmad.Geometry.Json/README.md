@@ -4,7 +4,7 @@
 [![LICENSE BSL 1.0](https://img.shields.io/badge/License-BSL_1.0-yellow.svg)](https://www.boost.org/LICENSE_1_0.txt) 
 
 
-GeoJSON and WKT serialization / deserialization for [Pmad.Geometry](../Pmad.Geometry/README.md) shapes, built on top of `System.Text.Json`.
+GeoJSON serialization / deserialization for [Pmad.Geometry](../Pmad.Geometry/README.md) shapes, built on top of `System.Text.Json`.
 
 ## Installation
 

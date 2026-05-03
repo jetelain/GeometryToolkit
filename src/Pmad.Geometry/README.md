@@ -127,8 +127,8 @@ var poly = new Polygon<double, Vector2D>(settings, shell,
 ### WKT serialization
 
 ```csharp
-string wkt     = rect.ToWkt();
-var    fromWkt = settings.PolygonFromWkt(wkt);
+string wkt     = rect.ToString();
+var    fromWkt = settings.ParsePolygon(wkt);
 ```
 
 ### SVG path
@@ -191,7 +191,7 @@ Polygon<double, Vector2D> poly = rr.ToPolygon();
 
 // Smallest rotated rectangle containing a set of points
 var points = new List<Vector2D> { new(0,0), new(3,1), new(2,4) };
-RotatedRectangle<double, Vector2D> smallest = settings.SmallestRotatedRectangle(points);
+RotatedRectangle<double, Vector2D> smallest = RotatedRectangle<double, Vector2D>.GetSmallestContaining(points);
 ```
 
 ## Circle
@@ -204,7 +204,7 @@ double area   = c.AreaD;
 
 // Smallest enclosing circle for a set of points
 var points = new List<Vector2D> { new(0,0), new(4,0), new(2,3) };
-Circle<double, Vector2D> enclosing = settings.SmallestEnclosingCircle(points);
+Circle<double, Vector2D> enclosing = Circle<double, Vector2D>.GetSmallestContaining(points);
 
 // Convert to polygon approximation
 Polygon<double, Vector2D> poly = c.ToPolygon(count: 32);
